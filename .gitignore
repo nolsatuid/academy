@@ -10,8 +10,9 @@ build/*
 local_settings.py
 *.jpg.*
 *.tmproj
-*.sqlite
 media/*
 env/*
 logs/*
 db.sqlite3
+*.sqlite*
+*.cpython-*
