@@ -135,3 +135,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static_files'),
 )
 STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
