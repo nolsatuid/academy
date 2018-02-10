@@ -12,7 +12,7 @@
     <div class="container ml-auto mr-auto">
 
         <div class="shard form-login col-md-12">
-            <h3>Log in</h3>
+            <h3>{{ title }}</h3>
             <form action="" method="post">
                 {% csrf_token %}
 
@@ -25,9 +25,11 @@
                                 <label class="pull-left">{{ field.label }}</label>
 
                                 {{ field|addclass:"form-control" }}
-                                <span class="help_text">
-                                    {{ field.help_text|safe }}
-                                </span>
+                                {% if not page == "sign-up" %}
+                                    <span class="help_text">
+                                        {{ field.help_text|safe }}
+                                    </span>
+                                {% endif %}
                                 {{ field.errors }}
                             </div>
                         {% endfor %}
@@ -40,12 +42,11 @@
                                 <input type="submit" class="btn btn-primary btn-pill pull-left" value="Login">
                                 <div class="clearfix">&nbsp;</div>
                                 <p class="help-block pull-left">
-                                    Don't have an account? <a href="{% url 'website:accounts:login' %}">Sign up</a>
+                                    Don't have an account? <a href="{% url 'website:accounts:sign_up' %}">Sign up</a>
                                 </p>
                             {% elif page == "sign-up" %}
-                                <button type="submit" class="btn btn-block btn-cta-primary">Sign up</button>
-                                <div class="clearfix">&nbsp;</div>
-                                <p class="help-block">
+                                <button type="submit" class="btn btn-primary btn-pill pull-left">Sign up</button>
+                                <p class="help-block pull-right mt-2">
                                     Have an account? <a href="{% url 'website:accounts:login' %}">Log in</a>
                                 </p>
                             {% else %}
@@ -59,5 +60,5 @@
         </div>
     </div>
 </div>
-<!-- <div class="page-content"></div> -->
+<div class="page-content"></div>
 {% endblock %}
