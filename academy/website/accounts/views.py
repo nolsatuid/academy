@@ -28,6 +28,7 @@ def login_view(request):
     context = {
         'form': form,
         'title': 'Login to your account',
+        'page': 'login'
     }
     return render(request, 'accounts/form.html', context)
 

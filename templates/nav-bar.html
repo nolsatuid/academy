@@ -1,0 +1,53 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light pt-4 px-0">
+    <img src="{% static 'website/images/demo/shards-logo.svg' %}" alt="Example Navbar 1" class="mr-2" height="30px">
+    <a class="navbar-brand" href="{% url 'website:index' %}">Alinguwa</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-1"
+            aria-controls="navbarNavDropdown-1"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown-1">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                    data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Home
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'website:index' %}">Home 1</a>
+                    <a class="dropdown-item" href="{% url 'website:home' %}">Home 2</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://designrevision.com" id="navbarDropdownMenuLink"
+                    data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Services
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Design</a>
+                    <a class="dropdown-item" href="#">Development</a>
+                    <a class="dropdown-item" href="#">Marketing</a>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Register</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'website:accounts:login' %}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
