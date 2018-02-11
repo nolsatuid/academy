@@ -1,0 +1,45 @@
+{% load form_tags %}
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <div class="card full-width">
+        <div class="card-body">
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="form-group col-md-12">
+                    <label class="pull-left">{{ field.label }}</label>
+
+                    {{ field|addclass:"form-control" }}
+                    {% if not page == "sign-up" %}
+                        <span class="help_text">
+                            {{ field.help_text|safe }}
+                        </span>
+                    {% endif %}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+
+            <div class="form-group col-md-12">
+                {% if page == "login" %}
+                    <p class="help-block pull-right mt-2">
+                        <a href="#">Forgot Password?</a>
+                    </p>
+                    <input type="submit" class="btn btn-primary btn-pill pull-left" value="Login">
+                    <div class="clearfix">&nbsp;</div>
+                    <p class="help-block pull-left">
+                        Don't have an account? <a href="{% url 'website:accounts:sign_up' %}">Sign up</a>
+                    </p>
+                {% elif page == "sign-up" %}
+                    <button type="submit" class="btn btn-primary btn-pill pull-left">Sign up</button>
+                    <p class="help-block pull-right mt-2">
+                        Have an account? <a href="{% url 'website:accounts:login' %}">Log in</a>
+                    </p>
+                {% else %}
+                    <input type="submit" class="btn btn-primary btn-pill" value="Submit" />
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</form>

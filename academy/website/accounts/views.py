@@ -7,13 +7,28 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import Http404
 
 from academy.apps.accounts.models import User
-from . forms import CustomAuthenticationForm, SignupForm
+from . forms import CustomAuthenticationForm, SignupForm, ProfileForm
 
 
 @login_required
 def index(request):
+    user = request.user
+
+    if hasattr(user, 'profile'):
+        context = {
+            'title': 'Dashboard',
+        }
+        return render(request, 'dashboard/index.html', context)
+
+    form = ProfileForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save(user)
+        messages.success(request, 'Thank you for completing your profile')
+        return redirect("website:accounts:index")
+
     context = {
-        'title': 'Account Index',
+        'title': 'Complate Your Profile',
+        'form': form
     }
     return render(request, 'accounts/index.html', context)
 

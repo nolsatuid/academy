@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
-from academy.apps.accounts.models import User
+from academy.apps.accounts.models import User, Profile
+from academy.core.validators import validate_email, validate_mobile_phone
 
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -27,3 +28,25 @@ class SignupForm(UserCreationForm):
         user.notification_register()
 
         return user
+
+
+class ProfileForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=70)
+    last_name = forms.CharField(max_length=70, required=False)
+    phone_number = forms.CharField(max_length=16, validators=[validate_mobile_phone])
+
+    class Meta:
+        model = Profile
+        fields = ('first_name', 'last_name', 'phone_number', 'avatar', 'address', 'organization_name')
+
+    def save(self, user, *args, **kwargs):
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.phone = self.cleaned_data['phone_number']
+        user.save()
+
+        profile = super().save(commit=False)
+        profile.user = user
+        profile.save()
+
+        return profile
