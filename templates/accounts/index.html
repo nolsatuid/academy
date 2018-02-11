@@ -1,1 +1,17 @@
-{{ title }}
+{% extends 'base-master.html' %}
+{% load static form_tags %}
+
+{% block content %}
+<div class=" d-flex justify-content-center flex-column">
+    <div class="container zindex">
+        {% include 'nav-bar.html' %}
+    </div>
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-12">
+            {{ title }}
+        </div>
+    </div>
+</div>
+{% endblock %}

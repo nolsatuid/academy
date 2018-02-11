@@ -24,3 +24,6 @@ class SignupForm(UserCreationForm):
         user.is_active = False
         user.role = User.ROLE.student
         user.save()
+        user.notification_register()
+
+        return user

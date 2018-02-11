@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import int_to_base36
+from django.template.loader import render_to_string
 
 from academy.core.utils import image_upload_path
 from academy.core.validators import validate_mobile_phone
 
 from model_utils import Choices
+from post_office import mail
 
 
 class CustomUserManager(UserManager):
@@ -37,6 +42,24 @@ class User(AbstractUser):
         if not name:
             name = self.username
         return name
+
+    def notification_register(self):
+        data = {
+            'token': default_token_generator.make_token(self),
+            'uid': int_to_base36(self.id),
+            'host': settings.HOST,
+            'user': self,
+            'email_title': 'Account Activation'
+        }
+
+        send = mail.send(
+            [self.email],
+            settings.DEFAULT_FROM_EMAIL,
+            subject='Account Activation',
+            html_message=render_to_string('emails/register.html', context=data),
+            headers={'Reply-to': 'reply@example.com'},
+        )
+        return send
 
 
 class Profile(models.Model):

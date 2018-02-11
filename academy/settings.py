@@ -30,8 +30,8 @@ SECRET_KEY = 'n-@n7d!%na!&^cd4^%al(z4%2vq0umr+fy_m6gmc(0_4uxbuwx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+HOST = 'http://academy.btech.id'
 
 # Application definition
 
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
 
     'academy.core',
     'academy.apps.accounts',
+
+    "post_office",
 ]
 
 MIDDLEWARE = [
@@ -111,6 +113,16 @@ AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = (
     'academy.core.custom_auth.EmailBackend',
 )
+
+# other app
+EMAIL_BACKEND = 'post_office.EmailBackend'
+DEFAULT_FROM_EMAIL = 'notification@btech.co.id'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'notification@btech.co.id'
+EMAIL_HOST_PASSWORD = '!N0t1f1c4t10n@w388t3ch!'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+DEFAULT_RECIPIANT_EMAIL = 'contact@btech.id'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

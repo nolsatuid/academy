@@ -5,3 +5,5 @@ id-phonenumbers==0.3.0
 phonenumbers==8.8.10
 django-model-utils==3.0.0
 Pillow==4.3.0
+
+django-post-office==3.0.4
