@@ -13,8 +13,9 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'website/css/shards.min.css' %}">
         <link rel="stylesheet" href="{% static 'website/css/shards-extras.min.css' %}">
+        <link rel="stylesheet" href="{% static 'website/css/custom.css' %}">
     </head>
-    <body class="shards-landing-page--1">
+    <body class="shards-landing-page--1 shards-app-promo-page--1">
       <!-- Welcome Section -->
       <div class="welcome d-flex justify-content-center flex-column">
         <div class="container">
@@ -80,169 +81,143 @@
       <!-- / Welcome Section -->
 
       <!-- Our Services Section -->
-      <div id="our-services" class="our-services section py-4">
-        <h3 class="section-title text-center my-5">Our Services</h3>
-        <!-- Features -->
-        <div class="features py-4 mb-4">
-          <div class="container">
-            <div class="row">
-              <div class="feature py-4 col-md-6 d-flex">
-                <div class="icon text-primary mr-3"><i class="fa fa-paint-brush"></i></div>
-                <div class="px-4">
-                    <h5>Design & Branding</h5>
-                    <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus purus duis sensibus signiferumque.</p>
-                </div>
-              </div>
-              <div class="feature py-4 col-md-6 d-flex">
-                <div class="icon text-primary mr-3"><i class="fa fa-code"></i></div>
-                <div class="px-4">
-                    <h5>Programming</h5>
-                    <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus purus duis sensibus signiferumque.</p>
-                </div>
-              </div>
+      <div id="our-services" class="bg-image our-services section py-4">
+        <h3 class="section-title text-center m-5">About Us</h3>
+        <div class="row m-5">
+          <div class="col-md-4">
+            <h4 class="text-center m-5"><i class="fa fa-users"></i> Students</h4>
+            <div class="px-5">
+                <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula lorem facilisis congue convallis. Duis non dictum velit. Maecenas iaculis vitae nunc in lobortis. Nunc lacinia dapibus ligula ac feugiat. Suspendisse imperdiet diam sed ex elementum, vel volutpat mauris facilisis. Sed et elit vel tortor blandit efficitur sed ut ante. Nam nisl est, bibendum id enim non, posuere pretium tellus. Nunc sollicitudin convallis nisl, eu efficitur sem tempor vitae. Vivamus euismod nibh in diam pretium volutpat. Integer sem diam, mollis non ante vel, laoreet viverra arcu. Suspendisse ut ligula a dui ornare vestibulum.</p>
             </div>
-
-            <div class="row">
-              <div class="feature py-4 col-md-6 d-flex">
-                <div class="icon text-primary mr-3"><i class="fa fa-font"></i></div>
-                <div class="px-4">
-                    <h5>Copywriting</h5>
-                    <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus purus duis sensibus signiferumque.</p>
-                </div>
-              </div>
-              <div class="feature py-4 col-md-6 d-flex">
-                <div class="icon text-primary mr-3"><i class="fa fa-support"></i></div>
-                <div class="px-4">
-                    <h5>Training & Support</h5>
-                    <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus purus duis sensibus signiferumque.</p>
-                </div>
-              </div>
+          </div>
+          <div class="col-md-4">
+            <h4 class="text-center m-5"><i class="fa fa-briefcase"></i> Career Seeker</h4>
+            <div class="px-5">
+                <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula lorem facilisis congue convallis. Duis non dictum velit. Maecenas iaculis vitae nunc in lobortis. Nunc lacinia dapibus ligula ac feugiat. Suspendisse imperdiet diam sed ex elementum, vel volutpat mauris facilisis. Sed et elit vel tortor blandit efficitur sed ut ante. Nam nisl est, bibendum id enim non, posuere pretium tellus. Nunc sollicitudin convallis nisl, eu efficitur sem tempor vitae. Vivamus euismod nibh in diam pretium volutpat. Integer sem diam, mollis non ante vel, laoreet viverra arcu. Suspendisse ut ligula a dui ornare vestibulum.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h4 class="text-center m-5"><i class="fa fa-building "></i> Company</h4 >
+            <div class="px-5">
+                <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vehicula lorem facilisis congue convallis. Duis non dictum velit. Maecenas iaculis vitae nunc in lobortis. Nunc lacinia dapibus ligula ac feugiat. Suspendisse imperdiet diam sed ex elementum, vel volutpat mauris facilisis. Sed et elit vel tortor blandit efficitur sed ut ante. Nam nisl est, bibendum id enim non, posuere pretium tellus. Nunc sollicitudin convallis nisl, eu efficitur sem tempor vitae. Vivamus euismod nibh in diam pretium volutpat. Integer sem diam, mollis non ante vel, laoreet viverra arcu. Suspendisse ut ligula a dui ornare vestibulum.</p>
             </div>
           </div>
         </div>
-        <!-- / Features -->
       </div>
       <!-- / Our Services Section -->
 
-      <!-- Our Blog Section -->
-      <div class="blog section section-invert py-4">
-        <h3 class="section-title text-center m-5">Latest Posts</h3>
-
-        <div class="container">
-          <div class="py-4">
-            <div class="row">
-              <div class="card-deck">
-              <div class="col-md-12 col-lg-4">
-                <div class="card mb-4">
-                  <img class="card-img-top" src="{% static 'website/images/common/card-1.jpg' %}" alt="Card image cap">
-                  <div class="card-body">
-                    <h4 class="card-title">Find Great Places to Work While Travelling</h4>
-                    <p class="card-text">He seems sinking under the evidence could not only grieve and a visit. The father is to bless and placed in his length hid...</p>
-                    <a class="btn btn-primary btn-pill" href="#">Read More &rarr;</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 col-lg-4">
-                <div class="card mb-4">
-                  <img class="card-img-top" src="{% static 'website/images/common/card-3.jpg' %}" alt="Card image cap">
-                  <div class="card-body">
-                    <h4 class="card-title">Quick Tips for Improving Your Website's Design</h4>
-                    <p class="card-text">He seems sinking under the evidence could not only grieve and a visit. The father is to bless and placed in his length hid...</p>
-                    <a class="btn btn-primary btn-pill" href="#">Read More &rarr;</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12 col-lg-4">
-                <div class="card mb-4">
-                  <img class="card-img-top" src="{% static 'website/images/common/card-2.jpg' %}" alt="Card image cap">
-                  <div class="card-body">
-                    <h4 class="card-title">A Designer's Tips While Travelling and Working</h4>
-                    <p class="card-text">He seems sinking under the evidence could not only grieve and a visit. The father is to bless and placed in his length hid...</p>
-                    <a class="btn btn-primary btn-pill" href="#">Read More &rarr;</a>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- / Our Blog Section -->
-
       <!-- Testimonials Section -->
-      <div class="testimonials section py-4">
-          <h3 class="section-title text-center m-5">Testimonials</h3>
+      <div class="testimonials welcome py-4">
+          <h3 class="section-title text-center text-white m-5">Teachers</h3>
           <div class="container py-5">
             <div class="row">
                 <div class="col-md-4 testimonial text-center">
                     <div class="avatar rounded-circle with-shadows mb-3 ml-auto mr-auto">
                         <img src="{% static 'website/images/common/avatar-1.jpeg' %}" class="w-100" alt="Testimonial Avatar" />
                     </div>
-                    <h5 class="mb-1">Osbourne Tranter</h5>
-                    <span class="text-muted d-block mb-2">CEO at Megacorp</span>
-                    <p>Vivamus quis ex mattis, gravida erat a, iaculis urna. Proin ac eleifend tortor. Nunc in augue eget enim venenatis viverra.</p>
+                    <h5 class="mb-1 text-white">Osbourne Tranter</h5>
+                    <span class="text-white d-block mb-2">CEO at Megacorp</span>
+                    <p class="text-white">Vivamus quis ex mattis, gravida erat a, iaculis urna. Proin ac eleifend tortor. Nunc in augue eget enim venenatis viverra.</p>
                 </div>
 
                 <div class="col-md-4 testimonial text-center">
                     <div class="avatar rounded-circle with-shadows mb-3 ml-auto mr-auto">
                         <img src="{% static 'website/images/common/avatar-2.jpeg' %}" class="w-100" alt="Testimonial Avatar" />
                     </div>
-                    <h5 class="mb-1">Darrin Ollie</h5>
-                    <span class="text-muted d-block mb-2">CEO at Megacorp</span>
-                    <p>Nullam eu ligula facilisis, commodo velit non, vulputate dolor. Aenean congue euismod vestibulum.</p>
+                    <h5 class="mb-1 text-white">Darrin Ollie</h5>
+                    <span class="text-white d-block mb-2">CEO at Megacorp</span>
+                    <p class=" text-white">Nullam eu ligula facilisis, commodo velit non, vulputate dolor. Aenean congue euismod vestibulum.</p>
                 </div>
 
                 <div class="col-md-4 testimonial text-center">
                     <div class="avatar rounded-circle with-shadows mb-3 ml-auto mr-auto">
                         <img src="{% static 'website/images/common/avatar-3.jpeg' %}" class="w-100" alt="Testimonial Avatar" />
                     </div>
-                    <h5 class="mb-1">Quinton Bruce</h5>
-                    <span class="text-muted d-block mb-2">CEO at Megacorp</span>
-                    <p> Aenean imperdiet ultrices tortor id convallis. Donec id metus magna. Morbi pretium odio faucibus blandit gravida.</p>
+                    <h5 class="mb-1 text-white">Quinton Bruce</h5>
+                    <span class="text-white d-block mb-2">CEO at Megacorp</span>
+                    <p class=" text-white"> Aenean imperdiet ultrices tortor id convallis. Donec id metus magna. Morbi pretium odio faucibus blandit gravida.</p>
                 </div>
             </div>
           </div>
       </div>
       <!-- / Testimonials Section -->
 
-      <!-- Contact Section -->
-      <div class="contact section-invert py-4">
-        <h3 class="section-title text-center m-5">Contact Us</h3>
-        <div class="container py-4">
-          <div class="row justify-content-md-center px-4">
-            <div class="contact-form col-sm-12 col-md-10 col-lg-7 p-4 mb-4 card">
-              <form>
-                <div class="row">
-                  <div class="col-md-6 col-sm-12">
-                    <div class="form-group">
-                      <label for="contactFormFullName">Full Name</label>
-                      <input type="email" class="form-control" id="contactFormFullName" placeholder="Enter your full name">
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-sm-12">
-                    <div class="form-group">
-                      <label for="contactFormEmail">Email address</label>
-                      <input type="email" class="form-control" id="contactFormEmail" placeholder="Enter your email address">
-                    </div>
+      <!-- Partners Section -->
+      <div class="testimonials bg-dark section py-4">
+        <h3 class="section-title text-center text-white m-5">Partners</h3>
+        <div class="container py-5">
+          <div class="row">
+            <div class="col-md-4 text-center">
+                <div class="mb-3 ml-auto mr-auto">
+                  <img width="70px" src="{% static 'website/images/demo/shard-1-5x-3.png' %}" class="mr-2" alt="Alinguwa - Agency Landing Page">
+                </div>
+            </div>
+
+            <div class="col-md-4 text-center">
+                <div class="mb-3 ml-auto mr-auto">
+                  <img width="70px" src="{% static 'website/images/demo/shard-1-5x-3.png' %}" class="mr-2" alt="Alinguwa - Agency Landing Page">
+                </div>
+            </div>
+
+            <div class="col-md-4 text-center">
+              <div class="mb-3 ml-auto mr-auto">
+                <img width="70px" src="{% static 'website/images/demo/shard-1-5x-3.png' %}" class="mr-2" alt="Alinguwa - Agency Landing Page">
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- / Partners Section -->
+
+      <!-- Features Section -->
+      <div id="app-features" class="app-features section">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="app-screenshot col-lg-4 col-md-12 col-sm-12 px-0 py-5">
+              <img class="mt-auto mb-auto" src="{% static 'website/images/app-promo/iphone-app-screenshot.png' %}" alt="App Screenshot - Shards App Promo Demo Page">
+            </div>
+
+            <!-- App Features Wrapper -->
+            <div class="app-features-wrapper col-lg-4 col-md-6 col-sm-12 py-5 mx-auto">
+              <div class="container">
+                <h3 class="section-title underline--left my-5">Academy</h3>
+                <div class="feature py-4 d-flex">
+                  <div class="icon text-white bg-success mr-5"><i class="fa fa-refresh"></i></div>
+                  <div>
+                      <h5>Everything Synced</h5>
+                      <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus purus duis sensibus signiferumque.</p>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col">
-                    <div class="form-group">
-                        <label for="exampleInputMessage1">Message</label>
-                        <textarea id="exampleInputMessage1" class="form-control mb-4" rows="10" placeholder="Enter your message..." name="message"></textarea>
-                    </div>
+
+                <div class="feature py-4 d-flex">
+                  <div class="icon text-white bg-success mr-5"><i class="fa fa-shield"></i></div>
+                  <div>
+                      <h5>Security</h5>
+                      <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus purus duis sensibus signiferumque.</p>
                   </div>
                 </div>
-                <input class="btn btn-primary btn-pill d-flex ml-auto mr-auto" type="submit" value="Send Your Message">
-              </form>
+
+                <div class="feature py-4 d-flex">
+                  <div class="icon text-white bg-success mr-5"><i class="fa fa-share"></i></div>
+                  <div>
+                      <h5>Sharing</h5>
+                      <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus purus duis sensibus signiferumque.</p>
+                  </div>
+                </div>
+
+                <div class="feature py-4 d-flex">
+                  <div class="icon text-white bg-success mr-5"><i class="fa fa-globe"></i></div>
+                  <div>
+                      <h5>Access Anywhere</h5>
+                      <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus purus duis sensibus signiferumque.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- / Contact Section -->
+      <!-- / Features Section -->
 
       <!-- Footer Section -->
       <footer>

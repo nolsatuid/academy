@@ -111,3 +111,27 @@
         margin-left: 0;
     }
 }
+
+.shards-landing-page--1 .bg-image {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    background: url("../images/app-promo/welcome-cover.jpg") no-repeat center center fixed;
+    background-size: cover;
+  }
+  
+  .shards-landing-page--1 .bg-image:before {
+    position: absolute;
+    z-index: 0;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .90;
+    background: #ffffff;
+  }
+
+  .shards-app-promo-page--1 .welcome:before {
+    background: #007bff;
+  }
