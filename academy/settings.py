@@ -127,6 +127,7 @@ DEFAULT_RECIPIANT_EMAIL = 'contact@btech.id'
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
+# LANGUAGE_CODE = 'id'
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'

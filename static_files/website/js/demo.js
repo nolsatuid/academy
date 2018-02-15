@@ -153,6 +153,8 @@
 
     // Datepicker example 2.
     $('#datepicker-example-2').datepicker({});
+
+    $('#id_birthday').datepicker({});
   });
 })(jQuery);
 
