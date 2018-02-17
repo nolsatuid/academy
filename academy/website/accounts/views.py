@@ -23,11 +23,11 @@ def index(request):
     form = ProfileForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save(user)
-        messages.success(request, 'Thank you for completing your profile')
+        messages.success(request, 'Terima kasih telah melengkapi profil Anda')
         return redirect("website:accounts:index")
 
     context = {
-        'title': 'Complate Your Profile',
+        'title': 'Lengkapi Profil Anda',
         'form': form
     }
     return render(request, 'accounts/index.html', context)
@@ -47,7 +47,7 @@ def login_view(request):
 
     context = {
         'form': form,
-        'title': 'Log in',
+        'title': 'Masuk',
         'page': 'login'
     }
     return render(request, 'accounts/form.html', context)
@@ -62,11 +62,11 @@ def sign_up(request):
     form = SignupForm(request.POST or None)
     if form.is_valid():
         form.save()
-        messages.success(request, 'Please check your email to activate your account')
+        messages.success(request, 'Tolong cek email Anda untuk mengaktifkan akun')
 
     context = {
         'form': form,
-        'title': 'Sign up',
+        'title': 'Daftar',
         'page': 'sign-up'
     }
     return render(request, 'accounts/form.html', context)
@@ -83,8 +83,8 @@ def active_account(request, uidb36, token):
         user.is_active = True
         user.save(update_fields=['is_active'])
         login(request, user)
-        messages.success(request, 'Congratulation, your account is active')
+        messages.success(request, 'Selamat, akun Anda sudah aktif')
     else:
-        messages.warning(request, 'Sorry, there was a problem with account activation')
+        messages.warning(request, 'Maaf, ada masalah dengan aktivasi akun')
 
     return redirect("website:accounts:index")

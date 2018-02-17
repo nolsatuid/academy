@@ -41,20 +41,20 @@
         {% if user.is_authenticated %}
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'website:accounts:index' %}">Hi, {{ user.username }}</a>
+                    <a class="nav-link" href="{% url 'website:accounts:index' %}">{{ user.username }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'website:accounts:logout' %}">Log out</a>
+                    <a class="nav-link" href="{% url 'website:accounts:logout' %}">Keluar</a>
                 </li>
             </ul>
         {% else %}
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'website:accounts:sign_up' %}">Register</a>
+                    <a class="nav-link" href="{% url 'website:accounts:sign_up' %}">Daftar</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'website:accounts:login' %}">Login</a>
+                    <a class="nav-link" href="{% url 'website:accounts:login' %}">Masuk</a>
                 </li>
             </ul>
         {% endif %}
