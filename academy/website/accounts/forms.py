@@ -9,8 +9,8 @@ class CustomAuthenticationForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'Email or Username'})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': 'Password'})
+        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'Email atau Nama Pengguna'})
+        self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': 'Kata Sandi'})
 
 
 class SignupForm(UserCreationForm):
