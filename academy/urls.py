@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('academy.website.urls', namespace='website')),
+    url(r'^backoffice/', include('academy.backoffice.urls', namespace='backoffice')),
 ]
