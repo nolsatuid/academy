@@ -9,8 +9,8 @@ class CustomAuthenticationForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'Email or Username'})
-        self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': 'Password'})
+        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'Email atau Nama Pengguna'})
+        self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': 'Kata Sandi'})
 
 
 class SignupForm(UserCreationForm):
@@ -37,7 +37,17 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'phone_number', 'avatar', 'address', 'organization_name')
+        fields = ('first_name', 'last_name', 'phone_number', 'linkedin', 'git_repo',
+                  'blog', 'youtube', 'facebook', 'instagram', 'twitter')
+        help_texts = {
+            'git_repo': ('url akun github/gitlab/bitbucket dll'),
+            'blog': ('url blog atau portfolio'),
+            'youtube': ('url kanal youtube'),
+            'facebook': ('e.g. "https://www.facebook.com/yourname"'),
+            'linkedin': ('e.g. "https://www.linkedin.com/in/yourname/"'),
+            'instagram': ('Instagram username e.g. YourName'),
+            'twitter': ('Twitter username without "@" e.g. YourName'),
+        }
 
     def save(self, user, *args, **kwargs):
         user.first_name = self.cleaned_data['first_name']

@@ -74,5 +74,14 @@ class Profile(models.Model):
     organization_name = models.CharField(max_length=200, blank=True, null=True)
     avatar = models.ImageField(upload_to=image_upload_path('avatar'), blank=True, null=True)
 
+    # Social fields
+    linkedin = models.URLField(blank=True, max_length=255)
+    git_repo = models.URLField(blank=True, max_length=255)
+    blog = models.URLField(blank=True, max_length=255)
+    facebook = models.URLField(blank=True, max_length=255)
+    youtube = models.URLField(blank=True, max_length=255)
+    twitter = models.CharField(blank=True, max_length=30)
+    instagram = models.CharField(blank=True, max_length=30)
+
     def __str__(self):
         return self.user.username

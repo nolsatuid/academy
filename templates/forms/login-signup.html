@@ -23,17 +23,17 @@
             <div class="form-group col-md-12">
                 {% if page == "login" %}
                     <p class="help-block pull-right mt-2">
-                        <a href="#">Forgot Password?</a>
+                        <a href="#">Lupa kata sandi?</a>
                     </p>
-                    <input type="submit" class="btn btn-primary btn-pill pull-left" value="Login">
+                    <input type="submit" class="btn btn-primary btn-pill pull-left" value="Masuk">
                     <div class="clearfix">&nbsp;</div>
                     <p class="help-block pull-left">
-                        Don't have an account? <a href="{% url 'website:accounts:sign_up' %}">Sign up</a>
+                        Tidak punya akun? <a href="{% url 'website:accounts:sign_up' %}">Daftar</a>
                     </p>
                 {% elif page == "sign-up" %}
-                    <button type="submit" class="btn btn-primary btn-pill pull-left">Sign up</button>
+                    <button type="submit" class="btn btn-primary btn-pill pull-left">Daftar</button>
                     <p class="help-block pull-right mt-2">
-                        Have an account? <a href="{% url 'website:accounts:login' %}">Log in</a>
+                        Punya Akun? <a href="{% url 'website:accounts:login' %}">Masuk</a>
                     </p>
                 {% else %}
                     <input type="submit" class="btn btn-primary btn-pill" value="Submit" />
