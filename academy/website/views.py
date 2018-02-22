@@ -7,6 +7,11 @@ def index(request):
     }
     return render(request, 'website/home.html', context)
 
+def faq(request):
+    context = {
+        'title': 'Tilil'
+    }
+    return render(request, 'website/faq.html', context)
 
 def home(request):
     context = {
