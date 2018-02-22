@@ -1,0 +1,80 @@
+{% extends 'base-master.html' %}
+{% load static %}
+
+{% block content %}
+<!-- <div class="loader"><div class="page-loader"></div></div> -->
+
+<!-- Welcome Section -->
+<div class="flex-column">
+    <div class="container zindex">
+        {% include 'nav-bar.html' %}
+    </div>
+
+    <div class="container shards-app-promo-page--1  mt-auto">
+        <h4 class="section-title text-center my-5">TILIL (Tanya Itu Lagi Itu Lagi)</h3>
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <a class="btn text-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
+                        Bidang profesi TIK apa yang saat ini tersedia untuk pelatihan dan disalurkan?
+                    </a>
+                </h5>
+                </div>
+            
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body pl-5">
+                    IT Operations, DevOps Engineer, Cloud Administrator, SDN Engineer.
+                </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <a class="btn text-primary collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
+                        Apa syarat terpilih menjadi kandidat di NolSatu?
+                    </a>
+                </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body pl-5">
+                    Memiliki kemampuan TIK dasar yang cukup baik.
+                </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <a class="btn text-primary collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
+                        Bagaimana proses seleksi kandidat dilakukan?
+                    </a>
+                </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body pl-5">
+                    Dari melihat profil dan karya kandidat di blog, repositori kode dan media sosial.
+                </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <a class="btn text-primary collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
+                        Berapa lama pelatihan kandidat berlangsung?
+                    </a>
+                </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body pl-5">
+                    Pelatihan dilaksanakan secara daring dan akan berlangsung sebanyak 16 kali dengan durasi 3 jam per pelatihan.
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
