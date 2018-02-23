@@ -88,3 +88,47 @@ def active_account(request, uidb36, token):
         messages.warning(request, 'Maaf, ada masalah dengan aktivasi akun')
 
     return redirect("website:accounts:index")
+
+def profile(request):
+    user = request.user
+
+    context = {
+        'title' : 'Dashboard',
+        'user'  : user,
+    }
+    return render(request, 'dashboard/profile.html', context)   
+
+@login_required
+def edit_profile(request):
+    user = request.user
+
+    initial = {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'phone_number': user.phone,
+        'avatar': user.profile.avatar,
+        'birthday': user.profile.birthday,
+        'gender': user.profile.gender,
+        'address': user.profile.address,
+        'linkedin': user.profile.linkedin,
+        'git_repo': user.profile.git_repo,
+        'blog': user.profile.blog,
+        'facebook':user.profile.facebook,
+        'youtube': user.profile.youtube,
+        'twitter': user.profile.twitter,
+        'instagram': user.profile.instagram
+    }
+
+    form = ProfileForm(request.POST or None, request.FILES or None,
+                          initial=initial, instance=user.profile)
+    if form.is_valid():
+        form.save(user)
+        form.update_user(user)
+        messages.success(request, 'Profil berhasil diubah')
+        return redirect("website:accounts:profile")
+
+    context = {
+        'title': 'Ubah Profil',
+        'form': form
+    }
+    return render(request, 'accounts/index.html', context)

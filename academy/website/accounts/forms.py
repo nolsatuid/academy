@@ -49,6 +49,12 @@ class ProfileForm(forms.ModelForm):
             'twitter': ('Twitter username without "@" e.g. YourName'),
         }
 
+    def update_user(self, user):
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.phone = self.cleaned_data['phone_number']
+        user.save()
+
     def save(self, user, *args, **kwargs):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
