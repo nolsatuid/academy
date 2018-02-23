@@ -7,7 +7,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import Http404
 
 from academy.apps.accounts.models import User
-from . forms import CustomAuthenticationForm, SignupForm, ProfileForm
+from academy.apps.students.models import Training
+from . forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm
 
 
 @login_required
@@ -23,7 +24,11 @@ def index(request):
     form = ProfileForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save(user)
-        messages.success(request, 'Terima kasih telah melengkapi profil Anda')
+        training = Training.objects.filter(is_active=True).order_by('batch').last()
+        form_student = StudentForm(data={'user': user.id, 'training': training.id})
+        if form_student.is_valid():
+            form_student.save()
+
         return redirect("website:accounts:index")
 
     context = {
@@ -63,6 +68,7 @@ def sign_up(request):
     if form.is_valid():
         form.save()
         messages.success(request, 'Tolong cek email Anda untuk mengaktifkan akun')
+        return redirect('website:accounts:sign_up')
 
     context = {
         'form': form,

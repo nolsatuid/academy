@@ -5,9 +5,10 @@ from model_utils import Choices
 
 
 class Training(models.Model):
-    batch = models.PositiveIntegerField()
+    batch = models.PositiveIntegerField(unique=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"batch {self.batch}"
