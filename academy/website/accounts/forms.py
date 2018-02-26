@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from academy.apps.accounts.models import User, Profile
+from academy.apps.students.models import Student
 from academy.core.validators import validate_email, validate_mobile_phone
 
 
@@ -60,3 +61,10 @@ class ProfileForm(forms.ModelForm):
         profile.save()
 
         return profile
+
+
+class StudentForm(forms.ModelForm):
+
+    class Meta:
+        model = Student
+        fields = ('user', 'training')
