@@ -123,7 +123,6 @@ def edit_profile(request):
                           initial=initial, instance=user.profile)
     if form.is_valid():
         form.save(user)
-        form.update_user(user)
         messages.success(request, 'Profil berhasil diubah')
         return redirect("website:accounts:profile")
 
@@ -131,4 +130,4 @@ def edit_profile(request):
         'title': 'Ubah Profil',
         'form': form
     }
-    return render(request, 'accounts/index.html', context)
+    return render(request, 'dashboard/edit_profile.html', context)

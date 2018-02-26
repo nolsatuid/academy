@@ -13,12 +13,7 @@
         <div class="card-body">
             <div class="row-fluid">
                 <div class="row">
-                    <div class="col-md-3 col-lg-3" align="center">
-                        
-                        <img src="/media/{{ user.profile.avatar }}" alt="Avatar" class="img-thumbnail">
-                        
-                    </div>
-                    <div class=" col-md-9 col-lg-9 ">
+                    <div class=" col-md-12 col-lg-12 ">
                         <div class="tab-content">
                             <div id="pane-pribadi" class="tab-pane active in">
                                 <div class="table-responsive box box-info">
@@ -33,18 +28,6 @@
                                         <tbody><tr>
                                             <td class="font-weight-bold">Nama</td>
                                             <td>{{ user.name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Jenis Kelamin</td>
-                                            <td>{{ user.profile.gender }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Tanggal Lahir</td>
-                                            <td>{{ user.profile.birthday }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Alamat</td>
-                                            <td>{{ user.profile.address }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Email</td>
@@ -64,19 +47,19 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">LinkedIn</td>
-                                            <td>{{ user.profile.linkedin }}</td>
+                                            <td><a href="{{ user.profile.linkedin }}" target="_blank">{{ user.profile.linkedin }}</a></td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Git Repo</td>
-                                            <td>{{ user.profile.git_repo }}</td>
+                                            <td><a href="{{ user.profile.linkedin }}" target="_blank">{{ user.profile.git_repo }}</a></td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Youtube</td>
-                                            <td>{{ user.profile.youtube }}</td>
+                                            <td><a href="{{ user.profile.youtube }}" target="_blank">{{ user.profile.youtube }}</a></td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Facebook</td>
-                                            <td>{{ user.profile.facebook }}</td>
+                                            <td><a href="{{ user.profile.facebook }}" target="_blank">{{ user.profile.facebook }}</a></td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Instagram</td>

@@ -8,15 +8,16 @@
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'website:accounts:profile' %}" id="navbarDropdownMenuLink">
-                    Profil
-                </a>
+                
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
                     <i class="fa fa-user"></i> {{ user.username }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{% url 'website:accounts:profile' %}" id="navbarDropdownMenuLink">
+                        Profil
+                    </a>
                     <a class="dropdown-item" href="{% url 'website:accounts:logout' %}">Keluar</a>
                 </div>
             </li>
