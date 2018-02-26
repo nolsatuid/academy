@@ -14,17 +14,18 @@ from . forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentFo
 @login_required
 def index(request):
     user = request.user
+    training = Training.objects.filter(is_active=True).order_by('batch').last()
 
     if hasattr(user, 'profile'):
         context = {
-            'title': 'Dashboard',
+            'title': 'Dasbor',
+            'training': training
         }
         return render(request, 'dashboard/index.html', context)
 
     form = ProfileForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         form.save(user)
-        training = Training.objects.filter(is_active=True).order_by('batch').last()
         form_student = StudentForm(data={'user': user.id, 'training': training.id})
         if form_student.is_valid():
             form_student.save()
@@ -102,7 +103,7 @@ def profile(request):
         'title' : 'Dashboard',
         'user'  : user,
     }
-    return render(request, 'dashboard/profile.html', context)   
+    return render(request, 'dashboard/profile.html', context)
 
 @login_required
 def edit_profile(request):

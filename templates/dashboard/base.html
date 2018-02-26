@@ -8,7 +8,7 @@
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                
+
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
@@ -28,26 +28,18 @@
 <div class="d-flex">
     <nav class="sidebar card mr-4">
         <ul class="list-unstyled">
-            <li><a href="#"><i class="fa fa-fw fa-link"></i> Sidebar Link</a></li>
-            <li><a href="#"><i class="fa fa-fw fa-link"></i> Sidebar Link</a></li>
-            <li>
+            <li><a href="{% url 'website:accounts:index' %}"><i class="fa fa-fw fa-tachometer"></i> Dasbor</a></li>
+            <li><a href="#"><i class="fa fa-fw fa-user"></i> Profil</a></li>
+            <!-- <li>
                 <a href="#submenu1" data-toggle="collapse"><i class="fa fa-fw fa-address-card"></i> Dropdown Link</a>
                 <ul id="submenu1" class="list-unstyled collapse">
                     <li><a href="#">Submenu Item</a></li>
                     <li><a href="#">Submenu Item</a></li>
                     <li><a href="#">Submenu Item</a></li>
                 </ul>
-            </li>
-            <li>
-                <a href="#submenu2" data-toggle="collapse"><i class="fa fa-fw fa-address-card"></i> Dropdown Link 2</a>
-                <ul id="submenu2" class="list-unstyled collapse">
-                    <li><a href="#">Submenu Item</a></li>
-                    <li><a href="#">Submenu Item</a></li>
-                    <li><a href="#">Submenu Item</a></li>
-                </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-fw fa-angle-right"></i> Sidebar Link</a></li>
-            <li><a href="#"><i class="fa fa-fw fa-link"></i> Sidebar Link</a></li>
+            </li> -->
+            <li><hr></li>
+            <li><a href="{% url 'website:accounts:logout' %}"><i class="fa fa-fw fa-sign-out"></i> Keluar </a></li>
 
         </ul>
     </nav>

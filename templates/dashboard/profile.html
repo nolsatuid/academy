@@ -22,9 +22,9 @@
                                             <col class="col-xs-1">
                                             <col class="col-xs-6">
                                         </colgroup>
-    
+
                                         <input data-val="true" data-val-number="The field ID must be a number." data-val-required="The ID field is required." id="ID" name="ID" value="64130" type="hidden">
-    
+
                                         <tbody><tr>
                                             <td class="font-weight-bold">Nama</td>
                                             <td>{{ user.name }}</td>
@@ -51,7 +51,11 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Git Repo</td>
-                                            <td><a href="{{ user.profile.linkedin }}" target="_blank">{{ user.profile.git_repo }}</a></td>
+                                            <td><a href="{{ user.profile.git_repo }}" target="_blank">{{ user.profile.git_repo }}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Blog / Web</td>
+                                            <td><a href="{{ user.profile.blog }}" target="_blank">{{ user.profile.blog }}</a></td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Youtube</td>
@@ -63,14 +67,14 @@
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Instagram</td>
-                                            <td>{{ user.profile.instagram }}</td>
+                                            <td><a href="https://instagram.com/{{ user.profile.instagram }}" target="_blank">{{ user.profile.instagram }}</a></td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Twitter</td>
-                                            <td>{{ user.profile.twitter }}</td>
+                                            <td><a href="https://twitter.com/{{ user.profile.twitter }}" target="_blank">{{ user.profile.twitter }}</a></td>
                                         </tr>
                                     </tbody></table>
-                                </div>    
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,6 +82,6 @@
             </div>
         </div>
         <div class="card-footer"></div>
-        
+
 </div>
 {% endblock %}
