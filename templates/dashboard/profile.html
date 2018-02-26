@@ -1,0 +1,83 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content-dashboard %}
+<div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">
+                Profil
+            </h4>
+            <div class="pull-right">
+                <a class="btn btn-primary text-white" href="{% url 'website:accounts:edit_profile' %}">Ubah</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row-fluid">
+                <div class="row">
+                    <div class=" col-md-12 col-lg-12 ">
+                        <div class="tab-content">
+                            <div id="pane-pribadi" class="tab-pane active in">
+                                <div class="table-responsive box box-info">
+                                    <table class="table table-user-information">
+                                        <colgroup>
+                                            <col class="col-xs-1">
+                                            <col class="col-xs-6">
+                                        </colgroup>
+    
+                                        <input data-val="true" data-val-number="The field ID must be a number." data-val-required="The ID field is required." id="ID" name="ID" value="64130" type="hidden">
+    
+                                        <tbody><tr>
+                                            <td class="font-weight-bold">Nama</td>
+                                            <td>{{ user.name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Email</td>
+                                            <td>{{ user.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Telepon</td>
+                                            <td>
+                                                {{ user.phone }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr class="thead-dark">
+                                            <th colspan="2">Data Pendukung</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">LinkedIn</td>
+                                            <td><a href="{{ user.profile.linkedin }}" target="_blank">{{ user.profile.linkedin }}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Git Repo</td>
+                                            <td><a href="{{ user.profile.linkedin }}" target="_blank">{{ user.profile.git_repo }}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Youtube</td>
+                                            <td><a href="{{ user.profile.youtube }}" target="_blank">{{ user.profile.youtube }}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Facebook</td>
+                                            <td><a href="{{ user.profile.facebook }}" target="_blank">{{ user.profile.facebook }}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Instagram</td>
+                                            <td>{{ user.profile.instagram }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Twitter</td>
+                                            <td>{{ user.profile.twitter }}</td>
+                                        </tr>
+                                    </tbody></table>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+        
+</div>
+{% endblock %}

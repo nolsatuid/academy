@@ -1,0 +1,16 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content-dashboard %}
+<div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">
+                {{ title }}
+            </h4>
+        </div>
+        <div class="card-body">
+                {% include 'dashboard/form.html' %}
+        </div>
+        <div class="card-footer"></div>
+        
+</div>
+{% endblock %}

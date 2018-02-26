@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^sign-up/$', views.sign_up, name='sign_up'),
     url(r'^activate/(?P<uidb36>[0-9A-Za-z]+)/(?P<token>.+)/$',
         views.active_account, name='active_account'),
+    url(r'^profile/$', views.profile, name='profile'),
+    url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
 ]
