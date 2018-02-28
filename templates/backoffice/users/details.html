@@ -1,0 +1,63 @@
+{% extends 'backoffice/base.html' %}
+
+{% block content-dashboard %}
+<div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">
+                {{ title }}
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="content table-responsive table-full-width">
+                <table class="table">
+                    <tr>
+                        <th>Username</th>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>First Name</th>
+                        <td>{{ user.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Last Name</th>
+                        <td>{{ user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td>{{ user.phone|default_if_none:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Staff Status</th>
+                        <td>
+                            {% if user.is_staff %}
+                                <div class="icon-success">
+                                    <i class="fa fa-check"></i>
+                                </div>
+                            {% else %}
+                                <div class="icon-danger">
+                                    <i class="fa fa-close"></i>
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Last Login</th>
+                        <td>
+                            {{ user.last_login}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Date Joined</th>
+                        <td>{{ user.date_joined }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+        
+</div>
+{% endblock %}

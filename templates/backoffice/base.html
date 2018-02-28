@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark mb-3">
     <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
 
-    <a class="navbar-brand" href="{% url 'website:index' %}"><i class="fa fa-code-branch"></i> Alinguwa</a>
+    <a class="navbar-brand" href="{% url 'website:index' %}"><i class="fa fa-code-branch"></i> NolSatu</a>
 
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
@@ -23,7 +23,7 @@
     <nav class="sidebar card mr-4">
         <ul class="list-unstyled">
             <li><a href="#"><i class="fa fa-fw fa-home"></i> Dasbor </a></li>
-            <li><a href="#"><i class="fa fa-fw fa-users"></i> Data Pengguna </a></li>
+            <li><a href="{% url 'backoffice:users:index' %}"><i class="fa fa-fw fa-users"></i> Data Pengguna </a></li>
             <li><a href="#"><i class="fa fa-fw fa-sign-out"></i> Keluar </a></li>
             <!-- <li>
                 <a href="#submenu2" data-toggle="collapse"><i class="fa fa-fw fa-address-card"></i> Dropdown Link 2</a>
