@@ -14,7 +14,6 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Staff Status</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
@@ -23,17 +22,6 @@
                                 <td>{{ user.first_name }} {{ user.last_name }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.phone|default_if_none:"-" }}</td>
-                                <td>
-                                    {% if user.is_staff %}
-                                        <div class="icon-success">
-                                            <h5><i class="fa fa-check"></i></h5>
-                                        </div>
-                                    {% else %}
-                                        <div class="icon-danger">
-                                            <h5><i class="fa fa-close"></i></h5>
-                                        </div>
-                                    {% endif %}
-                                </td>
                                 <td>
                                     <a href="{% url 'backoffice:users:details' user.id %}">Detail</a>
                                 </td>
