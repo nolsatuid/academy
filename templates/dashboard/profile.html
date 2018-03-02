@@ -1,4 +1,5 @@
 {% extends 'dashboard/base.html' %}
+{% load form_tags %}
 
 {% block content-dashboard %}
 <div class="card">
@@ -37,6 +38,12 @@
                                             <td class="font-weight-bold">Telepon</td>
                                             <td>
                                                 {{ user.phone }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Status</td>
+                                            <td>
+                                                {{ student.status|status_display:"True" }}
                                             </td>
                                         </tr>
                                         <tr>
