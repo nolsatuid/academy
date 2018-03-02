@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import Http404
 
 from academy.apps.accounts.models import User
-from academy.apps.students.models import Training
+from academy.apps.students.models import Training, Student
 from . forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm
 
 
@@ -102,6 +102,7 @@ def profile(request):
     context = {
         'title' : 'Dashboard',
         'user'  : user,
+        'student': user.students.exclude(status=Student.STATUS.graduate).last()
     }
     return render(request, 'dashboard/profile.html', context)
 
