@@ -1,0 +1,12 @@
+[Unit]
+Description=academy web daemon
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/var/www/html/academy/
+ExecStart=/var/www/html/academy/env/bin/gunicorn academy.wsgi --workers 2 --bind 127.0.0.1:8000 --log-file=logs/gunicorn.log
+
+[Install]
+WantedBy=multi-user.target
