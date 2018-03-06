@@ -4,11 +4,12 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 
 from academy.apps.accounts.models import User
+from academy.apps.students.models import Student
 
 
 @staff_member_required
 def index(request):
-    users = User.objects.exclude(is_superuser = True, is_staff = True)
+    users = User.objects.exclude(is_superuser=True).exclude(is_staff=True)
 
     context = {
         'title': 'User',
@@ -25,6 +26,7 @@ def details(request, id):
     context = {
         'user': user,
         'page_active': 'user',
-        'title': 'User Detail'
+        'title': 'User Detail',
+        'student': user.students.exclude(status=Student.STATUS.graduate).last()
     }
     return render(request, 'backoffice/users/details.html', context)
