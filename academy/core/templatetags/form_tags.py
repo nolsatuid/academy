@@ -24,6 +24,8 @@ def status_to_display(status, styling=False):
     elif status == Student.STATUS.graduate:
         status_display = 'lulus'
         class_bagde = 'success'
+    else:
+        return '-'
 
     if styling:
         return mark_safe('<span class="badge badge-%s">%s</span>' %

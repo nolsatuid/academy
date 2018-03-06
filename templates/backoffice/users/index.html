@@ -1,0 +1,38 @@
+{% extends 'backoffice/base.html' %}
+
+{% block content-dashboard %}
+<div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">
+                {{ title }}
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="datatable content table-responsive table-full-width">
+                <table id="datatable" class="table table-striped">
+                    <thead>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone|default_if_none:"-" }}</td>
+                                <td>
+                                    <a href="{% url 'backoffice:users:details' user.id %}">Detail</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+</div>
+{% endblock %}
