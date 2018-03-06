@@ -6,7 +6,12 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>NolSatu - {{title}}</title>
-    <meta name="description" content="Elegant UI Toolkit for Professional Web Creatives Based on Bootstrap 4">
+    <meta name="description" content="
+        {% if meta_description %} {{ meta_description }} {% else %}
+        NolSatu hadir sebagai usaha untuk merespon masalah nasional yaitu banyak lulusan
+        TIK atau pekerja TIK yang kemampuannya rendah sementara perusahaan-perusahaan membutuhkan pekerja TIK
+        terbaik dengan kemampuan terkini. {% endif %}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'bootstrap-4/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,7 +28,7 @@
 
 
 <footer class="main-footer py-5">
-    <p class="text-muted text-center small p-0 mb-4">&copy; Copyright 2017 — NolSatu</p>
+    <p class="text-muted text-center small p-0 mb-4">&copy; Copyright 2018 — NolSatu</p>
     <div class="social d-table ml-auto mr-auto">
         <a class="twitter mx-3 h4" href="#" target="_blank">
             <i class="fa fa-twitter"></i>

@@ -27,6 +27,6 @@ def details(request, id):
         'user': user,
         'page_active': 'user',
         'title': 'User Detail',
-        'student': user.students.exclude(status=Student.STATUS.graduate).last()
+        'student': user.get_student()
     }
     return render(request, 'backoffice/users/details.html', context)

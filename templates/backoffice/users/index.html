@@ -1,4 +1,5 @@
 {% extends 'backoffice/base.html' %}
+{% load form_tags %}
 
 {% block content-dashboard %}
 <div class="card">
@@ -12,6 +13,7 @@
                 <table id="datatable" class="table table-striped">
                     <thead>
                         <th>Name</th>
+                        <th>Status</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Action</th>
@@ -20,6 +22,7 @@
                         {% for user in users %}
                             <tr>
                                 <td>{{ user.name }}</td>
+                                <td>{{ user|get_status_student|status_display:'True' }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.phone|default_if_none:"-" }}</td>
                                 <td>

@@ -31,3 +31,11 @@ def status_to_display(status, styling=False):
         return mark_safe('<span class="badge badge-%s">%s</span>' %
                          (class_bagde, status_display))
     return status_display
+
+@register.filter
+def get_status_student(user):
+    student = user.get_student()
+    if not student:
+        return None
+
+    return student.status

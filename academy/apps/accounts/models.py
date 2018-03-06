@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 
 from academy.core.utils import image_upload_path
 from academy.core.validators import validate_mobile_phone
+from academy.apps.students.models import Student
 
 from model_utils import Choices
 from post_office import mail
@@ -42,6 +43,9 @@ class User(AbstractUser):
         if not name:
             name = self.username
         return name
+
+    def get_student(self):
+        return self.students.exclude(status=Student.STATUS.graduate).last()
 
     def notification_register(self):
         data = {
