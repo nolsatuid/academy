@@ -110,6 +110,10 @@
     .sidebar.toggled {
         margin-left: 0;
     }
+
+    .navbar-custom{
+        background: #e9ecef;
+    }
 }
 
 .shards-app-promo-page--1 .bg-image {
