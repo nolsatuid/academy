@@ -9,5 +9,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         emails = Email.objects.filter(status=STATUS.failed)
         failed_email = emails.count()
-        emails.update(status=STATUS.failed)
+        emails.update(status=STATUS.queued)
         print('%s email success change status to queued' % failed_email)
