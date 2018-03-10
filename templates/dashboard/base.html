@@ -1,9 +1,11 @@
 {% extends 'base-master.html' %}
+{% load static %}
+
 {% block content %}
 <nav class="navbar navbar-expand navbar-dark bg-dark mb-3">
     <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
-
-    <a class="navbar-brand" href="{% url 'website:index' %}"><i class="fa fa-code-branch"></i> NolSatu</a>
+    <img src="{% static 'website/images/logo/logo-polos-warna-30.png' %}" alt="nolsatu" class="mr-2" height="30px">
+    <a class="navbar-brand" href="{% url 'website:index' %}"><i class="fa fa-code-branch"></i> nolsatu</a>
 
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
