@@ -40,12 +40,15 @@ def index(request):
 
 
 def login_view(request):
-    next = request.GET.get('next') or None
-    # form = AuthenticationForm(request, data=request.POST or None)
+    if request.user.is_authenticated():
+        return redirect('website:accounts:index')
+
     form = CustomAuthenticationForm(request, data=request.POST or None)
     if form.is_valid():
         user = form.get_user()
         login(request, user)
+
+        next = request.GET.get('next') or None
         if next:
             return redirect(next)
         else:
@@ -65,6 +68,9 @@ def logout_view(request):
 
 
 def sign_up(request):
+    if request.user.is_authenticated():
+        return redirect('website:accounts:index')
+
     form = SignupForm(request.POST or None)
     if form.is_valid():
         form.save()
