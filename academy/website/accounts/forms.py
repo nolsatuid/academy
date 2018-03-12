@@ -10,7 +10,8 @@ class CustomAuthenticationForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'Email atau Nama Pengguna'})
+        self.fields['username'].label = 'Username'
+        self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'Email atau Username'})
         self.fields['password'].widget = forms.PasswordInput(attrs={'placeholder': 'Kata Sandi'})
 
 
@@ -20,6 +21,10 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('email', 'username', 'password1', 'password2')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].label = 'Username'
 
     def save(self, *args, **kwargs):
         user = super().save(commit=False)
