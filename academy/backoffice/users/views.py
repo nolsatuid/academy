@@ -12,9 +12,10 @@ from .forms import BaseFilterForm
 def index(request):
     user_ids = Student.objects.distinct('user_id').values_list('user_id', flat=True)
     users = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
-        .filter(id__in=user_ids)
-    download = request.GET.get('download', '')
+        .exclude(is_superuser=True).filter(id__in=user_ids)
+    user_count = users.count()
 
+    download = request.GET.get('download', '')
     form = BaseFilterForm(request.GET or None)
     if form.is_valid():
         users = form.get_data()
@@ -28,7 +29,9 @@ def index(request):
         'title': 'User',
         'page_active': 'user',
         'users': users,
-        'form': form
+        'form': form,
+        'user_count': user_count,
+        'filter_count': users.count()
     }
     return render(request, 'backoffice/users/index.html', context)
 

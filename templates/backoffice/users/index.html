@@ -8,8 +8,13 @@
     </div>
     <div class="card-body">
         {% include 'forms/filter.html' %}
+
     </div>
     <div class="card-body">
+        <p>
+            Total data <span class="badge badge-primary">{{ user_count }}</span>
+            Total penyaringan <span class="badge badge-info">{{ filter_count }}</span>
+        </p>
         <div class="datatable content table-responsive table-full-width">
             <table id="datatable" class="table table-striped">
                 <thead>
