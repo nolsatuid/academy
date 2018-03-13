@@ -37,9 +37,10 @@ class SignupForm(UserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=70)
-    last_name = forms.CharField(max_length=70, required=False)
-    phone_number = forms.CharField(max_length=16, validators=[validate_mobile_phone])
+    first_name = forms.CharField(max_length=70, label='Nama Depan')
+    last_name = forms.CharField(max_length=70, required=False, label='Nama Belakang')
+    phone_number = forms.CharField(max_length=16, validators=[validate_mobile_phone],
+                                   label='Nomor Ponsel')
 
     class Meta:
         model = Profile
@@ -49,10 +50,10 @@ class ProfileForm(forms.ModelForm):
             'git_repo': ('url akun github/gitlab/bitbucket dll'),
             'blog': ('url blog atau portfolio'),
             'youtube': ('url kanal youtube'),
-            'facebook': ('e.g. "https://www.facebook.com/yourname"'),
-            'linkedin': ('e.g. "https://www.linkedin.com/in/yourname/"'),
-            'instagram': ('Instagram username e.g. YourName'),
-            'twitter': ('Twitter username without "@" e.g. YourName'),
+            'facebook': ('contoh: "https://www.facebook.com/namaanda"'),
+            'linkedin': ('contoh: "https://www.linkedin.com/in/namaanda/"'),
+            'instagram': ('username Instagram'),
+            'twitter': ('username Twitter tanpa "@"'),
         }
 
     def save(self, user, *args, **kwargs):
