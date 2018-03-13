@@ -1,0 +1,24 @@
+{% load form_tags %}
+
+<form method="GET" >
+    <div class="form-row">
+        {% for field in form %}
+            <div class="col-md-2">
+                {{ field|addclass:"form-control date" }}
+                <span class="help_text">
+                    {{ field.errors }}
+                </span>
+            </div>
+        {% endfor %}
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary btn-pill">Menyaring</button>
+            <button name="download" value="true" class="btn btn-secondary btn-pill">Unduh</button>
+        </div>
+    </div>
+</form>
+
+{% block extra_js %}
+<script>
+    flatpickr(".date", {});
+</script>
+{% endblock%}

@@ -19,6 +19,13 @@
     <link rel="stylesheet" href="{% static 'website/css/shards-demo.css' %}">
     <link rel="stylesheet" href="{% static 'website/css/shards-extras.min.css' %}">
     <link rel="stylesheet" href="{% static 'website/css/custom.css' %}">
+
+    <!-- flatpickr -->
+    <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
+    <script src="https://unpkg.com/flatpickr"></script>
+
+    {% block extra_css %}{% endblock %}
 </head>
 
 <body>
@@ -55,6 +62,6 @@
 <script src="{% static 'website/js/shards.min.js' %}"></script>
 <script src="{% static 'website/js/demo.js' %}"></script>
 <script src="{% static 'website/js/custom.js' %}"></script>
-
+{% block extra_js %}{% endblock %}
 </body>
 </html>
