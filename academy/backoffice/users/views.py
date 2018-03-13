@@ -5,16 +5,30 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student
+from .forms import BaseFilterForm
 
 
 @staff_member_required
 def index(request):
-    users = User.objects.exclude(is_superuser=True).exclude(is_staff=True)
+    user_ids = Student.objects.distinct('user_id').values_list('user_id', flat=True)
+    users = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
+        .filter(id__in=user_ids)
+    download = request.GET.get('download', '')
+
+    form = BaseFilterForm(request.GET or None)
+    if form.is_valid():
+        users = form.get_data()
+        if download:
+            csv_buffer = form.generate_to_csv()
+            response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+            response['Content-Disposition'] = 'attachment; filename=daftar-pengguna.csv'
+            return response
 
     context = {
         'title': 'User',
         'page_active': 'user',
-        'users': users
+        'users': users,
+        'form': form
     }
     return render(request, 'backoffice/users/index.html', context)
 
