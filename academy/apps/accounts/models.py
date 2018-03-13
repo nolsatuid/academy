@@ -53,15 +53,14 @@ class User(AbstractUser):
             'uid': int_to_base36(self.id),
             'host': settings.HOST,
             'user': self,
-            'email_title': 'Account Activation'
+            'email_title': 'Aktivasi Akun'
         }
 
         send = mail.send(
             [self.email],
             settings.DEFAULT_FROM_EMAIL,
-            subject='Account Activation',
-            html_message=render_to_string('emails/register.html', context=data),
-            headers={'Reply-to': 'reply@example.com'},
+            subject='Aktivasi Akun',
+            html_message=render_to_string('emails/register.html', context=data)
         )
         return send
 
