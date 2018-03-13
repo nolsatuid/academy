@@ -66,7 +66,7 @@ class BaseFilterForm(forms.Form):
         user_ids = Student.objects.filter(status=status).distinct('user_id') \
             .values_list('user_id', flat=True)
         self.users = User.objects.filter(id__in=user_ids, date_joined__range=(start, end)) \
-            .exclude(is_superuser=True)
+            .exclude(is_superuser=True).exclude(is_staff=True)
 
         return self.users
 

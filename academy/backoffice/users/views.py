@@ -26,7 +26,7 @@ def index(request):
             return response
 
     context = {
-        'title': 'User',
+        'title': 'Pengguna',
         'page_active': 'user',
         'users': users,
         'form': form,
