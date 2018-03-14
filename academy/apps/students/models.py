@@ -27,3 +27,11 @@ class Student(models.Model):
 
     def __str__(self):
         return self.user.email
+
+
+class TrainingMaterial(models.Model):
+    code = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.code
