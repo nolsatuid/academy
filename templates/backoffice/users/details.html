@@ -8,7 +8,12 @@
                 Profil
             </h4>
             <div class="pull-right">
-                <a class="btn btn-primary text-white" href="{% url 'website:accounts:edit_profile' %}">Ubah</a>
+                {% if student.status|status_display == 'seleksi' %}
+                    <a class="btn btn-success text-white" href="{% url 'backoffice:users:change_to_participant' user.id %}">Jadikan Peserta</a>
+                {% endif %}
+                {% comment %}
+                    <a class="btn btn-primary text-white" href="{% url 'website:accounts:edit_profile' %}">Ubah</a>
+                {% endcomment %}
             </div>
         </div>
         <div class="card-body">

@@ -102,6 +102,7 @@ def active_account(request, uidb36, token):
 
     return redirect("website:accounts:index")
 
+
 def profile(request):
     user = request.user
 
@@ -111,6 +112,7 @@ def profile(request):
         'student': user.students.exclude(status=Student.STATUS.graduate).last()
     }
     return render(request, 'dashboard/profile.html', context)
+
 
 @login_required
 def edit_profile(request):
