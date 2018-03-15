@@ -98,3 +98,10 @@ class BaseFilterForm(forms.Form):
                 status_to_display(get_status_student(user))
             ])
         return csv_buffer
+
+
+class ParticipantsFilterForm(BaseFilterForm):
+    STATUS = Choices (
+        (2, 'participants', 'Peserta'),
+    )
+    status = forms.ChoiceField(choices=STATUS, required=False, label="Status")
