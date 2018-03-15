@@ -39,6 +39,7 @@ class Student(models.Model):
             return
 
         data = {
+            'host': settings.HOST,
             'user': self.user,
             'email_title': title
         }
