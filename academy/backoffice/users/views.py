@@ -76,3 +76,20 @@ def participants(request):
         'filter_count': users.count()
     }
     return render(request, 'backoffice/users/index.html', context)
+
+
+@staff_member_required
+def change_to_participant(request, id):
+    user = get_object_or_404(User, id=id)
+    student = user.get_student()
+
+    if student.status == Student.STATUS.selection:
+        student.status = Student.STATUS.participants
+        student.save(update_fields=['status'])
+        student.notification_status()
+
+        messages.success(request, 'Status berhasil diubah menjadi peserta')
+        return redirect('backoffice:users:details', id=user.id)
+
+    messages.success(request, 'Maaf, pengguna ini sudah menjadi peserta atau sudah lulus')
+    return redirect('backoffice:users:index')
