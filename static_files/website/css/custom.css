@@ -6,11 +6,6 @@
     width: 100%;
 }
 
-.form-login {
-    top: 130px !important;
-    width: 400px;
-}
-
 .help-block {
     font-size: 14px;
     color: #adadad;
@@ -43,6 +38,10 @@
 
 .errorlist {
     padding-left: 0px;
+}
+
+.inner-wrapper {
+    top: -30px;
 }
 
 /* sidebar */
