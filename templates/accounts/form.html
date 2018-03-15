@@ -2,16 +2,12 @@
 {% load static form_tags %}
 
 {% block content %}
-<div class="welcome d-flex justify-content-center flex-column">
+<div class="welcome d-flex flex-column">
     <div class="container zindex">
         {% include 'nav-bar.html' %}
     </div>
     <div class="inner-wrapper mt-auto mb-auto">
-
-    </div>
-    <div class="container ml-auto mr-auto">
-
-        <div class="shard form-login col-md-12">
+        <div class="offset-md-4 col-md-4">
             <h3>{{ title }}</h3>
             {% include 'forms/login-signup.html' %}
         </div>
