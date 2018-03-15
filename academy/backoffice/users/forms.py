@@ -3,6 +3,7 @@ import csv
 from io import StringIO
 from datetime import timedelta
 
+from django.db.models import Q
 from django import forms
 from django.utils import timezone
 
@@ -15,12 +16,16 @@ from model_utils import Choices
 
 class BaseFilterForm(forms.Form):
 
+    name = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Cari berdasarkan nama'}),
+        required=False
+    )
     start_date = forms.DateField(
-        input_formats=["%Y-%m-%d"], label="Tanggal Mulai",
+        input_formats=["%Y-%m-%d"], label="Tanggal Mulai", required=False,
         widget=forms.TextInput(attrs={'placeholder': 'Tanggal Mulai'}),
     )
     end_date = forms.DateField(
-        input_formats=["%Y-%m-%d"], label="Tanggal Akhir",
+        input_formats=["%Y-%m-%d"], label="Tanggal Akhir", required=False,
         widget=forms.TextInput(attrs={'placeholder': 'Tanggal Akhir'}),
     )
     STATUS = Choices (
@@ -44,6 +49,9 @@ class BaseFilterForm(forms.Form):
         start_date = cleaned_data['start_date']
         end_date = cleaned_data['end_date']
 
+        if not start_date or not end_date:
+            return cleaned_data
+
         if cleaned_data['start_date'] > cleaned_data['end_date']:
             self.add_error('start_date', "Tanggal mulai tidak bisa lebih dari tanggal akhir")
 
@@ -61,13 +69,20 @@ class BaseFilterForm(forms.Form):
         start_date = self.cleaned_data['start_date']
         end_date = self.cleaned_data['end_date']
         status = self.cleaned_data['status']
+        name = self.cleaned_data['name']
 
-        start, end = normalize_datetime_range(start_date, end_date)
         user_ids = Student.objects.filter(status=status).distinct('user_id') \
             .values_list('user_id', flat=True)
-        self.users = User.objects.filter(id__in=user_ids, date_joined__range=(start, end)) \
-            .exclude(is_superuser=True).exclude(is_staff=True)
+        users = User.objects.filter(id__in=user_ids).exclude(is_superuser=True).exclude(is_staff=True)
 
+        if start_date and end_date:
+            start, end = normalize_datetime_range(start_date, end_date)
+            users = users.filter(date_joined__range=(start, end))
+
+        if name:
+            users = users.filter(Q(first_name__icontains=name) | Q(last_name__icontains=name))
+
+        self.users = users
         return self.users
 
     def generate_to_csv(self):
