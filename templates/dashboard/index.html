@@ -1,14 +1,36 @@
 {% extends 'dashboard/base.html' %}
+{% load form_tags %}
 
 {% block content-dashboard %}
 <div class="col-md-12 card p-5">
-    <h1 class="display-5 mb-4">Terima Kasih</h1>
-
-    <p>
-        Kamu telah mendaftarkan menjadi calon peserta NolSatu Akademi Gelombang {{ training.batch }}.
-        Setelah ini kami akan memeriksa profil kamu dan akan memberikan pemberitahuan jika kamu lolos seleksi berkas.
-    </p>
-    <a href="{% url 'website:accounts:profile' %}" class="btn btn-primary">Lihat profil Anda</a>
+    {% if student.status|status_display == 'seleksi' %}
+        <h3>Halo {{ student.user.name }},</h3>
+        <p>
+            Anda telah terdaftar dan aktif sebagai talenta/profesional di NolSatu.
+            Kami sedang mempelajari profil keren anda dan sesegera mungkin kami akan kabari anda saat kursi kelas
+            periode terdekat tersedia untuk anda. Jika profil anda belum lengkap, silahkan lengkapi profil anda
+            sehingga membantu kami untuk dapat lebih mengenal anda.
+        </p>
+        <a href="{% url 'website:accounts:profile' %}" class="btn btn-primary">Lihat profil Anda</a>
+    {% elif student.status|status_display == 'peserta' %}
+        <h3>Halo {{ student.user.name }},</h3>
+        <p>
+            Selamat anda terpilih menjadi peserta pelatihan NolSatu.<br>
+            Berikut beberapa informasi untuk anda:<br>
+            <ul>
+                <li>Kelas akan dilaksanakan setiap hari Senin & Kamis atau Selasa & Jumat atau Rabu & Sabtu pukul 19.00 s.d. 22.00 WIB di <a href="https://kelas.nolsatu.id">https://kelas.nolsatu.id</a></li>
+                <li>Nomor ponsel anda akan dimasukkan ke grup Telegram bersama dengan peserta sekelas lain dan instruktur kelas.</a></li>
+                <li>Performa anda di kelas dan di lab akan dinilai oleh instruktur dan menjadi acuan keputusan anda lulus atau mengulang pada materi pelatihan yang diikuti.</a></li>
+                <li>Jika anda lulus pada seluruh materi pelatihan, anda akan direkomendasikan ke perusahaan yang membutuhkan SDM sesuai profil anda.</a></li>
+            </ul>
+            Nomor ponsel anda akan dimasukkan ke grup Telegram bersama dengan peserta sekelas lain dan instruktur kelas.
+            Performa anda di kelas dan di lab akan dinilai oleh instruktur dan menjadi acuan keputusan anda lulus atau mengulang pada materi pelatihan yang diikuti.
+            Jika anda lulus pada seluruh materi pelatihan, anda akan direkomendasikan ke perusahaan yang membutuhkan SDM sesuai profil anda.
+            <br><br>
+            Selamat mengikuti pelatihan NolSatu.
+        </p>
+        <a href="{% url 'website:accounts:trainings:materials' %}" class="btn btn-primary">Lihat daftar pelatihan</a>
+    {% endif %}
 
 </div>
 {% endblock %}

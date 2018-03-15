@@ -19,7 +19,7 @@ def index(request):
     if hasattr(user, 'profile'):
         context = {
             'title': 'Dasbor',
-            'training': training
+            'student': request.user.get_student()
         }
         return render(request, 'dashboard/index.html', context)
 

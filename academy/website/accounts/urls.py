@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from . import views
 
 
@@ -11,4 +11,5 @@ urlpatterns = [
         views.active_account, name='active_account'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
+    url(r'^trainings/', include('academy.website.accounts.trainings.urls', namespace='trainings'))
 ]
