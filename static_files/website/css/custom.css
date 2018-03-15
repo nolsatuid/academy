@@ -40,6 +40,10 @@
     padding-left: 0px;
 }
 
+.inner-wrapper {
+    top: -30px;
+}
+
 /* sidebar */
 .navbar-dark .navbar-nav .nav-link, .navbar-dark .navbar-text {
     color: rgba(255, 255, 255, .75);
