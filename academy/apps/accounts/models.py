@@ -85,6 +85,7 @@ class Profile(models.Model):
     youtube = models.URLField(blank=True, max_length=255)
     twitter = models.CharField(blank=True, max_length=30)
     instagram = models.CharField(blank=True, max_length=30)
+    telegram_id = models.CharField(blank=True, max_length=50)
 
     def __str__(self):
         return self.user.username

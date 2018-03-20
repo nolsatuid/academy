@@ -51,7 +51,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('first_name', 'last_name', 'phone_number', 'linkedin', 'git_repo',
-                  'blog', 'youtube', 'facebook', 'instagram', 'twitter')
+                  'blog', 'youtube', 'facebook', 'instagram', 'twitter', 'telegram_id')
         help_texts = {
             'git_repo': ('url akun github/gitlab/bitbucket dll'),
             'blog': ('url blog atau portfolio'),
@@ -60,7 +60,13 @@ class ProfileForm(forms.ModelForm):
             'linkedin': ('contoh: "https://www.linkedin.com/in/namaanda/"'),
             'instagram': ('username Instagram'),
             'twitter': ('username Twitter tanpa "@"'),
+            'telegram_id': ('contoh "@namaanda"'),
         }
+
+    def clean_telegram_id(self):
+        if self.cleaned_data['telegram_id'][0] != '@':
+            raise forms.ValidationError("Awal ID harus menggunakan karakter '@'")
+        return self.cleaned_data['telegram_id']
 
     def save(self, user, *args, **kwargs):
         user.first_name = self.cleaned_data['first_name']
