@@ -64,9 +64,13 @@ class ProfileForm(forms.ModelForm):
         }
 
     def clean_telegram_id(self):
-        if self.cleaned_data['telegram_id'][0] != '@':
+        telegram_id = self.cleaned_data['telegram_id']
+        if not telegram_id:
+            return telegram_id
+
+        if telegram_id[0] != '@':
             raise forms.ValidationError("Awal ID harus menggunakan karakter '@'")
-        return self.cleaned_data['telegram_id']
+        return telegram_id
 
     def save(self, user, *args, **kwargs):
         user.first_name = self.cleaned_data['first_name']
