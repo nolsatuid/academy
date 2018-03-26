@@ -1,9 +1,15 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import int_to_base36
+from django.conf import settings
+from django.template.loader import render_to_string
 
 from academy.apps.accounts.models import User, Profile
 from academy.apps.students.models import Student
 from academy.core.validators import validate_email, validate_mobile_phone
+
+from post_office import mail
 
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -45,7 +51,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('first_name', 'last_name', 'phone_number', 'linkedin', 'git_repo',
-                  'blog', 'youtube', 'facebook', 'instagram', 'twitter')
+                  'blog', 'youtube', 'facebook', 'instagram', 'twitter', 'telegram_id')
         help_texts = {
             'git_repo': ('url akun github/gitlab/bitbucket dll'),
             'blog': ('url blog atau portfolio'),
@@ -54,7 +60,17 @@ class ProfileForm(forms.ModelForm):
             'linkedin': ('contoh: "https://www.linkedin.com/in/namaanda/"'),
             'instagram': ('username Instagram'),
             'twitter': ('username Twitter tanpa "@"'),
+            'telegram_id': ('contoh "@namaanda"'),
         }
+
+    def clean_telegram_id(self):
+        telegram_id = self.cleaned_data['telegram_id']
+        if not telegram_id:
+            return telegram_id
+
+        if telegram_id[0] != '@':
+            raise forms.ValidationError("Awal ID harus menggunakan karakter '@'")
+        return telegram_id
 
     def save(self, user, *args, **kwargs):
         user.first_name = self.cleaned_data['first_name']
@@ -74,3 +90,35 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ('user', 'training')
+
+
+class ForgotPasswordForm(forms.Form):
+    email = forms.EmailField(validators=[validate_email], label='',
+                             widget=forms.TextInput(attrs={'placeholder': 'Email anda'}),
+                             help_text='Kami akan mengirim email untuk mengatur ulang kata sandi Anda')
+    # The link to reset your password will be sent to your email
+    def clean_email(self):
+        email = self.cleaned_data['email']
+
+        user = User.objects.filter(email=email).first()
+        if not user:
+            raise forms.ValidationError("Email tidak terdaftar")
+
+        return user
+
+    def send_email(self, user):
+        data = {
+            'token': default_token_generator.make_token(user),
+            'uid': int_to_base36(user.id),
+            'host': settings.HOST,
+            'user': user,
+            'email_title': 'Lupa kata sandi'
+        }
+
+        mail.send(
+            [user.email],
+            settings.DEFAULT_FROM_EMAIL,
+            subject='Lupa Kata Sandi',
+            context=data,
+            html_message=render_to_string('emails/forgot_password.html', context=data)
+        )

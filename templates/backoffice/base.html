@@ -26,6 +26,7 @@
         <ul class="list-unstyled">
             <li><a href="{% url 'backoffice:index' %}"><i class="fa fa-fw fa-home"></i> Dasbor </a></li>
             <li><a href="{% url 'backoffice:users:index' %}"><i class="fa fa-fw fa-users"></i> Data Pengguna </a></li>
+            <li><a href="{% url 'backoffice:users:participants' %}"><i class="fa fa-fw fa-address-card"></i> Data Peserta </a></li>
             <li><hr></li>
             <li><a href="#"><i class="fa fa-fw fa-sign-out"></i> Keluar </a></li>
             <!-- <li>
@@ -41,6 +42,20 @@
     </nav>
 
     <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show" {% endif %} role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span class="mt-3 mr-2" aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
         {% block content-dashboard %}{% endblock %}
     </div>
 </div>

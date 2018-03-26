@@ -1,7 +1,10 @@
 from django.db import models
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.template.loader import render_to_string
 
 from model_utils import Choices
+from post_office import mail
 
 
 class Training(models.Model):
@@ -27,6 +30,27 @@ class Student(models.Model):
 
     def __str__(self):
         return self.user.email
+
+    def notification_status(self):
+        if self.status == self.STATUS.participants:
+            template = 'emails/change_to_participant.html'
+            title = 'Selamat, Anda menjadi peserta'
+        else:
+            return
+
+        data = {
+            'host': settings.HOST,
+            'user': self.user,
+            'email_title': title
+        }
+
+        send = mail.send(
+            [self.user.email],
+            settings.DEFAULT_FROM_EMAIL,
+            subject=title,
+            html_message=render_to_string(template, context=data)
+        )
+        return send
 
 
 class TrainingMaterial(models.Model):

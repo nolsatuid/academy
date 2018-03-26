@@ -5,10 +5,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import base36_to_int
 from django.contrib.auth.tokens import default_token_generator
 from django.http import Http404
+from django.contrib.auth.forms import SetPasswordForm
 
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Training, Student
-from . forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm
+from . forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm
 
 
 @login_required
@@ -102,6 +103,7 @@ def active_account(request, uidb36, token):
 
     return redirect("website:accounts:index")
 
+
 def profile(request):
     user = request.user
 
@@ -111,6 +113,7 @@ def profile(request):
         'student': user.students.exclude(status=Student.STATUS.graduate).last()
     }
     return render(request, 'dashboard/profile.html', context)
+
 
 @login_required
 def edit_profile(request):
@@ -145,3 +148,45 @@ def edit_profile(request):
         'form': form
     }
     return render(request, 'dashboard/edit_profile.html', context)
+
+
+def forgot_password(request):
+    form = ForgotPasswordForm(request.POST or None)
+
+    if form.is_valid():
+        form.send_email(form.cleaned_data['email'])
+        messages.success(request, 'Silahkan cek email untuk mengatur ulang kata sandi')
+        return redirect('website:accounts:forgot_password')
+
+    context = {
+        'title': 'Lupa kata sandi',
+        'form': form,
+    }
+    return render(request, 'accounts/form.html', context)
+
+
+def reset_password(request, uidb36, token):
+
+    try:
+        uid_int = base36_to_int(uidb36)
+    except ValueError:
+        raise Http404
+
+    user = get_object_or_404(User, id=uid_int)
+    if user and default_token_generator.check_token(user, token):
+        form = SetPasswordForm(user=user, data=request.POST or None)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, 'Kata sandi baru anda berhasil disimpan')
+            return redirect('website:accounts:login')
+    else:
+        messages.warning(request, 'Maaf, permintaan atur ulang kata sandi sudah'
+                         'kadaluarsa. Silahkan coba lagi')
+        return redirect('website:accounts:login')
+
+    context = {
+        'title': 'Atur Ulang',
+        'form': form,
+        'page': 'reset-password'
+    }
+    return render(request, 'accounts/form.html', context)
