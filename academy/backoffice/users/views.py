@@ -14,8 +14,19 @@ def index(request):
     user_ids = Student.objects.distinct('user_id').values_list('user_id', flat=True)
     user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
         .filter(id__in=user_ids)
-    paginator = Paginator(user_list, 10)
+    user_count = user_list.count()
 
+    download = request.GET.get('download', '')
+    form = BaseFilterForm(request.GET or None)
+    if form.is_valid():
+        user_list = form.get_data()
+        if download:
+            csv_buffer = form.generate_to_csv()
+            response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+            response['Content-Disposition'] = 'attachment; filename=daftar-pengguna.csv'
+            return response    
+
+    paginator = Paginator(user_list, 2)
     page = request.GET.get('page',1)
     try:
         users = paginator.page(page)
@@ -24,25 +35,14 @@ def index(request):
     except EmptyPage:
         users = paginator.page(paginator.num_pages)
 
-    user_count = user_list.count()
-
-    download = request.GET.get('download', '')
-    form = BaseFilterForm(request.GET or None)
-    if form.is_valid():
-        users = form.get_data()
-        if download:
-            csv_buffer = form.generate_to_csv()
-            response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
-            response['Content-Disposition'] = 'attachment; filename=daftar-pengguna.csv'
-            return response
-
     context = {
         'title': 'Pengguna',
         'page_active': 'user',
         'users': users,
         'form': form,
         'user_count': user_count,
-        'filter_count': user_list.count()
+        'filter_count': user_list.count(),
+        'status': request.GET.get('status', 1)
     }
     return render(request, 'backoffice/users/index.html', context)
 
