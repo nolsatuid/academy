@@ -15,7 +15,7 @@
   right: 0;
   bottom: 0;
   opacity: .8;
-  background: #007bff;
+  background: #EA413A;
 }
 
 @media (max-width: 767px) {
@@ -38,7 +38,7 @@
   content: '';
   width: 30px;
   height: 2px;
-  background: #007bff;
+  background: #EA413A;
   position: absolute;
   left: 50%;
   margin-left: -15px;
