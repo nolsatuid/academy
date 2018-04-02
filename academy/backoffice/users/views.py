@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student
@@ -11,9 +12,19 @@ from .forms import BaseFilterForm, ParticipantsFilterForm
 @staff_member_required
 def index(request):
     user_ids = Student.objects.distinct('user_id').values_list('user_id', flat=True)
-    users = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
+    user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
         .filter(id__in=user_ids)
-    user_count = users.count()
+    paginator = Paginator(user_list, 10)
+
+    page = request.GET.get('page',1)
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+
+    user_count = user_list.count()
 
     download = request.GET.get('download', '')
     form = BaseFilterForm(request.GET or None)
@@ -31,7 +42,7 @@ def index(request):
         'users': users,
         'form': form,
         'user_count': user_count,
-        'filter_count': users.count()
+        'filter_count': user_list.count()
     }
     return render(request, 'backoffice/users/index.html', context)
 
