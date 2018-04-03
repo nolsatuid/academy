@@ -1,5 +1,5 @@
 {% extends 'dashboard/base.html' %}
-{% load form_tags %}
+{% load form_tags tags_students %}
 
 {% block content-dashboard %}
 <div class="card">
@@ -33,7 +33,7 @@
                                                 <td>{{ forloop.counter }}</td>
                                                 <td>{{ materi.code }}</td>
                                                 <td>{{ materi.title }}</td>
-                                                <td></td>
+                                                <td>{{ materi|get_status:user|training_status_display:'True' }}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
