@@ -42,7 +42,7 @@ def index(request):
         'form': form,
         'user_count': user_count,
         'filter_count': user_list.count(),
-        'status': request.GET.get('status', 1)
+        'query_params': 'status=%s&start_date=%s&end_date=%s' % (request.GET.get('status', 1), request.GET.get('start_date', ''), request.GET.get('end_date', ''))
     }
     return render(request, 'backoffice/users/index.html', context)
 
