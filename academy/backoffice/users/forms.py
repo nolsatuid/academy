@@ -112,7 +112,7 @@ class ChangeStatusTraining(forms.ModelForm):
     STATUS = Choices(
         (1, 'not_yet', 'Belum'),
         (2, 'graduate', 'Lulus'),
-        (3, 'repeat', 'Mengulang'),
+        (3, 'repeat', 'Ulang'),
     )
     status = forms.ChoiceField(choices=STATUS, required=False, label="")
 

@@ -16,13 +16,13 @@ def get_status(materi, user=None):
 @register.filter(name='training_status_display')
 def status_to_display(status, styling=False):
     if status == TrainingStatus.STATUS.not_yet:
-        status_display = 'Belom'
+        status_display = 'Belum'
         class_bagde = 'secondary'
     elif status == TrainingStatus.STATUS.graduate:
         status_display = 'Lulus'
         class_bagde = 'primary'
     elif status == TrainingStatus.STATUS.repeat:
-        status_display = 'Mengulang'
+        status_display = 'Ulang'
         class_bagde = 'warning'
     else:
         return '-'

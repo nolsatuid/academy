@@ -119,6 +119,7 @@ def status_training(request, id):
 
     if formset.is_valid():
         formset.save(user)
+        user.notification_status_training(training_materials)
         messages.success(request, f'Status Pelatihan {user.get_full_name()} berhasil disimpan')
 
     context = {

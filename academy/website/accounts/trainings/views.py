@@ -9,9 +9,6 @@ def materials(request):
     user = request.user
     training_materials = TrainingMaterial.objects.prefetch_related('training_status')
 
-    for materi in training_materials:
-        print(materi.get_training_status(user))
-
     context = {
         'title': 'Daftar Pelatihan',
         'training_materials': training_materials,
