@@ -114,17 +114,30 @@ class ChangeStatusTraining(forms.ModelForm):
         (2, 'graduate', 'Lulus'),
         (3, 'repeat', 'Mengulang'),
     )
-    status = forms.ChoiceField(choices=STATUS, required=False, label="Status")
+    status = forms.ChoiceField(choices=STATUS, required=False, label="")
 
     class Meta:
         model = TrainingStatus
         exclude = ('user', )
         widgets = {
-            'training_material': forms.Select(attrs={'readonly': True}),
+            'training_material': forms.Select(attrs={'hidden': True}),
         }
 
 
 class BaseStatusTrainingFormSet(BaseFormSet):
+
+    def __init__(self, *args, **kwargs):
+        """
+        To create dynamic label form fields training materials
+        """
+        self.training_materials = kwargs.pop('training_materials')
+        super().__init__(*args, **kwargs)
+        for i, form in enumerate(self.forms):
+            # skip or continue last loop
+            if i > self.training_materials.count() - 1:
+                continue
+            material = self.training_materials[i]
+            form.fields['training_material'].label = f"{material.code} - {material.title}"
 
     def clean(self):
         if any(self.errors):
@@ -140,6 +153,7 @@ class BaseStatusTrainingFormSet(BaseFormSet):
                 training_status = TrainingStatus.objects \
                     .filter(training_material=training_material, user=user).first()
 
+                # to update or create
                 if not training_status:
                     training_status = form.save(commit=False)
                 else:

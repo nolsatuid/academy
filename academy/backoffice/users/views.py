@@ -114,7 +114,8 @@ def status_training(request, id):
         for materi in training_materials
     ]
 
-    formset = ChangeStatusFormSet(data=request.POST or None, initial=initial)
+    formset = ChangeStatusFormSet(data=request.POST or None, initial=initial,
+                                  training_materials=training_materials)
 
     if formset.is_valid():
         formset.save(user)

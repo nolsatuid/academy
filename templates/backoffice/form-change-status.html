@@ -27,10 +27,11 @@
                                     </thead>
                                     {% for form in formset %}
                                         <tbody>
-                                                {{ form.non_field_errors }}
+                                        {{ form.non_field_errors }}
                                         {% if not forloop.last %}
                                             {% for field in form %}
                                                 <td>
+                                                    {{ field.label}}
                                                     {{ field|addclass:"form-control" }}
                                                     {{ field.errors }}
                                                 </td>
