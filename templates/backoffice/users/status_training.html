@@ -1,0 +1,49 @@
+{% extends 'dashboard/base.html' %}
+{% load form_tags tags_students %}
+
+{% block content-dashboard %}
+<div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">
+                {{ title }}
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row-fluid">
+                <div class="row">
+                    <div class=" col-md-12 col-lg-12 ">
+                        <h5>Nama Peserta: {{ user.get_full_name }}</h5>
+                    </div>
+                    <div class=" col-md-12 col-lg-12 ">
+                        <div class="tab-content">
+                            <div id="pane-pribadi" class="tab-pane active in">
+                                <div class="table-responsive box box-info">
+                                    <table class="table table-user-information">
+                                        <thead>
+                                            <th>No</th>
+                                            <th>Kode</th>
+                                            <th>Judul</th>
+                                            <th>Status</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for materi in training_materials %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ materi.code }}</td>
+                                                <td>{{ materi.title }}</td>
+                                                <td>{{ materi|get_status:user|training_status_display:'True' }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'backoffice/base.html' %}
+{% load form_tags tags_students %}
+
+{% block content-dashboard %}
+<div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">
+                {{ title }}
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row-fluid">
+                <div class="row">
+                    <div class=" col-md-12 col-lg-12 ">
+                        <h5>Nama Peserta: {{ user.get_full_name }}</h5>
+                    </div>
+                    <div class=" col-md-12 col-lg-12 ">
+                        <div class="tab-content">
+
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {{ formset.management_form }}
+                                <table class="table table-user-information">
+                                    <thead>
+                                        <th>Materi Pelatihan</th>
+                                        <th>Status</th>
+                                    </thead>
+                                    {% for form in formset %}
+                                        <tbody>
+                                                {{ form.non_field_errors }}
+                                        {% if not forloop.last %}
+                                            {% for field in form %}
+                                                <td>
+                                                    {{ field|addclass:"form-control" }}
+                                                    {{ field.errors }}
+                                                </td>
+                                            {% endfor %}
+                                        {% endif %}
+                                        </tbody>
+                                    {% endfor %}
+
+                                </table>
+                                <button type="submit" class="btn btn-primary text-white">Simpan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+</div>
+{% endblock %}

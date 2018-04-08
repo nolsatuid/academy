@@ -2,10 +2,13 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.forms import formset_factory
 
 from academy.apps.accounts.models import User
-from academy.apps.students.models import Student
-from .forms import BaseFilterForm, ParticipantsFilterForm
+from academy.apps.students.models import Student, TrainingMaterial
+
+from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
+                    BaseStatusTrainingFormSet)
 
 
 @staff_member_required
@@ -93,3 +96,36 @@ def change_to_participant(request, id):
 
     messages.success(request, 'Maaf, pengguna ini sudah menjadi peserta atau sudah lulus')
     return redirect('backoffice:users:index')
+
+
+@staff_member_required
+def status_training(request, id):
+    user = get_object_or_404(User, id=id)
+    training_materials = TrainingMaterial.objects.prefetch_related('training_status')
+
+    ChangeStatusFormSet = formset_factory(ChangeStatusTraining, formset=BaseStatusTrainingFormSet)
+
+    initial = [
+        {
+            'training_material': materi.id,
+            'status': materi.get_training_status(user).status \
+                if materi.get_training_status(user) else 1
+        }
+        for materi in training_materials
+    ]
+
+    formset = ChangeStatusFormSet(data=request.POST or None, initial=initial)
+
+    if formset.is_valid():
+        formset.save(user)
+        messages.success(request, f'Status Pelatihan {user.get_full_name()} berhasil disimpan')
+
+    context = {
+        'formset': formset,
+        'title': 'Daftar Pelatihan',
+        'training_materials': training_materials,
+        'student': request.user.get_student(),
+        'user': user
+    }
+    # return render(request, 'backoffice/users/status_training.html', context)
+    return render(request, 'backoffice/form-change-status.html', context)
