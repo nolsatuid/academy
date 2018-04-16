@@ -59,3 +59,20 @@ class TrainingMaterial(models.Model):
 
     def __str__(self):
         return self.code
+
+    def get_training_status(self, user):
+        return self.training_status.filter(user=user).first()
+
+
+class TrainingStatus(models.Model):
+    training_material = models.ForeignKey('students.TrainingMaterial', related_name='training_status')
+    STATUS = Choices (
+        (1, 'not_yet', _('Not Yet')),
+        (2, 'graduate', _('Graduate')),
+        (3, 'repeat', _('Repeat')),
+    )
+    status = models.PositiveIntegerField(choices=STATUS, blank=True, null=True)
+    user = models.ForeignKey('accounts.User', related_name='training_status')
+
+    def __str__(self):
+        return self.get_status_display()

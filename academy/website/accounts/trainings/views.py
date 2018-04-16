@@ -6,7 +6,9 @@ from academy.apps.students.models import TrainingMaterial
 
 
 def materials(request):
-    training_materials = TrainingMaterial.objects.all()
+    user = request.user
+    training_materials = TrainingMaterial.objects.prefetch_related('training_status')
+
     context = {
         'title': 'Daftar Pelatihan',
         'training_materials': training_materials,

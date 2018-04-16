@@ -12,9 +12,7 @@
             <div class="row-fluid">
                 <div class="row">
                     <div class=" col-md-12 col-lg-12 ">
-                        {% if student.status|status_display == 'seleksi' %}
-                            <p>Anda dapat mengikuti pelatihan setelah status berubah menjadi 'Peserta'</p>
-                        {% endif %}
+                        <h5>Nama Peserta: {{ user.get_full_name }}</h5>
                     </div>
                     <div class=" col-md-12 col-lg-12 ">
                         <div class="tab-content">
