@@ -6,9 +6,10 @@ from datetime import timedelta
 from django.db.models import Q
 from django import forms
 from django.utils import timezone
+from django.forms.formsets import BaseFormSet
 
 from academy.apps.accounts.models import User
-from academy.apps.students.models import Student
+from academy.apps.students.models import Student, TrainingStatus
 from academy.core.utils import normalize_datetime_range
 from academy.core.templatetags.form_tags import get_status_student, status_to_display
 from model_utils import Choices
@@ -101,7 +102,63 @@ class BaseFilterForm(forms.Form):
 
 
 class ParticipantsFilterForm(BaseFilterForm):
-    STATUS = Choices (
+    STATUS = Choices(
         (2, 'participants', 'Peserta'),
     )
     status = forms.ChoiceField(choices=STATUS, required=False, label="Status")
+
+
+class ChangeStatusTraining(forms.ModelForm):
+    STATUS = Choices(
+        (1, 'not_yet', 'Belum'),
+        (2, 'graduate', 'Lulus'),
+        (3, 'repeat', 'Ulang'),
+    )
+    status = forms.ChoiceField(choices=STATUS, required=False, label="")
+
+    class Meta:
+        model = TrainingStatus
+        exclude = ('user', )
+        widgets = {
+            'training_material': forms.Select(attrs={'hidden': True}),
+        }
+
+
+class BaseStatusTrainingFormSet(BaseFormSet):
+
+    def __init__(self, *args, **kwargs):
+        """
+        To create dynamic label form fields training materials
+        """
+        self.training_materials = kwargs.pop('training_materials')
+        super().__init__(*args, **kwargs)
+        for i, form in enumerate(self.forms):
+            # skip or continue last loop
+            if i > self.training_materials.count() - 1:
+                continue
+            material = self.training_materials[i]
+            form.fields['training_material'].label = f"{material.code} - {material.title}"
+
+    def clean(self):
+        if any(self.errors):
+            return
+
+    def save(self, user):
+        for form in self.forms:
+            cleaned_data = form.cleaned_data
+            if cleaned_data:
+                training_material = cleaned_data.get('training_material')
+                status = cleaned_data.get('status')
+
+                training_status = TrainingStatus.objects \
+                    .filter(training_material=training_material, user=user).first()
+
+                # to update or create
+                if not training_status:
+                    training_status = form.save(commit=False)
+                else:
+                    training_status.training_material = training_material
+                    training_status.status = int(status)
+
+                training_status.user = user
+                training_status.save()

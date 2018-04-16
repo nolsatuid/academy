@@ -1,10 +1,10 @@
-{% load static %}
+{% load form_tags tags_students %}
 <!doctype html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Lupa Kata Sandi</title>
+    <title>{{ email_title }}</title>
     <style>
     /* -------------------------------------
         INLINED WITH htmlemail.io/inline
@@ -98,45 +98,43 @@
             <table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px;">
 
               <!-- START MAIN CONTENT AREA -->
-              <tr style="margin-bottom: 15px;">
-                <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                  <img src="{{ host }}static/website/images/logo/logo-landscape.png" alt="nolsatu" class="mr-2" height="40px">
-                  <hr>
-                </td>
-              </tr>
               <tr>
                 <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;">
                   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
+                    <tr style="margin-bottom: 15px;">
+                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
+                          <img src="{{ host }}static/website/images/logo/logo-landscape.jpg" alt="nolsatu" class="mr-2" height="40px">
+                          <hr>
+                        </td>
+                    </tr>
                     <tr>
                       <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Halo {{ user.username }},</p>
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hai {{ user.name }},</p>
                         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-                            Silahkan klik tombol di bawah ini untuk mengatur ulang kata sandi.
-                        </p>
-                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
-                          <tbody>
-                            <tr>
-                              <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;">
-                                <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
-                                  <tbody>
+                            Instruktur telah memperbarui status pelatihan anda, berikut detailnya:<br>
+                            <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: separate; width: 100%;">
+                                <thead>
                                     <tr>
-                                      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #EA413A; border-radius: 50px; text-align: center;">
-                                        <a href="{{ host }}{% url 'website:accounts:reset_password' uidb36=uid token=token %}" target="_blank" style="display: inline-block; color: #ffffff; background-color: #EA413A; border: solid 1px #0167d4; border-radius: 50px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #EA413A;">
-                                          Atur ulang kata sandi
-                                        </a>
-                                      </td>
+                                        <th style="padding: 10px;">No</th>
+                                        <th style="padding: 10px;">Kode</th>
+                                        <th style="padding: 10px;">Judul</th>
+                                        <th style="padding: 10px;">Status</th>
+                                    <tr>
+                                </thead>
+                                <tbody>
+                                    {% for materi in training_materials %}
+                                    <tr>
+                                        <td style="padding: 10px;">{{ forloop.counter }}</td>
+                                        <td style="padding: 10px;">{{ materi.code }}</td>
+                                        <td style="padding: 10px;">{{ materi.title }}</td>
+                                        <td style="padding: 10px;">{{ materi|get_status:user|training_status_display }}</td>
                                     </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">
-                            Jika tombol tidak bekerja, salin dan tempel tautan di bawah ini ke peramban web Anda. <br/>
-                            {{ host }}{% url 'website:accounts:reset_password' uidb36=uid token=token %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </p>
-                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Terimakasih.</p>
+
+                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Salam,<br> Admin NolSatu </p>
                       </td>
                     </tr>
                   </table>
@@ -152,6 +150,7 @@
                 <tr>
                   <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-size: 12px; color: #999999; text-align: center;">
                     <span class="apple-link" style="color: #999999; font-size: 12px; text-align: center;">&copy; 2018 - PT. Boer Technology (Btech)</span>
+
                     <br> <a href="#" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;"></a>.
                   </td>
                 </tr>

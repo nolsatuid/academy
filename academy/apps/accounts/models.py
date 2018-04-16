@@ -64,6 +64,22 @@ class User(AbstractUser):
         )
         return send
 
+    def notification_status_training(self, training_materials):
+        data = {
+            'host': settings.HOST,
+            'user': self,
+            'training_materials': training_materials,
+            'email_title': 'Status Pelatihan'
+        }
+
+        send = mail.send(
+            [self.email],
+            settings.DEFAULT_FROM_EMAIL,
+            subject='Status Pelatihan',
+            html_message=render_to_string('emails/training-status.html', context=data)
+        )
+        return send
+
 
 class Profile(models.Model):
     user = models.OneToOneField('accounts.User', related_name='profile')
