@@ -66,7 +66,7 @@
 }
 .sidebar ul li a:hover, .sidebar ul .active a {
     color: rgba(255, 255, 255, 1);
-    background: #007bff;
+    background: #EA413A;
 }
 .sidebar ul ul a {
     padding-left: 2.5rem;
@@ -143,14 +143,14 @@
 }
 
   .shards-app-promo-page--1 .welcome:before {
-    background: #007bff;
+    background: #EA413A;
   }
 
   .shards-app-promo-page--1 .section-title:after {
     content: '';
     width: 30px;
     height: 2px;
-    background: #0067f4;
+    background: #EA413A;
     position: absolute;
     left: 50%;
     margin-left: -15px;
