@@ -6,10 +6,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms import formset_factory
 
 from academy.apps.accounts.models import User
-from academy.apps.students.models import Student, TrainingMaterial
+from academy.apps.students.models import Student, TrainingMaterial, Training
 
 from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
-                    BaseStatusTrainingFormSet)
+                    BaseStatusTrainingFormSet, TrainingForm)
 
 
 @staff_member_required
@@ -142,3 +142,21 @@ def status_training(request, id):
     }
     # return render(request, 'backoffice/users/status_training.html', context)
     return render(request, 'backoffice/form-change-status.html', context)
+
+
+@staff_member_required
+def batch_training(request):
+    form = TrainingForm(request.POST or None)
+    trainings = Training.objects.order_by('batch')
+
+    if form.is_valid():
+        training = form.save()
+        messages.success(request, f'Pelatihan Angkatan {training.batch} telah di tambahkan')
+
+    context = {
+        'form': form,
+        'title': 'Angkatan',
+        'trainings': trainings
+    }
+
+    return render(request, 'backoffice/form-batch-training.html', context)

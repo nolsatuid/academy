@@ -11,4 +11,5 @@ urlpatterns = [
         name='change_to_participant'),
     url(r'^(?P<id>\d+)/status-training/$', views.status_training,
         name='status_training'),
+    url(r'^batch-training/$', views.batch_training, name='batch_training')
 ]
