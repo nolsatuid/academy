@@ -57,7 +57,7 @@
                                             <td class="font-weight-bold">Angkatan</td>
                                             <td>
                                                 {{ student.training.batch }} 
-                                                <small><a href="#">edit</a></small>
+                                                <small><a href="{% url 'backoffice:users:edit_student_batch' student.id %}">edit</a></small>
                                             </td>
                                         </tr>
                                         <tr>

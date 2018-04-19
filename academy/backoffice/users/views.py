@@ -9,7 +9,7 @@ from academy.apps.accounts.models import User
 from academy.apps.students.models import Student, TrainingMaterial, Training
 
 from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
-                    BaseStatusTrainingFormSet, TrainingForm)
+                    BaseStatusTrainingFormSet, TrainingForm, StudentForm)
 
 
 @staff_member_required
@@ -140,7 +140,6 @@ def status_training(request, id):
         'student': request.user.get_student(),
         'user': user
     }
-    # return render(request, 'backoffice/users/status_training.html', context)
     return render(request, 'backoffice/form-change-status.html', context)
 
 
@@ -160,3 +159,22 @@ def batch_training(request):
     }
 
     return render(request, 'backoffice/form-batch-training.html', context)
+
+
+@staff_member_required
+def edit_student_batch(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+
+    form = StudentForm(data=request.POST or None, instance=student)
+    if form.is_valid():
+        form.save()
+        messages.success(request, f'Berhasil ubah data angkatan {student.user.name}')
+        return redirect('backoffice:users:details', id=student.user.id)
+        
+    context = {
+        'form': form,
+        'title': 'Ubah Data Angkatan',
+        'title_extra': student.user.name,
+    }
+
+    return render(request, 'backoffice/form.html', context)

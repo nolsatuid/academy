@@ -186,3 +186,13 @@ class TrainingForm(forms.ModelForm):
             'start_date': 'Boleh kosong',
             'end_date': 'Boleh kosong',
         }
+
+
+class StudentForm(forms.ModelForm):
+
+    class Meta:
+        model = Student
+        fields = ('training',)
+        labels = {
+            'training': 'Peserta Angkatan'
+        }
