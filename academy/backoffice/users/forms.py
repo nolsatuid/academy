@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.forms.formsets import BaseFormSet
 
 from academy.apps.accounts.models import User
-from academy.apps.students.models import Student, TrainingStatus
+from academy.apps.students.models import Student, TrainingStatus, Training
 from academy.core.utils import normalize_datetime_range
 from academy.core.templatetags.form_tags import get_status_student, status_to_display
 from model_utils import Choices
@@ -162,3 +162,37 @@ class BaseStatusTrainingFormSet(BaseFormSet):
 
                 training_status.user = user
                 training_status.save()
+
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
+class TrainingForm(forms.ModelForm):
+
+    class Meta:
+        model = Training
+        fields = ('batch', 'start_date', 'end_date')
+        labels = {
+            'batch': 'Angkatan',
+            'start_date': 'Tanggal Mulai',
+            'end_date': 'Tanggal Akhir'
+        }
+        widgets = {
+            'start_date': DateInput(),
+            'end_date': DateInput(),
+        }
+        help_texts = {
+            'start_date': 'Boleh kosong',
+            'end_date': 'Boleh kosong',
+        }
+
+
+class StudentForm(forms.ModelForm):
+
+    class Meta:
+        model = Student
+        fields = ('training',)
+        labels = {
+            'training': 'Peserta Angkatan'
+        }
