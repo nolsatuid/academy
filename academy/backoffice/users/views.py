@@ -29,7 +29,7 @@ def index(request):
             response['Content-Disposition'] = 'attachment; filename=daftar-pengguna.csv'
             return response    
 
-    paginator = Paginator(user_list, 2)
+    paginator = Paginator(user_list, 25)
     page = request.GET.get('page',1)
     try:
         users = paginator.page(page)
@@ -67,19 +67,28 @@ def details(request, id):
 def participants(request):
     user_ids = Student.objects.filter(status=Student.STATUS.participants) \
         .distinct('user_id').values_list('user_id', flat=True)
-    users = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
+    user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
         .filter(id__in=user_ids)
-    user_count = users.count()
+    user_count = user_list.count()
 
     download = request.GET.get('download', '')
     form = ParticipantsFilterForm(request.GET or None)
     if form.is_valid():
-        users = form.get_data()
+        user_list = form.get_data()
         if download:
             csv_buffer = form.generate_to_csv()
             response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
             response['Content-Disposition'] = 'attachment; filename=daftar-peserta.csv'
             return response
+
+    paginator = Paginator(user_list, 25)
+    page = request.GET.get('page',1)
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
 
     context = {
         'title': 'Peserta',
@@ -87,7 +96,8 @@ def participants(request):
         'users': users,
         'form': form,
         'user_count': user_count,
-        'filter_count': users.count()
+        'filter_count': user_list.count(),
+        'query_params': 'status=%s&start_date=%s&end_date=%s' % (request.GET.get('status', 2), request.GET.get('start_date', ''), request.GET.get('end_date', ''))
     }
     return render(request, 'backoffice/users/index.html', context)
 
