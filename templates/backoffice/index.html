@@ -4,11 +4,103 @@
 <div class="col-md-12 card p-5">
     <h1 class="display-5 mb-4">{{ title }}</h1>
 
-    <p>ini adalah halaman staff admin</p>
+    <div class="row mb-5">
+        <div class="col-xl-4 col-sm-6">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body bg-success">
+                    <div class="row">
+                        <div class="col-md-6">                                                   
+                                <div class="rotate">
+                                <i class="fa fa-user fa-3x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Pengguna</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <h1 class="display-4 float-right">{{ data.pengguna }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body bg-warning">
+                    <div class="row">
+                        <div class="col-md-6">                                                   
+                                <div class="rotate">
+                                <i class="fa fa-users fa-3x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Peserta</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <h1 class="display-4 float-right">{{ data.peserta }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body bg-info">
+                    <div class="row">
+                        <div class="col-md-7">      
+                            <div class="rotate">
+                                <i class="fa fa-user-plus fa-3x"></i>
+                            </div>
+                            <h6 class="text-uppercase mb-0">Pendaftar</h6>
+                            <small class="text-muted mt-0">dalam satu minggu</small>
+                        </div>
+                        <div class="col-md-5">                            
+                            <h1 class="display-4 float-right">{{ data.pendaftar }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <canvas class="mt-5" id="myChart" height="400"></canvas>
 
-    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
-        ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt
-        condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
-        Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
 </div>
+
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
 {% endblock %}
