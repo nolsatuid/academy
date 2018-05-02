@@ -57,7 +57,7 @@
                     </li>
                     {% endif %}
                     
-                    {% for i in users.paginator.page_range %}
+                    {% for i in page_range %}
                         {% if users.number == i %}
                             <li class="page-item active">
                                 <a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a>
