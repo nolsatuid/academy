@@ -172,6 +172,7 @@ def batch_training(request):
     context = {
         'form': form,
         'title': 'Angkatan',
+        'page_active': 'batch',
         'trainings': trainings
     }
 
@@ -191,6 +192,7 @@ def edit_student_batch(request, student_id):
     context = {
         'form': form,
         'title': 'Ubah Data Angkatan',
+        'page_active': 'batch',
         'title_extra': student.user.name,
     }
 
