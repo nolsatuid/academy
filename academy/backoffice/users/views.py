@@ -104,7 +104,10 @@ def participants(request):
         'form': form,
         'user_count': user_count,
         'filter_count': user_list.count(),
-        'query_params': 'status=%s&start_date=%s&end_date=%s' % (request.GET.get('status', 2), request.GET.get('start_date', ''), request.GET.get('end_date', ''))
+        'query_params': 'status=%s&start_date=%s&end_date=%s&batch=%s' % (
+            request.GET.get('status', 2), request.GET.get('start_date', ''), request.GET.get('end_date', ''),
+            request.GET.get('batch', '')
+        ),
     }
     return render(request, 'backoffice/users/index.html', context)
 
