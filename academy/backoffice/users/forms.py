@@ -36,6 +36,9 @@ class BaseFilterForm(forms.Form):
         (4, 'graduate', 'Lulus')
     )
     status = forms.ChoiceField(choices=STATUS, required=False, label="Status")
+    batch = forms.ModelChoiceField(
+        queryset=Training.objects.order_by('batch'), empty_label="Pilih Angkatan", required=False
+    )
 
     def __init__(self, *args, **kwargs):
         self.users = None
@@ -71,8 +74,13 @@ class BaseFilterForm(forms.Form):
         end_date = self.cleaned_data['end_date']
         status = self.cleaned_data['status']
         name = self.cleaned_data['name']
+        batch = self.cleaned_data['batch']
 
-        user_ids = Student.objects.filter(status=status).distinct('user_id') \
+        students = Student.objects.filter(status=status)
+        if batch:
+            students = students.filter(training=batch)
+
+        user_ids = students.distinct('user_id') \
             .values_list('user_id', flat=True)
         users = User.objects.filter(id__in=user_ids).exclude(is_superuser=True).exclude(is_staff=True)
 
@@ -99,6 +107,11 @@ class BaseFilterForm(forms.Form):
                 status_to_display(get_status_student(user))
             ])
         return csv_buffer
+
+
+class UserFilterForm(BaseFilterForm):
+    # override field batch to hidden input
+    batch = forms.CharField(widget = forms.HiddenInput(), required = False)
 
 
 class ParticipantsFilterForm(BaseFilterForm):

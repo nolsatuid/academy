@@ -8,7 +8,7 @@ from django.forms import formset_factory
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student, TrainingMaterial, Training
 
-from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
+from .forms import (UserFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
                     BaseStatusTrainingFormSet, TrainingForm, StudentForm)
 
 
@@ -20,17 +20,17 @@ def index(request):
     user_count = user_list.count()
 
     download = request.GET.get('download', '')
-    form = BaseFilterForm(request.GET or None)
+    form = UserFilterForm(request.GET or None)
     if form.is_valid():
         user_list = form.get_data()
         if download:
             csv_buffer = form.generate_to_csv()
             response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
             response['Content-Disposition'] = 'attachment; filename=daftar-pengguna.csv'
-            return response    
+            return response
 
     paginator = Paginator(user_list, 25)
-    page = request.GET.get('page',1)
+    page = request.GET.get('page', 1)
     try:
         users = paginator.page(page)
     except PageNotAnInteger:
@@ -104,7 +104,10 @@ def participants(request):
         'form': form,
         'user_count': user_count,
         'filter_count': user_list.count(),
-        'query_params': 'status=%s&start_date=%s&end_date=%s' % (request.GET.get('status', 2), request.GET.get('start_date', ''), request.GET.get('end_date', ''))
+        'query_params': 'status=%s&start_date=%s&end_date=%s&batch=%s' % (
+            request.GET.get('status', 2), request.GET.get('start_date', ''), request.GET.get('end_date', ''),
+            request.GET.get('batch', '')
+        ),
     }
     return render(request, 'backoffice/users/index.html', context)
 
@@ -188,7 +191,7 @@ def edit_student_batch(request, student_id):
         form.save()
         messages.success(request, f'Berhasil ubah data angkatan {student.user.name}')
         return redirect('backoffice:users:details', id=student.user.id)
-        
+
     context = {
         'form': form,
         'title': 'Ubah Data Angkatan',
