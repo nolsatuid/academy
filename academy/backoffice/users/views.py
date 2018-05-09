@@ -22,7 +22,6 @@ def index(request):
     download = request.GET.get('download', '')
     form = UserFilterForm(request.GET or None)
     if form.is_valid():
-        print('njir', request.GET.get('status', ''))
         user_list = form.get_data()
         if download:
             csv_buffer = form.generate_to_csv()
