@@ -10,13 +10,13 @@
                 <div class="card-body bg-success">
                     <div class="row">
                         <div class="col-md-6">                                                   
-                                <div class="rotate">
-                                <i class="fa fa-user fa-3x"></i>
+                            <div class="rotate mb-3">
+                                <i class="fa fa-users fa-3x"></i>
                             </div>
-                            <h6 class="text-uppercase">Pengguna</h6>
+                            <h6 class="text-uppercase">Pendaftar</h6>
                         </div>
                         <div class="col-md-6">
-                            <h1 class="display-4 float-right">{{ data.pengguna }}</h1>
+                            <h1 class="display-4 float-right">{{ data.pendaftar }}</h1>
                         </div>
                     </div>
                 </div>
@@ -27,8 +27,8 @@
                 <div class="card-body bg-warning">
                     <div class="row">
                         <div class="col-md-6">                                                   
-                                <div class="rotate">
-                                <i class="fa fa-users fa-3x"></i>
+                            <div class="rotate mb-3">
+                                <i class="fa fa-user-check fa-3x"></i>
                             </div>
                             <h6 class="text-uppercase">Peserta</h6>
                         </div>
@@ -44,63 +44,76 @@
                 <div class="card-body bg-info">
                     <div class="row">
                         <div class="col-md-7">      
-                            <div class="rotate">
-                                <i class="fa fa-user-plus fa-3x"></i>
+                            <div class="rotate mb-3">
+                                <i class="fa fa-user-graduate fa-3x"></i>
                             </div>
-                            <h6 class="text-uppercase mb-0">Pendaftar</h6>
-                            <small class="text-muted mt-0">dalam satu minggu</small>
+                            <h6 class="text-uppercase mb-0">Lulus</h6>
                         </div>
                         <div class="col-md-5">                            
-                            <h1 class="display-4 float-right">{{ data.pendaftar }}</h1>
+                            <h1 class="display-4 float-right">{{ data.lulus }}</h1>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <canvas class="mt-5" id="myChart" height="400"></canvas>
+
+    <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
 
 </div>
-
 <script>
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+    new Chart(
+        document.getElementById("chartjs-0"),
+        {
+            "type":"line",
+            "data":
+            {
+                "labels":
+                [
+                    {% for i in angkatan %}
+                        "{{ i }}",    
+                    {% endfor %}
                 ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
+                "datasets"  :
+                [
+                    {
+                    "label":"Pendaftar",
+                    "data": [
+                                {% for i in jumlah_pendaftar %}
+                                    "{{ i.num_students }}",    
+                                {% endfor %}
+                            ],
+                    "fill":false,
+                    "borderColor":"rgb(75, 192, 192)",
+                    "lineTension":0.1
+                    },
+                    {
+                    "label":"Peserta",
+                    "data": [
+                                {% for i in jumlah_peserta %}
+                                    "{{ i.num_participants }}",    
+                                {% endfor %}
+                            ],
+                    "fill":false,
+                    "borderColor":"rgb(255,180,0)",
+                    "lineTension":0.1
+                    },
+                    {
+                    "label":"Lulus",
+                    "data":[
+                                {% for j in jumlah_lulus %}
+                                    "{{ j.num_graduate }}",    
+                                {% endfor %}
+                            ],
+                    "fill":false,
+                    "borderColor":"rgb(234,65,58)",
+                    "lineTension":0.1
+                    },
+                ]
+            },
+            "options":{}
         }
-    });
+    );
 </script>
 
 {% endblock %}

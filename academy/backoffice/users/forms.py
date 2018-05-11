@@ -30,6 +30,7 @@ class BaseFilterForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': 'Tanggal Akhir'}),
     )
     STATUS = Choices (
+        (0, 'none', '-- Pilih --'),
         (1, 'selection', 'Seleksi'),
         (2, 'participants', 'Peserta'),
         (3, 'repeat', 'Mengulang'),
@@ -72,9 +73,14 @@ class BaseFilterForm(forms.Form):
         status = self.cleaned_data['status']
         name = self.cleaned_data['name']
 
-        user_ids = Student.objects.filter(status=status).distinct('user_id') \
-            .values_list('user_id', flat=True)
-        users = User.objects.filter(id__in=user_ids).exclude(is_superuser=True).exclude(is_staff=True)
+        if status != '0':
+            user_ids = Student.objects.filter(status=status).distinct('user_id') \
+                .values_list('user_id', flat=True)
+            users = User.objects.filter(id__in=user_ids).exclude(is_superuser=True).exclude(is_staff=True)
+        else:
+            user_ids = Student.objects.distinct('user_id') \
+                .values_list('user_id', flat=True)
+            users = User.objects.filter(id__in=user_ids).exclude(is_superuser=True).exclude(is_staff=True)
 
         if start_date and end_date:
             start, end = normalize_datetime_range(start_date, end_date)
