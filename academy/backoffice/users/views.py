@@ -38,6 +38,12 @@ def index(request):
     except EmptyPage:
         users = paginator.page(paginator.num_pages)
 
+    max_index = len(paginator.page_range)
+    index = users.number
+    start_index = max_index - 5 if index > max_index - 3 else (index - 3 if index > 3 else 0)
+    end_index = 5 if index <= 3 else (index + 2 if index < max_index - 2 else max_index)
+    page_range = list(paginator.page_range)[start_index:end_index]
+
     context = {
         'title': 'Pengguna',
         'page_active': 'user',
@@ -45,7 +51,8 @@ def index(request):
         'form': form,
         'user_count': user_count,
         'filter_count': user_list.count(),
-        'query_params': 'status=%s&start_date=%s&end_date=%s' % (request.GET.get('status', 0), request.GET.get('start_date', ''), request.GET.get('end_date', ''))
+        'query_params': 'status=%s&start_date=%s&end_date=%s' % (request.GET.get('status', 1), request.GET.get('start_date', ''), request.GET.get('end_date', '')),
+        'page_range': page_range
     }
     return render(request, 'backoffice/users/index.html', context)
 
@@ -82,13 +89,19 @@ def participants(request):
             return response
 
     paginator = Paginator(user_list, 25)
-    page = request.GET.get('page',1)
+    page = request.GET.get('page', 1)
     try:
         users = paginator.page(page)
     except PageNotAnInteger:
         users = paginator.page(1)
     except EmptyPage:
         users = paginator.page(paginator.num_pages)
+
+    max_index = len(paginator.page_range)
+    index = users.number
+    start_index = max_index - 5 if index > max_index - 3 else (index - 3 if index > 3 else 0)
+    end_index = 5 if index <= 3 else (index + 2 if index < max_index - 2 else max_index)
+    page_range = list(paginator.page_range)[start_index:end_index]
 
     context = {
         'title': 'Peserta',
@@ -101,6 +114,7 @@ def participants(request):
             request.GET.get('status', 2), request.GET.get('start_date', ''), request.GET.get('end_date', ''),
             request.GET.get('batch', '')
         ),
+        'page_range': page_range
     }
     return render(request, 'backoffice/users/index.html', context)
 
