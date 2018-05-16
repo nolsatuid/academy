@@ -19,8 +19,10 @@ def index(request):
         'data': data_dashboard,
         'angkatan': angkatan,
         'jumlah_pendaftar': angkatan.annotate(num_students=Count('students')),
-        'jumlah_peserta': angkatan.filter(students__status = Student.STATUS.participants).annotate(num_participants=Count('students')),
-        'jumlah_lulus': angkatan.filter(students__status = Student.STATUS.graduate).annotate(num_graduate=Count('students'))
+        'jumlah_peserta': angkatan.filter(students__status = Student.STATUS.participants) \
+            .annotate(num_participants=Count('students')),
+        'jumlah_lulus': angkatan.filter(students__status = Student.STATUS.graduate) \
+            .annotate(num_graduate=Count('students'))
     }
 
     return render(request, 'backoffice/index.html', context=context)

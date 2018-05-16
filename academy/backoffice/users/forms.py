@@ -78,6 +78,9 @@ class BaseFilterForm(forms.Form):
         batch = self.cleaned_data['batch']
 
         students = Student.objects.filter(status=status)
+        if status:
+            students = students.filter(status=status)
+
         if batch:
             students = students.filter(training=batch)
 
