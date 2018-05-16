@@ -14,7 +14,7 @@ class Training(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"batch {self.batch}"
+        return f"Batch {self.batch}"
 
 
 class Student(models.Model):

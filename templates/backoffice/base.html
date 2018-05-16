@@ -5,7 +5,7 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark mb-3">
     <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
     <img src="{% static 'website/images/logo/logo-polos-warna-30.png' %}" alt="nolsatu" class="mr-2" height="30px">
-    <a class="navbar-brand" href="{% url 'website:index' %}"><i class="fa fa-code-branch"></i> NolSatu</a>
+    <a class="navbar-brand" href="{% url 'website:index' %}"> NolSatu</a>
 
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
@@ -24,12 +24,12 @@
 <div class="d-flex">
     <nav class="sidebar card mr-4">
         <ul class="list-unstyled">
-            <li {% if page_active == 'dasbor' %}class="active"{% endif %}><a href="{% url 'backoffice:index' %}"><i class="fa fa-fw fa-home"></i> Dasbor </a></li>
-            <li {% if page_active == 'user' %}class="active"{% endif %}><a href="{% url 'backoffice:users:index' %}"><i class="fa fa-fw fa-users"></i> Data Pengguna </a></li>
-            <li {% if page_active == 'participants' %}class="active"{% endif %}><a href="{% url 'backoffice:users:participants' %}"><i class="fa fa-fw fa-address-card"></i> Data Peserta </a></li>
-            <li {% if page_active == 'batch' %}class="active"{% endif %}><a href="{% url 'backoffice:users:batch_training' %}"><i class="fa fa-fw fa-certificate "></i> Angkatan </a></li>
+            <li><a href="{% url 'backoffice:index' %}"><i class="fa fa-fw fa-home"></i> Dasbor </a></li>
+            <li><a href="{% url 'backoffice:users:index' %}"><i class="fa fa-fw fa-users"></i> Data Pengguna </a></li>
+            <li><a href="{% url 'backoffice:users:participants' %}"><i class="fa fa-fw fa-address-card"></i> Data Peserta </a></li>
+            <li><a href="{% url 'backoffice:users:batch_training' %}"><i class="fa fa-fw fa-certificate "></i> Angkatan </a></li>
             <li><hr></li>
-            <li><a href="#"><i class="fa fa-fw fa-sign-out"></i> Keluar </a></li>
+            <li><a href="#"><i class="fa fa-fw fa-sign-out-alt"></i> Keluar </a></li>
             <!-- <li>
                 <a href="#submenu2" data-toggle="collapse"><i class="fa fa-fw fa-address-card"></i> Dropdown Link 2</a>
                 <ul id="submenu2" class="list-unstyled collapse">

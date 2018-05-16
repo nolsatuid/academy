@@ -20,11 +20,14 @@
     <link rel="stylesheet" href="{% static 'website/css/shards-extras.min.css' %}">
     <link rel="stylesheet" href="{% static 'website/css/custom.css' %}">
 
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+
     <!-- flatpickr -->
     <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
     <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
     <script src="https://unpkg.com/flatpickr"></script>
-
+    
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -38,15 +41,15 @@
     <p class="text-muted text-center small p-0 mb-4">&copy; 2018 — PT. Boer Technology (Btech)</p>
     <div class="social d-table ml-auto mr-auto">
         <a class="twitter mx-3 h4" href="#" target="_blank">
-            <i class="fa fa-twitter"></i>
+            <i class="fab fa-twitter"></i>
             <span class="sr-only">View our Twitter Profile</span>
         </a>
         <a class="facebook mx-3 h4" href="#" target="_blank">
-            <i class="fa fa-facebook"></i>
+            <i class="fab fa-facebook-f"></i>
             <span class="sr-only">View our Facebook Profile <span>
         </a>
         <a class="github mx-3 h4" href="#" target="_blank">
-            <i class="fa fa-github"></i>
+            <i class="fab fa-github"></i>
             <span class="sr-only">View our GitHub Profile</span>
         </a>
     </div>
@@ -62,6 +65,7 @@
 <script src="{% static 'website/js/shards.min.js' %}"></script>
 <script src="{% static 'website/js/demo.js' %}"></script>
 <script src="{% static 'website/js/custom.js' %}"></script>
+
 {% block extra_js %}{% endblock %}
 
 <!-- Global site tag (gtag.js) - Google Analytics -->

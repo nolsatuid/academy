@@ -5,7 +5,7 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark mb-3">
     <a class="sidebar-toggle text-light mr-3"><i class="fa fa-bars"></i></a>
     <img src="{% static 'website/images/logo/logo-polos-warna-30.png' %}" alt="nolsatu" class="mr-2" height="30px">
-    <a class="navbar-brand" href="{% url 'website:index' %}"><i class="fa fa-code-branch"></i> nolsatu</a>
+    <a class="navbar-brand" href="{% url 'website:index' %}"> nolsatu</a>
 
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
@@ -30,7 +30,7 @@
 <div class="d-flex">
     <nav class="sidebar card mr-4">
         <ul class="list-unstyled">
-            <li><a href="{% url 'website:accounts:index' %}"><i class="fa fa-fw fa-tachometer"></i> Dasbor</a></li>
+            <li><a href="{% url 'website:accounts:index' %}"><i class="fas fa-fw fa-tachometer-alt"></i> Dasbor</a></li>
             <li><a href="{% url 'website:accounts:profile' %}"><i class="fa fa-fw fa-user"></i> Profil</a></li>
             <li><a href="{% url 'website:accounts:trainings:materials' %}"><i class="fa fa-fw fa-book"></i> Daftar Pelatihan</a></li>
             <!-- <li>
@@ -42,7 +42,7 @@
                 </ul>
             </li> -->
             <li><hr></li>
-            <li><a href="{% url 'website:accounts:logout' %}"><i class="fa fa-fw fa-sign-out"></i> Keluar </a></li>
+            <li><a href="{% url 'website:accounts:logout' %}"><i class="fa fa-fw fa-sign-out-alt"></i> Keluar </a></li>
 
         </ul>
     </nav>

@@ -30,6 +30,7 @@ class BaseFilterForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': 'Tanggal Akhir'}),
     )
     STATUS = Choices (
+        (0, 'none', '-- Pilih --'),
         (1, 'selection', 'Seleksi'),
         (2, 'participants', 'Peserta'),
         (3, 'repeat', 'Mengulang'),
@@ -77,6 +78,9 @@ class BaseFilterForm(forms.Form):
         batch = self.cleaned_data['batch']
 
         students = Student.objects.filter(status=status)
+        if status:
+            students = students.filter(status=status)
+
         if batch:
             students = students.filter(training=batch)
 
