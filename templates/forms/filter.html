@@ -2,31 +2,23 @@
 
 <form method="GET" >
     <div class="form-group row">
-        <div class="col-md-3">
-            {{ form.name|addclass:"form-control" }}
-            <span class="help_text">
-                {{ form.name.errors }}
-            </span>
-        </div>
-        <div class="col-md-3">
-            {{ form.start_date|addclass:"form-control date" }}
-            <span class="help_text">
-                {{ form.start_date.errors }}
-            </span>
-        </div>
-        <div class="col-md-3">
-            {{ form.end_date|addclass:"form-control date" }}
-            <span class="help_text">
-                {{ form.end_date.errors }}
-            </span>
-        </div>
-        <div class="col-md-3">
-            {{ form.status|addclass:"form-control" }}
-            <span class="help_text">
-                {{ form.status.errors }}
-            </span>
-        </div>
-
+        {% for field in form %}
+            {% if field.name == 'start_date' or field.name == 'end_date' %}
+                <div class="form-group col-md-3">
+                    {{ field|addclass:"form-control date" }}
+                    <span class="help_text">
+                        {{ field.errors }}
+                    </span>
+                </div>
+            {% else %}
+                <div class="form-group col-md-3">
+                    {{ field|addclass:"form-control" }}
+                    <span class="help_text">
+                        {{ field.errors }}
+                    </span>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
     <div class="form-group row">
         <div class="offset-md-9 col-md-3">
