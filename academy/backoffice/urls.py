@@ -6,4 +6,6 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^users/', include('academy.backoffice.users.urls', namespace='users')),
+    url(r'^training-materials/', include('academy.backoffice.training_materials.urls',
+                                         namespace='training_materials')),
 ]
