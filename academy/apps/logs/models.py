@@ -17,3 +17,6 @@ class LogTrainingStatus(models.Model):
     student = models.ForeignKey('students.Student', related_name='log_training_status')
     user = models.ForeignKey('accounts.User', related_name='log_training_status')
     created = AutoCreatedField()
+
+    def __str__(self):
+        return f"{self.user.name} - #{self.code}"

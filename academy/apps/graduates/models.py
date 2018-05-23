@@ -11,4 +11,5 @@ class Graduate(models.Model):
     created = AutoCreatedField()
 
     def __str__(self):
-        return f"{user.name} #{certificate_number}"
+        return f"{self.user.name} - #{self.certificate_number}"
+
