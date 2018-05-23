@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'academy.core',
     'academy.apps.accounts',
     'academy.apps.students',
+    'academy.apps.logs',
 
     "post_office",
 ]
