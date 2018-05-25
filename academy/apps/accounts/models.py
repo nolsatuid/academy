@@ -85,15 +85,15 @@ class User(AbstractUser):
         count_status = self.training_status.aggregate(
             graduate=Count(
                 Case(When(status=TrainingStatus.STATUS.graduate, then=1),
-                        output_field=IntegerField())
+                          output_field=IntegerField())
             ),
             not_yet=Count(
                 Case(When(status=TrainingStatus.STATUS.not_yet, then=1),
-                        output_field=IntegerField())
+                          output_field=IntegerField())
             ),
             repeat=Count(
                 Case(When(status=TrainingStatus.STATUS.repeat, then=1),
-                        output_field=IntegerField())
+                          output_field=IntegerField())
             )
         )
         return count_status
