@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
+from django.db.models import When, Case, Count, IntegerField
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import int_to_base36
@@ -10,7 +11,7 @@ from django.template.loader import render_to_string
 
 from academy.core.utils import image_upload_path
 from academy.core.validators import validate_mobile_phone
-from academy.apps.students.models import Student
+from academy.apps.students.models import Student, TrainingStatus
 
 from model_utils import Choices
 from post_office import mail
@@ -79,6 +80,23 @@ class User(AbstractUser):
             html_message=render_to_string('emails/training-status.html', context=data)
         )
         return send
+    
+    def get_count_training_status(self):
+        count_status = self.training_status.aggregate(
+            graduate=Count(
+                Case(When(status=TrainingStatus.STATUS.graduate, then=1),
+                        output_field=IntegerField())
+            ),
+            not_yet=Count(
+                Case(When(status=TrainingStatus.STATUS.not_yet, then=1),
+                        output_field=IntegerField())
+            ),
+            repeat=Count(
+                Case(When(status=TrainingStatus.STATUS.repeat, then=1),
+                        output_field=IntegerField())
+            )
+        )
+        return count_status
 
 
 class Profile(models.Model):

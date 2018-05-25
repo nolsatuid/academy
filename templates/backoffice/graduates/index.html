@@ -2,41 +2,50 @@
 {% load form_tags %}
 
 {% block content-dashboard %}
-<div class="card">
-    <div class="card-header">
-        <h4 class="pull-left">{{ title }}</h4>
+<div class="container">
+    <div class="alert alert-info pt-4 pb-4" role="alert">
+        <h3 class="alert-heading">Perhatian !</h3>
+        <p>Anda dapat melihat daftar peserta yang udah memenuhi indikator kelulusan dengan klik tombol di bawah ini</p>
+        <a href="{% url 'backoffice:graduates:candidates' %}" class="btn btn-secondary">Lihat data</a>
     </div>
-    <div class="card-body">
-        {% if graduates %}
-        <div class="datatable content table-responsive table-full-width">
-            <table id="datatable" class="table table-striped">
-                <thead>
-                    <th>Name</th>
-                    <th>No. Sertifikat</th>
-                    <th>Email</th>
-                    <th>No. Ponsel</th>
-                    <th>Aksi</th>
-                </thead>
-                <tbody>
-                    {% for graduate in graduates %}
-                        <tr>
-                            <td>{{ graduate.user.name }}</td>
-                            <td>{{ graduate.certificate_number }}</td>
-                            <td>{{ graduate.user.email }}</td>
-                            <td>{{ graduate.user.phone|default_if_none:"-" }}</td>
-                            <td>
-                                <a href="{% url 'backoffice:users:details' graduate.user.id %}">Detail</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-        <h3>Tidak ada data</h3>
-        {% endif %}
-    </div>
-    <div class="card-footer"></div>
 
+    <div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">{{ title }}</h4>
+        </div>
+        <div class="card-body">
+            {% if graduates %}
+            <div class="datatable content table-responsive table-full-width">
+                <table id="datatable" class="table table-striped">
+                    <thead>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>No. Sertifikat</th>
+                        <th>Email</th>
+                        <th>No. Ponsel</th>
+                        <th>Aksi</th>
+                    </thead>
+                    <tbody>
+                        {% for graduate in graduates %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ graduate.user.name }}</td>
+                                <td>{{ graduate.certificate_number|default:'-' }}</td>
+                                <td>{{ graduate.user.email }}</td>
+                                <td>{{ graduate.user.phone|default_if_none:"-" }}</td>
+                                <td>
+                                    <a href="{% url 'backoffice:users:details' graduate.user.id %}">Detail</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <h3>Tidak ada data</h3>
+            {% endif %}
+        </div>
+        <div class="card-footer"></div>
+    </div>
 </div>
 {% endblock %}

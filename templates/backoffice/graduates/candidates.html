@@ -1,0 +1,44 @@
+{% extends 'backoffice/base.html' %}
+{% load form_tags %}
+
+{% block content-dashboard %}
+<div class="card">
+    <div class="card-header">
+        <h4 class="pull-left">{{ title }}</h4>
+    </div>
+    <div class="card-body">
+        {% if users %}
+        <p>Berikut daftar peserta yang sudah memenuhi indikator kelulusan.</p>
+        <p>Total data <span class="badge badge-primary">{{ users|length }}</span></p>
+        <div class="datatable content table-responsive table-full-width">
+            <table id="datatable" class="table table-striped">
+                <thead>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>No. Ponsel</th>
+                    <th>Aksi</th>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone|default_if_none:"-" }}</td>
+                            <td>
+                                <a href="{% url 'backoffice:users:status_training' user.id %}">Detail status pelatihan</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <h3>Tidak ada data</h3>
+        {% endif %}
+    </div>
+    <div class="card-footer"></div>
+
+</div>
+{% endblock %}
