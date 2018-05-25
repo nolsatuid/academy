@@ -23,7 +23,8 @@
                     {% for user in users %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ user.name }}</td>
+                            <td>
+                                <a href="{% url 'backoffice:users:details' user.id %}">{{ user.name }}</a></td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.phone|default_if_none:"-" }}</td>
                             <td>
