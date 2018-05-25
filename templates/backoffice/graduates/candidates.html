@@ -8,7 +8,7 @@
     </div>
     <div class="card-body">
         {% if users %}
-        <p>Berikut daftar peserta yang sudah memenuhi indikator kelulusan.</p>
+        <p class="font-italic">Berikut daftar peserta yang sudah memenuhi indikator kelulusan dengan minimum {{ indicator }} materi lulus dari {{ training_count }} materi pelatihan</p>
         <p>Total data <span class="badge badge-primary">{{ users|length }}</span></p>
         <div class="datatable content table-responsive table-full-width">
             <table id="datatable" class="table table-striped">

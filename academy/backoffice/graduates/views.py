@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
 from academy.apps.graduates.models import Graduate
-from academy.apps.students.models import Student
+from academy.apps.students.models import Student, TrainingMaterial
 from academy.apps.accounts.models import User
 
 def index(request):
@@ -16,6 +16,7 @@ def index(request):
 
 
 def candidates(request):
+    training_count = TrainingMaterial.objects.all().count()
     user_ids = Student.objects.filter(status=Student.STATUS.participants) \
         .order_by('user_id').distinct('user_id').values_list('user_id', flat=True)
     
@@ -31,5 +32,7 @@ def candidates(request):
     context = {
         'title': 'Calon Lulusan',
         'users': user_cantidates,
+        'indicator': settings.INDICATOR_GRADUATED,
+        'training_count': training_count
     }
     return render(request, 'backoffice/graduates/candidates.html', context)
