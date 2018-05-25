@@ -1,0 +1,42 @@
+{% extends 'backoffice/base.html' %}
+{% load form_tags %}
+
+{% block content-dashboard %}
+<div class="card">
+    <div class="card-header">
+        <h4 class="pull-left">{{ title }}</h4>
+    </div>
+    <div class="card-body">
+        {% if graduates %}
+        <div class="datatable content table-responsive table-full-width">
+            <table id="datatable" class="table table-striped">
+                <thead>
+                    <th>Name</th>
+                    <th>No. Sertifikat</th>
+                    <th>Email</th>
+                    <th>No. Ponsel</th>
+                    <th>Aksi</th>
+                </thead>
+                <tbody>
+                    {% for graduate in graduates %}
+                        <tr>
+                            <td>{{ graduate.user.name }}</td>
+                            <td>{{ graduate.certificate_number }}</td>
+                            <td>{{ graduate.user.email }}</td>
+                            <td>{{ graduate.user.phone|default_if_none:"-" }}</td>
+                            <td>
+                                <a href="{% url 'backoffice:users:details' graduate.user.id %}">Detail</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <h3>Tidak ada data</h3>
+        {% endif %}
+    </div>
+    <div class="card-footer"></div>
+
+</div>
+{% endblock %}
