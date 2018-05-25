@@ -152,6 +152,8 @@ STATICFILES_DIRS = (
 )
 STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
 
+INDICATOR_GRADUATED = 6
+
 try:
     from .local_settings import *
 except ImportError:
