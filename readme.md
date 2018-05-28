@@ -1,4 +1,4 @@
-# Telin Dashboard
+# Nolsatu Academy
 
 ## Prerequisite
   - Python 3.6.x already installed on system or using virtualenv
@@ -69,8 +69,8 @@ Clone the latest source code from the repository, and I assume you put it to `/v
 
 ```
 $ cd /var/www/html/
-$ git clone git@go.btech.id:dev/academy.git
-$ cd academy 
+$ git clone {repository}
+$ cd academy
 ```
 
 Then create virtualenv with python3
@@ -100,7 +100,7 @@ Then create first superuser
 ```
 $ python manage.py createsuperuser
 Username (leave blank to use 'btech'):
-Email address: contact@btech.id
+Email address:
 Password:
 Password (again):
 Superuser created successfully.
