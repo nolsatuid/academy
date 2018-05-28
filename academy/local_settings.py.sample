@@ -10,3 +10,16 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+EMAIL_BACKEND = 'post_office.EmailBackend'
+DEFAULT_FROM_EMAIL = 'no-reply@yourdomain.id'
+EMAIL_HOST = 'mail.yourdomain.id'
+EMAIL_HOST_USER = 'no-reply@yourdomain.id'
+EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+DEFAULT_RECIPIANT_EMAIL = 'no-reply@yourdomain.id'
+
+HOST = 'http://localhost:8000'
+
+INDICATOR_GRADUATED = 1
