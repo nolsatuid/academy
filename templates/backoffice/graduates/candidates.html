@@ -2,44 +2,52 @@
 {% load form_tags %}
 
 {% block content-dashboard %}
-<div class="card">
-    <div class="card-header">
-        <h4 class="pull-left">{{ title }}</h4>
-    </div>
-    <div class="card-body">
-        {% if users %}
-        <p class="font-italic">Berikut daftar peserta yang sudah memenuhi indikator kelulusan dengan minimum {{ indicator }} materi lulus dari {{ training_count }} materi pelatihan</p>
-        <p>Total data <span class="badge badge-primary">{{ users|length }}</span></p>
-        <div class="datatable content table-responsive table-full-width">
-            <table id="datatable" class="table table-striped">
-                <thead>
-                    <th>No.</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>No. Ponsel</th>
-                    <th>Aksi</th>
-                </thead>
-                <tbody>
-                    {% for user in users %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>
-                                <a href="{% url 'backoffice:users:details' user.id %}">{{ user.name }}</a></td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.phone|default_if_none:"-" }}</td>
-                            <td>
-                                <a href="{% url 'backoffice:users:status_training' user.id %}">Detail status pelatihan</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">{{ title }}</h4>
         </div>
-        {% else %}
-        <h3>Tidak ada data</h3>
-        {% endif %}
+        <div class="card-body">
+            {% if users %}
+            <p class="font-italic">Berikut daftar peserta yang sudah memenuhi indikator kelulusan dengan minimum {{ indicator }} materi lulus dari {{ training_count }} materi pelatihan</p>
+            <p>Total data <span class="badge badge-primary">{{ users|length }}</span></p>
+            <div class="datatable content table-responsive table-full-width">
+                <table id="datatable" class="table table-striped">
+                    <thead>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>No. Ponsel</th>
+                        <th>Aksi</th>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    <a href="{% url 'backoffice:users:details' user.id %}">{{ user.name }}</a></td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone|default_if_none:"-" }}</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="{% url 'backoffice:users:status_training' user.id %}" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Detail status pelatihan">
+                                            <i class="fa fa-address-card"></i>
+                                        </a>
+                                        <a href="{% url 'backoffice:graduates:candidate_to_graduates' user.id %}" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Proses menjadi lulusan">
+                                            <i class="fa fa-graduation-cap "></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <h3>Tidak ada data</h3>
+            {% endif %}
+        </div>
+        <div class="card-footer"></div>
     </div>
-    <div class="card-footer"></div>
-
 </div>
 {% endblock %}

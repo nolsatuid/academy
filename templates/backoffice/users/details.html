@@ -11,7 +11,7 @@
                 {% if student.status|status_display == 'seleksi' %}
                     <a class="btn btn-success text-white" href="{% url 'backoffice:users:change_to_participant' user.id %}">Jadikan Peserta</a>
                 {% elif student.status|status_display == 'peserta' %}
-                    <a class="btn btn-success text-white" href="{% url 'backoffice:users:status_training' user.id %}">Status Pelatihan</a>
+                    <a class="btn btn-secondary text-white" href="{% url 'backoffice:users:status_training' user.id %}">Status Pelatihan</a>
                 {% endif %}
                 {% comment %}
                     <a class="btn btn-primary text-white" href="{% url 'website:accounts:edit_profile' %}">Ubah</a>
@@ -56,7 +56,7 @@
                                         <tr>
                                             <td class="font-weight-bold">Angkatan</td>
                                             <td>
-                                                {{ student.training.batch }} 
+                                                {{ student.training.batch }}
                                                 <small><a href="{% url 'backoffice:users:edit_student_batch' student.id %}">edit</a></small>
                                             </td>
                                         </tr>

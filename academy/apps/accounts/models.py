@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 from academy.core.utils import image_upload_path
 from academy.core.validators import validate_mobile_phone
 from academy.apps.students.models import Student, TrainingStatus
+from academy.apps.logs.models import LogTrainingStatus
 
 from model_utils import Choices
 from post_office import mail
@@ -80,23 +81,41 @@ class User(AbstractUser):
             html_message=render_to_string('emails/training-status.html', context=data)
         )
         return send
-    
+
     def get_count_training_status(self):
         count_status = self.training_status.aggregate(
             graduate=Count(
                 Case(When(status=TrainingStatus.STATUS.graduate, then=1),
-                          output_field=IntegerField())
+                     output_field=IntegerField())
             ),
             not_yet=Count(
                 Case(When(status=TrainingStatus.STATUS.not_yet, then=1),
-                          output_field=IntegerField())
+                     output_field=IntegerField())
             ),
             repeat=Count(
                 Case(When(status=TrainingStatus.STATUS.repeat, then=1),
-                          output_field=IntegerField())
+                     output_field=IntegerField())
             )
         )
         return count_status
+
+    def indicator_reached(self, status):
+        if status['graduate'] >= settings.INDICATOR_GRADUATED and status['not_yet'] == 0:
+            return True
+        return False
+
+    def save_training_status_to_log(self):
+        LogTrainingStatus.objects.bulk_create([
+            LogTrainingStatus(
+                code=training.training_material.code,
+                title=training.training_material.title,
+                status=training.status,
+                user=self,
+                student=self.get_student()
+            ) for training in self.training_status.select_related('training_material')
+        ])
+
+        self.training_status.all().delete()
 
 
 class Profile(models.Model):
