@@ -14,7 +14,8 @@ from .forms import (UserFilterForm, ParticipantsFilterForm, ChangeStatusTraining
 
 @staff_member_required
 def index(request):
-    user_ids = Student.objects.distinct('user_id').values_list('user_id', flat=True)
+    user_ids = Student.objects.exclude(status=Student.STATUS.graduate)\
+        .distinct('user_id').values_list('user_id', flat=True)
     user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
         .filter(id__in=user_ids)
     user_count = user_list.count()
@@ -67,6 +68,7 @@ def details(request, id):
         'title': 'User Detail',
         'student': user.get_student()
     }
+    print(user.get_student())
     return render(request, 'backoffice/users/details.html', context)
 
 
