@@ -46,7 +46,7 @@ def candidate_to_graduates(request, id):
     status = user.get_count_training_status()
     if user.indicator_reached(status):
         user.save_training_status_to_log()
-        Graduate.objects.create(user=user)
+        Graduate.objects.create(user=user, student=user.get_student())
 
         student = user.get_student()
         student.status = Student.STATUS.graduate
@@ -58,3 +58,15 @@ def candidate_to_graduates(request, id):
 
     messages.warning(request, f'{user.name} belum memenuhi indikator kelulusan')
     return redirect('backoffice:graduates:candidates')
+
+
+def details(request, id):
+    graduate = get_object_or_404(Graduate, id=id)
+
+    context = {
+        'graduate': graduate,
+        'user': graduate.user,
+        'title': 'Profil Lulusan',
+        'student': graduate.student
+    }
+    return render(request, 'backoffice/graduates/details.html', context)

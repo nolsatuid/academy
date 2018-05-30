@@ -68,7 +68,6 @@ def details(request, id):
         'title': 'User Detail',
         'student': user.get_student()
     }
-    print(user.get_student())
     return render(request, 'backoffice/users/details.html', context)
 
 

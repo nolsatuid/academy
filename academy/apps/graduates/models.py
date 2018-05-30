@@ -8,6 +8,7 @@ from model_utils.fields import AutoCreatedField
 class Graduate(models.Model):
     certificate_number = models.CharField(max_length=200, blank=True, null=True)
     user = models.ForeignKey('accounts.User', related_name='graduates')
+    student = models.OneToOneField('students.Student', null=True)
     created = AutoCreatedField()
 
     def __str__(self):
