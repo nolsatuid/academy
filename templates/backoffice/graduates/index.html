@@ -34,7 +34,7 @@
                                 <td>{{ graduate.user.email }}</td>
                                 <td>{{ graduate.user.phone|default_if_none:"-" }}</td>
                                 <td>
-                                    <a href="{% url 'backoffice:users:details' graduate.user.id %}">Detail</a>
+                                    <a href="{% url 'backoffice:graduates:details' graduate.id %}">Detail</a>
                                 </td>
                             </tr>
                         {% endfor %}
