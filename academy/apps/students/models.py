@@ -35,13 +35,19 @@ class Student(models.Model):
         if self.status == self.STATUS.participants:
             template = 'emails/change_to_participant.html'
             title = 'Selamat, Anda menjadi peserta'
+        elif self.status == self.STATUS.graduate:
+            template = 'emails/change_to_graduate.html'
+            title = 'Selamat, Anda lulus'       
         else:
             return
 
+        status = self.user.get_count_training_status()
         data = {
             'host': settings.HOST,
             'user': self.user,
-            'email_title': title
+            'email_title': title,
+            'graduate': status['graduate'],
+            'indicator': settings.INDICATOR_GRADUATED
         }
 
         send = mail.send(
