@@ -42,6 +42,9 @@
                 </ul>
             </li> -->
             <li><hr></li>
+            {% if user.is_staff == True %}
+            <li><a href="{% url 'backoffice:index' %}"><i class="fa fa-fw fa-user-cog"></i> Backoffice </a></li>
+            {% endif %}
             <li><a href="{% url 'website:accounts:logout' %}"><i class="fa fa-fw fa-sign-out-alt"></i> Keluar </a></li>
 
         </ul>
