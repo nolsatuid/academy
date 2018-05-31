@@ -10,7 +10,7 @@ def index(request):
 
 def faq(request):
     context = {
-        'title': 'Tilil'
+        'title': 'Tilil (Q&A)'
     }
     return render(request, 'website/faq.html', context)
 
