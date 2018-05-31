@@ -47,7 +47,7 @@ class Student(models.Model):
             'user': self.user,
             'email_title': title,
             'graduate': status['graduate'],
-            'indicators': settings.INDICATOR_GRADUATED
+            'indicator': settings.INDICATOR_GRADUATED
         }
 
         send = mail.send(

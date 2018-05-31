@@ -52,7 +52,7 @@ def candidate_to_graduates(request, id):
         student.status = Student.STATUS.graduate
         student.save(update_fields=['status'])
         student.notification_status()
-        user.delete_training()
+        user.delete_training_status()
 
         messages.success(request, f'Berhasil proses {user.name} menjadi lulusan')
         return redirect('backoffice:graduates:index')

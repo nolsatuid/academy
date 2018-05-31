@@ -115,7 +115,7 @@ class User(AbstractUser):
             ) for training in self.training_status.select_related('training_material')
         ])
 
-    def delete_training(self):
+    def delete_training_status(self):
         self.training_status.all().delete()
 
 
