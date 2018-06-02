@@ -18,7 +18,7 @@ from model_utils import Choices
 class BaseFilterForm(forms.Form):
 
     name = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'Cari berdasarkan nama'}),
+        widget=forms.TextInput(attrs={'placeholder': 'Cari: nama/username'}),
         required=False
     )
     start_date = forms.DateField(
@@ -30,11 +30,10 @@ class BaseFilterForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': 'Tanggal Akhir'}),
     )
     STATUS = Choices (
-        (0, 'none', '-- Pilih --'),
+        ('', 'none', '-- Pilih --'),
         (1, 'selection', 'Seleksi'),
         (2, 'participants', 'Peserta'),
         (3, 'repeat', 'Mengulang'),
-        (4, 'graduate', 'Lulus')
     )
     status = forms.ChoiceField(choices=STATUS, required=False, label="Status")
     batch = forms.ModelChoiceField(
@@ -77,13 +76,13 @@ class BaseFilterForm(forms.Form):
         name = self.cleaned_data['name']
         batch = self.cleaned_data['batch']
 
-        students = Student.objects.filter(status=status)
+        students = Student.objects.exclude(status=Student.STATUS.graduate)
         if status:
             students = students.filter(status=status)
 
         if batch:
             students = students.filter(training=batch)
-
+        print(students)
         user_ids = students.distinct('user_id') \
             .values_list('user_id', flat=True)
         users = User.objects.filter(id__in=user_ids).exclude(is_superuser=True).exclude(is_staff=True)
@@ -93,7 +92,8 @@ class BaseFilterForm(forms.Form):
             users = users.filter(date_joined__range=(start, end))
 
         if name:
-            users = users.filter(Q(first_name__icontains=name) | Q(last_name__icontains=name))
+            users = users.filter(Q(first_name__icontains=name) | Q(last_name__icontains=name) |
+                                 Q(username__icontains=name))
 
         self.users = users
         return self.users
