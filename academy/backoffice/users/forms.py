@@ -102,12 +102,12 @@ class BaseFilterForm(forms.Form):
         csv_buffer = StringIO()
         writer = csv.writer(csv_buffer)
         writer.writerow([
-            'ID', 'Name', 'Email', 'No. Ponsel', 'Status'
+            'ID', 'Name', 'Username', 'Email', 'No. Ponsel', 'Status'
         ])
 
         for user in self.users:
             writer.writerow([
-                user.id, user.name, user.email, user.phone,
+                user.id, user.name, user.username, user.email, user.phone,
                 status_to_display(get_status_student(user))
             ])
         return csv_buffer
