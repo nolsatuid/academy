@@ -13,6 +13,7 @@ class TrainingMaterialAdmin(admin.ModelAdmin):
 
 class TrainingStatusAdmin(admin.ModelAdmin):
     list_display = ('training_material', 'status', 'user')
+    search_fields = ('user__username', 'user__email', 'training_material__code')
 
 
 admin.site.register(Training)
