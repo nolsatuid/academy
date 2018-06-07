@@ -1,0 +1,49 @@
+{% extends 'backoffice/base.html' %}
+{% load form_tags tags_students %}
+
+{% block content-dashboard %}
+<div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">
+                {{ title }}
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row-fluid">
+                <div class="row">
+                    <div class=" col-md-12 col-lg-12 ">
+                        <h5>{{ title_extra }}</h5>
+                    </div>
+                    <div class=" col-md-12 col-lg-12 ">
+                        <div class="tab-content">
+
+                            <form action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                {{ form.non_field_errors }}
+                                {% for field in form %}
+                                    <div class="form-group col-md-12">
+                                        <label class="pull-left">{{ field.label }}</label>
+
+                                        {{ field|addclass:"form-control" }}
+                                        <span class="help_text">
+                                            {{ field.help_text|safe }}
+                                        </span>
+                                        {{ field.errors }}
+                                    </div>
+                                {% endfor %}
+
+                                <div class="form-group col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-pill"/>Kirim</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+</div>
+{% endblock %}
