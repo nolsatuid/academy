@@ -29,7 +29,14 @@
             <li><a href="{% url 'backoffice:users:participants' %}"><i class="fa fa-fw fa-address-card"></i> Data Peserta </a></li>
             <li><a href="{% url 'backoffice:users:batch_training' %}"><i class="fa fa-fw fa-certificate "></i> Angkatan </a></li>
             <li><a href="{% url 'backoffice:training_materials:index' %}"><i class="fa fa-fw fa-book "></i> Materi Pelatihan </a></li>
-            <li><a href="{% url 'backoffice:graduates:index' %}"><i class="fa fa-graduation-cap "></i> Data Lulusan </a></li>
+            <li>
+                <a href="#graduted" data-toggle="collapse"><i class="fa fa-fw fa-address-card"></i> Lulusan</a>
+                <ul id="graduted" class="list-unstyled collapse">
+                    <li><a href="{% url 'backoffice:graduates:index' %}">Data Lulusan</a></li>
+                    <li><a href="{% url 'backoffice:graduates:candidates' %}">Calon lulusan</a></li>
+                    <li><a href="{% url 'backoffice:graduates:participants_repeat' %}">Peserta Mengulang</a></li>
+                </ul>
+            </li>
             <li><hr></li>
             <li><a href="{% url 'website:accounts:logout' %}"><i class="fa fa-fw fa-sign-out-alt"></i> Keluar </a></li>
             <!-- <li>

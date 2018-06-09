@@ -82,7 +82,7 @@ class BaseFilterForm(forms.Form):
 
         if batch:
             students = students.filter(training=batch)
-        print(students)
+
         user_ids = students.distinct('user_id') \
             .values_list('user_id', flat=True)
         users = User.objects.filter(id__in=user_ids).exclude(is_superuser=True).exclude(is_staff=True)

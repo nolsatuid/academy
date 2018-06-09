@@ -6,6 +6,7 @@ from django.db import transaction
 from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial
 from academy.apps.accounts.models import User
+from .forms import ParticipantsRepeatForm
 
 
 def index(request):
@@ -71,3 +72,17 @@ def details(request, id):
         'student': graduate.student
     }
     return render(request, 'backoffice/graduates/details.html', context)
+
+
+def participants_repeat(request):
+    form = ParticipantsRepeatForm(request.POST or None)
+
+    if form.is_valid():
+        sent = form.send_notification()
+        messages.warning(request, f'{sent} pemberitahuan berhasil dikirim')
+
+    context = {
+        'title': 'Peserta mengulang',
+        'form': form
+    }
+    return render(request, 'backoffice/graduates/participants_repeat.html', context)
