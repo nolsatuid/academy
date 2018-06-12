@@ -204,7 +204,7 @@ class TrainingForm(forms.ModelForm):
             'start_date': 'Boleh kosong',
             'end_date': 'Boleh kosong',
             'materials': ('Gunakan tombol shift/ctrl untuk memilih '
-                          'beberapa materi segaligus')
+                          'beberapa materi sekaligus')
         }
 
 
