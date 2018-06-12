@@ -140,7 +140,8 @@ def change_to_participant(request, id):
 @staff_member_required
 def status_training(request, id):
     user = get_object_or_404(User, id=id)
-    training_materials = TrainingMaterial.objects.prefetch_related('training_status')
+    student = user.get_student()
+    training_materials = student.training.materials.prefetch_related('training_status')
 
     ChangeStatusFormSet = formset_factory(ChangeStatusTraining, formset=BaseStatusTrainingFormSet)
 
@@ -182,7 +183,27 @@ def batch_training(request):
 
     context = {
         'form': form,
-        'title': 'Angkatan',
+        'title': 'Tambah Angkatan',
+        'trainings': trainings
+    }
+
+    return render(request, 'backoffice/form-batch-training.html', context)
+
+
+@staff_member_required
+def edit_batch_training(request, id):
+    training = get_object_or_404(Training, id=id)
+    form = TrainingForm(data=request.POST or None, instance=training)
+    trainings = Training.objects.order_by('batch')
+
+    if form.is_valid():
+        training = form.save()
+        messages.success(request, f'Pelatihan Angkatan {training.batch} telah di ubah')
+        return redirect('backoffice:users:batch_training')
+
+    context = {
+        'form': form,
+        'title': 'Edit Angkatan',
         'trainings': trainings
     }
 
