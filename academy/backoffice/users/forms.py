@@ -189,9 +189,10 @@ class TrainingForm(forms.ModelForm):
 
     class Meta:
         model = Training
-        fields = ('batch', 'start_date', 'end_date')
+        fields = ('batch', 'materials', 'start_date', 'end_date')
         labels = {
             'batch': 'Angkatan',
+            'materials': 'Materi Pelatihan',
             'start_date': 'Tanggal Mulai',
             'end_date': 'Tanggal Akhir'
         }
@@ -202,6 +203,8 @@ class TrainingForm(forms.ModelForm):
         help_texts = {
             'start_date': 'Boleh kosong',
             'end_date': 'Boleh kosong',
+            'materials': ('Gunakan tombol shift/ctrl untuk memilih '
+                          'beberapa materi segaligus')
         }
 
 

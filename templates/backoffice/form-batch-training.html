@@ -21,17 +21,19 @@
                                     <td>Angkatan</td>
                                     <td>Tanggal Mulai</td>
                                     <td>Tanggal Akhir</td>
+                                    <td>Aksi</td>
                                 </tr>
                                 {% for training in trainings %}
                                 <tr>
                                     <td>{{ training.batch }}</td>
                                     <td>{{ training.start_date|default:'-' }}</td>
                                     <td>{{ training.end_date|default:'-' }}</td>
+                                    <td><a href="{% url 'backoffice:users:edit_batch_training' training.id %}">edit</a></td>
                                 </tr>
                                 {% endfor %}
                             </table>
                             <hr>
-                            <h5 class="mt-5">Tambah Angkatan</h5>
+                            <h5 class="mt-5">{{ title }}</h5>
                             <form action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
 

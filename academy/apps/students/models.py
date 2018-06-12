@@ -12,6 +12,8 @@ class Training(models.Model):
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    materials = models.ManyToManyField('TrainingMaterial', blank=True,
+                                       related_name='trainings')
 
     def __str__(self):
         return f"Batch {self.batch}"
