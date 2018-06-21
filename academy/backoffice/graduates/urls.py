@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^candidate-to-graduates/(?P<id>\d+)$', views.candidate_to_graduates, name='candidate_to_graduates'),
     url(r'^details/(?P<id>\d+)$', views.details, name='details'),
     url(r'^participants-repeat/$', views.participants_repeat, name='participants_repeat'),
+    url(r'^status-training/(?P<id>\d+)/$', views.status_training,
+        name='status_training'),
 ]

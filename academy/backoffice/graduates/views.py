@@ -2,13 +2,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
 from django.db import transaction
+from django.contrib.admin.views.decorators import staff_member_required
+from django.forms import formset_factory
 
 from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial
 from academy.apps.accounts.models import User
+from academy.backoffice.users.forms import ChangeStatusTraining, BaseStatusTrainingFormSet
 from .forms import ParticipantsRepeatForm
 
 
+@staff_member_required
 def index(request):
     graduates = Graduate.objects.select_related('user')
 
@@ -19,6 +23,7 @@ def index(request):
     return render(request, 'backoffice/graduates/index.html', context)
 
 
+@staff_member_required
 def candidates(request):
     training_count = TrainingMaterial.objects.all().count()
     user_ids = Student.objects.filter(status=Student.STATUS.participants) \
@@ -41,6 +46,7 @@ def candidates(request):
     return render(request, 'backoffice/graduates/candidates.html', context)
 
 
+@staff_member_required
 @transaction.atomic
 def candidate_to_graduates(request, id):
     user = get_object_or_404(User, id=id)
@@ -62,6 +68,7 @@ def candidate_to_graduates(request, id):
     return redirect('backoffice:graduates:candidates')
 
 
+@staff_member_required
 def details(request, id):
     graduate = get_object_or_404(Graduate, id=id)
 
@@ -74,6 +81,7 @@ def details(request, id):
     return render(request, 'backoffice/graduates/details.html', context)
 
 
+@staff_member_required
 def participants_repeat(request):
     form = ParticipantsRepeatForm(request.POST or None)
 
@@ -86,3 +94,39 @@ def participants_repeat(request):
         'form': form
     }
     return render(request, 'backoffice/graduates/participants_repeat.html', context)
+
+
+@staff_member_required
+def status_training(request, id):
+    graduate = get_object_or_404(Graduate, id=id)
+    user = graduate.user
+    student = graduate.student
+    training_materials = student.training.materials.prefetch_related('training_status')
+
+    ChangeStatusFormSet = formset_factory(ChangeStatusTraining, formset=BaseStatusTrainingFormSet)
+
+    initial = [
+        {
+            'training_material': materi.id,
+            'status': materi.get_training_status(user).status \
+                if materi.get_training_status(user) else 1
+        }
+        for materi in training_materials
+    ]
+
+    formset = ChangeStatusFormSet(data=request.POST or None, initial=initial,
+                                  training_materials=training_materials)
+
+    if formset.is_valid():
+        formset.save(user)
+        user.notification_status_training(training_materials)
+        messages.success(request, f'Status Pelatihan {user.get_full_name()} berhasil disimpan')
+
+    context = {
+        'formset': formset,
+        'title': 'Daftar Pelatihan',
+        'training_materials': training_materials,
+        'student': student,
+        'user': user
+    }
+    return render(request, 'backoffice/form-change-status.html', context)
