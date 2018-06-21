@@ -2,13 +2,14 @@
 {% load form_tags %}
 
 {% block content-dashboard %}
-<div class="container">
+<div class="container-fluid">
     <div class="card">
         <div class="card-header">
             <h4 class="pull-left">{{ title }}</h4>
         </div>
         <div class="card-body">
-            <div class="datatable content table-responsive table-full-width">
+            <a href="{% url 'backoffice:instructors:add' %}" class="btn btn-primary btn-pill">Tambah Materi</a>
+            <div class="datatable content table-responsive table-full-width mt-3">
                 <table id="datatable" class="table table-striped">
                     <thead>
                         <th>Avatar</th>
@@ -25,7 +26,7 @@
                                 <td>{{ user.username }}</td>
                                 <td>{{ user.profile.specialization }}</td>
                                 <td>
-                                    <a href="{% url 'backoffice:users:details' user.id %}">Detail</a>
+                                    <a href="{% url 'backoffice:instructors:edit' user.pk %}">Edit</a>
                                 </td>
                             </tr>
                         {% endfor %}

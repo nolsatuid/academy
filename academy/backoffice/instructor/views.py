@@ -2,10 +2,10 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from academy.apps.accounts.models import User
-from academy.backoffice.instructor.forms import InstructorForm
+from academy.backoffice.instructor.forms import AddInstructorForm, EditInstructorForm
 
 
 @staff_member_required
@@ -20,7 +20,7 @@ def index(request):
 
 @staff_member_required
 def add(request):
-    form = InstructorForm(request.POST or None, request.FILES or None)
+    form = AddInstructorForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
         form.save()
@@ -52,3 +52,26 @@ def ajax_find_user(request):
     }
 
     return JsonResponse(data)
+
+
+@staff_member_required
+def edit(request, pk):
+    instructor = get_object_or_404(User, pk=pk)
+    form = EditInstructorForm(request.POST or None, request.FILES or None, initial={
+        'instructor': f'{instructor.name} ({instructor.email})',
+        'first_name': instructor.first_name,
+        'last_name': instructor.last_name,
+        'specialization': instructor.profile.specialization,
+        'avatar': instructor.profile.avatar
+    })
+
+    if form.is_valid():
+        form.save(instructor)
+        messages.success(request, 'Berhasil edit instruktur')
+        return redirect('backoffice:instructors:index')
+
+    context = {
+        'title': 'Edit Instruktur',
+        'form': form
+    }
+    return render(request, 'backoffice/form.html', context)
