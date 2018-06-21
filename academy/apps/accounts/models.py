@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from PIL import Image, ImageOps
 from django.conf import settings
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 from django.db.models import When, Case, Count, IntegerField
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import int_to_base36
 from django.template.loader import render_to_string
+from django.utils.six import StringIO
 
 from academy.core.utils import image_upload_path
 from academy.core.validators import validate_mobile_phone
@@ -128,7 +131,7 @@ class Profile(models.Model):
     )
     gender = models.PositiveIntegerField(choices=GENDER, blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
-    organization_name = models.CharField(max_length=200, blank=True, null=True)
+    specialization = models.CharField(max_length=200, blank=True, null=True)
     avatar = models.ImageField(upload_to=image_upload_path('avatar'), blank=True, null=True)
 
     # Social fields
@@ -143,3 +146,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
+        # Fit avatar to 200px x 200px
+        img = Image.open(self.avatar)
+        img = ImageOps.fit(img, (200, 200))
+        img.save(self.avatar.path)

@@ -1,0 +1,40 @@
+{% extends 'backoffice/base.html' %}
+{% load form_tags %}
+
+{% block content-dashboard %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">{{ title }}</h4>
+        </div>
+        <div class="card-body">
+            <div class="datatable content table-responsive table-full-width">
+                <table id="datatable" class="table table-striped">
+                    <thead>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Specialization</th>
+                        <th>Aksi</th>
+                    </thead>
+                    <tbody>
+                        {% for user in instructors %}
+                            <tr>
+                                <td width="20%"><img src="{{ user.profile.avatar.url }}" class="img-fluid rounded-circle" /></td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.profile.specialization }}</td>
+                                <td>
+                                    <a href="{% url 'backoffice:users:details' user.id %}">Detail</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+    </div>
+</div>
+{% endblock %}

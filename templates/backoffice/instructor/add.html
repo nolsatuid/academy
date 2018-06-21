@@ -1,0 +1,29 @@
+{% extends 'backoffice/form.html' %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+           $('#id_instructor').select2({
+               ajax: {
+                   url: '{% url 'backoffice:instructors:ajax_find_user' %}',
+                   dataType: 'json',
+                   processResults: function (data, params) {
+                       console.log(data);
+                       return {
+                           results: data.users.map(function (it) {
+                               return {
+                                   id: it.id,
+                                   text: it.name + ' (' + it.email + ')'
+                               }
+                           })
+                       };
+                   },
+                   cache: true
+               },
+               placeholder: 'Cari User',
+               minimumInputLength: 1,
+           });
+        });
+    </script>
+{% endblock %}

@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^training-materials/', include('academy.backoffice.training_materials.urls',
                                          namespace='training_materials')),
     url(r'graduates/', include('academy.backoffice.graduates.urls', namespace='graduates')),
+    url(r'instructors/', include('academy.backoffice.instructor.urls', namespace='instructors'))
 ]
