@@ -6,7 +6,7 @@ from academy.core.widget import AjaxSelect
 
 class AjaxModelChoiceField(forms.ChoiceField):
     """ An Ajax choice field that can get model from which item is selected
-    Ajax response must follow:
+    Ajax response must at least have:
     data: [
         {
             id: 1,

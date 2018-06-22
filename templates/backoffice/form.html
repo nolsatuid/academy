@@ -66,14 +66,9 @@
                     ajax: {
                         url: widget.data('url'),
                         dataType: 'json',
-                        processResults: function (data, params) {
+                        processResults: function (data) {
                             return {
-                                results: data.data.map(function (it) {
-                                    return {
-                                        id: it.id,
-                                        text: it.text
-                                    }
-                                })
+                                results: data.data
                             };
                         },
                         cache: true

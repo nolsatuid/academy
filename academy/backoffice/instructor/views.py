@@ -31,7 +31,7 @@ def add(request):
         'title': 'Tambah Instruktur',
         'form': form
     }
-    return render(request, 'backoffice/form.html', context)
+    return render(request, 'backoffice/instructor/add.html', context)
 
 
 @staff_member_required
@@ -46,6 +46,9 @@ def ajax_find_user(request):
             {
                 'id': user.id,
                 'text': f'{user.name} ({user.email})',
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'linked_in': user.profile.linkedin if hasattr(user, 'profile') else None
             } for user in users
         ]
     }
@@ -60,6 +63,7 @@ def edit(request, id):
         'instructor': f'{instructor.name} ({instructor.email})',
         'first_name': instructor.first_name,
         'last_name': instructor.last_name,
+        'linked_in': instructor.profile.linkedin,
         'specialization': instructor.profile.specialization,
         'avatar': instructor.profile.avatar
     })
