@@ -3,11 +3,11 @@
 
 {% block extra_css %}
     {{ block.super }}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block content-dashboard %}
-<div class="card">
+    <div class="card">
         <div class="card-header">
             <h4 class="pull-left">
                 {{ title }}
@@ -39,7 +39,8 @@
                                 {% endfor %}
 
                                 <div class="form-group col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-pill"/>Simpan</button>
+                                    <button type="submit" class="btn btn-primary btn-pill"/>
+                                    Simpan</button>
                                 </div>
 
                             </form>
@@ -50,10 +51,37 @@
         </div>
         <div class="card-footer"></div>
 
-</div>
+    </div>
 {% endblock %}
 
 {% block extra_js %}
     {{ block.super }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select').each(function (index) {
+                var widget = $(this);
+                if (!widget.data('isajax')) return;
+                widget.select2({
+                    ajax: {
+                        url: widget.data('url'),
+                        dataType: 'json',
+                        processResults: function (data, params) {
+                            return {
+                                results: data.data.map(function (it) {
+                                    return {
+                                        id: it.id,
+                                        text: it.text
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                    placeholder: 'Cari User',
+                    minimumInputLength: 1,
+                });
+            });
+        });
+    </script>
 {% endblock %}

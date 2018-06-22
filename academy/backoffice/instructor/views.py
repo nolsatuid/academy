@@ -31,7 +31,7 @@ def add(request):
         'title': 'Tambah Instruktur',
         'form': form
     }
-    return render(request, 'backoffice/instructor/add.html', context)
+    return render(request, 'backoffice/form.html', context)
 
 
 @staff_member_required
@@ -42,12 +42,11 @@ def ajax_find_user(request):
     ).exclude(role=User.ROLE.trainer)
 
     data = {
-        'users': [
+        'data': [
             {
-                'id': obj.id,
-                'name': obj.name,
-                'email': obj.email
-            } for obj in users
+                'id': user.id,
+                'text': f'{user.name} ({user.email})',
+            } for user in users
         ]
     }
 

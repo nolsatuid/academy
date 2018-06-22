@@ -148,7 +148,7 @@ class Profile(models.Model):
         return self.user.username
 
     def save(self, *args, **kwargs):
-        super(Profile, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         if self.avatar:
             # Fit avatar to 200px x 200px
             img = Image.open(self.avatar)
