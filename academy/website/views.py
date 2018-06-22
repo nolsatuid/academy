@@ -1,9 +1,12 @@
 from django.shortcuts import render
 
+from academy.apps.accounts.models import User
+
 
 def index(request):
     context = {
-        'title': 'Home'
+        'title': 'Home',
+        'instructors': User.objects.filter(role=User.ROLE.trainer),
     }
     return render(request, 'website/home.html', context)
 

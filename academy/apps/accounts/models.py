@@ -149,7 +149,8 @@ class Profile(models.Model):
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
-        # Fit avatar to 200px x 200px
-        img = Image.open(self.avatar)
-        img = ImageOps.fit(img, (200, 200))
-        img.save(self.avatar.path)
+        if self.avatar:
+            # Fit avatar to 200px x 200px
+            img = Image.open(self.avatar)
+            img = ImageOps.fit(img, (200, 200))
+            img.save(self.avatar.path)

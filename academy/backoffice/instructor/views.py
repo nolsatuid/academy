@@ -38,8 +38,8 @@ def add(request):
 def ajax_find_user(request):
     q = request.GET.get('q')
     users = User.objects.filter(
-        Q(first_name__contains=q) | Q(last_name__contains=q) | Q(email__contains=q) & Q(role=None)
-    )
+        Q(first_name__contains=q) | Q(last_name__contains=q) | Q(email__contains=q)
+    ).exclude(role=User.ROLE.trainer)
 
     data = {
         'users': [
