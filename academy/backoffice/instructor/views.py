@@ -54,8 +54,8 @@ def ajax_find_user(request):
 
 
 @staff_member_required
-def edit(request, pk):
-    instructor = get_object_or_404(User, pk=pk)
+def edit(request, id):
+    instructor = get_object_or_404(User, id=id)
     form = EditInstructorForm(request.POST or None, request.FILES or None, initial={
         'instructor': f'{instructor.name} ({instructor.email})',
         'first_name': instructor.first_name,

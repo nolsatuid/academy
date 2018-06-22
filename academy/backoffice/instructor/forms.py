@@ -16,7 +16,7 @@ class BaseInstructorForm(forms.Form):
     avatar = forms.ImageField(label='Avatar', required=True, widget=ImagePreviewFileInput)
 
     def save(self, instructor=None):
-        if instructor is not None:
+        if instructor:
             first_name = self.cleaned_data['first_name']
             last_name = self.cleaned_data['last_name']
             specialization = self.cleaned_data['specialization']
