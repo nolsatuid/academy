@@ -1,0 +1,15 @@
+{% extends 'backoffice/form.html' %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_instructor').on('select2:select', function (e) {
+                var data = e.params.data;
+                $('#id_first_name').val(data.first_name);
+                $('#id_last_name').val(data.last_name);
+                $('#id_linked_in').val(data.linked_in);
+            });
+        });
+    </script>
+{% endblock %}

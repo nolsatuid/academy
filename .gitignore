@@ -16,3 +16,7 @@ logs/*
 db.sqlite3
 *.sqlite*
 *.cpython-*
+
+# IDE Setting
+.idea/*
+.vscode/*
