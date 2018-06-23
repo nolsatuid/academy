@@ -16,11 +16,12 @@ class AjaxModelChoiceField(forms.ChoiceField):
     """
     widget = AjaxSelect()
 
-    def __init__(self, model, url, *args, **kwargs):
+    def __init__(self, model, url, placeholder="", *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.model = model
         self.url = url
         self.widget.url = self.url
+        self.widget.placeholder = placeholder
 
     def to_python(self, value):
         if value in self.empty_values:

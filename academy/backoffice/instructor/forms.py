@@ -7,11 +7,11 @@ from academy.core.widget import ImagePreviewFileInput
 
 
 class BaseInstructorForm(forms.Form):
-    first_name = forms.CharField(label='Nama Awal', required=True)
-    last_name = forms.CharField(label='Nama Akhir', required=True)
-    linked_in = forms.CharField(label='LinkedIn', required=True)
-    specialization = forms.CharField(label='Spesialisasi', required=True)
-    avatar = forms.ImageField(label='Avatar', required=True, widget=ImagePreviewFileInput)
+    first_name = forms.CharField(label='Nama Awal')
+    last_name = forms.CharField(label='Nama Akhir')
+    linked_in = forms.URLField(label='LinkedIn')
+    specialization = forms.CharField(label='Spesialisasi')
+    avatar = forms.ImageField(label='Avatar', widget=ImagePreviewFileInput)
 
     def save(self, instructor=None):
         if instructor:
@@ -37,9 +37,10 @@ class BaseInstructorForm(forms.Form):
 
 
 class AddInstructorForm(BaseInstructorForm):
-    instructor = AjaxModelChoiceField(model=User, required=True,
+    instructor = AjaxModelChoiceField(model=User,
                                       url=reverse_lazy('backoffice:instructors:ajax_find_user'),
-                                      label='Instruktur')
+                                      label='Instruktur',
+                                      placeholder="Pilih User")
 
     field_order = ['instructor']
 

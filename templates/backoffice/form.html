@@ -59,7 +59,7 @@
     <script src="{% static 'website/js/select2.min.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('select').each(function (index) {
+            $('select').each(function () {
                 var widget = $(this);
                 if (!widget.data('isajax')) return;
                 widget.select2({
@@ -73,7 +73,7 @@
                         },
                         cache: true
                     },
-                    placeholder: 'Cari User',
+                    placeholder: widget.data('placeholder'),
                     minimumInputLength: 1,
                 });
             });

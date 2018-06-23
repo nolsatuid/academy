@@ -11,8 +11,10 @@ class AjaxSelect(forms.Select):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.url = None
+        self.placeholder = ""
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
         context['widget']['url'] = self.url
+        context['widget']['placeholder'] = self.placeholder
         return context
