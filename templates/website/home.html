@@ -174,7 +174,9 @@
     </div>
     <!-- / Our Services Section -->
 
-    {% include 'website/instructor.html' %}
+    {% if instructors %}
+        {% include 'website/instructor.html' %}
+    {% endif %}
 
     <!-- Subscribe Section -->
     <div id="hubungi-kami" class="subscribe section bg-dark py-4">

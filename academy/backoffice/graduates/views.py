@@ -31,16 +31,25 @@ def candidates(request):
 
     users = User.objects.filter(id__in=user_ids)
 
-    user_cantidates = []
+    cantidate_graduates = []
+    cantidate_repeats = []
     for user in users:
         status = user.get_count_training_status()
-        if user.indicator_reached(status):
-            user_cantidates.append(user)
+        if status['graduate'] >= settings.INDICATOR_GRADUATED:
+            if user.indicator_reached(status):
+                user.is_graduate = True
+            else:
+                user.is_graduate = False
+            cantidate_graduates.append(user)
+        elif status['repeat'] >= settings.INDICATOR_REPEATED:
+            cantidate_repeats.append(user)
 
     context = {
-        'title': 'Calon Lulusan',
-        'users': user_cantidates,
+        'title': 'Kandidat',
+        'cantidate_graduates': cantidate_graduates,
+        'cantidate_repeats': cantidate_repeats,
         'indicator': settings.INDICATOR_GRADUATED,
+        'repeat_indicator': settings.INDICATOR_REPEATED,
         'training_count': training_count
     }
     return render(request, 'backoffice/graduates/candidates.html', context)

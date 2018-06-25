@@ -156,6 +156,7 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
 
 INDICATOR_GRADUATED = 6
+INDICATOR_REPEATED = 3
 
 try:
     from .local_settings import *
