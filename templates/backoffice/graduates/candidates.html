@@ -8,9 +8,11 @@
             <h4 class="pull-left">{{ title }}</h4>
         </div>
         <div class="card-body">
-            {% if users %}
-            <p class="font-italic">Berikut daftar peserta yang sudah memenuhi indikator kelulusan dengan minimum {{ indicator }} materi lulus dari {{ training_count }} materi pelatihan</p>
-            <p>Total data <span class="badge badge-primary">{{ users|length }}</span></p>
+            <p class="font-italic">Berikut daftar peserta yang sudah memenuhi indikator kelulusan dengan minimum {{ indicator }} materi lulus dari {{ training_count }} materi pelatihan
+                dan peserta yang terindikasi mengulang karena terdapat {{ repeat_indicator }} materi dengan status ulang
+            </p>
+            <h4>Calon Lulusan</h4>
+            <p>Total data <span class="badge badge-primary">{{ cantidate_graduates|length }}</span></p>
             <div class="datatable content table-responsive table-full-width">
                 <table id="datatable" class="table table-striped">
                     <thead>
@@ -21,7 +23,7 @@
                         <th>Aksi</th>
                     </thead>
                     <tbody>
-                        {% for user in users %}
+                        {% for user in cantidate_graduates %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
@@ -33,10 +35,18 @@
                                         <a href="{% url 'backoffice:users:status_training' user.id %}" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Detail status pelatihan">
                                             <i class="fa fa-address-card"></i>
                                         </a>
-                                        <button class="btn btn-secondary" data-toggle="modal"
-                                            data-target="#userID-{{ user.id }}">
-                                            <i class="fa fa-graduation-cap "></i>
-                                        </button>
+
+                                        {% if user.is_graduate %}
+                                            <button class="btn btn-secondary" data-toggle="modal"
+                                                data-target="#userID-{{ user.id }}">
+                                                <i class="fa fa-graduation-cap "></i>
+                                            </button>
+                                        {% else %}
+                                            <button class="btn btn-default" data-toggle="tooltip" 
+                                                data-placement="top" title="Belum menyelesaikan semua materi">
+                                                <i class="fa fa-graduation-cap "></i>
+                                            </button>
+                                        {% endif %}
                                     </div>
 
                                     <!-- Modal confirmation -->
@@ -65,9 +75,39 @@
                     </tbody>
                 </table>
             </div>
-            {% else %}
-            <h3>Tidak ada data</h3>
-            {% endif %}
+
+            <hr>
+            <h4>Calon Mengulang</h4>
+            <p>Total data <span class="badge badge-primary">{{ cantidate_repeats|length }}</span></p>
+            <div class="datatable content table-responsive table-full-width">
+                <table id="datatable" class="table table-striped">
+                    <thead>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>No. Ponsel</th>
+                        <th>Aksi</th>
+                    </thead>
+                    <tbody>
+                        {% for user in cantidate_repeats %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    <a href="{% url 'backoffice:users:details' user.id %}">{{ user.name }}</a></td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone|default_if_none:"-" }}</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="{% url 'backoffice:users:status_training' user.id %}" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Detail status pelatihan">
+                                            <i class="fa fa-address-card"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="card-footer"></div>
     </div>
