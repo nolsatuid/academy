@@ -23,3 +23,11 @@ def home(request):
         'title': 'Home 2'
     }
     return render(request, 'website/home2.html', context)
+
+
+def error_404(request):
+    return render(request, '404.html', {})
+
+
+def error_500(request):
+    return render(request, '500.html', {})
