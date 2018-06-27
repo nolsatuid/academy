@@ -19,15 +19,15 @@
                         <th>Aksi</th>
                     </thead>
                     <tbody>
-                        {% for user in instructors %}
+                        {% for instructor in instructors %}
                             <tr>
-                                <td width="20%"><img src="{{ user.profile.avatar.url }}" class="img-fluid rounded-circle" /></td>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.username }}</td>
-                                <td>{{ user.profile.specialization }}</td>
+                                <td width="20%"><img src="{{ instructor.user.profile.avatar.url }}" class="img-fluid rounded-circle" /></td>
+                                <td>{{ instructor.user.name }}</td>
+                                <td>{{ instructor.user.username }}</td>
+                                <td>{{ instructor.user.profile.specialization }}</td>
                                 <td>
-                                    <a class="btn btn-pill btn-secondary" href="{% url 'backoffice:instructors:edit' user.id %}">Edit</a>
-                                    <button class="btn btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:instructors:delete' user.id %}" data-user-name="{{user.name}}" >Hapus</button>
+                                    <a class="btn btn-pill btn-secondary" href="{% url 'backoffice:instructors:edit' instructor.id %}">Edit</a>
+                                    <button class="btn btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:instructors:delete' instructor.id %}" data-user-name="{{instructor.user.name}}" >Hapus</button>
                                 </td>
                             </tr>
                         {% endfor %}

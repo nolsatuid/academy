@@ -2,4 +2,5 @@
 <input type="checkbox" name="{{ checkbox_name }}" id="{{ checkbox_id }}" />
 <label for="{{ checkbox_id }}">{{ clear_checkbox_label }}</label>{% endif %}<br />
 {{ input_text }}:{% endif %}
+<img class="img-thumbnail my-1" style="visibility: hidden" id="preview_{{ widget.name }}" src="" />
 <input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} />

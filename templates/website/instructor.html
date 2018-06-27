@@ -10,11 +10,11 @@
                 <div class="col">
                     <div class="slider instructor-slider">
                         {% for instructor in instructors %}
-                           <div class="card text-center mx-2 my-5" style="height:550px">
-                            <img class="card-img-top rounded-circle img-fluid p-4" src="{{ instructor.profile.avatar.url }}">
+                           <div class="card text-center mx-2 my-5" style="min-height:550px">
+                            <img class="card-img-top rounded-circle img-fluid p-4" src="{{ instructor.user.profile.avatar.url }}">
                             <div class="card-body">
-                                <h5 class="card-title">{{ instructor.name }}</h5>
-                                <p class="card-text">{{ instructor.profile.specialization }}</p>
+                                <h5 class="card-title">{{ instructor.user.name }}</h5>
+                                <p class="card-text">{{ instructor.user.profile.specialization }}</p>
                                 <a href=""><img class="d-inline-block" width="24" height="24" src="{% static 'website/images/icon/linkedin.ico' %}" alt=""></a>
                             </div>
                         </div>
