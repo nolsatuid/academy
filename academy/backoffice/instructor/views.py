@@ -78,3 +78,12 @@ def edit(request, id):
         'form': form
     }
     return render(request, 'backoffice/form.html', context)
+
+
+@staff_member_required
+def delete(request, id):
+    instructor = get_object_or_404(User, id=id)
+    instructor.role = None
+    instructor.save()
+    messages.success(request, 'Berhasil hapus instruktur')
+    return redirect('backoffice:instructors:index')
