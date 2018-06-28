@@ -4,13 +4,13 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from academy.apps.accounts.models import User
+from academy.apps.accounts.models import User, Instructor
 from academy.backoffice.instructor.forms import AddInstructorForm, EditInstructorForm
 
 
 @staff_member_required
 def index(request):
-    instructors = User.objects.filter(role=User.ROLE.trainer)
+    instructors = Instructor.objects.order_by('order')
     context = {
         'title': 'Instruktur',
         'instructors': instructors
@@ -48,7 +48,9 @@ def ajax_find_user(request):
                 'text': f'{user.name} ({user.email})',
                 'first_name': user.first_name,
                 'last_name': user.last_name,
-                'linked_in': user.profile.linkedin if hasattr(user, 'profile') else None
+                'linked_in': user.profile.linkedin if hasattr(user, 'profile') else None,
+                'specialization': user.profile.specialization if hasattr(user, 'profile') else None,
+                'avatar': user.profile.avatar.url if hasattr(user, 'profile') and user.profile.avatar else None
             } for user in users
         ]
     }
@@ -58,18 +60,18 @@ def ajax_find_user(request):
 
 @staff_member_required
 def edit(request, id):
-    instructor = get_object_or_404(User, id=id)
+    instructor = get_object_or_404(Instructor, id=id)
     form = EditInstructorForm(request.POST or None, request.FILES or None, initial={
-        'instructor': f'{instructor.name} ({instructor.email})',
-        'first_name': instructor.first_name,
-        'last_name': instructor.last_name,
-        'linked_in': instructor.profile.linkedin,
-        'specialization': instructor.profile.specialization,
-        'avatar': instructor.profile.avatar
+        'user': f'{instructor.user.name} ({instructor.user.email})',
+        'first_name': instructor.user.first_name,
+        'last_name': instructor.user.last_name,
+        'linked_in': instructor.user.profile.linkedin,
+        'specialization': instructor.user.profile.specialization,
+        'avatar': instructor.user.profile.avatar
     })
 
     if form.is_valid():
-        form.save(instructor)
+        form.save(instructor.user)
         messages.success(request, 'Berhasil edit instruktur')
         return redirect('backoffice:instructors:index')
 
@@ -78,3 +80,13 @@ def edit(request, id):
         'form': form
     }
     return render(request, 'backoffice/form.html', context)
+
+
+@staff_member_required
+def delete(request, id):
+    instructor = get_object_or_404(Instructor, id=id)
+    instructor.user.role = None
+    instructor.user.save()
+    instructor.delete()
+    messages.success(request, 'Berhasil hapus instruktur')
+    return redirect('backoffice:instructors:index')

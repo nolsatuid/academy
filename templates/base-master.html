@@ -27,6 +27,10 @@
     <link rel="stylesheet" href="{% static 'website/css/flatpickr.min.css' %}">
     <script src="{% static 'website/js/flatpickr_id.js' %}"></script>
     <script src="{% static 'website/js/flatpickr.js' %}"></script>
+
+    <!-- slick -->
+    <link rel="stylesheet" href="{% static 'website/css/slick.min.css' %}">
+    <link rel="stylesheet" href="{% static 'website/css/slick-theme.css' %}">
     
     {% block extra_css %}{% endblock %}
 </head>
@@ -46,7 +50,7 @@
         </a>
         <a class="facebook mx-3 h4" href="https://www.facebook.com/nolsatuid" target="_blank">
             <i class="fab fa-facebook-f"></i>
-            <span class="sr-only">View our Facebook Profile <span>
+            <span class="sr-only">View our Facebook Profile </span>
         </a>
         <a class="github mx-3 h4" href="https://github.com/nolsatuid" target="_blank">
             <i class="fab fa-github"></i>
@@ -64,6 +68,8 @@
 <script src="{% static 'bootstrap-4/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'website/js/shards.min.js' %}"></script>
 <script src="{% static 'website/js/demo.js' %}"></script>
+
+<script src="{% static 'website/js/slick.min.js' %}"></script>
 <script src="{% static 'website/js/custom.js' %}"></script>
 
 {% block extra_js %}{% endblock %}

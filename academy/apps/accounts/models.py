@@ -154,3 +154,21 @@ class Profile(models.Model):
             img = Image.open(self.avatar)
             img = ImageOps.fit(img, (200, 200))
             img.save(self.avatar.path)
+
+
+class Instructor(models.Model):
+    user = models.OneToOneField('accounts.User', related_name='instructor')
+    order = models.IntegerField()
+
+    def __str__(self):
+        return self.user.username
+
+    def save(self, *args, **kwargs):
+        # increment order manually because django din't let us have multiple auto field
+        if not self.order:
+            last_order = Instructor.objects.order_by('-order').first()
+            self.order = 1
+            if last_order is not None:
+                self.order = last_order.order + 1
+
+        super().save(*args, **kwargs)

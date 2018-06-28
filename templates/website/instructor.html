@@ -1,24 +1,27 @@
 <!--Instructor Section -->
 {% load static %}
-<div id="perusahaan" class="section py-4">
+<div id="instruktur" class="section py-4">
     <h3 class="section-title text-center my-5">Instruktur</h3>
-    <h6 class="text-center text-muted">Profil instruktur</h6>
+    <h6 class="text-center text-muted">Profil instruktur NolSatu</h6>
     <!-- Features -->
     <div class="features py-4 mb-4">
         <div class="container">
             <div class="row">
-                {% for instructor in instructors %}
-                    <div class="col-md-3 mx-auto my-5">
-                        <div class="card text-center">
-                            <img class="p-4 card-img-top rounded-circle img-fluid" src="{{ instructor.profile.avatar.url }}" alt="Card image cap">
+                <div class="col">
+                    <div class="slider instructor-slider">
+                        {% for instructor in instructors %}
+                           <div class="card text-center mx-2 my-5" style="min-height:550px">
+                            <img class="card-img-top rounded-circle img-fluid p-4" src="{{ instructor.user.profile.avatar.url }}">
                             <div class="card-body">
-                                <h5 class="card-title">{{ instructor.name }}</h5>
-                                <p class="card-text"><span class="text-black font-weight-normal">Spesialisasi </span><br/> {{ instructor.profile.specialization }}</p>
-                                <a class="card-text" href="{{ instructor.profile.linkedin }}"><img width="24" height="24" src="{% static 'website/images/icon/linkedin.ico' %}" alt=""></a>
+                                <h5 class="card-title">{{ instructor.user.name }}</h5>
+                                <p class="card-text">{{ instructor.user.profile.specialization }}</p>
+                                <a href=""><img class="d-inline-block" width="24" height="24" src="{% static 'website/images/icon/linkedin.ico' %}" alt=""></a>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
+
             </div>
         </div>
     </div>

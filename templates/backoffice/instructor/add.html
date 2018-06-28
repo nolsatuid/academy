@@ -4,11 +4,20 @@
     {{ block.super }}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#id_instructor').on('select2:select', function (e) {
+            $('#id_user').on('select2:select', function (e) {
                 var data = e.params.data;
                 $('#id_first_name').val(data.first_name);
                 $('#id_last_name').val(data.last_name);
                 $('#id_linked_in').val(data.linked_in);
+                $('#id_specialization').val(data.specialization);
+                if (data.avatar) {
+                    $('#preview_avatar').css('visibility', 'visible');
+                    $('#preview_avatar').attr('src', data.avatar);
+                    $('#id_avatar').removeAttr('required');
+                } else {
+                    $('#preview_avatar').css('visibility', 'hidden');
+                    $('#preview_avatar').attr('src', '');
+                }
             });
         });
     </script>
