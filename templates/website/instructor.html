@@ -1,8 +1,8 @@
 <!--Instructor Section -->
 {% load static %}
 <div id="instruktur" class="section py-4">
-    <h3 class="section-title text-center my-5">Instruktur</h3>
-    <h6 class="text-center text-muted">Profil instruktur NolSatu</h6>
+    <h3 class="section-title text-center my-5">Profil Instruktur</h3>
+    <h6 class="text-center text-muted">Instruktur NolSatu</h6>
     <!-- Features -->
     <div class="features py-4 mb-4">
         <div class="container">
@@ -10,7 +10,7 @@
                 <div class="col">
                     <div class="slider instructor-slider">
                         {% for instructor in instructors %}
-                           <div class="card text-center mx-2 my-5" style="min-height:550px">
+                           <div class="card text-center mx-2 my-5">
                             <img class="card-img-top rounded-circle img-fluid p-4" src="{{ instructor.user.profile.avatar.url }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ instructor.user.name }}</h5>
