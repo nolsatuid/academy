@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 
 from academy.apps.accounts.models import User, Profile
 from academy.apps.students.models import Student
-from academy.core.validators import validate_email, validate_mobile_phone
+from academy.core.validators import validate_email, validate_mobile_phone, validate_username
 
 from post_office import mail
 
@@ -23,7 +23,7 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200)
-
+    
     class Meta:
         model = User
         fields = ('email', 'username', 'password1', 'password2')
@@ -31,6 +31,7 @@ class SignupForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = 'Username'
+        self.fields['username'].validators = [validate_username]
 
     def save(self, *args, **kwargs):
         user = super().save(commit=False)
