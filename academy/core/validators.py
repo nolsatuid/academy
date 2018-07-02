@@ -1,4 +1,4 @@
-import phonenumbers
+import phonenumbers, re
 from phonenumbers import phonenumberutil
 from id_phonenumbers import parse
 
@@ -21,6 +21,12 @@ def validate_email_address(email):
 
     if email.endswith('.'):
         raise ValidationError('Email cannot end with \'.\' (dot), please check again')
+    else:
+        return True
+
+def validate_username(email):
+    if not re.match(r'^[a-z0-9_.-]+$', email):
+        raise ValidationError('Masukkan nama pengguna yang valid. Nilai ini hanya boleh mengandung karakter huruf kecil, angka, dan karakter ./-/_')
     else:
         return True
 
