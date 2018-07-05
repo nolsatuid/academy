@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'academy.apps.logs',
     'academy.apps.graduates',
 
-    "post_office",
+    'post_office',
+    'django_extensions',
+
 ]
 
 MIDDLEWARE = [
