@@ -15,7 +15,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ instructor.user.name }}</h5>
                                 <p class="card-text">{{ instructor.user.profile.specialization }}</p>
-                                <a href=""><img class="d-inline-block" width="24" height="24" src="{% static 'website/images/icon/linkedin.ico' %}" alt=""></a>
+                                <a href="{{ instructor.user.profile.linkedin }}"><img class="d-inline-block" width="24" height="24" src="{% static 'website/images/icon/linkedin.ico' %}" alt=""></a>
                             </div>
                         </div>
                         {% endfor %}
