@@ -26,7 +26,13 @@
         <ul class="list-unstyled">
             <li><a href="{% url 'backoffice:index' %}"><i class="fa fa-fw fa-home"></i> Dasbor </a></li>
             <li><a href="{% url 'backoffice:users:index' %}"><i class="fa fa-fw fa-users"></i> Data Pengguna </a></li>
-            <li><a href="{% url 'backoffice:users:participants' %}"><i class="fa fa-fw fa-address-card"></i> Data Peserta </a></li>
+            <li>
+                <a href="#participants" data-toggle="collapse"><i class="fa fa-fw fa-address-card"></i> Peserta</a>
+                <ul id="participants" class="list-unstyled collapse">
+                    <li><a href="{% url 'backoffice:users:participants' %}"></i> Data Peserta </a></li>
+                    <li><a href="{% url 'backoffice:training_materials:bulk_training_status' %}">Status Pelatihan</a></li>
+                </ul>
+            </li>
             <li><a href="{% url 'backoffice:users:batch_training' %}"><i class="fa fa-fw fa-certificate "></i> Angkatan </a></li>
             <li><a href="{% url 'backoffice:training_materials:index' %}"><i class="fa fa-fw fa-book "></i> Materi Pelatihan </a></li>
             <li>
