@@ -27,6 +27,14 @@
             Selamat mengikuti pelatihan NolSatu.
         </p>
         <a href="{% url 'website:accounts:trainings:materials' %}" class="btn btn-primary">Lihat daftar pelatihan</a>
+    {% elif student.status|status_display == 'lulus' %}
+        <h3>Halo {{ student.user.name }},</h3>
+        <p>
+            Selamat, Anda telah berhasil menyelesaikan persyaratan yang diperlukan untuk mendapatkan Sertifikasi kelulusan NolSatu!.<br>
+            Mohon ditunggu ya, sertifikat sedang dalam proses. <br><br>
+            Harap luangkan beberapa menit untuk menyelesaikan survei tentang pengalaman Anda selama menjadi peserta NolSatu dibawah ini.
+        </p>
+        <a href="https://goo.gl/forms/uJBb2rGZTJmjMFYq1" target="blank_" class="btn btn-primary">Form Feedback</a>
     {% endif %}
 
 </div>

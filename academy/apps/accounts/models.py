@@ -50,8 +50,7 @@ class User(AbstractUser):
         return name
 
     def get_student(self):
-        return self.students.exclude(status=Student.STATUS.graduate)\
-            .select_related('training').last()
+        return self.students.select_related('training').last()
 
     def notification_register(self):
         data = {
