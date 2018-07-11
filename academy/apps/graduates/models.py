@@ -17,7 +17,8 @@ class Graduate(models.Model):
     def save(self, *args, **kwargs):
         if not self.certificate_number:
             self.certificate_number = self.generate_certificate_number()
-            self.save()
+        graduate = super().save(*args, **kwargs)
+        return graduate
 
     def generate_certificate_number(self):
         batch = str(self.student.training.batch)
