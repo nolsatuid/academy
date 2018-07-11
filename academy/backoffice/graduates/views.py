@@ -62,8 +62,7 @@ def candidate_to_graduates(request, id):
     status = user.get_count_training_status()
     if user.indicator_reached(status):
         user.save_training_status_to_log()
-        graduate = Graduate.objects.create(user=user, student=user.get_student())
-        graduate.generate_certificate_number()
+        Graduate.objects.create(user=user, student=user.get_student())
 
         student = user.get_student()
         student.status = Student.STATUS.graduate
