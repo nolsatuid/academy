@@ -1,0 +1,192 @@
+[
+{
+    "model": "students.training",
+    "pk": 1,
+    "fields": {
+        "batch": 1,
+        "start_date": null,
+        "end_date": null,
+        "is_active": true,
+        "materials": [
+            1,
+            2,
+            3
+        ]
+    }
+},
+{
+    "model": "students.training",
+    "pk": 2,
+    "fields": {
+        "batch": 2,
+        "start_date": null,
+        "end_date": null,
+        "is_active": true,
+        "materials": [
+            1,
+            2,
+            3
+        ]
+    }
+},
+{
+    "model": "students.training",
+    "pk": 3,
+    "fields": {
+        "batch": 9999,
+        "start_date": null,
+        "end_date": null,
+        "is_active": true,
+        "materials": []
+    }
+},
+{
+    "model": "students.student",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "training": 2,
+        "status": 4
+    }
+},
+{
+    "model": "students.student",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "training": 1,
+        "status": 2
+    }
+},
+{
+    "model": "students.student",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "training": 3,
+        "status": 1
+    }
+},
+{
+    "model": "students.student",
+    "pk": 4,
+    "fields": {
+        "user": 6,
+        "training": 2,
+        "status": 2
+    }
+},
+{
+    "model": "students.trainingmaterial",
+    "pk": 1,
+    "fields": {
+        "code": "OS",
+        "title": "openstack"
+    }
+},
+{
+    "model": "students.trainingmaterial",
+    "pk": 2,
+    "fields": {
+        "code": "Docker",
+        "title": "DOC"
+    }
+},
+{
+    "model": "students.trainingmaterial",
+    "pk": 3,
+    "fields": {
+        "code": "SDN",
+        "title": "Software Define Network"
+    }
+},
+{
+    "model": "students.trainingmaterial",
+    "pk": 4,
+    "fields": {
+        "code": "K8S",
+        "title": "Kubernetes"
+    }
+},
+{
+    "model": "students.trainingstatus",
+    "pk": 1,
+    "fields": {
+        "training_material": 1,
+        "status": 2,
+        "user": 3
+    }
+},
+{
+    "model": "students.trainingstatus",
+    "pk": 2,
+    "fields": {
+        "training_material": 2,
+        "status": 3,
+        "user": 3
+    }
+},
+{
+    "model": "students.trainingstatus",
+    "pk": 3,
+    "fields": {
+        "training_material": 3,
+        "status": 2,
+        "user": 2
+    }
+},
+{
+    "model": "students.trainingstatus",
+    "pk": 4,
+    "fields": {
+        "training_material": 2,
+        "status": 2,
+        "user": 2
+    }
+},
+{
+    "model": "students.trainingstatus",
+    "pk": 5,
+    "fields": {
+        "training_material": 3,
+        "status": 2,
+        "user": 6
+    }
+},
+{
+    "model": "students.trainingstatus",
+    "pk": 6,
+    "fields": {
+        "training_material": 2,
+        "status": 2,
+        "user": 6
+    }
+},
+{
+    "model": "students.trainingstatus",
+    "pk": 7,
+    "fields": {
+        "training_material": 1,
+        "status": 3,
+        "user": 6
+    }
+},
+{
+    "model": "students.trainingstatus",
+    "pk": 8,
+    "fields": {
+        "training_material": 3,
+        "status": 3,
+        "user": 3
+    }
+},
+{
+    "model": "students.trainingstatus",
+    "pk": 12,
+    "fields": {
+        "training_material": 1,
+        "status": 2,
+        "user": 2
+    }
+}
+]
