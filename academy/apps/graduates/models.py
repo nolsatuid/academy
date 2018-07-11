@@ -25,8 +25,8 @@ class Graduate(models.Model):
         batch = "0" + batch if len(batch) == 1 else batch
 
         user_id = str(self.user_id)
-        user_id = "0" + user_id if len(user_id) == 1 else batch
+        user_id = "0" + user_id if len(user_id) == 1 else user_id
 
-        date = self.created.strftime("YYYY-MMDD")
+        date = self.created.strftime("%Y-%m%d")
         certificate_number = f"NS-{batch}{user_id}-{date}"
         return certificate_number
