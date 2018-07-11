@@ -1,7 +1,5 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 from model_utils import Choices
 from model_utils.fields import AutoCreatedField
