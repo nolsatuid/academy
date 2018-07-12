@@ -30,7 +30,7 @@ class ParticipantsRepeatForm(forms.Form):
         for user in users:
             status = user.get_count_training_status()
             if status['graduate'] < settings.INDICATOR_GRADUATED and status['not_yet'] == 0 \
-                and status['repeat'] > 1:
+                and status['repeat'] >= settings.INDICATOR_REPEATED:
                 self.users_repeat.append({'user': user, 'status': status})
 
         if not self.users_repeat:
