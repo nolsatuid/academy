@@ -14,6 +14,7 @@ $(document).ready(function () {
         parent.addClass('show');
     }
 
+    $('#instruktur').css('display', 'block');
     $('.instructor-slider').slick({
         infinite: true,
         slidesToShow: 4,
