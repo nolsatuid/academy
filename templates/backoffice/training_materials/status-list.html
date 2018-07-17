@@ -1,0 +1,93 @@
+{% extends 'backoffice/base.html' %}
+{% load form_tags %}
+
+{% block content-dashboard %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">{{ title }}</h4>
+        </div>
+        <div class="card-body">
+            <form method="GET" >
+                <div class="form-group row">
+                    {% for field in form %}
+                        <div class="form-group col-md-3">
+                            {{ field|addclass:"form-control" }}
+                            <span class="help_text">
+                                {{ field.errors }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary btn-pill">Menyaring</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        {{ form.non_field_errors }}
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="card-body">
+            {% if students %}
+            <form action="" method="post" name="form-bulk">
+                {% csrf_token %}
+                {{ bulk_form.non_field_errors }}
+                <div class="form-group row">
+                    <div class="form-group col-md-3">
+                        {{ bulk_form.status|addclass:"form-control" }}
+                        <span class="help_text">
+                            {{ bulk_form.status.errors }}
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary text-white">Simpan</button>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <th> <input type="checkbox" id="check_all"> </th>
+                        <th>{{ table_heading.column_user }}</th>
+                        <th>{{ table_heading.column_status }}</th>
+                    </thead>
+                    <tbody>
+                        {% for student in students%}
+                        <tr>
+                            <td> <input type="checkbox" name="students" value="{{ student.id }}" class="checkbox" id="id_students_{{ forloop.counter }}"> </td>
+                            <td>{{ student.username }} - {{ student.name }} - {{ student.email }}</td>
+                            <td>{{ student.status|status_material_to_display }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+            {% else %}
+                <h3>Tidak ada data</h3>
+            {% endif %}
+        </div>
+        <div class="card-footer"></div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+//select all checkboxes
+$("#check_all").change(function(){
+    $(".checkbox").prop('checked', $(this).prop("checked"));
+});
+
+//".checkbox" change
+$('.checkbox').change(function(){
+    if(false == $(this).prop("checked")){
+        $("#check_all").prop('checked', false);
+    }
+    if ($('.checkbox:checked').length == $('.checkbox').length ){
+        $("#check_all").prop('checked', true);
+    }
+});
+</script>
+{% endblock %}

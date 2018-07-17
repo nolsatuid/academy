@@ -1,7 +1,7 @@
 from django.template import Library
 from django.utils.safestring import mark_safe
 
-from academy.apps.students.models import Student
+from academy.apps.students.models import Student, TrainingStatus
 
 register = Library()
 
@@ -39,3 +39,23 @@ def get_status_student(user):
         return None
 
     return student.status
+
+
+@register.filter(name='status_material_to_display')
+def status_material_to_display(status, styling=False):
+    if status == TrainingStatus.STATUS.not_yet:
+        status_display = 'belum'
+        class_bagde = 'secondary'
+    elif status == TrainingStatus.STATUS.repeat:
+        status_display = 'ulang'
+        class_bagde = 'warning'
+    elif status == TrainingStatus.STATUS.graduate:
+        status_display = 'lulus'
+        class_bagde = 'success'
+    else:
+        return '-'
+
+    if styling:
+        return mark_safe('<span class="badge badge-%s">%s</span>' %
+                         (class_bagde, status_display))
+    return status_display
