@@ -105,7 +105,6 @@ def bulk_material_status(request):
     form = StudentFilterForm(request.GET or None)
     table_heading= {}
     data = []
-    initial = {}
     student_ids = []
     bulk_form = None
 
