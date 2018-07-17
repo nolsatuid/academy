@@ -18,6 +18,6 @@ class GraduateTest(TestCase):
         user_id = str(graduate.user_id)
         user_id = "0" + user_id if len(user_id) == 1 else batch
 
-        date = graduate.created.strftime("YYYY-MMDD")
+        date = graduate.created.strftime("%Y-%m%d")
         certificate_number = f"NS-{batch}{user_id}-{date}"
         self.assertEqual(graduate.certificate_number, certificate_number)
