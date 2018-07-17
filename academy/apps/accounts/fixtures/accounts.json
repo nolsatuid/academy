@@ -1,0 +1,202 @@
+[
+{
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$u0f5klbHxhfq$8Lg7Z6sgV3p6PF2CAVH9qh+FtVCy3ANom1uD2dB1+bI=",
+        "last_login": "2018-07-09T08:13:38.992Z",
+        "is_superuser": true,
+        "username": "irfanpule",
+        "first_name": "Muhammad",
+        "last_name": "Irfan",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2018-04-19T02:40:46.260Z",
+        "email": "irfan@btech.id",
+        "phone": "08978950954",
+        "role": 2,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$pmjUQoHxPAi1$JftEYXJRBKZ3lpmzOWJohlTrw6DG/YdY/Ze0VP+Rhu0=",
+        "last_login": "2018-07-09T09:55:07.118Z",
+        "is_superuser": false,
+        "username": "user1",
+        "first_name": "User 1",
+        "last_name": "Coba tes",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-04-19T02:42:21Z",
+        "email": "user1@gmail.com",
+        "phone": "08192839123",
+        "role": 1,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$tVaWFBMsK8uK$AVYfvTrwLpoIpUr5xUH0z4XJSmw0SCR+diTLJUR4Xs4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user2",
+        "first_name": "User 2",
+        "last_name": "Siapa",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-05-09T08:05:16Z",
+        "email": "user2@gmail.com",
+        "phone": "08977123123",
+        "role": 1,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$dGs3O7cuVRZE$AlkpU0neOxo+w2eq7AtP6TyLPg8xMPRUzno4kOrZR4Y=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "ary",
+        "first_name": "Saputro",
+        "last_name": "Ary",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-06-22T09:46:57Z",
+        "email": "ary@btech.id",
+        "phone": null,
+        "role": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$Cv9HD352cAbg$Y5TVlNKvvJjNkod0HtA1qdPo0NWaG0AgQJcnJH03X1Q=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dendy",
+        "first_name": "Dendy Putra",
+        "last_name": "Delly",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-06-22T09:47:59Z",
+        "email": "dendy@btech.id",
+        "phone": null,
+        "role": 2,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$7jBD3hNCuTC4$wi9bNo85dg0uLMrUaW8D7I//hTCbQrGaXcp8opRQkuA=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user3",
+        "first_name": "User 3",
+        "last_name": "Coba",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-06-25T08:55:42Z",
+        "email": "user3@gmail.com",
+        "phone": "08981112313",
+        "role": 1,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "address": "jll",
+        "gender": null,
+        "birthday": null,
+        "specialization": null,
+        "avatar": "",
+        "linkedin": "",
+        "git_repo": "",
+        "blog": "",
+        "facebook": "",
+        "youtube": "",
+        "twitter": "",
+        "instagram": "",
+        "telegram_id": ""
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 2,
+    "fields": {
+        "user": 3,
+        "address": "lampung",
+        "gender": null,
+        "birthday": null,
+        "specialization": null,
+        "avatar": "",
+        "linkedin": "",
+        "git_repo": "",
+        "blog": "",
+        "facebook": "",
+        "youtube": "",
+        "twitter": "",
+        "instagram": "",
+        "telegram_id": ""
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "address": "",
+        "gender": null,
+        "birthday": null,
+        "specialization": "Cloud Computing, Linux Engineering",
+        "avatar": "images/avatar/2018/06/22/Screenshot_from_2018-05-31_12-45-54.png",
+        "linkedin": "",
+        "git_repo": "",
+        "blog": "",
+        "facebook": "",
+        "youtube": "",
+        "twitter": "",
+        "instagram": "",
+        "telegram_id": ""
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 4,
+    "fields": {
+        "user": 5,
+        "address": "",
+        "gender": null,
+        "birthday": null,
+        "specialization": "asdf, asdlfk",
+        "avatar": "images/avatar/2018/06/23/Screenshot_from_2018-06-05_11-26-44.png",
+        "linkedin": "saasdfasdf",
+        "git_repo": "",
+        "blog": "",
+        "facebook": "",
+        "youtube": "",
+        "twitter": "",
+        "instagram": "",
+        "telegram_id": ""
+    }
+}
+]

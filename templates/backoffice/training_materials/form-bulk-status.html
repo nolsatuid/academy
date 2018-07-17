@@ -35,14 +35,14 @@
                 <form action="" method="post">
                     {% csrf_token %}
                     {{ formset.management_form }}
-                    <table class="table table-user-information">
+                    <table class="table table-striped">
                         <thead>
                             <th>{{ table_heading.column_user }}</th>
                             <th>{{ table_heading.column_status }}</th>
                         </thead>
                         {% for form in formset %}
-                            <tbody>
                             {{ form.non_field_errors }}
+                            <tr>
                             {% if not forloop.last %}
                                 {% for field in form %}
                                     <td>
@@ -52,7 +52,7 @@
                                     </td>
                                 {% endfor %}
                             {% endif %}
-                            </tbody>
+                            </tr>
                         {% endfor %}
 
                     </table>

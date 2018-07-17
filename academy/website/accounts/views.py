@@ -110,7 +110,7 @@ def profile(request):
     context = {
         'title' : 'Dashboard',
         'user'  : user,
-        'student': user.students.exclude(status=Student.STATUS.graduate).last()
+        'student': user.get_student()
     }
     return render(request, 'dashboard/profile.html', context)
 
