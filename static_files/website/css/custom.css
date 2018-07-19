@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .zindex {
     z-index: 100 !important;
 }
