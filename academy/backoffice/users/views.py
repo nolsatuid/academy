@@ -8,7 +8,7 @@ from django.forms import formset_factory
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student, TrainingMaterial, Training
 
-from .forms import (UserFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
+from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
                     BaseStatusTrainingFormSet, TrainingForm, StudentForm)
 
 
@@ -21,7 +21,7 @@ def index(request):
     user_count = user_list.count()
 
     download = request.GET.get('download', '')
-    form = UserFilterForm(request.GET or None)
+    form = BaseFilterForm(request.GET or None)
     if form.is_valid():
         user_list = form.get_data()
         if download:

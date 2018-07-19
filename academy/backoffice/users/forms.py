@@ -34,6 +34,7 @@ class BaseFilterForm(forms.Form):
         (1, 'selection', 'Seleksi'),
         (2, 'participants', 'Peserta'),
         (3, 'repeat', 'Mengulang'),
+        (4, 'graduate', 'Lulus'),
     )
     status = forms.ChoiceField(choices=STATUS, required=False, label="Status")
     batch = forms.ModelChoiceField(
@@ -76,7 +77,7 @@ class BaseFilterForm(forms.Form):
         name = self.cleaned_data['name']
         batch = self.cleaned_data['batch']
 
-        students = Student.objects.exclude(status=Student.STATUS.graduate)
+        students = Student.objects.all()
         if status:
             students = students.filter(status=status)
 
@@ -113,14 +114,10 @@ class BaseFilterForm(forms.Form):
         return csv_buffer
 
 
-class UserFilterForm(BaseFilterForm):
-    # override field batch to hidden input
-    batch = forms.CharField(widget = forms.HiddenInput(), required = False)
-
-
 class ParticipantsFilterForm(BaseFilterForm):
     STATUS = Choices(
         (2, 'participants', 'Peserta'),
+        (3, 'repeat', 'Mengulang'),
     )
     status = forms.ChoiceField(choices=STATUS, required=False, label="Status")
 
