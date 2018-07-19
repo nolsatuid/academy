@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.forms import formset_factory
 from django.contrib.admin.views.decorators import staff_member_required
 
-from academy.apps.students.models import TrainingMaterial
+from academy.apps.students.models import TrainingMaterial, TrainingStatus
 from .forms import (TrainingMaterialForm, StudentFilterForm, BaseStatusTrainingFormSet,
                     ChangeStatusTraining, BulkStatusTrainingForm)
 
@@ -130,12 +130,15 @@ def bulk_material_status(request):
         students = form.get_data()
         for student in students:
             materi = student.training.materials.get(id=cleaned_data['training_materials'].id)
+            training_status, created = materi.training_status.get_or_create(
+                user=student.user, defaults={'status': TrainingStatus.STATUS.not_yet}
+            )
             data.append({
                 'id': student.id,
                 'name': student.user.name,
                 'username': student.user.username,
                 'email': student.user.email,
-                'status': materi.get_training_status(student.user).status
+                'status': training_status.status
             })
 
     context = {
