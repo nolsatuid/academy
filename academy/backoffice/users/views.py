@@ -9,7 +9,7 @@ from academy.apps.accounts.models import User
 from academy.apps.students.models import Student, TrainingMaterial, Training
 
 from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
-                    BaseStatusTrainingFormSet, TrainingForm, StudentForm)
+                    BaseStatusTrainingFormSet, TrainingForm, StudentForm, ChangeStatusForm)
 
 
 @staff_member_required
@@ -223,6 +223,25 @@ def edit_student_batch(request, student_id):
     context = {
         'form': form,
         'title': 'Ubah Data Angkatan',
+        'title_extra': student.user.name,
+    }
+
+    return render(request, 'backoffice/form.html', context)
+
+
+@staff_member_required
+def edit_status(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+
+    form = ChangeStatusForm(data=request.POST or None, instance=student)
+    if form.is_valid():
+        form.save()
+        messages.success(request, f'Berhasil ubah status {student.user.name}')
+        return redirect('backoffice:users:details', id=student.user.id)
+
+    context = {
+        'form': form,
+        'title': 'Ubah status',
         'title_extra': student.user.name,
     }
 

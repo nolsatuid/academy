@@ -56,6 +56,7 @@
                                             <td class="font-weight-bold">Status</td>
                                             <td>
                                                 {{ student.status|status_display:"True" }}
+                                                <small><a href="{% url 'backoffice:users:edit_status' student.id %}">edit</a></small>
                                             </td>
                                         </tr>
                                         <tr>

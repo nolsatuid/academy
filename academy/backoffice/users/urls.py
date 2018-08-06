@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^batch-training/(?P<id>\d+)/edit$', views.edit_batch_training, name='edit_batch_training'),
     url(r'^(?P<student_id>\d+)/batch/$', views.edit_student_batch,
         name='edit_student_batch'),
+    url(r'^(?P<student_id>\d+)/status/$', views.edit_status,
+        name='edit_status'),
 ]
