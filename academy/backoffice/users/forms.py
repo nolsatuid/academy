@@ -213,3 +213,16 @@ class StudentForm(forms.ModelForm):
         labels = {
             'training': 'Peserta Angkatan'
         }
+
+
+class ChangeStatusForm(forms.ModelForm):
+    STATUS = Choices(
+        (1, 'selection', 'Seleksi'),
+        (2, 'participants', 'Peserta'),
+        (3, 'repeat', 'Mengulang')
+    )
+    status = forms.ChoiceField(choices=STATUS)
+
+    class Meta:
+        model = Student
+        fields = ('status',)
