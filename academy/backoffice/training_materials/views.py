@@ -104,7 +104,6 @@ def bulk_training_status(request):
 def bulk_material_status(request):
     form = StudentFilterForm(request.GET or None)
     table_heading= {}
-    data = []
     student_ids = []
     bulk_form = None
 
@@ -128,29 +127,11 @@ def bulk_material_status(request):
 
         # pass data students
         students = form.get_data()
-        for student in students:
-            materi = student.training.materials.get(id=cleaned_data['training_materials'].id) 
-            training_status, created = materi.training_status.get_or_create(
-                user=student.user, defaults={'status': TrainingStatus.STATUS.not_yet}
-            )   
-
-            available_student = {
-                'id': student.id,
-                'name': student.user.name,
-                'username': student.user.username,
-                'email': student.user.email,
-                'status': training_status.status
-            }
-            if cleaned_data['training_status']:
-                if training_status.status == int(cleaned_data['training_status']):
-                    data.append(available_student)
-            else:
-                data.append(available_student)       
-
+              
     context = {
         'title': 'Status Pelatihan',
         'form': form,
-        'students': data,
+        'students': students,
         'table_heading': table_heading,
         'bulk_form': bulk_form
     }

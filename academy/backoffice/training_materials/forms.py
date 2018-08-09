@@ -56,7 +56,27 @@ class StudentFilterForm(forms.Form):
         students = Student.objects.filter(status=student_status, training=batch)\
             .select_related('training', 'user')
 
-        return students
+        data = []
+        for student in students:
+            materi = student.training.materials.get(id=self.cleaned_data['training_materials'].id) 
+            training_status, created = materi.training_status.get_or_create(
+                user=student.user, defaults={'status': TrainingStatus.STATUS.not_yet}
+            )   
+
+            available_student = {
+                'id': student.id,
+                'name': student.user.name,
+                'username': student.user.username,
+                'email': student.user.email,
+                'status': training_status.status
+            }
+            if self.cleaned_data['training_status']:
+                if training_status.status == int(self.cleaned_data['training_status']):
+                    data.append(available_student)
+            else:
+                data.append(available_student) 
+
+        return data
 
 
 class ChangeStatusTraining(forms.ModelForm):
