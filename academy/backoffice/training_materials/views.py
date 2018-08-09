@@ -134,23 +134,18 @@ def bulk_material_status(request):
                 user=student.user, defaults={'status': TrainingStatus.STATUS.not_yet}
             )   
 
+            available_student = {
+                'id': student.id,
+                'name': student.user.name,
+                'username': student.user.username,
+                'email': student.user.email,
+                'status': training_status.status
+            }
             if cleaned_data['training_status']:
-                if training_status.status == cleaned_data['training_status']:
-                    data.append({
-                        'id': student.id,
-                        'name': student.user.name,
-                        'username': student.user.username,
-                        'email': student.user.email,
-                        'status': training_status.status
-                    })         
+                if training_status.status == int(cleaned_data['training_status']):
+                    data.append(available_student)
             else:
-                data.append({
-                    'id': student.id,
-                    'name': student.user.name,
-                    'username': student.user.username,
-                    'email': student.user.email,
-                    'status': training_status.status
-                })            
+                data.append(available_student)       
 
     context = {
         'title': 'Status Pelatihan',
