@@ -18,13 +18,19 @@ class TrainingMaterialForm(forms.ModelForm):
 
 
 class StudentFilterForm(forms.Form):
-
-    STATUS = Choices (
+    STUDENT_STATUS = Choices (
         (2, 'participants', 'Peserta'),
         (3, 'repeat', 'Mengulang'),
         (4, 'graduate', 'Lulus'),
     )
-    status = forms.ChoiceField(choices=STATUS, required=False, label="Status")
+    student_status = forms.ChoiceField(choices=STUDENT_STATUS, required=False, label="Status Peserta")
+    TRAINING_STATUS = Choices(
+        ('', 'all', 'Pilih Status Training'),
+        (1, 'not_yet', 'Belum'),
+        (2, 'graduate', 'Lulus'),
+        (3, 'repeat', 'Ulang'),
+    )
+    training_status = forms.ChoiceField(choices=TRAINING_STATUS, required=False, label="Status Pelatihan")
     batch = forms.ModelChoiceField(
         queryset=Training.objects.order_by('batch'), empty_label="Pilih Angkatan", required=False
     )
@@ -42,12 +48,15 @@ class StudentFilterForm(forms.Form):
         return cleaned_data
 
     def get_data(self):
-        status = self.cleaned_data['status']
+        student_status = self.cleaned_data['student_status']
+        training_status = self.cleaned_data['training_status']
         training_materials = self.cleaned_data['training_materials']
         batch = self.cleaned_data['batch']
 
-        return Student.objects.filter(status=status, training=batch)\
+        students = Student.objects.filter(status=student_status, training=batch)\
             .select_related('training', 'user')
+
+        return students
 
 
 class ChangeStatusTraining(forms.ModelForm):
