@@ -164,3 +164,14 @@ body {
   select.form-control:not([size]):not([multiple]) {
       height: auto;
   }
+
+  .statistik {
+    background-color: #fff;
+    color: #EA413A;
+    height: 10rem;
+    width: 10rem;
+    display: block;
+    line-height: 10.5rem;
+    font-size: 2.25rem;
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,.1);
+}
