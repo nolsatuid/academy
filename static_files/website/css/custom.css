@@ -168,10 +168,10 @@ body {
   .statistik {
     background-color: #fff;
     color: #EA413A;
-    height: 10rem;
-    width: 10rem;
+    height: 7rem;
+    width: 7rem;
     display: block;
-    line-height: 10.5rem;
+    line-height: 7.5rem;
     font-size: 2.25rem;
     box-shadow: 0 3px 3px 0 rgba(0,0,0,.1);
 }
