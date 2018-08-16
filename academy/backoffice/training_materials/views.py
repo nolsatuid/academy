@@ -106,7 +106,7 @@ def bulk_material_status(request):
     table_heading= {}
     student_ids = []
     bulk_form = None
-
+    students = None
     if form.is_valid():
         cleaned_data = form.cleaned_data
 
