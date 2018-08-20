@@ -1,10 +1,6 @@
 import datetime
-import xhtml2pdf.pisa as pisa
 
-from io import BytesIO
 from django.utils import timezone
-from django.http import HttpResponse
-from django.template.loader import get_template
 
 
 def image_upload_path(prefix='etc'):
@@ -34,14 +30,3 @@ def normalize_datetime_range(start, end, tzinfo=None):
     end = end.replace(hour=23, minute=59, second=59)
 
     return start, end
-
-
-def render_to_pdf(path: str, params: dict):
-    template = get_template(path)
-    html = template.render(params)
-    response = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
-    if not pdf.err:
-        return HttpResponse(response.getvalue(), content_type='application/pdf')
-    else:
-        return HttpResponse("Error Rendering PDF", status=400)

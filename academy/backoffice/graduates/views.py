@@ -13,7 +13,6 @@ from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial
 from academy.apps.accounts.models import User
 from academy.backoffice.users.forms import ChangeStatusTraining, BaseStatusTrainingFormSet
-from academy.core.utils import render_to_pdf
 from .forms import ParticipantsRepeatForm
 
 
@@ -154,12 +153,21 @@ def show_certificate(request, id):
     context = {
         'title': 'Sertifikat',
         'graduate': graduate,
-        'user': user
+        'user': user,
+        'host': settings.HOST
     }
-    report = render_to_string('backoffice/graduates/certificate.html', context)
+    certificate = render_to_string('backoffice/graduates/certificate.html', context)
     filename = 'certificate-%s.pdf' % slugify(user.name)
     filepath = '/tmp/%s' % filename
-    pdfkit.from_string(report, filepath)
 
+    options = {
+        'page-size': 'Letter',
+        'encoding': "UTF-8",
+        'margin-top': '0in',
+        'margin-right': '0in',
+        'margin-bottom': '0in',
+        'margin-left': '0in',
+        'no-outline': None
+    }
+    pdfkit.from_string(certificate, filepath, options=options)
     return render(request, 'backoffice/graduates/certificate.html', context)
-    # return render_to_pdf('backoffice/graduates/certificate.html', params=context)

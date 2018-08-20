@@ -1,102 +1,49 @@
 <html>
   <head>
+    <meta name="pdfkit-page-size" content="Letter"/>
+    <meta name="pdfkit-orientation" content="Landscape"/>
+    <style>
+      body {
+        width: 1000px;
+        font-family: Open Sans, Calibri, sans-serif;
+      }
+
+      .bg-certificate {
+          /* The image used */
+          background-image: url("{{ host }}/static/website/images/certificate-blank.png");
+
+          /* Full height */
+          height: 100%;
+
+          /* Center and scale the image nicely */
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+      }
+
+      .user-data h1{
+        font-size: 2.5em;
+        text-align: center;
+      }
+
+      .user-data h1{
+        text-align: center;
+      }
+
+      .user-data {
+        position: absolute;
+        top: 280px;
+        left: 268px;
+      }
+    </style>
   </head>
-  <body style="padding:50px; font-family: Open Sans, Calibri, sans-serif;">
-    <table cellpadding="10px" style="collapse; width: 100%;">
-      <tbody>
-        <tr>
-          <td>
-            <img width="150px" src="http://{{ request.META.HTTP_HOST }}/static/website/images/logo/logo-polos-warna-30.png">
-          </td>
-          <td>
-            <pre style="color:gray;  font-family: Open Sans, calibri, sans-serif; font-size:13px;">
-                PT. Boer Technology (Btech)
-                Perum Taman Cimanggu, Jl. Tanjung VIII No.14 Bogor Indonesia 16164
-                Tel: +62-251-8340354, Text/Whatsapp: +62-811-1118187
-                Email: contact@btech.id
-            </pre>
-          </td>
-          <th><small>Status</small><br/><h2></h2></th>
-        </tr>
-      </tbody>
-    </table>
-    <hr style="border-color:#e9ecef;">
-
-    <table style="margin:30 0 30 0;collapse; width: 100%;">
-      <tbody>
-        <tr>
-          <td>
-            <h2>Certificate&nbsp;&nbsp;</h2>
-          </td>
-          <td style="width:20%">
-            <h2 style="color:#90c000">#{{ graduante.certificate_number }}</h2>
-          </td>
-          <td rowspan=2>
-          <pre style="font-family: Open Sans, calibri, sans-serif; font-size:14px;">
-            <strong>Order Information</strong><br>
-
-          </pre>
-          </td>
-          <td rowspan=2>
-            <pre style="font-family: Open Sans, calibri, sans-serif; font-size:14px;">
-                <strong>Client Information</strong><br>
-                Name: {{ .user.name }}
-                Email: {{ user.email }}
-                Phone: {{ user.phone }}
-            </pre>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h4>Total Due</h4>
-          </td>
-          <td>
-            <h4>IDR  </h4>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br>
-
-    <table border="0" cellpadding="10px" style="border-collapse: collapse; width: 100%;">
-        <tr style="background-color:#e9ecef; border-right: 2px solid #e9ecef;text-align:left;">
-            <th>Students</th>
-            <th>Price/person</th>
-            <th>Discount/person</th>
-            <th>Total Price</th>
-        </tr>
-        <tr style="border-right: 2px solid #e9ecef;text-align:left;">
-
-        </tr>
-
-    </table>
-
-    <br/>
-    <table>
-      <tr>
-        <td>Transfer the cost to an account:</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>
-          <pre style="color:gray;  font-family: Open Sans, calibri, sans-serif; font-size:13px;">
-Bank Mandiri
-Account number: 0060001297641
-Account name: Fanida Ismaini
-          </pre>
-        </td>
-        <td>
-          <pre style="color:gray;  font-family: Open Sans, calibri, sans-serif; font-size:13px;">
-BCA
-Account number: 6820573887
-Account name: Fanida Ismaini
-          </pre>
-        </td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
-
+  <body>
+    <div class="bg-certificate">
+      <div class="user-data">
+        <h1>{{ user.name }}</h1>
+        <h4>Selamat, kamu telah menjadi lulusan NolSatu Akademi angkatan {{ gradute.student.training }}.</h4>
+      </div>
+    </div>
 
   </body>
 </html>
