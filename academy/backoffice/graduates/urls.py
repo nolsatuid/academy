@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^participants-repeat/$', views.participants_repeat, name='participants_repeat'),
     url(r'^status-training/(?P<id>\d+)/$', views.status_training,
         name='status_training'),
+    url(r'^certificate/(?P<id>\d+)/$', views.show_certificate,
+        name='show_certificate'),
 ]

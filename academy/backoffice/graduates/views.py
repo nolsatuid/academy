@@ -1,14 +1,19 @@
+import pdfkit
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
 from django.db import transaction
 from django.contrib.admin.views.decorators import staff_member_required
 from django.forms import formset_factory
+from django.template.loader import render_to_string
+from django.template.defaultfilters import slugify
 
 from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial
 from academy.apps.accounts.models import User
 from academy.backoffice.users.forms import ChangeStatusTraining, BaseStatusTrainingFormSet
+from academy.core.utils import render_to_pdf
 from .forms import ParticipantsRepeatForm
 
 
@@ -139,3 +144,22 @@ def status_training(request, id):
         'user': user
     }
     return render(request, 'backoffice/form-change-status.html', context)
+
+
+@staff_member_required
+def show_certificate(request, id):
+    graduate = get_object_or_404(Graduate, id=id)
+    user = graduate.user
+
+    context = {
+        'title': 'Sertifikat',
+        'graduate': graduate,
+        'user': user
+    }
+    report = render_to_string('backoffice/graduates/certificate.html', context)
+    filename = 'certificate-%s.pdf' % slugify(user.name)
+    filepath = '/tmp/%s' % filename
+    pdfkit.from_string(report, filepath)
+
+    return render(request, 'backoffice/graduates/certificate.html', context)
+    # return render_to_pdf('backoffice/graduates/certificate.html', params=context)
