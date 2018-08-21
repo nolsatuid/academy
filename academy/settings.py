@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
     'post_office',
     'django_extensions',
+    'qr_code',
 
 ]
 

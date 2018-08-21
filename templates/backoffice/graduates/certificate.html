@@ -1,3 +1,4 @@
+{% load qr_code %}
 <html>
   <head>
     <meta name="pdfkit-page-size" content="Letter"/>
@@ -45,6 +46,9 @@
           Selamat, kamu telah menjadi lulusan NolSatu Akademi angkatan {{ gradute.student.training }}.<br>
           {{ graduate.certificate_number }}
         </h4>
+        <div class="qr-code">
+          {% qr_from_text graduate.certificate_number size="S" %}
+        </div>
       </div>
     </div>
 
