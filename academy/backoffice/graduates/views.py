@@ -161,7 +161,8 @@ def show_certificate(request, id):
     filepath = '/tmp/%s' % filename
 
     options = {
-        'page-size': 'Letter',
+        'page-size': 'A4',
+        'orientation': 'Landscape',
         'encoding': "UTF-8",
         'margin-top': '0in',
         'margin-right': '0in',
