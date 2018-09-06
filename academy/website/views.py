@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+
+from datetime import datetime, timedelta
 
 from academy.apps.accounts.models import Instructor
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student
+from academy.apps.graduates.models import Graduate
 
+from .forms import CertificateVerifyForm
 
 def index(request):
     context = {
@@ -21,6 +25,28 @@ def faq(request):
         'title': 'Tilil (Q&A)'
     }
     return render(request, 'website/faq.html', context)
+
+
+def certificate_verify(request):
+    form = CertificateVerifyForm(request.POST or None)
+    result = None
+    valid_date = None
+
+    if form.is_valid():     
+        student = form.verification()
+        if student:
+            result = student
+            valid_date = student.created + timedelta(days=1095)
+        else:
+            result = ""
+
+    context = {
+        'title': 'Verifikasi Sertifikat',
+        'form': form,
+        'result': result,
+        'valid_date': valid_date
+    }
+    return render(request, 'website/cert-verify.html', context)
 
 
 def home(request):
