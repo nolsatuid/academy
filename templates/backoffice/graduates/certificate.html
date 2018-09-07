@@ -30,7 +30,7 @@
           background-size: contain;
       }
 
-      .user-name{
+      .user-name {
         font-size: 30px;
         text-align: left;
         font-family: 'Roboto';
@@ -38,6 +38,18 @@
 
         position: absolute;
         top: 36px;
+        left: 0px;
+        width: 600px;
+      }
+
+      .graduation-date {
+        font-size: 24px;
+        text-align: left;
+        font-family: 'Roboto';
+        color: #6b6b6b;
+
+        position: absolute;
+        top: 210px;
         left: 0px;
         width: 600px;
       }
@@ -70,6 +82,7 @@
     <div class="bg-certificate">
       <div class="user-data">
         <div class="user-name">{{ user.name }}</div>
+        <div class="graduation-date">{{ graduate.created|date:"d F Y" }}</div>
         <div class="certificate-number">
           Nomor Sertifikat:<br>
           {{ graduate.certificate_number }}
