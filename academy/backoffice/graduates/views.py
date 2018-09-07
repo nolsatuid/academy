@@ -1,5 +1,7 @@
 import pdfkit
 
+from django.http import HttpResponse
+from django.template.loader import get_template
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
@@ -150,25 +152,29 @@ def show_certificate(request, id):
     graduate = get_object_or_404(Graduate, id=id)
     user = graduate.user
 
+    filename = 'certificate-%s.pdf' % slugify(user.name)
+    filepath = '/tmp/%s' % filename
+    html_template = get_template('backoffice/graduates/certificate.html')
+
     context = {
         'title': 'Sertifikat',
         'graduate': graduate,
         'user': user,
         'host': settings.HOST
     }
-    certificate = render_to_string('backoffice/graduates/certificate.html', context)
-    filename = 'certificate-%s.pdf' % slugify(user.name)
-    filepath = '/tmp/%s' % filename
+    rendered_html = html_template.render(context)
 
     options = {
         'page-size': 'A4',
         'orientation': 'Landscape',
-        'encoding': "UTF-8",
         'margin-top': '0in',
         'margin-right': '0in',
         'margin-bottom': '0in',
         'margin-left': '0in',
         'no-outline': None
     }
-    pdfkit.from_string(certificate, filepath, options=options)
-    return render(request, 'backoffice/graduates/certificate.html', context)
+    pdf = pdfkit.from_string(rendered_html, filepath, options=options)
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename={filename}'
+    # return response
+    return redirect('backoffice:graduates:index')
