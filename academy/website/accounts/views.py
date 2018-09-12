@@ -18,9 +18,17 @@ def index(request):
     training = Training.objects.filter(is_active=True).order_by('batch').last()
 
     if hasattr(user, 'profile'):
+        student = request.user.get_student()
+        graduate = None
+
+        if hasattr(student, 'graduate'):
+            graduate = student.graduate
+            graduate.generate_certificate_file()
+
         context = {
             'title': 'Dasbor',
-            'student': request.user.get_student()
+            'student': student,
+            'graduate': graduate
         }
         return render(request, 'dashboard/index.html', context)
 
@@ -106,11 +114,18 @@ def active_account(request, uidb36, token):
 
 def profile(request):
     user = request.user
+    student = request.user.get_student()
+    graduate = None
+
+    if hasattr(student, 'graduate'):
+        graduate = student.graduate
+        graduate.generate_certificate_file()
 
     context = {
-        'title' : 'Dashboard',
-        'user'  : user,
-        'student': user.get_student()
+        'title': 'Dashboard',
+        'user': user,
+        'student': student,
+        'graduate': graduate
     }
     return render(request, 'dashboard/profile.html', context)
 
