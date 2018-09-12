@@ -1,5 +1,12 @@
+import pdfkit
+
 from django.db import models
+from django.http import HttpResponse
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
+from django.template.loader import get_template
+from django.template.defaultfilters import slugify
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from academy.core.utils import image_upload_path
 from model_utils import Choices
@@ -10,7 +17,8 @@ class Graduate(models.Model):
     certificate_number = models.CharField(max_length=200, blank=True, null=True)
     user = models.ForeignKey('accounts.User', related_name='graduates')
     student = models.OneToOneField('students.Student', null=True)
-    certificate_file = models.FileField(upload_to=image_upload_path('certificates'), blank=True, null=True)
+    certificate_file = models.FileField(upload_to=image_upload_path('certificates'),
+                                        blank=True, null=True)
     created = AutoCreatedField()
 
     def __str__(self):
@@ -32,3 +40,40 @@ class Graduate(models.Model):
         date = self.created.strftime("%Y-%m%d")
         certificate_number = f"NS-{batch}{user_id}-{date}"
         return certificate_number
+
+    def generate_certificate_file(self, force=False):
+        if force:
+            self.generate_and_save_certificate()
+
+        if not self.certificate_file:
+            self.generate_and_save_certificate()
+
+    def generate_and_save_certificate(self):
+        filename = 'certificate-%s.pdf' % slugify(self.user.name)
+        filepath = '/tmp/%s' % filename
+        html_template = get_template('backoffice/graduates/certificate.html')
+
+        context = {
+            'graduate': self,
+            'user': self.user,
+            'host': settings.HOST
+        }
+        rendered_html = html_template.render(context)
+
+        options = {
+            'page-size': 'A4',
+            'orientation': 'Landscape',
+            'margin-top': '0in',
+            'margin-right': '0in',
+            'margin-bottom': '0in',
+            'margin-left': '0in',
+            'no-outline': None
+        }
+        pdf = pdfkit.from_string(rendered_html, filepath, options=options)
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename={filename}'
+
+        certificate_file = open(filepath, 'rb')
+        upload_file = SimpleUploadedFile(filename, certificate_file.read())
+        self.certificate_file = upload_file
+        self.save()

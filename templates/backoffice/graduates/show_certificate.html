@@ -1,0 +1,23 @@
+{% extends 'backoffice/base.html' %}
+{% load form_tags %}
+
+{% block content-dashboard %}
+<div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">
+                Sertifikat
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row-fluid">
+                <div class="row">
+                    <div class=" col-md-12 col-lg-12 ">
+                        <embed src="{{ graduate.certificate_file.url }}" type="application/pdf" width="100%" height="600px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+</div>
+{% endblock %}

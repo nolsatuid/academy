@@ -1,15 +1,9 @@
-import pdfkit
-
-from django.http import HttpResponse
-from django.template.loader import get_template
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
 from django.db import transaction
 from django.contrib.admin.views.decorators import staff_member_required
 from django.forms import formset_factory
-from django.template.loader import render_to_string
-from django.template.defaultfilters import slugify
 
 from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial
@@ -151,30 +145,11 @@ def status_training(request, id):
 def show_certificate(request, id):
     graduate = get_object_or_404(Graduate, id=id)
     user = graduate.user
-
-    filename = 'certificate-%s.pdf' % slugify(user.name)
-    filepath = '/tmp/%s' % filename
-    html_template = get_template('backoffice/graduates/certificate.html')
+    graduate.generate_certificate_file()
 
     context = {
-        'title': 'Sertifikat',
-        'graduate': graduate,
-        'user': user,
-        'host': settings.HOST
+        'title': f'Certificate {graduate.certificate_number}',
+        'graduate': graduate
     }
-    rendered_html = html_template.render(context)
-
-    options = {
-        'page-size': 'A4',
-        'orientation': 'Landscape',
-        'margin-top': '0in',
-        'margin-right': '0in',
-        'margin-bottom': '0in',
-        'margin-left': '0in',
-        'no-outline': None
-    }
-    pdf = pdfkit.from_string(rendered_html, filepath, options=options)
-    response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename={filename}'
-    # return response
-    return redirect('backoffice:graduates:index')
+    return render(request, 'backoffice/graduates/show_certificate.html',
+                  context)
