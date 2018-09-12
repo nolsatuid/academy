@@ -51,7 +51,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"></td>
+                                            {% if graduate %}
+                                                <td colspan="2" class="font-weight-bold">Sertifikat<embed class="pb-5" src="{{ graduate.certificate_file.url }}" type="application/pdf" width="100%" height="600px" /></td>
+                                            {% endif %}
                                         </tr>
                                         <tr class="thead-dark">
                                             <th colspan="2">Data Pendukung</th>
