@@ -1,0 +1,100 @@
+{% load qr_code %}
+<html>
+  <head>
+    <style>
+      @font-face {
+        font-family: "Roboto";
+        src: url("{{ host }}/static/fonts/Roboto-Light.ttf") format("truetype");
+      }
+
+      @font-face {
+        font-family: "Dosis";
+        src: url("{{ host }}/static/fonts/Dosis-Regular.ttf") format("truetype");
+      }
+
+      body {
+        width: 1169px;
+        font-family: Open Sans, Calibri, sans-serif;
+      }
+
+      .bg-certificate {
+          /* The image used */
+          background-image: url("{{ host }}/static/website/images/sertifikat_nolsatu.png");
+
+          /* Full height */
+          height: 100%;
+
+          /* Center and scale the image nicely */
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+      }
+
+      .user-name {
+        font-size: 30px;
+        text-align: left;
+        font-family: 'Roboto';
+        color: #6b6b6b;
+
+        position: absolute;
+        top: 36px;
+        left: 0px;
+        width: 600px;
+      }
+
+      .graduation-date {
+        font-size: 24px;
+        text-align: left;
+        font-family: 'Roboto';
+        color: #6b6b6b;
+
+        position: absolute;
+        top: 210px;
+        left: 0px;
+        width: 600px;
+      }
+
+      .qr-code {
+        position: absolute;
+        top: 387px;
+        left: 750px;
+      }
+
+      .certificate-number {
+        position: absolute;
+        top: 360px;
+        left: 294px;
+        width: 200px;
+        font-size: 18px;
+        text-align: left;
+        font-family: 'Dosis';
+        color: #6b6b6b;
+      }
+
+      .user-data {
+        position: absolute;
+        top: 260px;
+        left: 251px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-certificate">
+      <div class="user-data">
+        <div class="user-name">{{ user.name }}</div>
+        <div class="graduation-date">{{ graduate.created|date:"d F Y" }}</div>
+        <div class="certificate-number">
+          Nomor Sertifikat:<br>
+          {{ graduate.certificate_number }}
+          <br><br>
+          Verifikasi sertifikat ini di<br>
+          https://www.nolsatu.id/verify
+        </div>
+        <div class="qr-code">
+          {% qr_from_text graduate.certificate_number size="S" %}
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

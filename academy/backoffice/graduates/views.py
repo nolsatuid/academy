@@ -139,3 +139,17 @@ def status_training(request, id):
         'user': user
     }
     return render(request, 'backoffice/form-change-status.html', context)
+
+
+@staff_member_required
+def show_certificate(request, id):
+    graduate = get_object_or_404(Graduate, id=id)
+    user = graduate.user
+    graduate.generate_certificate_file()
+
+    context = {
+        'title': f'Certificate {graduate.certificate_number}',
+        'graduate': graduate
+    }
+    return render(request, 'backoffice/graduates/show_certificate.html',
+                  context)

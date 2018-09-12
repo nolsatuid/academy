@@ -8,6 +8,7 @@
                 Profil
             </h4>
             <div class="pull-right">
+                <a class="btn btn-success text-white" href="{% url 'backoffice:graduates:show_certificate' graduate.id %}">Lihat Sertifikat</a>
                 <a class="btn btn-secondary text-white" href="{% url 'backoffice:graduates:status_training' graduate.id %}">Status Pelatihan</a>
             </div>
         </div>
