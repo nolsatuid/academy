@@ -3,6 +3,7 @@
 ## Prerequisite
   - Python 3.6.x already installed on system or using virtualenv
   - Postgresql 9.6.x
+  - wkhtmltopdf 0.12.3
 
 ## Development Setup
 Install dependencies
