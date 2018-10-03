@@ -145,7 +145,12 @@ def status_training(request, id):
 def show_certificate(request, id):
     graduate = get_object_or_404(Graduate, id=id)
     user = graduate.user
-    graduate.generate_certificate_file()
+    force = False
+
+    if request.GET.get('regenerate') and request.GET['regenerate'] == 'yes':
+        force = True
+
+    graduate.generate_certificate_file(force)
 
     context = {
         'title': f'Certificate {graduate.certificate_number}',

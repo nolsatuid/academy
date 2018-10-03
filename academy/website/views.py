@@ -32,7 +32,7 @@ def certificate_verify(request):
     result = None
     valid_date = None
 
-    if form.is_valid():     
+    if form.is_valid():
         student = form.verification()
         if student:
             result = student

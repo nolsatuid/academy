@@ -1,6 +1,5 @@
 {% extends 'base-master.html' %}
 {% load static form_tags %}
-{% load static %}
 
 {% block content %}
 <!-- <div class="loader"><div class="page-loader"></div></div> -->
@@ -19,41 +18,42 @@
                         Peserta yang memiliki sertifikat adalah peserta yang telah lulus dari pelatihan NolSatu dengan mengikuti dan menyelesaikan seluruh materi dan lab.
                         <br><br>
                         Halaman verifikasi sertifikat digunakan untuk memvalidasi Sertifikat Pelatihan NolSatu.
-                        <br><br>
-                        Masukkan nama belakang Anda dan nomor sertifikat pada kotak dibawah ini.
+                        <br>
+                        Masukkan nama belakang Anda dan nomor sertifikat pada kotak dibawah ini atau pindai QRCode yang terdapat pada sertifikat.
                         <br><br>
                     </p>
+                    <hr>
                     <form action="" method="post">
                         {% csrf_token %}
                         {{ form.non_field_errors }}
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="pull-left">{{ form.certificate_number.label }}</label>
-
-                                {{ form.certificate_number|addclass:"form-control" }}
-                                <span class="help_text">
-                                    {{ form.certificate_number.help_text|safe }}
-                                </span>
-                                {{ form.certificate_number.errors }}
+                            <div class="col-md-6">
+                                <div class="form-group col-md-12">
+                                    <label class="pull-left">{{ form.certificate_number.label }}</label>
+                                    {{ form.certificate_number|addclass:"form-control" }}
+                                    <span class="help_text">
+                                        {{ form.certificate_number.help_text|safe }}
+                                    </span>
+                                    {{ form.certificate_number.errors }}
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="pull-left">{{ form.last_name.label }}</label>
+                                    {{ form.last_name|addclass:"form-control" }}
+                                    <span class="help_text">
+                                        {{ form.last_name.help_text|safe }}
+                                    </span>
+                                    {{ form.last_name.errors }}
+                                    <input type="submit" id="submit" class="btn btn-info mt-4" value="Verifikasi" />
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="pull-left">{{ form.last_name.label }}</label>
-
-                                {{ form.last_name|addclass:"form-control" }}
-                                <span class="help_text">
-                                    {{ form.last_name.help_text|safe }}
-                                </span>
-                                {{ form.last_name.errors }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-12">
-                                <input type="submit" class="btn btn-info" value="Verifikasi" />
+                            <div class="col-md-6">
+                                <video id="preview" style="width:100%;"></video>
                             </div>
                         </div>
                     </form>
                     {% if result %}
-                        <div class="col-md-12 card text-white bg-success mb-3">
+                        <hr>
+                        <div class="col-md-12 card text-white bg-success mb-3 mt-3">
                             <div class="card-body">
                                 <div class="row">
                                     <table>
@@ -100,7 +100,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     {% elif result == "" %}
                     <div class="col-md-12 card text-white bg-danger mb-3">
                             <div class="card-body">
@@ -108,10 +108,40 @@
                                     Maaf, kami tidak dapat menemukan sertifikat dengan nomor sertifikat dan nama belakang tersebut.
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                     {% endif %}
                 </div>
             </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'website/js/instascan.min.js' %}"></script>
+<script type="text/javascript">
+    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+    scanner.addListener('scan', function (content) {
+        document.getElementById("id_certificate_number").value = "";
+        document.getElementById("id_last_name").value = "";
+
+        var data = content.split(":");
+        if (data.length != 2) {
+            alert("QRcode tidak valid")
+            return
+        }
+
+        document.getElementById("id_certificate_number").value = data[0];
+        document.getElementById("id_last_name").value = data[1];
+        document.getElementById("submit").click();
+    });
+    Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            alert("Kamera tidak ditemukan")
+        }
+    }).catch(function (e) {
+        console.error(e);
+    });
+</script>
 {% endblock %}
