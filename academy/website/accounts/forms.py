@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 
 from academy.apps.accounts.models import User, Profile
 from academy.apps.students.models import Student
+from academy.apps.surveys.model import Survey
 from academy.core.validators import validate_email, validate_mobile_phone, validate_username
 
 from post_office import mail
@@ -23,7 +24,7 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200)
-    
+
     class Meta:
         model = User
         fields = ('email', 'username', 'password1', 'password2')
@@ -87,7 +88,6 @@ class ProfileForm(forms.ModelForm):
 
 
 class StudentForm(forms.ModelForm):
-
     class Meta:
         model = Student
         fields = ('user', 'training')
@@ -97,6 +97,7 @@ class ForgotPasswordForm(forms.Form):
     email = forms.EmailField(validators=[validate_email], label='',
                              widget=forms.TextInput(attrs={'placeholder': 'Email anda'}),
                              help_text='Kami akan mengirim email untuk mengatur ulang kata sandi Anda')
+
     # The link to reset your password will be sent to your email
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -123,3 +124,24 @@ class ForgotPasswordForm(forms.Form):
             context=data,
             html_message=render_to_string('emails/forgot_password.html', context=data)
         )
+
+
+class SurveyForm(forms.ModelForm):
+    working_status = forms.ChoiceField(choices=Survey.WORKING_STATUS_CHOICES, label='Status pekerjaan saat ini:')
+    working_status_other = forms.CharField(label='Jawaban anda:', required=False)
+    graduate_channeled = forms.ChoiceField(choices=Survey.TRUE_FALSE_CHOICES,
+                                           label='Apabila anda telah lulus dari kelas nolsatu, apakah bersedia untuk disalurkan')
+    graduate_channeled_when = forms.ChoiceField(choices=Survey.GRADUATE_CHANNELED_TIME_CHOICES,
+                                                label='Apabila bersedia untuk disalurkan, kapan waktu yang diinginkan')
+    graduate_channeled_when_other = forms.CharField(label='Jawaban anda:', required=False)
+
+    class Meta:
+        model = Survey
+        exclude = ['user']
+
+    def save(self, user, *args, **kwargs):
+        survey = super().save(commit=False)
+        survey.user = user
+        survey.save()
+
+        return survey

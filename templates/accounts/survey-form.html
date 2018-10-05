@@ -1,0 +1,49 @@
+{% extends 'base-master.html' %}
+{% load static form_tags %}
+
+{% block content %}
+<div class="d-flex flex-column">
+    <div class="container zindex">
+        {% include 'nav-bar.html' %}
+    </div>
+    <div class="inner-wrapper mt-auto mb-auto">
+        <div class="offset-md-4 col-md-4 text-center">
+            <h3>{{ title }}</h3>
+            {% include 'forms/login-signup.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        function showHideWorkingStatusOther() {
+            var shouldShow = $("#id_working_status").val() == '99'
+            $("#id_working_status_other").parent().css('display',  shouldShow ? 'block': 'none')
+            if (shouldShow)
+                $("#id_working_status_other").attr('required', 'required')
+            else
+                $("#id_working_status_other").removeAttr('required')
+        }
+
+        function showHideGraduateChanneledWhenStatusOther() {
+            var shouldShow = $("#id_graduate_channeled_when").val() == '99'
+            $("#id_graduate_channeled_when_other").parent().css('display',  shouldShow ? 'block': 'none')
+            if (shouldShow)
+                $("#id_graduate_channeled_when_other").attr('required', 'required')
+            else
+                $("#id_graduate_channeled_when_other").removeAttr('required')
+        }
+
+        $(document).ready(function () {
+            showHideWorkingStatusOther();
+            $("#id_working_status").change(function() {
+                showHideWorkingStatusOther()
+            })
+
+            showHideGraduateChanneledWhenStatusOther();
+            $("#id_graduate_channeled_when").change(function() {
+                showHideGraduateChanneledWhenStatusOther()
+            })
+        })
+    </script>
+{% endblock %}
