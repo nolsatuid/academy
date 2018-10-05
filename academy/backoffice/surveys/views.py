@@ -19,7 +19,7 @@ def index(request):
         if download:
             csv_buffer = form.generate_to_csv()
             response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
-            response['Content-Disposition'] = 'attachment; filename=daftar-peserta.csv'
+            response['Content-Disposition'] = 'attachment; filename=survey.csv'
             return response
 
     paginator = Paginator(survey_list, 25)
