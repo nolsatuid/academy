@@ -2,7 +2,7 @@ from django.db import models
 from model_utils import Choices
 
 
-class Survey (models.Model):
+class Survey(models.Model):
     WORKING_STATUS_CHOICES = Choices(
         (1, 'employee', 'Karyawan'),
         (2, 'student', 'Mahasiswa'),
@@ -26,3 +26,6 @@ class Survey (models.Model):
     graduate_channeled = models.BooleanField()
     graduate_channeled_when = models.PositiveIntegerField(choices=GRADUATE_CHANNELED_TIME_CHOICES)
     graduate_channeled_when_other = models.CharField(blank=True, null=True, default=None, max_length=150)
+
+    def __str__(self):
+        return self.user.username

@@ -127,12 +127,15 @@ class ForgotPasswordForm(forms.Form):
 
 
 class SurveyForm(forms.ModelForm):
-    working_status = forms.ChoiceField(choices=Survey.WORKING_STATUS_CHOICES, label='Status pekerjaan saat ini:')
+    working_status = forms.ChoiceField(choices=Survey.WORKING_STATUS_CHOICES, label='Status pekerjaan saat ini:',
+                                       widget=forms.RadioSelect)
     working_status_other = forms.CharField(label='Jawaban anda:', required=False)
     graduate_channeled = forms.ChoiceField(choices=Survey.TRUE_FALSE_CHOICES,
-                                           label='Apabila anda telah lulus dari kelas nolsatu, apakah bersedia untuk disalurkan')
+                                           label='Apabila anda telah lulus dari kelas nolsatu, apakah bersedia untuk disalurkan',
+                                           widget=forms.RadioSelect)
     graduate_channeled_when = forms.ChoiceField(choices=Survey.GRADUATE_CHANNELED_TIME_CHOICES,
-                                                label='Apabila bersedia untuk disalurkan, kapan waktu yang diinginkan')
+                                                label='Apabila bersedia untuk disalurkan, kapan waktu yang diinginkan',
+                                                widget=forms.RadioSelect)
     graduate_channeled_when_other = forms.CharField(label='Jawaban anda:', required=False)
 
     class Meta:

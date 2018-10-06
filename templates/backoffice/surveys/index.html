@@ -20,6 +20,7 @@
                 <table id="datatable" class="table table-striped">
                     <thead>
                         <th>User</th>
+                        <th>Status</th>
                         <th>Status Pekerjaan</th>
                         <th>Bersedia Disalurkan</th>
                         <th>Waktu Disalurkan</th>
@@ -28,6 +29,7 @@
                         {% for survey in surveys %}
                             <tr>
                                 <td><a href="{% url 'backoffice:users:details' survey.user.id %}">{{ survey.user.name }}</a></td>
+                                <td>{{ survey.user|get_status_student|status_display:'True' }}</td>
                                 <td>
                                     {% if survey.working_status == 99 %}
                                         {{ survey.working_status_other}}
@@ -43,7 +45,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if survey.working_status == 99 %}
+                                    {% if survey.graduate_channeled_when == 99 %}
                                         {{ survey.graduate_channeled_when_other}}
                                     {% else %}
                                         {{ survey.get_graduate_channeled_when_display }}

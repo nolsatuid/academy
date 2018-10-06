@@ -1,0 +1,30 @@
+{% load form_tags %}
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <div class="card full-width">
+        <div class="card-body">
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <div class="form-group col-md-12">
+                    <label class="">{{ field.label }}</label>
+                    {% if field.field.widget.input_type == 'radio' %}
+                        {{ field|addclass:"form-check-input" }}
+                    {% else %}
+                        {{ field|addclass:"form-control" }}
+                    {% endif %}
+                    <span class="help_text">
+                        {{ field.help_text|safe }}
+                    </span>
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+
+            <div class="form-group col-md-12 text-center">
+                <input type="submit" class="btn btn-primary btn-pill" value="Kirim"/>
+            </div>
+        </div>
+    </div>
+
+</form>

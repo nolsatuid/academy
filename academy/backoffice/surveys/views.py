@@ -9,8 +9,8 @@ from academy.backoffice.surveys.form import SurveyFilterForm
 
 @staff_member_required
 def index(request):
-    survey_count = Survey.objects.count()
-    survey_list = Survey.objects.all()
+    survey_list = Survey.objects.filter(user__students__isnull=False).all()
+    survey_count = survey_list.count()
     download = request.GET.get('download', '')
     form = SurveyFilterForm(request.GET or None)
 
@@ -44,8 +44,9 @@ def index(request):
         'form': form,
         'survey_count': survey_count,
         'filter_count': survey_list.count(),
-        'query_params': 'work_status=%s&channeled=%s&channeled_when=%s' % (
-            request.GET.get('work_status', ''), request.GET.get('channeled', ''), request.GET.get('channeled_when', '')
+        'query_params': 'name=%s&work_status=%s&channeled=%s&channeled_when=%s&status=%s' % (
+            request.GET.get('name', ''), request.GET.get('work_status', ''), request.GET.get('channeled', ''),
+            request.GET.get('channeled_when', ''), request.GET.get('status', '')
         ),
         'page_range': page_range
     }
