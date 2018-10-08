@@ -1,0 +1,111 @@
+{% extends 'backoffice/base.html' %}
+{% load form_tags %}
+
+{% block content-dashboard %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">{{ title }}</h4>
+        </div>
+        <div class="card-body">
+            {% include 'forms/filter.html' %}
+
+        </div>
+        <div class="card-body">
+            <p>
+                Total data <span class="badge badge-primary">{{ survey_count }}</span>
+                Total penyaringan <span class="badge badge-info">{{ filter_count }}</span>
+            </p>
+            <div class="datatable content table-responsive table-full-width">
+                <table id="datatable" class="table table-striped">
+                    <thead>
+                        <th>User</th>
+                        <th>Status</th>
+                        <th>Status Pekerjaan</th>
+                        <th>Bersedia Disalurkan</th>
+                        <th>Waktu Disalurkan</th>
+                    </thead>
+                    <tbody>
+                        {% for survey in surveys %}
+                            <tr>
+                                <td><a href="{% url 'backoffice:users:details' survey.user.id %}">{{ survey.user.name }}</a></td>
+                                <td>{{ survey.user|get_status_student|status_display:'True' }}</td>
+                                <td>
+                                    {% if survey.working_status == 99 %}
+                                        {{ survey.working_status_other}}
+                                    {% else %}
+                                        {{ survey.get_working_status_display }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if survey.graduate_channeled %}
+                                        Ya
+                                    {% else %}
+                                        Tidak
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if survey.graduate_channeled_when == 99 %}
+                                        {{ survey.graduate_channeled_when_other}}
+                                    {% else %}
+                                        {{ survey.get_graduate_channeled_when_display }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% if surveys.has_other_pages  %}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if surveys.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1&{{ query_params }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for i in page_range %}
+                            {% if surveys.number == i %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a>
+                                </li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}&{{ query_params }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if surveys.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ surveys.paginator.num_pages }}&{{ query_params }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+    </div>
+</div>
+{% endblock %}
