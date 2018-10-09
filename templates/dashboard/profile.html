@@ -92,6 +92,52 @@
                                         </tr>
                                     </tbody></table>
                                 </div>
+
+                                {% if survey %}
+                                <div class="table-responsive box box-info">
+                                    <table class="table table-bordered">
+
+                                        <tr class="thead-dark">
+                                            <th colspan="2">Data Pekerjaan
+                                                <div class="pull-right">
+                                                    <a class="btn btn-info text-white" href="{% url 'website:accounts:edit_survey' %}">Ubah</a>
+                                                </div>
+                                            </th>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Status pekerjaan saat ini</td>
+                                            <td>
+                                                {% if survey.working_status == 99 %}
+                                                    {{ survey.working_status_other}}
+                                                {% else %}
+                                                    {{ survey.get_working_status_display }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Apabila anda telah lulus dari kelas nolsatu, apakah bersedia untuk disalurkan</td>
+                                            <td>
+                                                {% if survey.graduate_channeled %}
+                                                    Ya
+                                                {% else %}
+                                                    Tidak
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Apabila bersedia untuk disalurkan, kapan waktu yang diinginkan</td>
+                                            <td>
+                                                {% if survey.graduate_channeled_when == 99 %}
+                                                    {{ survey.graduate_channeled_when_other}}
+                                                {% else %}
+                                                    {{ survey.get_graduate_channeled_when_display }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

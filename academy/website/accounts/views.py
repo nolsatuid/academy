@@ -119,16 +119,21 @@ def profile(request):
     user = request.user
     student = request.user.get_student()
     graduate = None
+    survey = None
 
     if hasattr(student, 'graduate'):
         graduate = student.graduate
         graduate.generate_certificate_file()
 
+    if hasattr(user, 'survey'):
+        survey = user.survey
+
     context = {
         'title': 'Dashboard',
         'user': user,
         'student': student,
-        'graduate': graduate
+        'graduate': graduate,
+        'survey': survey
     }
     return render(request, 'dashboard/profile.html', context)
 
@@ -223,6 +228,25 @@ def survey(request):
 
     context = {
         'title': 'Mohon isi data berikut',
+        'form': form,
+        'page': 'survey'
+    }
+    return render(request, 'accounts/survey-form.html', context)
+
+
+@login_required
+def edit_survey(request):
+    if not hasattr(request.user, 'survey'):
+        return redirect("website:accounts:index")
+
+    survey = request.user.survey
+    form = SurveyForm(data=request.POST or None, instance=survey)
+    if form.is_valid():
+        form.save(request.user)
+        return redirect("website:accounts:profile")
+
+    context = {
+        'title': 'Data Pekerjaan',
         'form': form,
         'page': 'survey'
     }
