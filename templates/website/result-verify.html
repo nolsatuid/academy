@@ -1,0 +1,59 @@
+{% if result %}
+    <hr>
+    <div class="col-md-12 card text-white bg-success mb-3 mt-3">
+        <div class="card-body">
+            <div class="row">
+                <table>
+                    <tr>
+                        <td class="pull-right" style="width:150px; text-align:right;">
+                            Pemilik :
+                        </td>
+                        <td>
+                            <strong style="font-weight: bold;">
+                                &nbsp;&nbsp;&nbsp;{{ result.user.first_name }} {{ result.user.last_name }}
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pull-right">
+                            Nomor Sertifikat :
+                        </td>
+                        <td>
+                            <strong style="font-weight: bold;">
+                                &nbsp;&nbsp;&nbsp;{{ result.certificate_number }}
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pull-right">
+                            Tanggal Sertifikat :
+                        </td>
+                        <td>
+                            <strong style="font-weight: bold;">
+                                &nbsp;&nbsp;&nbsp;{{ result.created|date:'d M Y' }}
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pull-right">
+                            Berlaku Hingga :
+                        </td>
+                        <td>
+                            <strong style="font-weight: bold;">
+                                &nbsp;&nbsp;&nbsp;{{ valid_date|date:'d M Y' }}
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{% elif result == "" %}
+    <div class="col-md-12 card text-white bg-danger mb-3">
+        <div class="card-body">
+            <div class="row">
+                Maaf, kami tidak dapat menemukan sertifikat dengan nomor sertifikat dan nama belakang tersebut.
+            </div>
+        </div>
+    </div>
+{% endif %}
