@@ -9,11 +9,14 @@ from django.contrib.auth.forms import SetPasswordForm
 
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Training, Student
-from . forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm
+from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm, SurveyForm
 
 
 @login_required
 def index(request):
+    if not hasattr(request.user, 'survey'):
+        return redirect("website:accounts:survey")
+
     user = request.user
     training = Training.objects.filter(is_active=True).order_by('batch').last()
 
@@ -116,16 +119,21 @@ def profile(request):
     user = request.user
     student = request.user.get_student()
     graduate = None
+    survey = None
 
     if hasattr(student, 'graduate'):
         graduate = student.graduate
         graduate.generate_certificate_file()
 
+    if hasattr(user, 'survey'):
+        survey = user.survey
+
     context = {
         'title': 'Dashboard',
         'user': user,
         'student': student,
-        'graduate': graduate
+        'graduate': graduate,
+        'survey': survey
     }
     return render(request, 'dashboard/profile.html', context)
 
@@ -205,3 +213,41 @@ def reset_password(request, uidb36, token):
         'page': 'reset-password'
     }
     return render(request, 'accounts/form.html', context)
+
+
+@login_required
+def survey(request):
+    if hasattr(request.user, 'survey'):
+        return redirect("website:accounts:index")
+
+    form = SurveyForm(data=request.POST or None)
+    if form.is_valid():
+        form.save(request.user)
+        messages.success(request, 'Terima kasih telah mengisi survey')
+        return redirect("website:accounts:index")
+
+    context = {
+        'title': 'Mohon isi data berikut',
+        'form': form,
+        'page': 'survey'
+    }
+    return render(request, 'accounts/survey-form.html', context)
+
+
+@login_required
+def edit_survey(request):
+    if not hasattr(request.user, 'survey'):
+        return redirect("website:accounts:index")
+
+    survey = request.user.survey
+    form = SurveyForm(data=request.POST or None, instance=survey)
+    if form.is_valid():
+        form.save(request.user)
+        return redirect("website:accounts:profile")
+
+    context = {
+        'title': 'Data Pekerjaan',
+        'form': form,
+        'page': 'survey'
+    }
+    return render(request, 'accounts/survey-form.html', context)

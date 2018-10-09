@@ -1,0 +1,51 @@
+{% extends 'base-master.html' %}
+{% load static form_tags %}
+
+{% block content %}
+    <div class="d-flex flex-column">
+        <div class="container zindex">
+            {% include 'nav-bar.html' %}
+        </div>
+        <div class="inner-wrapper mt-auto mb-auto">
+            <div class="offset-md-4 col-md-4">
+                <h3 class="text-center">{{ title }}</h3>
+                {% include 'forms/survey.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        function showHideWorkingStatusOther() {
+            var shouldShow = $("input[name='working_status']:checked").val() === '99'
+            var other = $("input[name='working_status_other']")
+            other.parent().css('display', shouldShow ? 'block' : 'none')
+            if (shouldShow)
+                other.attr('required', 'required')
+            else
+                other.removeAttr('required')
+        }
+
+        function showHideGraduateChanneledWhenStatusOther() {
+            var shouldShow = $("input[name='graduate_channeled_when']:checked").val() === '99'
+            var other = $("input[name='graduate_channeled_when_other']")
+            other.parent().css('display', shouldShow ? 'block' : 'none')
+            if (shouldShow)
+                other.attr('required', 'required')
+            else
+                other.removeAttr('required')
+        }
+
+        $(document).ready(function () {
+            showHideWorkingStatusOther();
+            $("input[name='working_status']").change(function () {
+                showHideWorkingStatusOther()
+            })
+
+            showHideGraduateChanneledWhenStatusOther();
+            $("input[name='graduate_channeled_when").change(function () {
+                showHideGraduateChanneledWhenStatusOther()
+            })
+        })
+    </script>
+{% endblock %}
