@@ -66,9 +66,6 @@
 <script type="text/javascript">
     let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
     scanner.addListener('scan', function (content) {
-        document.getElementById("id_certificate_number").value = "";
-        document.getElementById("id_last_name").value = "";
-
         var data = content.split(":");
         if (data.length != 2) {
             alert("QRcode tidak valid")
