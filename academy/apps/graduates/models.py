@@ -53,10 +53,16 @@ class Graduate(models.Model):
         filepath = '/tmp/%s' % filename
         html_template = get_template('backoffice/graduates/certificate.html')
 
+        last_name = (
+            self.user.last_name if self.user.last_name
+            else self.user.first_name
+        )
+
         context = {
             'graduate': self,
             'user': self.user,
-            'host': settings.HOST
+            'host': settings.HOST,
+            'data_qr': f"{self.certificate_number}:{last_name}"
         }
         rendered_html = html_template.render(context)
 

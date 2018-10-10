@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template import loader
+from django.http import JsonResponse
 
 from datetime import datetime, timedelta
 
@@ -32,7 +34,7 @@ def certificate_verify(request):
     result = None
     valid_date = None
 
-    if form.is_valid():     
+    if form.is_valid():
         student = form.verification()
         if student:
             result = student
@@ -46,6 +48,10 @@ def certificate_verify(request):
         'result': result,
         'valid_date': valid_date
     }
+
+    if request.is_ajax():
+        html = loader.render_to_string('website/result-verify.html', context)
+        return JsonResponse({'html': html})
     return render(request, 'website/cert-verify.html', context)
 
 
