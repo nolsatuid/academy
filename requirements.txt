@@ -1,4 +1,4 @@
-Django==1.11
+Django==1.11.15
 psycopg2==2.7.3.2
 
 id-phonenumbers==0.3.0
@@ -9,4 +9,4 @@ pdfkit==0.6.1
 
 django-post-office==3.0.4
 django-extensions==2.0.7
-django-qr-code
+django-qr-code==1.0.0
