@@ -10,7 +10,16 @@
                 <div class="form-group col-md-12">
                     <label class="">{{ field.label }}</label>
                     {% if field.field.widget.input_type == 'radio' %}
-                        {{ field|addclass:"form-check-input" }}
+                        <ul>
+                            {% for radio in field %}
+                                <li>
+                                    <label for="{{ radio.id_for_label }}">
+                                        <span class="form-check-input">{{ radio.tag }}</span>
+                                        {{ radio.choice_label }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     {% else %}
                         {{ field|addclass:"form-control" }}
                     {% endif %}
