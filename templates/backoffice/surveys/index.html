@@ -24,6 +24,7 @@
                         <th>Status Pekerjaan</th>
                         <th>Bersedia Disalurkan</th>
                         <th>Waktu Disalurkan</th>
+                        <th>Lokasi</th>
                     </thead>
                     <tbody>
                         {% for survey in surveys %}
@@ -50,6 +51,9 @@
                                     {% else %}
                                         {{ survey.get_graduate_channeled_when_display }}
                                     {% endif %}
+                                </td>
+                                 <td>
+                                     {{ survey.get_channeled_location }}
                                 </td>
                             </tr>
                         {% endfor %}

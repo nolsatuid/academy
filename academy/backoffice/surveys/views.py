@@ -44,9 +44,9 @@ def index(request):
         'form': form,
         'survey_count': survey_count,
         'filter_count': survey_list.count(),
-        'query_params': 'name=%s&work_status=%s&channeled=%s&channeled_when=%s&status=%s' % (
+        'query_params': 'name=%s&work_status=%s&channeled=%s&channeled_when=%s&status=%s&channeled_location%s' % (
             request.GET.get('name', ''), request.GET.get('work_status', ''), request.GET.get('channeled', ''),
-            request.GET.get('channeled_when', ''), request.GET.get('status', '')
+            request.GET.get('channeled_when', ''), request.GET.get('status', ''), request.GET.get('channeled_location', '')
         ),
         'page_range': page_range
     }

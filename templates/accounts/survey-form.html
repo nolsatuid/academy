@@ -36,6 +36,16 @@
                 other.removeAttr('required')
         }
 
+        function showHideLocation() {
+            var shouldShow = $("input[name='channeled_location'][value='Lain-lain']:checked").length !== 0
+            var other = $("input[name='channeled_location_other']")
+            other.parent().css('display', shouldShow ? 'block' : 'none')
+            if (shouldShow)
+                other.attr('required', 'required')
+            else
+                other.removeAttr('required')
+        }
+
         $(document).ready(function () {
             showHideWorkingStatusOther();
             $("input[name='working_status']").change(function () {
@@ -45,6 +55,10 @@
             showHideGraduateChanneledWhenStatusOther();
             $("input[name='graduate_channeled_when").change(function () {
                 showHideGraduateChanneledWhenStatusOther()
+            })
+            showHideLocation()
+            $("input[name='channeled_location").change(function () {
+                showHideLocation()
             })
         })
     </script>

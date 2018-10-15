@@ -39,6 +39,14 @@ class SurveyFilterForm(forms.Form):
         (4, 'graduate', 'Lulus'),
     )
 
+    LOCATION = Choices(
+        ('', '-- Lokasi penyaluran --'),
+        ('Jakarta', 'Jakarta'),
+        ('Yogyakarta', 'Yogyakarta'),
+        ('Bandung', 'Bandung'),
+        ('Lain-lain', 'Lain-lain'),
+    )
+
     name = forms.CharField(
         widget=forms.TextInput(attrs={'placeholder': 'Cari: nama/username'}),
         required=False
@@ -47,6 +55,7 @@ class SurveyFilterForm(forms.Form):
     channeled = forms.ChoiceField(choices=TRUE_FALSE_CHOICES, required=False)
     channeled_when = forms.ChoiceField(choices=GRADUATE_CHANNELED_TIME_CHOICES, required=False)
     status = forms.ChoiceField(choices=STATUS, required=False, label="Status")
+    channeled_location = forms.ChoiceField(label="Lokasi penempatan", choices=LOCATION, required=False)
 
     def get_data(self):
         name = self.cleaned_data['name']
@@ -54,6 +63,7 @@ class SurveyFilterForm(forms.Form):
         channeled = self.cleaned_data['channeled']
         channeled_when = self.cleaned_data['channeled_when']
         status = self.cleaned_data['status']
+        location = self.cleaned_data['channeled_location']
 
         surveys = Survey.objects.filter(user__students__isnull=False).all()
 
@@ -72,6 +82,12 @@ class SurveyFilterForm(forms.Form):
 
         if status:
             surveys = surveys.filter(user__students__status=status)
+
+        if location:
+            if location == 'Lain-lain':
+                surveys = surveys.exclude(channeled_location_other=[])
+            else:
+                surveys = surveys.filter(channeled_location__contains=[location])
 
         self.surveys = surveys
 
