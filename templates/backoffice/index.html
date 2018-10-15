@@ -58,7 +58,8 @@
         </div>
     </div>
 
-    <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
+    <canvas id="bar-lulus" class="chartjs" width="undefined" height="undefined"></canvas>
+    <canvas id="line-pendaftar" class="chartjs" width="undefined" height="undefined"></canvas>
 
 </div>
 
@@ -69,16 +70,83 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     
 <script>
+    var ctx = document.getElementById("bar-lulus").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [
+                    {% for i in angkatan %}
+                        "{{ i }}",    
+                    {% endfor %}
+            ],
+            datasets: [            
+            {
+                label: 'Lulus',
+                data: [
+                    {% for j in jumlah_lulus %}
+                        "{{ j.num_graduate }}",    
+                    {% endfor %}
+                ],
+                backgroundColor: [
+                    {% for i in angkatan %}
+                        'rgba(54, 162, 235, 0.5)',
+                    {% endfor %}
+                ],
+                borderColor: [
+                    {% for i in angkatan %}
+                        'rgba(54, 162, 235, 1)',
+                    {% endfor %}
+                ],
+                borderWidth: 1
+            },
+            {
+                label: 'Tidak Lulus',
+                data: [
+                    {% for i in jumlah_ulang %}
+                        "{{ i.num_repeat }}",    
+                    {% endfor %}
+                ],
+                backgroundColor: [
+                    {% for i in angkatan %}
+                        'rgba(255,99,132,0.5)',  
+                    {% endfor %}
+                ],
+                borderColor: [
+                    {% for i in angkatan %}
+                        'rgba(255,99,132,1)',  
+                    {% endfor %}
+                ],
+                borderWidth: 1
+            }
+            ]
+        },
+        options: {
+            layout: {
+                padding: {
+                    bottom: 75
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    });
+    
     new Chart(
-        document.getElementById("chartjs-0"),
+        document.getElementById("line-pendaftar"),
         {
             "type":"line",
             "data":
             {
                 "labels":
                 [
-                    {% for i in angkatan %}
-                        "{{ i }}",    
+                    {% for i in jumlah_pendaftar %}
+                        "{{ i.month|date:'F Y' }}",    
                     {% endfor %}
                 ],
                 "datasets"  :
@@ -87,39 +155,18 @@
                     "label":"Pendaftar",
                     "data": [
                                 {% for i in jumlah_pendaftar %}
-                                    "{{ i.num_students }}",    
+                                    "{{ i.id__count }}",    
                                 {% endfor %}
                             ],
                     "fill":false,
                     "borderColor":"rgb(75, 192, 192)",
                     "lineTension":0.1
-                    },
-                    {
-                    "label":"Peserta",
-                    "data": [
-                                {% for i in jumlah_peserta %}
-                                    "{{ i.num_participants }}",    
-                                {% endfor %}
-                            ],
-                    "fill":false,
-                    "borderColor":"rgb(255,180,0)",
-                    "lineTension":0.1
-                    },
-                    {
-                    "label":"Lulus",
-                    "data":[
-                                {% for j in jumlah_lulus %}
-                                    "{{ j.num_graduate }}",    
-                                {% endfor %}
-                            ],
-                    "fill":false,
-                    "borderColor":"rgb(234,65,58)",
-                    "lineTension":0.1
-                    },
+                    }
                 ]
             },
             "options":{}
         }
     );
+    
 </script>
 {% endblock %}
