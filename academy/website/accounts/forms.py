@@ -4,6 +4,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import int_to_base36
 from django.conf import settings
 from django.template.loader import render_to_string
+from model_utils import Choices
 
 from academy.apps.accounts.models import User, Profile
 from academy.apps.students.models import Student
@@ -127,6 +128,13 @@ class ForgotPasswordForm(forms.Form):
 
 
 class SurveyForm(forms.ModelForm):
+    LOCATION = Choices(
+        ('Jakarta', 'Jakarta'),
+        ('Yogyakarta', 'Yogyakarta'),
+        ('Bandung', 'Bandung'),
+        ('Lain-lain', 'Lain-lain'),
+    )
+
     working_status = forms.ChoiceField(choices=Survey.WORKING_STATUS_CHOICES, label='Status pekerjaan saat ini:',
                                        widget=forms.RadioSelect)
     working_status_other = forms.CharField(label='Jawaban anda:', required=False)
@@ -137,6 +145,26 @@ class SurveyForm(forms.ModelForm):
                                                 label='Apabila bersedia untuk disalurkan, kapan waktu yang diinginkan',
                                                 widget=forms.RadioSelect)
     graduate_channeled_when_other = forms.CharField(label='Jawaban anda:', required=False)
+    channeled_location = forms.MultipleChoiceField(
+        label="Apabila Anda bersedia disalurkan, dimana Anda bersedia ditempatkan",
+        choices=LOCATION,
+        widget=forms.CheckboxSelectMultiple, required=False)
+    channeled_location_other = forms.CharField(label='Jawaban anda (Pisahkan dengan koma):', required=False)
+
+    def clean_channeled_location(self):
+        locations = self.cleaned_data['channeled_location']
+        ignore_empty = False
+        if 'Lain-lain' in locations:
+            ignore_empty = True
+            locations.remove('Lain-lain')
+
+        if len(locations) == 0 and not ignore_empty:
+            raise forms.ValidationError('Field ini tidak boleh kosong.')
+
+        return locations
+
+    def clean_channeled_location_other(self):
+        return self.cleaned_data['channeled_location_other'].split(',')
 
     class Meta:
         model = Survey

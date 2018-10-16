@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from model_utils import Choices
 
@@ -26,6 +27,12 @@ class Survey(models.Model):
     graduate_channeled = models.BooleanField()
     graduate_channeled_when = models.PositiveIntegerField(choices=GRADUATE_CHANNELED_TIME_CHOICES)
     graduate_channeled_when_other = models.CharField(blank=True, null=True, default=None, max_length=150)
+    channeled_location = ArrayField(models.CharField(blank=True, null=True, default=None, max_length=255), default=list)
+    channeled_location_other = ArrayField(models.CharField(blank=True, null=True, default=None, max_length=255),
+                                          default=list)
 
     def __str__(self):
         return self.user.username
+
+    def get_channeled_location(self):
+        return ','.join(self.channeled_location + self.channeled_location_other)

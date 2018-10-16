@@ -10,12 +10,23 @@
                 <div class="form-group col-md-12">
                     <label class="">{{ field.label }}</label>
                     {% if field.field.widget.input_type == 'radio' %}
-                        <ul>
+                        <ul style="list-style: none">
                             {% for radio in field %}
                                 <li>
                                     <label for="{{ radio.id_for_label }}">
                                         <span class="form-check-input">{{ radio.tag }}</span>
                                         {{ radio.choice_label }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% elif field.name == 'channeled_location'%}
+                        <ul style="list-style: none">
+                            {% for checkbox in field %}
+                                <li>
+                                    <label for="{{ checkbox.id_for_label }}">
+                                        <span class="form-check-input">{{ checkbox.tag }}</span>
+                                        {{ checkbox.choice_label }}
                                     </label>
                                 </li>
                             {% endfor %}
