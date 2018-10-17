@@ -151,20 +151,19 @@ class SurveyForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple, required=False)
     channeled_location_other = forms.CharField(label='Jawaban anda (Pisahkan dengan koma):', required=False)
 
-    def clean_channeled_location(self):
-        locations = self.cleaned_data['channeled_location']
-        ignore_empty = False
-        if 'Lain-lain' in locations:
-            ignore_empty = True
-            locations.remove('Lain-lain')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        if len(locations) == 0 and not ignore_empty:
-            raise forms.ValidationError('Field ini tidak boleh kosong.')
-
-        return locations
+        # Because [] also mean false so check it against None
+        if self.initial.get('channeled_location_other', None) is not None:
+            self.initial['channeled_location_other'] = ','.join(self.initial['channeled_location_other'])
 
     def clean_channeled_location_other(self):
         return self.cleaned_data['channeled_location_other'].split(',')
+
+    def clean(self):
+        if 'Lain-lain' not in self.cleaned_data['channeled_location']:
+            self.cleaned_data['channeled_location_other'] = []
 
     class Meta:
         model = Survey

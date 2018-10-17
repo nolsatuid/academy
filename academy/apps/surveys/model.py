@@ -35,4 +35,8 @@ class Survey(models.Model):
         return self.user.username
 
     def get_channeled_location(self):
-        return ','.join(self.channeled_location + self.channeled_location_other)
+        locations = self.channeled_location
+        if 'Lain-lain' in locations:
+            locations.remove('Lain-lain')
+
+        return ','.join(locations + self.channeled_location_other)
