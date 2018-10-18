@@ -139,14 +139,14 @@ class SurveyForm(forms.ModelForm):
                                        widget=forms.RadioSelect)
     working_status_other = forms.CharField(label='Jawaban anda:', required=False)
     graduate_channeled = forms.ChoiceField(choices=Survey.TRUE_FALSE_CHOICES,
-                                           label='Apabila anda telah lulus dari kelas nolsatu, apakah bersedia untuk disalurkan',
+                                           label='Apabila Anda telah lulus dari kelas nolsatu, apakah bersedia untuk disalurkan',
                                            widget=forms.RadioSelect)
     graduate_channeled_when = forms.ChoiceField(choices=Survey.GRADUATE_CHANNELED_TIME_CHOICES,
                                                 label='Apabila bersedia untuk disalurkan, kapan waktu yang diinginkan',
                                                 widget=forms.RadioSelect)
     graduate_channeled_when_other = forms.CharField(label='Jawaban anda:', required=False)
     channeled_location = forms.MultipleChoiceField(
-        label="Apabila Anda bersedia disalurkan, dimana Anda bersedia ditempatkan",
+        label="Apabila bersedia untuk disalurkan, dimana lokasi yang diinginkan",
         choices=LOCATION,
         widget=forms.CheckboxSelectMultiple, required=False)
     channeled_location_other = forms.CharField(label='Jawaban anda (Pisahkan dengan koma):', required=False)
