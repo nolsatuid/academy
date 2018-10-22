@@ -15,9 +15,10 @@ def index(request):
     context = {
         'title': 'Home',
         'instructors': Instructor.objects.order_by('order'),
-        'pendaftar': User.objects.exclude(is_superuser=True).exclude(is_staff=True).count(),
-        'peserta': Student.objects.filter(status = Student.STATUS.participants).count(),
-        'lulus': Student.objects.filter(status = Student.STATUS.graduate).count()
+        'pendaftar': User.objects.registered_counts(),
+        'pengguna': User.objects.actived_counts(),
+        'peserta': Student.objects.participant_counts(),
+        'lulus': Student.objects.graduated_counts()
     }
     return render(request, 'website/home.html', context)
 

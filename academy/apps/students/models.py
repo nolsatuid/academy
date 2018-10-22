@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
@@ -19,6 +20,20 @@ class Training(models.Model):
         return f"Batch {self.batch}"
 
 
+class StudentManager(models.Manager):
+    def participant_counts(self):
+        participant = Student.objects \
+            .exclude(Q(user__is_superuser=True) | Q(status=Student.STATUS.selection)) \
+            .count()
+        return participant
+
+    def graduated_counts(self):
+        graduated = Student.objects \
+            .exclude(user__is_superuser=True) \
+            .filter(status = Student.STATUS.graduate).count()
+        return graduated
+
+
 class Student(models.Model):
     user = models.ForeignKey('accounts.User', related_name='students')
     training = models.ForeignKey('students.Training', related_name='students')
@@ -29,6 +44,7 @@ class Student(models.Model):
         (4, 'graduate', _('Graduate'))
     )
     status = models.PositiveIntegerField(choices=STATUS, default=STATUS.selection)
+    objects = StudentManager()
 
     def __str__(self):
         return self.user.email
