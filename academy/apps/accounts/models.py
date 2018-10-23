@@ -26,12 +26,12 @@ class CustomUserManager(UserManager):
         user = super().create_user(username, email, password, is_active=False, **extra_fields)
         return user
 
-    def registered_counts(self):
-        registered = User.objects.exclude(Q(is_superuser=True) | Q(is_staff=True)).count()
+    def registered(self):
+        registered = User.objects.exclude(Q(is_superuser=True) | Q(is_staff=True))
         return registered
 
-    def actived_counts(self):
-        actived = User.objects.exclude(Q(is_superuser=True) | Q(is_staff=True)).filter(is_active=True).count()
+    def actived(self):
+        actived = User.objects.registered().filter(is_active=True)
         return actived
 
 

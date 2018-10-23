@@ -21,16 +21,15 @@ class Training(models.Model):
 
 
 class StudentManager(models.Manager):
-    def participant_counts(self):
-        participant = Student.objects \
-            .exclude(Q(user__is_superuser=True) | Q(status=Student.STATUS.selection)) \
-            .count()
-        return participant
+    def participants(self):
+        participants = Student.objects \
+            .exclude(Q(user__is_superuser=True) | Q(status=Student.STATUS.selection))
+        return participants
 
-    def graduated_counts(self):
+    def graduated(self):
         graduated = Student.objects \
             .exclude(user__is_superuser=True) \
-            .filter(status = Student.STATUS.graduate).count()
+            .filter(status = Student.STATUS.graduate)
         return graduated
 
 

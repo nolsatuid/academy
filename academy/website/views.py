@@ -15,10 +15,10 @@ def index(request):
     context = {
         'title': 'Home',
         'instructors': Instructor.objects.order_by('order'),
-        'pendaftar': User.objects.registered_counts(),
-        'pengguna': User.objects.actived_counts(),
-        'peserta': Student.objects.participant_counts(),
-        'lulus': Student.objects.graduated_counts()
+        'pendaftar': User.objects.registered().count(),
+        'pengguna': User.objects.actived().count(),
+        'peserta': Student.objects.participants().count(),
+        'lulus': Student.objects.graduated().count()
     }
     return render(request, 'website/home.html', context)
 
