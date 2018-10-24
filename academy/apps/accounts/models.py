@@ -27,11 +27,11 @@ class CustomUserManager(UserManager):
         return user
 
     def registered(self):
-        registered = User.objects.exclude(Q(is_superuser=True) | Q(is_staff=True))
+        registered = self.exclude(Q(is_superuser=True) | Q(is_staff=True))
         return registered
 
     def actived(self):
-        actived = User.objects.registered().filter(is_active=True)
+        actived = self.registered().filter(is_active=True)
         return actived
 
 

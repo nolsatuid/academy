@@ -22,13 +22,11 @@ class Training(models.Model):
 
 class StudentManager(models.Manager):
     def participants(self):
-        participants = Student.objects \
-            .exclude(Q(user__is_superuser=True) | Q(status=Student.STATUS.selection))
+        participants = self.exclude(Q(user__is_superuser=True) | Q(status=Student.STATUS.selection))
         return participants
 
     def graduated(self):
-        graduated = Student.objects \
-            .exclude(user__is_superuser=True) \
+        graduated = self.exclude(user__is_superuser=True) \
             .filter(status = Student.STATUS.graduate)
         return graduated
 
