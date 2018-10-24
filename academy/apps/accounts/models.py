@@ -5,7 +5,7 @@ from PIL import Image, ImageOps
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
-from django.db.models import When, Case, Count, IntegerField
+from django.db.models import When, Case, Count, IntegerField, Q
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import int_to_base36
@@ -25,6 +25,14 @@ class CustomUserManager(UserManager):
     def create_user(self, username, email, password, is_active=False, **extra_fields):
         user = super().create_user(username, email, password, is_active=False, **extra_fields)
         return user
+
+    def registered(self):
+        registered = self.exclude(Q(is_superuser=True) | Q(is_staff=True))
+        return registered
+
+    def actived(self):
+        actived = self.registered().filter(is_active=True)
+        return actived
 
 
 class User(AbstractUser):
