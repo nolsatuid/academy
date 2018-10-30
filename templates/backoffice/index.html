@@ -5,52 +5,85 @@
     <h1 class="display-5 mb-4">{{ title }}</h1>
 
     <div class="row mb-5">
-        <div class="col-xl-4 col-sm-6">
+        <div class="col-xl-3 col-sm-6">
             <div class="card bg-success text-white h-100">
-                <div class="card-body bg-success">
+                <div class="card-body bg-default">
                     <div class="row">
-                        <div class="col-md-6">                                                   
-                            <div class="rotate mb-3">
-                                <i class="fa fa-users fa-3x"></i>
-                            </div>
-                            <h6 class="text-uppercase">Pendaftar</h6>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <h1 class="display-4 float-right">{{ data.pendaftar }}</h1>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-sm-6">
-            <div class="card text-white bg-warning h-100">
-                <div class="card-body bg-warning">
                     <div class="row">
-                        <div class="col-md-6">                                                   
-                            <div class="rotate mb-3">
-                                <i class="fa fa-user-check fa-3x"></i>
+                        <div class="col-md-4">                                                   
+                            <div class="rotate">
+                                <i class="fa fa-users fa-2x"></i>                                
                             </div>
-                            <h6 class="text-uppercase">Peserta</h6>
                         </div>
-                        <div class="col-md-6">
-                            <h1 class="display-4 float-right">{{ data.peserta }}</h1>
+                        <div class="col-md-8">
+                            <h6 class="text-uppercase text-right">Pendaftar</h6>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-sm-6">
-            <div class="card text-white bg-info h-100">
-                <div class="card-body bg-info">
+        <div class="col-xl-3 col-sm-6">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body bg-default">
                     <div class="row">
-                        <div class="col-md-7">      
-                            <div class="rotate mb-3">
-                                <i class="fa fa-user-graduate fa-3x"></i>
-                            </div>
-                            <h6 class="text-uppercase mb-0">Lulus</h6>
+                        <div class="col-md-12">
+                            <h1 class="display-4 float-right">{{ data.pengguna }}</h1>
                         </div>
-                        <div class="col-md-5">                            
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">                                                   
+                            <div class="rotate">
+                                <i class="fa fa-user fa-2x"></i>                                
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h6 class="text-uppercase text-right">Pengguna</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card bg-warning text-white h-100">
+                <div class="card-body bg-default">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="display-4 float-right">{{ data.peserta }}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">                                                   
+                            <div class="rotate">
+                                <i class="fa fa-user-check fa-2x"></i>                                
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h6 class="text-uppercase text-right">Peserta</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body bg-default">
+                    <div class="row">
+                        <div class="col-md-12 text-white">
                             <h1 class="display-4 float-right">{{ data.lulus }}</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">                                                   
+                            <div class="rotate">
+                                <i class="fa fa-user-graduate fa-2x"></i>                                
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h6 class="text-uppercase text-right">Lulus</h6>
                         </div>
                     </div>
                 </div>

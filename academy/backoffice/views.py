@@ -9,9 +9,10 @@ from academy.apps.students.models import Student, Training
 @staff_member_required
 def index(request):
     data_dashboard = {
-        'pendaftar': User.objects.exclude(is_superuser=True).exclude(is_staff=True).count(),
-        'peserta': Student.objects.filter(status = Student.STATUS.participants).count(),
-        'lulus': Student.objects.filter(status = Student.STATUS.graduate).count()
+        'pendaftar': User.objects.registered().count(),
+        'pengguna': User.objects.actived().count(),
+        'peserta': Student.objects.participants().count(),
+        'lulus': Student.objects.graduated().count()
     }
 
     angkatan = Training.objects.order_by('batch')
