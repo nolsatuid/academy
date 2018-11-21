@@ -80,12 +80,16 @@ def candidate_to_graduates(request, id):
 @staff_member_required
 def details(request, id):
     graduate = get_object_or_404(Graduate, id=id)
+    survey = None
+    if hasattr(graduate.user, 'survey'):
+        survey = graduate.user.survey
 
     context = {
         'graduate': graduate,
         'user': graduate.user,
         'title': 'Profil Lulusan',
-        'student': graduate.student
+        'student': graduate.student,
+        'survey': survey
     }
     return render(request, 'backoffice/graduates/details.html', context)
 

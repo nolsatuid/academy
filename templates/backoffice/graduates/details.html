@@ -96,7 +96,58 @@
                                             <td class="font-weight-bold">Twitter</td>
                                             <td><a href="https://twitter.com/{{ user.profile.twitter }}" target="_blank">{{ user.profile.twitter }}</a></td>
                                         </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Telegram ID</td>
+                                            <td><a href="https://web.telegram.org/#/im?p={{ user.profile.telegram_id }}" target="_blank">{{ user.profile.telegram_id }}</a></td>
+                                        </tr>
                                     </tbody></table>
+
+                                    {% if survey %}
+                                    <div class="table-responsive box box-info">
+                                        <table class="table table-bordered">
+
+                                            <tr class="thead-dark">
+                                                <th colspan="2">Data Pekerjaan</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Status pekerjaan saat ini</td>
+                                                <td>
+                                                    {% if survey.working_status == 99 %}
+                                                        {{ survey.working_status_other}}
+                                                    {% else %}
+                                                        {{ survey.get_working_status_display }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Apabila anda telah lulus dari kelas nolsatu, apakah bersedia untuk disalurkan</td>
+                                                <td>
+                                                    {% if survey.graduate_channeled %}
+                                                        Ya
+                                                    {% else %}
+                                                        Tidak
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Apabila bersedia untuk disalurkan, kapan waktu yang diinginkan</td>
+                                                <td>
+                                                    {% if survey.graduate_channeled_when == 99 %}
+                                                        {{ survey.graduate_channeled_when_other}}
+                                                    {% else %}
+                                                        {{ survey.get_graduate_channeled_when_display }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Apabila Anda bersedia disalurkan, dimana Anda bersedia ditempatkan</td>
+                                                <td>
+                                                    {{ survey.get_channeled_location }}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

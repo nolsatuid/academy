@@ -61,11 +61,15 @@ def index(request):
 @staff_member_required
 def details(request, id):
     user = get_object_or_404(User, id=id)
+    survey = None
+    if hasattr(user, 'survey'):
+        survey = user.survey
 
     context = {
         'user': user,
         'page_active': 'user',
         'title': 'User Detail',
+        'survey': survey,
         'student': user.get_student()
     }
     return render(request, 'backoffice/users/details.html', context)
