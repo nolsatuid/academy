@@ -19,6 +19,7 @@
             <div class="datatable content table-responsive table-full-width">
                 <table id="datatable" class="table table-striped">
                     <thead>
+                        <th>No.</th>
                         <th>Name</th>
                         <th>Username</th>
                         <th>Status</th>
@@ -29,6 +30,7 @@
                     <tbody>
                         {% for user in users %}
                             <tr>
+                                <td>{{ forloop.counter }}</td>
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.username }}</td>
                                 <td>{{ user|get_status_student|status_display:'True' }}</td>
