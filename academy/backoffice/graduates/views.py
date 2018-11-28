@@ -119,7 +119,7 @@ def candidates(request):
         response['Content-Disposition'] = 'attachment; filename=daftar-calon-mengulang.csv'
         return response
 
-    paginator_graduates = Paginator(cantidate_graduates, 2)
+    paginator_graduates = Paginator(cantidate_graduates, 25)
     page_graduates = request.GET.get('page_graduates', 1)
     try:
         data_candidate_graduates = paginator_graduates.page(page_graduates)
@@ -134,7 +134,7 @@ def candidates(request):
     end_index_graduates = 5 if index_graduates <= 3 else (index_graduates + 2 if index_graduates < max_index_graduates - 2 else max_index_graduates)
     page_range_graduates = list(paginator_graduates.page_range)[start_index_graduates:end_index_graduates]
 
-    paginator_repeats = Paginator(cantidate_repeats, 2)
+    paginator_repeats = Paginator(cantidate_repeats, 25)
     page_repeats = request.GET.get('page_repeats', 1)
     try:
         data_candidate_repeats = paginator_repeats.page(page_repeats)
