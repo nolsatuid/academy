@@ -27,8 +27,12 @@
                                         <input data-val="true" data-val-number="The field ID must be a number." data-val-required="The ID field is required." id="ID" name="ID" value="64130" type="hidden">
 
                                         <tbody><tr>
-                                            <td class="font-weight-bold">Nama</td>
-                                            <td>{{ user.name }}</td>
+                                            <td class="font-weight-bold">Nama Depan</td>
+                                            <td>{{ user.first_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Nama Belakang</td>
+                                            <td>{{ user.last_name }}</td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Username</td>
