@@ -8,7 +8,7 @@ class CertificateVerifyForm(forms.Form):
         label='Nomor Sertifikat', max_length=18,
         widget=forms.TextInput(attrs={'placeholder': 'ex: NS-XXXXX-XXXX-XXXX'})
     )
-    last_name = forms.CharField(label='Nama Belakang')
+    last_name = forms.CharField(label='Nama Belakang', help_text="Nama Belakang harus sesuai dengan yang tertetera pada profil Anda.")
 
     def verification(self, *args, **kwargs):
         certificate_number = self.cleaned_data['certificate_number']
@@ -22,7 +22,7 @@ class CertificateVerifyForm(forms.Form):
                 graduates.user.last_name and graduates.user.last_name.lower()
                 == last_name.lower()
             ) or (
-                graduates.user.first_name and
+                not graduates.user.last_name and graduates.user.first_name and
                 graduates.user.first_name.lower() == last_name.lower()
             ):
                 return graduates
