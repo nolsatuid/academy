@@ -6,11 +6,11 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import transaction
 from django.contrib.admin.views.decorators import staff_member_required
 from django.forms import formset_factory
 
+from academy.core.utils import pagination
 from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial
 from academy.apps.accounts.models import User
@@ -40,20 +40,8 @@ def index(request):
         response['Content-Disposition'] = 'attachment; filename=daftar-lulusan.csv'
         return response
 
-    paginator = Paginator(graduates, 25)
     page = request.GET.get('page', 1)
-    try:
-        data_graduates = paginator.page(page)
-    except PageNotAnInteger:
-        data_graduates = paginator.page(1)
-    except EmptyPage:
-        data_graduates = paginator.page(paginator.num_pages)
-
-    max_index = len(paginator.page_range)
-    index = data_graduates.number
-    start_index = max_index - 5 if index > max_index - 3 else (index - 3 if index > 3 else 0)
-    end_index = 5 if index <= 3 else (index + 2 if index < max_index - 2 else max_index)
-    page_range = list(paginator.page_range)[start_index:end_index]
+    data_graduates, page_range = pagination(graduates, page)
 
     context = {
         'graduates': graduates,
@@ -119,36 +107,11 @@ def candidates(request):
         response['Content-Disposition'] = 'attachment; filename=daftar-calon-mengulang.csv'
         return response
 
-    paginator_graduates = Paginator(cantidate_graduates, 25)
     page_graduates = request.GET.get('page_graduates', 1)
-    try:
-        data_candidate_graduates = paginator_graduates.page(page_graduates)
-    except PageNotAnInteger:
-        data_candidate_graduates = paginator_graduates.page(1)
-    except EmptyPage:
-        data_candidate_graduates = paginator_graduates.page(paginator_graduates.num_pages)
+    data_candidate_graduates, page_range_graduates = pagination(cantidate_graduates, page_graduates)
 
-    max_index_graduates = len(paginator_graduates.page_range)
-    index_graduates = data_candidate_graduates.number
-    start_index_graduates = max_index_graduates - 5 if index_graduates > max_index_graduates - 3 else (index_graduates - 3 if index_graduates > 3 else 0)
-    end_index_graduates = 5 if index_graduates <= 3 else (index_graduates + 2 if index_graduates < max_index_graduates - 2 else max_index_graduates)
-    page_range_graduates = list(paginator_graduates.page_range)[start_index_graduates:end_index_graduates]
-
-    paginator_repeats = Paginator(cantidate_repeats, 25)
     page_repeats = request.GET.get('page_repeats', 1)
-    try:
-        data_candidate_repeats = paginator_repeats.page(page_repeats)
-    except PageNotAnInteger:
-        data_candidate_repeats = paginator_repeats.page(1)
-    except EmptyPage:
-        data_candidate_repeats = paginator_repeats.page(paginator_repeats.num_pages)
-
-    max_index_repeats = len(paginator_repeats.page_range)
-    index_repeats = data_candidate_repeats.number
-    start_index_repeats = max_index_repeats - 5 if index_repeats > max_index_repeats - 3 else (index_repeats - 3 if index_repeats > 3 else 0)
-    end_index_repeats = 5 if index_repeats <= 3 else (index_repeats + 2 if index_repeats < max_index_repeats - 2 else max_index_repeats)
-    page_range_repeats = list(paginator_repeats.page_range)[start_index_repeats:end_index_repeats]
-
+    data_candidate_repeats, page_range_repeats = pagination(cantidate_repeats, page_repeats)
 
     context = {
         'title': 'Kandidat',

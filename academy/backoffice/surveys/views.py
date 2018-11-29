@@ -1,8 +1,8 @@
 from django.contrib.admin.views.decorators import staff_member_required
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from academy.core.utils import pagination
 from academy.apps.surveys.model import Survey
 from academy.backoffice.surveys.form import SurveyFilterForm
 
@@ -22,20 +22,9 @@ def index(request):
             response['Content-Disposition'] = 'attachment; filename=survey.csv'
             return response
 
-    paginator = Paginator(survey_list, 25)
+    
     page = request.GET.get('page', 1)
-    try:
-        survey = paginator.page(page)
-    except PageNotAnInteger:
-        survey = paginator.page(1)
-    except EmptyPage:
-        survey = paginator.page(paginator.num_pages)
-
-    max_index = len(paginator.page_range)
-    index = survey.number
-    start_index = max_index - 5 if index > max_index - 3 else (index - 3 if index > 3 else 0)
-    end_index = 5 if index <= 3 else (index + 2 if index < max_index - 2 else max_index)
-    page_range = list(paginator.page_range)[start_index:end_index]
+    survey, page_range = pagination(survey_list, page)
 
     context = {
         'title': 'Survey',
