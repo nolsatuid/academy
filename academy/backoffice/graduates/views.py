@@ -1,3 +1,8 @@
+import csv
+
+from io import StringIO
+
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
@@ -5,6 +10,7 @@ from django.db import transaction
 from django.contrib.admin.views.decorators import staff_member_required
 from django.forms import formset_factory
 
+from academy.core.utils import pagination
 from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial
 from academy.apps.accounts.models import User
@@ -15,10 +21,33 @@ from .forms import ParticipantsRepeatForm
 @staff_member_required
 def index(request):
     graduates = Graduate.objects.select_related('user')
+    download = request.GET.get('download', '')
+    
+    if download:
+        csv_buffer = StringIO()
+        writer = csv.writer(csv_buffer)
+        writer.writerow([
+            'No.', 'Nama', 'No.Sertifikat', 'Email', 'No. Ponsel'
+        ])
+
+        for index, graduate in enumerate(graduates, 1):
+            writer.writerow([
+                index, graduate.user.name, graduate.certificate_number,
+                graduate.user.email, graduate.user.phone
+            ])
+
+        response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+        response['Content-Disposition'] = 'attachment; filename=daftar-lulusan.csv'
+        return response
+
+    page = request.GET.get('page', 1)
+    data_graduates, page_range = pagination(graduates, page)
 
     context = {
         'graduates': graduates,
-        'title': "Daftar Lulusan"
+        'title': "Daftar Lulusan",
+        'data_graduates': data_graduates,
+        'page_range': page_range
     }
     return render(request, 'backoffice/graduates/index.html', context)
 
@@ -44,13 +73,57 @@ def candidates(request):
         elif status['repeat'] >= settings.INDICATOR_REPEATED:
             cantidate_repeats.append(user)
 
+    download_graduates = request.GET.get('download-calon-lulusan', '')    
+    if download_graduates:
+        csv_buffer = StringIO()
+        writer = csv.writer(csv_buffer)
+        writer.writerow([
+            'No.', 'Nama', 'Email', 'No. Ponsel'
+        ])
+
+        for index, candidate_graduate in enumerate(cantidate_graduates, 1):
+            writer.writerow([
+                index, candidate_graduate.name, candidate_graduate.email, candidate_graduate.phone
+            ])
+
+        response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+        response['Content-Disposition'] = 'attachment; filename=daftar-calon-lulusan.csv'
+        return response
+
+    download_repeats = request.GET.get('download-calon-mengulang', '')    
+    if download_repeats:
+        csv_buffer = StringIO()
+        writer = csv.writer(csv_buffer)
+        writer.writerow([
+            'No.', 'Nama', 'Email', 'No. Ponsel'
+        ])
+
+        for index, candidate_repeats in enumerate(cantidate_repeats, 1):
+            writer.writerow([
+                index, candidate_repeats.name, candidate_repeats.email, candidate_repeats.phone
+            ])
+
+        response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+        response['Content-Disposition'] = 'attachment; filename=daftar-calon-mengulang.csv'
+        return response
+
+    page_graduates = request.GET.get('page_graduates', 1)
+    data_candidate_graduates, page_range_graduates = pagination(cantidate_graduates, page_graduates)
+
+    page_repeats = request.GET.get('page_repeats', 1)
+    data_candidate_repeats, page_range_repeats = pagination(cantidate_repeats, page_repeats)
+
     context = {
         'title': 'Kandidat',
         'cantidate_graduates': cantidate_graduates,
         'cantidate_repeats': cantidate_repeats,
         'indicator': settings.INDICATOR_GRADUATED,
         'repeat_indicator': settings.INDICATOR_REPEATED,
-        'training_count': training_count
+        'training_count': training_count,
+        'page_range_graduates': page_range_graduates,
+        'page_range_repeats': page_range_repeats,
+        'data_candidate_graduates': data_candidate_graduates,
+        'data_candidate_repeats': data_candidate_repeats,        
     }
     return render(request, 'backoffice/graduates/candidates.html', context)
 

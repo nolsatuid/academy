@@ -2,9 +2,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms import formset_factory
 
+from academy.core.utils import pagination
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student, TrainingMaterial, Training
 
@@ -29,21 +29,9 @@ def index(request):
             response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
             response['Content-Disposition'] = 'attachment; filename=daftar-pengguna.csv'
             return response
-
-    paginator = Paginator(user_list, 25)
+    
     page = request.GET.get('page', 1)
-    try:
-        users = paginator.page(page)
-    except PageNotAnInteger:
-        users = paginator.page(1)
-    except EmptyPage:
-        users = paginator.page(paginator.num_pages)
-
-    max_index = len(paginator.page_range)
-    index = users.number
-    start_index = max_index - 5 if index > max_index - 3 else (index - 3 if index > 3 else 0)
-    end_index = 5 if index <= 3 else (index + 2 if index < max_index - 2 else max_index)
-    page_range = list(paginator.page_range)[start_index:end_index]
+    users, page_range = pagination(user_list, page)
 
     context = {
         'title': 'Pengguna',
@@ -52,7 +40,8 @@ def index(request):
         'form': form,
         'user_count': user_count,
         'filter_count': user_list.count(),
-        'query_params': 'status=%s&start_date=%s&end_date=%s' % (request.GET.get('status', 1), request.GET.get('start_date', ''), request.GET.get('end_date', '')),
+        'query_params': 'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''), 
+            request.GET.get('start_date', ''), request.GET.get('end_date', ''), request.GET.get('status', ''), request.GET.get('batch', '')),
         'page_range': page_range
     }
     return render(request, 'backoffice/users/index.html', context)
@@ -93,20 +82,8 @@ def participants(request):
             response['Content-Disposition'] = 'attachment; filename=daftar-peserta.csv'
             return response
 
-    paginator = Paginator(user_list, 25)
     page = request.GET.get('page', 1)
-    try:
-        users = paginator.page(page)
-    except PageNotAnInteger:
-        users = paginator.page(1)
-    except EmptyPage:
-        users = paginator.page(paginator.num_pages)
-
-    max_index = len(paginator.page_range)
-    index = users.number
-    start_index = max_index - 5 if index > max_index - 3 else (index - 3 if index > 3 else 0)
-    end_index = 5 if index <= 3 else (index + 2 if index < max_index - 2 else max_index)
-    page_range = list(paginator.page_range)[start_index:end_index]
+    users, page_range = pagination(user_list, page)
 
     context = {
         'title': 'Peserta',
@@ -115,10 +92,8 @@ def participants(request):
         'form': form,
         'user_count': user_count,
         'filter_count': user_list.count(),
-        'query_params': 'status=%s&start_date=%s&end_date=%s&batch=%s' % (
-            request.GET.get('status', 2), request.GET.get('start_date', ''), request.GET.get('end_date', ''),
-            request.GET.get('batch', '')
-        ),
+        'query_params':'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''), 
+            request.GET.get('start_date', ''), request.GET.get('end_date', ''), request.GET.get('status', 2), request.GET.get('batch', '')),
         'page_range': page_range
     }
     return render(request, 'backoffice/users/index.html', context)

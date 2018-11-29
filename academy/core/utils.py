@@ -1,6 +1,7 @@
 import datetime
 
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def image_upload_path(prefix='etc'):
@@ -30,3 +31,20 @@ def normalize_datetime_range(start, end, tzinfo=None):
     end = end.replace(hour=23, minute=59, second=59)
 
     return start, end
+
+
+def pagination(data, page, lenght=25):
+    paginator = Paginator(data, lenght)
+    try:
+        data_pagination = paginator.page(page)
+    except PageNotAnInteger:
+        data_pagination = paginator.page(1)
+    except EmptyPage:
+        data_pagination = paginator.page(paginator.num_pages)
+
+    max_index = len(paginator.page_range)
+    index = data_pagination.number
+    start_index = max_index - 5 if index > max_index - 3 else (index - 3 if index > 3 else 0)
+    end_index = 5 if index <= 3 else (index + 2 if index < max_index - 2 else max_index)
+    page_range = list(paginator.page_range)[start_index:end_index]
+    return (data_pagination, page_range)
