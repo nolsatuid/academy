@@ -3,9 +3,14 @@ from django.db.models import Q
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
+from django.contrib.auth import get_user_model
 
 from model_utils import Choices
 from post_office import mail
+
+
+def get_sentinel_user():
+    return get_user_model().objects.get_or_create(username='deleted')[0]
 
 
 class Training(models.Model):
@@ -27,14 +32,16 @@ class StudentManager(models.Manager):
 
     def graduated(self):
         graduated = self.exclude(user__is_superuser=True) \
-            .filter(status = Student.STATUS.graduate)
+            .filter(status=Student.STATUS.graduate)
         return graduated
 
 
 class Student(models.Model):
-    user = models.ForeignKey('accounts.User', related_name='students')
-    training = models.ForeignKey('students.Training', related_name='students')
-    STATUS = Choices (
+    user = models.ForeignKey('accounts.User', related_name='students',
+                             on_delete=models.SET(get_sentinel_user))
+    training = models.ForeignKey('students.Training', related_name='students',
+                                 null=True, on_delete=models.SET_NULL)
+    STATUS = Choices(
         (1, 'selection', _('Selection')),
         (2, 'participants', _('Participants')),
         (3, 'repeat', _('Repeat')),
@@ -52,7 +59,7 @@ class Student(models.Model):
             title = 'Selamat, Anda menjadi peserta'
         elif self.status == self.STATUS.graduate:
             template = 'emails/change_to_graduate.html'
-            title = 'Selamat, Anda lulus'       
+            title = 'Selamat, Anda lulus'
         else:
             return
 
@@ -86,14 +93,18 @@ class TrainingMaterial(models.Model):
 
 
 class TrainingStatus(models.Model):
-    training_material = models.ForeignKey('students.TrainingMaterial', related_name='training_status')
-    STATUS = Choices (
+    training_material = models.ForeignKey(
+        'students.TrainingMaterial', related_name='training_status',
+        null=True, on_delete=models.SET_NULL
+    )
+    STATUS = Choices(
         (1, 'not_yet', _('Not Yet')),
         (2, 'graduate', _('Graduate')),
         (3, 'repeat', _('Repeat')),
     )
     status = models.PositiveIntegerField(choices=STATUS, blank=True, null=True)
-    user = models.ForeignKey('accounts.User', related_name='training_status')
+    user = models.ForeignKey('accounts.User', related_name='training_status',
+                             on_delete=models.SET(get_sentinel_user))
 
     def __str__(self):
         return self.get_status_display()

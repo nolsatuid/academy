@@ -52,7 +52,7 @@ def index(request):
 
 
 def login_view(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('website:accounts:index')
 
     form = CustomAuthenticationForm(request, data=request.POST or None)
@@ -80,7 +80,7 @@ def logout_view(request):
 
 
 def sign_up(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('website:accounts:index')
 
     form = SignupForm(request.POST or None)
@@ -107,7 +107,7 @@ def active_account(request, uidb36, token):
     if user and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save(update_fields=['is_active'])
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         messages.success(request, 'Selamat, akun Anda sudah aktif')
     else:
         messages.warning(request, 'Maaf, ada masalah dengan aktivasi akun')

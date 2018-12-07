@@ -1,14 +1,12 @@
-from django.contrib.auth.backends import ModelBackend
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from academy.apps.accounts.models import User
+from django.contrib.auth.hashers import check_password
 
 
-class EmailBackend(ModelBackend):
+class EmailBackend:
     # Authenticate user using email
 
-    def authenticate(self, username=None, password=None):
+    def authenticate(self, request, username=None, password=None):
         if '@' in username:
             kwargs = {'email': username}
         else:
