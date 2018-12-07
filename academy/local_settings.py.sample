@@ -1,4 +1,5 @@
 from django.conf import settings
+import sentry_sdk
 
 DATABASES = {
     'default': {
@@ -23,3 +24,8 @@ DEFAULT_RECIPIANT_EMAIL = 'no-reply@yourdomain.id'
 HOST = 'http://localhost:8000'
 
 INDICATOR_GRADUATED = 1
+
+sentry_sdk.init(
+    dsn="",
+    integrations=[]
+)

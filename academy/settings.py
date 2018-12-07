@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -162,6 +164,11 @@ STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
 
 INDICATOR_GRADUATED = 6
 INDICATOR_REPEATED = 3
+
+sentry_sdk.init(
+    dsn="https://c9a271a3699648e18769f6370f4d7488@sentry.io/1339389",
+    integrations=[DjangoIntegration()]
+)
 
 try:
     from .local_settings import *
