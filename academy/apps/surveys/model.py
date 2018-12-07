@@ -21,7 +21,7 @@ class Survey(models.Model):
         (False, 'Tidak')
     )
 
-    user = models.OneToOneField('accounts.User', related_name='survey')
+    user = models.OneToOneField('accounts.User', related_name='survey', on_delete=models.CASCADE)
     working_status = models.PositiveIntegerField(choices=WORKING_STATUS_CHOICES)
     working_status_other = models.CharField(blank=True, null=True, default=None, max_length=150)
     graduate_channeled = models.BooleanField()

@@ -122,6 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = (
     'academy.core.custom_auth.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 # other app

@@ -7,16 +7,22 @@ from django.utils.translation import ugettext_lazy as _
 from django.template.loader import get_template
 from django.template.defaultfilters import slugify
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth import get_user_model
 
 from academy.core.utils import image_upload_path
 from model_utils import Choices
 from model_utils.fields import AutoCreatedField
 
 
+def get_sentinel_user():
+    return get_user_model().objects.get_or_create(username='deleted')[0]
+
+
 class Graduate(models.Model):
     certificate_number = models.CharField(max_length=200, blank=True, null=True)
-    user = models.ForeignKey('accounts.User', related_name='graduates')
-    student = models.OneToOneField('students.Student', null=True)
+    user = models.ForeignKey('accounts.User', related_name='graduates',
+                             on_delete=models.SET(get_sentinel_user))
+    student = models.OneToOneField('students.Student', null=True, on_delete=models.SET_NULL)
     certificate_file = models.FileField(upload_to=image_upload_path('certificates'),
                                         blank=True, null=True)
     created = AutoCreatedField()

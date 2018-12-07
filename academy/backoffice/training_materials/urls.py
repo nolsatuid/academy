@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from . import views
 
+app_name = 'training_materials'
 
 urlpatterns = [
     url(r'^(?P<id>\d+)/delete/$', views.delete, name='delete'),

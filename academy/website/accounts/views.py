@@ -52,7 +52,7 @@ def index(request):
 
 
 def login_view(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('website:accounts:index')
 
     form = CustomAuthenticationForm(request, data=request.POST or None)
@@ -80,7 +80,7 @@ def logout_view(request):
 
 
 def sign_up(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('website:accounts:index')
 
     form = SignupForm(request.POST or None)

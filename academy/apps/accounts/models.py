@@ -131,7 +131,8 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField('accounts.User', related_name='profile')
+    user = models.OneToOneField('accounts.User', related_name='profile',
+                                on_delete=models.CASCADE)
     address = models.TextField()
     GENDER = Choices(
         (1, 'male', 'Male'),
@@ -165,7 +166,8 @@ class Profile(models.Model):
 
 
 class Instructor(models.Model):
-    user = models.OneToOneField('accounts.User', related_name='instructor')
+    user = models.OneToOneField('accounts.User', related_name='instructor',
+                                on_delete=models.CASCADE)
     order = models.IntegerField()
 
     def __str__(self):

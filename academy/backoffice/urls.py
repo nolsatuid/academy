@@ -1,14 +1,16 @@
-from django.conf.urls import url, include
+from django.urls import path, include
 
 from . import views
 
 
+app_name = 'backoffice'
+
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^users/', include('academy.backoffice.users.urls', namespace='users')),
-    url(r'^training-materials/', include('academy.backoffice.training_materials.urls',
-                                         namespace='training_materials')),
-    url(r'graduates/', include('academy.backoffice.graduates.urls', namespace='graduates')),
-    url(r'instructors/', include('academy.backoffice.instructor.urls', namespace='instructors')),
-    url(r'surveys/', include('academy.backoffice.surveys.urls', namespace='surveys'))
+    path('', views.index, name='index'),
+    path('users/', include('academy.backoffice.users.urls', namespace='users')),
+    path('training-materials/', include('academy.backoffice.training_materials.urls',
+                                        namespace='training_materials')),
+    path('graduates/', include('academy.backoffice.graduates.urls', namespace='graduates')),
+    path('instructors/', include('academy.backoffice.instructor.urls', namespace='instructors')),
+    path('surveys/', include('academy.backoffice.surveys.urls', namespace='surveys'))
 ]
