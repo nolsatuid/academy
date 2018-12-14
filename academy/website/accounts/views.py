@@ -115,6 +115,7 @@ def active_account(request, uidb36, token):
     return redirect("website:accounts:index")
 
 
+@login_required
 def profile(request):
     user = request.user
     student = request.user.get_student()
