@@ -12,7 +12,7 @@ from django.utils.http import int_to_base36
 from django.template.loader import render_to_string
 from django.utils.six import StringIO
 
-from academy.core.utils import image_upload_path
+from academy.core.utils import image_upload_path, file_upload_path
 from academy.core.validators import validate_mobile_phone
 from academy.apps.students.models import Student, TrainingStatus
 from academy.apps.logs.models import LogTrainingStatus
@@ -152,6 +152,8 @@ class Profile(models.Model):
     twitter = models.CharField(blank=True, max_length=30)
     instagram = models.CharField(blank=True, max_length=30)
     telegram_id = models.CharField(blank=True, max_length=50)
+
+    curriculum_vitae = models.FileField(upload_to=file_upload_path('cv'), blank=True, null=True)
 
     def __str__(self):
         return self.user.username

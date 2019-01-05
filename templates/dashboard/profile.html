@@ -94,6 +94,12 @@
                                             <td class="font-weight-bold">Telegram ID</td>
                                             <td><a href="https://web.telegram.org/#/im?p={{ user.profile.telegram_id }}" target="_blank">{{ user.profile.telegram_id }}</a></td>
                                         </tr>
+                                        {% if user.profile.curriculum_vitae %}
+                                            <tr>
+                                                <td class="font-weight-bold">Curriculum Vitae</td>
+                                                <td><a href="{{ user.profile.curriculum_vitae.url }}" target="_blank">Download</a></td>
+                                            </tr>
+                                        {% endif %}
                                     </tbody></table>
                                 </div>
 
