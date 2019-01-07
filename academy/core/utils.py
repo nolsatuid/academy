@@ -9,6 +9,10 @@ def image_upload_path(prefix='etc'):
     return path
 
 
+def file_upload_path(prefix='etc'):
+    return f"files/{prefix}/%Y/%m/%d"
+
+
 def convert_to_datetime(date, tzinfo=None):
     """
     Converts date objects into timezone aware datetime object

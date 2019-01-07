@@ -9,6 +9,7 @@ from model_utils import Choices
 from academy.apps.accounts.models import User, Profile
 from academy.apps.students.models import Student
 from academy.apps.surveys.model import Survey
+from academy.core import fields
 from academy.core.validators import validate_email, validate_mobile_phone, validate_username
 
 from post_office import mail
@@ -50,11 +51,21 @@ class ProfileForm(forms.ModelForm):
     last_name = forms.CharField(max_length=70, required=False, label='Nama Belakang')
     phone_number = forms.CharField(max_length=16, validators=[validate_mobile_phone],
                                    label='Nomor Ponsel')
+    curriculum_vitae = fields.FileFieldExtended(
+        label='Curriculum Vitae (.pdf, .doc, .docx, .odt. Max 2 MB)',
+        max_mb_file_size=2,
+        allowed_content_type=[
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.oasis.opendocument.text '
+        ]
+    )
 
     class Meta:
         model = Profile
         fields = ('first_name', 'last_name', 'phone_number', 'linkedin', 'git_repo',
-                  'blog', 'youtube', 'facebook', 'instagram', 'twitter', 'telegram_id')
+                  'blog', 'youtube', 'facebook', 'instagram', 'twitter', 'telegram_id', 'curriculum_vitae')
         help_texts = {
             'git_repo': ('url akun github/gitlab/bitbucket dll'),
             'blog': ('url blog atau portfolio'),

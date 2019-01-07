@@ -34,3 +34,23 @@ class AjaxModelChoiceField(forms.ChoiceField):
 
     def valid_value(self, value):
         return True
+
+
+class FileFieldExtended(forms.FileField):
+    def __init__(self, allowed_content_type=None, max_mb_file_size=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.allowed_content_type = allowed_content_type
+        self.max_mb_file_size = max_mb_file_size
+
+    def to_python(self, data):
+        f = super().to_python(data)
+        if f is None:
+            return None
+
+        if self.max_mb_file_size and f.size > self.max_mb_file_size * 1048576:
+            raise forms.ValidationError('Ukuran file maksimal 2 MB')
+
+        if self.allowed_content_type and f.content_type not in self.allowed_content_type:
+            raise forms.ValidationError('Tipe file yang diperbolehkan hanya .pdf, .docx, dan .odt')
+
+        return f
