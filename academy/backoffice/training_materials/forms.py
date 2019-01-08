@@ -18,7 +18,7 @@ class TrainingMaterialForm(forms.ModelForm):
 
 
 class StudentFilterForm(forms.Form):
-    STUDENT_STATUS = Choices (
+    STUDENT_STATUS = Choices(
         (2, 'participants', 'Peserta'),
         (3, 'repeat', 'Mengulang'),
         (4, 'graduate', 'Lulus'),
@@ -32,10 +32,10 @@ class StudentFilterForm(forms.Form):
     )
     training_status = forms.ChoiceField(choices=TRAINING_STATUS, required=False, label="Status Pelatihan")
     batch = forms.ModelChoiceField(
-        queryset=Training.objects.order_by('batch'), empty_label="Pilih Angkatan", required=False
+        queryset=Training.objects.order_by('batch'), empty_label="Pilih Angkatan"
     )
-    training_materials = forms.ModelChoiceField( empty_label="Pilih Materi",
-        queryset=TrainingMaterial.objects.all()
+    training_materials = forms.ModelChoiceField(
+        empty_label="Pilih Materi", queryset=TrainingMaterial.objects.all()
     )
 
     def clean(self):
@@ -58,10 +58,10 @@ class StudentFilterForm(forms.Form):
 
         data = []
         for student in students:
-            materi = student.training.materials.get(id=self.cleaned_data['training_materials'].id) 
+            materi = student.training.materials.get(id=self.cleaned_data['training_materials'].id)
             training_status, created = materi.training_status.get_or_create(
                 user=student.user, defaults={'status': TrainingStatus.STATUS.not_yet}
-            )   
+            )
 
             available_student = {
                 'id': student.id,
@@ -74,7 +74,7 @@ class StudentFilterForm(forms.Form):
                 if training_status.status == int(self.cleaned_data['training_status']):
                     data.append(available_student)
             else:
-                data.append(available_student) 
+                data.append(available_student)
 
         return data
 
