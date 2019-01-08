@@ -65,7 +65,7 @@ def bulk_training_status(request):
     """
     form = StudentFilterForm(request.GET or None)
     formset = None
-    table_heading= {}
+    table_heading = {}
 
     if form.is_valid():
         students = form.get_data()
@@ -127,7 +127,7 @@ def bulk_material_status(request):
 
         # pass data students
         students = form.get_data()
-              
+
     context = {
         'title': 'Status Pelatihan',
         'form': form,
