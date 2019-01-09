@@ -4,8 +4,12 @@ from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-def image_upload_path(prefix='etc'):
-    path = f"images/{prefix}/%Y/%m/%d"
+def image_upload_path(prefix='etc', use_dir_date=True):
+    if use_dir_date:
+        path = f"images/{prefix}/%Y/%m/%d"
+    else:
+        path = f"images/{prefix}"
+
     return path
 
 

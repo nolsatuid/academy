@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'academy.apps.logs',
     'academy.apps.graduates',
     'academy.apps.surveys',
+    'academy.apps.offices',
 
     'post_office',
     'django_extensions',
