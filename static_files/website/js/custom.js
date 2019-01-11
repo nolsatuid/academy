@@ -43,4 +43,35 @@ $(document).ready(function () {
             }
         ]
     });
+
+    $('#mitra').css('display', 'block');
+    $('.mitra-slider').slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        dots: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        adaptiveHeight: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
+    });
 });
