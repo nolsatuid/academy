@@ -4,7 +4,9 @@ from django.template.loader import render_to_string
 
 from academy.apps.students.models import Student, Training, TrainingStatus
 from academy.apps.accounts.models import User
+
 from post_office import mail
+from model_utils import Choices
 
 
 class ParticipantsRepeatForm(forms.Form):
@@ -65,6 +67,12 @@ class ParticipantsRepeatForm(forms.Form):
 
 
 class AddTrainingStatus(forms.ModelForm):
+    STATUS = Choices(
+        (1, 'not_yet', 'Belum'),
+        (2, 'graduate', 'Lulus'),
+        (3, 'repeat', 'Ulang'),
+    )
+    status = forms.ChoiceField(choices=STATUS, required=False, label="")
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
