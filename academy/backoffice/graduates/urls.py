@@ -14,4 +14,6 @@ urlpatterns = [
         name='status_training'),
     url(r'^certificate/(?P<id>\d+)/$', views.show_certificate,
         name='show_certificate'),
+    url(r'^add-training-material/(?P<id>\d+)/$', views.add_training_material,
+        name='add_training_material'),
 ]

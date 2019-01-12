@@ -129,6 +129,13 @@ class User(AbstractUser):
     def delete_training_status(self):
         self.training_status.all().delete()
 
+    def get_training_materials(self):
+        training_materials = []
+        for ts in self.training_status.all():
+            training_materials.append(ts.training_material)
+
+        return training_materials
+
 
 class Profile(models.Model):
     user = models.OneToOneField('accounts.User', related_name='profile',

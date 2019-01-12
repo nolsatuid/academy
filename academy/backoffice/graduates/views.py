@@ -15,14 +15,14 @@ from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial
 from academy.apps.accounts.models import User
 from academy.backoffice.users.forms import ChangeStatusTraining, BaseStatusTrainingFormSet
-from .forms import ParticipantsRepeatForm
+from .forms import ParticipantsRepeatForm, AddTrainingStatus
 
 
 @staff_member_required
 def index(request):
     graduates = Graduate.objects.select_related('user')
     download = request.GET.get('download', '')
-    
+
     if download:
         csv_buffer = StringIO()
         writer = csv.writer(csv_buffer)
@@ -73,7 +73,7 @@ def candidates(request):
         elif status['repeat'] >= settings.INDICATOR_REPEATED:
             cantidate_repeats.append(user)
 
-    download_graduates = request.GET.get('download-calon-lulusan', '')    
+    download_graduates = request.GET.get('download-calon-lulusan', '')
     if download_graduates:
         csv_buffer = StringIO()
         writer = csv.writer(csv_buffer)
@@ -90,7 +90,7 @@ def candidates(request):
         response['Content-Disposition'] = 'attachment; filename=daftar-calon-lulusan.csv'
         return response
 
-    download_repeats = request.GET.get('download-calon-mengulang', '')    
+    download_repeats = request.GET.get('download-calon-mengulang', '')
     if download_repeats:
         csv_buffer = StringIO()
         writer = csv.writer(csv_buffer)
@@ -123,7 +123,7 @@ def candidates(request):
         'page_range_graduates': page_range_graduates,
         'page_range_repeats': page_range_repeats,
         'data_candidate_graduates': data_candidate_graduates,
-        'data_candidate_repeats': data_candidate_repeats,        
+        'data_candidate_repeats': data_candidate_repeats,
     }
     return render(request, 'backoffice/graduates/candidates.html', context)
 
@@ -187,7 +187,8 @@ def status_training(request, id):
     graduate = get_object_or_404(Graduate, id=id)
     user = graduate.user
     student = graduate.student
-    training_materials = student.training.materials.prefetch_related('training_status')
+    # training materials get from user, not get from training/batch
+    training_materials = user.get_training_materials()
 
     ChangeStatusFormSet = formset_factory(ChangeStatusTraining, formset=BaseStatusTrainingFormSet)
 
@@ -213,7 +214,8 @@ def status_training(request, id):
         'title': 'Daftar Pelatihan',
         'training_materials': training_materials,
         'student': student,
-        'user': user
+        'user': user,
+        'graduate': graduate
     }
     return render(request, 'backoffice/form-change-status.html', context)
 
@@ -235,3 +237,22 @@ def show_certificate(request, id):
     }
     return render(request, 'backoffice/graduates/show_certificate.html',
                   context)
+
+
+@staff_member_required
+def add_training_material(request, id):
+    graduate = get_object_or_404(Graduate, id=id)
+    user = graduate.user
+    form = AddTrainingStatus(data=request.POST or None, user=user)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Berhasil menambahkan materi")
+        return redirect('backoffice:graduates:status_training', id)
+
+    context = {
+        'title': f'Tambah Materi ke {user.name}',
+        'custom_button_title': 'Tambah',
+        'form': form
+    }
+    return render(request, 'backoffice/form.html', context)
