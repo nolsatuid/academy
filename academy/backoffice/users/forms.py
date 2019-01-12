@@ -148,7 +148,7 @@ class BaseStatusTrainingFormSet(BaseFormSet):
         super().__init__(*args, **kwargs)
         for i, form in enumerate(self.forms):
             # skip or continue last loop
-            if i > self.training_materials.count() - 1:
+            if i > len(self.training_materials) - 1:
                 continue
             material = self.training_materials[i]
             form.fields['training_material'].label = f"{material.code} - {material.title}"

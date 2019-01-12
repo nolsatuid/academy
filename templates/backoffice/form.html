@@ -40,7 +40,12 @@
 
                                 <div class="form-group col-md-12">
                                     <button type="submit" class="btn btn-primary btn-pill"/>
-                                    Simpan</button>
+                                    {% if custom_button_title %}
+                                        {{ custom_button_title }}
+                                    {% else %}
+                                        Simpan
+                                    {% endif %}
+                                    </button>
                                 </div>
 
                             </form>

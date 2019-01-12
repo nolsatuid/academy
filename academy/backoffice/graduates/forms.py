@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.template.loader import render_to_string
 
-from academy.apps.students.models import Student, Training
+from academy.apps.students.models import Student, Training, TrainingStatus
 from academy.apps.accounts.models import User
 from post_office import mail
 
@@ -62,3 +62,28 @@ class ParticipantsRepeatForm(forms.Form):
             student.save(update_fields=['status'])
 
         return len(self.users_repeat)
+
+
+class AddTrainingStatus(forms.ModelForm):
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = TrainingStatus
+        fields = ('training_material', 'status')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if TrainingStatus.objects.filter(user=self.user, training_material=cleaned_data['training_material']).exists():
+            raise forms.ValidationError(
+                f"{self.user.name} sudah memiliki materi {cleaned_data['training_material']}"
+            )
+        return cleaned_data
+
+    def save(self, *args, **kwargs):
+        training_status = super().save(commit=False)
+        training_status.user = self.user
+        training_status.save()
+        return training_status

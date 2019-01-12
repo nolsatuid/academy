@@ -7,6 +7,9 @@
             <h4 class="pull-left">
                 {{ title }}
             </h4>
+            {% if graduate %}
+                <a class="btn btn-secondary pull-right" href="{% url 'backoffice:graduates:add_training_material'  graduate.id %}">Tambah Materi</a>
+            {% endif %}
         </div>
         <div class="card-body">
             <div class="row-fluid">
