@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
+from academy.apps.students.models import TrainingMaterial
 from academy.core.widget import AjaxSelect
 
 
@@ -54,3 +54,11 @@ class FileFieldExtended(forms.FileField):
             raise forms.ValidationError('Tipe file yang diperbolehkan hanya .pdf, .docx, dan .odt')
 
         return f
+
+
+class TrainingMaterialField(forms.ModelChoiceField):
+    def __init__(self, *args, **kwargs):
+        super().__init__(queryset=TrainingMaterial.objects.all(), *args, **kwargs)
+
+    def label_from_instance(self, obj):
+        return f"{obj.code} - {obj.title}"

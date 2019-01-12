@@ -2,8 +2,9 @@ from django import forms
 from django.conf import settings
 from django.template.loader import render_to_string
 
-from academy.apps.students.models import Student, Training, TrainingStatus
+from academy.apps.students.models import Student, Training, TrainingStatus, TrainingMaterial
 from academy.apps.accounts.models import User
+from academy.core.fields import TrainingMaterialField
 
 from post_office import mail
 from model_utils import Choices
@@ -67,6 +68,7 @@ class ParticipantsRepeatForm(forms.Form):
 
 
 class AddTrainingStatus(forms.ModelForm):
+    training_material = TrainingMaterialField()
     STATUS = Choices(
         (1, 'not_yet', 'Belum'),
         (2, 'graduate', 'Lulus'),
