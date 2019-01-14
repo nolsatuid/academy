@@ -12,10 +12,10 @@ from django.forms import formset_factory
 
 from academy.core.utils import pagination
 from academy.apps.graduates.models import Graduate
-from academy.apps.students.models import Student, TrainingMaterial
+from academy.apps.students.models import Student, TrainingMaterial, TrainingStatus
 from academy.apps.accounts.models import User
 from academy.backoffice.users.forms import ChangeStatusTraining, BaseStatusTrainingFormSet
-from .forms import ParticipantsRepeatForm, AddTrainingStatus
+from .forms import ParticipantsRepeatForm, AddTrainingStatus, GraduateTrainingStatusFormSet
 
 
 @staff_member_required
@@ -190,7 +190,7 @@ def status_training(request, id):
     # training materials get from user, not get from training/batch
     training_materials = user.get_training_materials()
 
-    ChangeStatusFormSet = formset_factory(ChangeStatusTraining, formset=BaseStatusTrainingFormSet)
+    ChangeStatusFormSet = formset_factory(ChangeStatusTraining, formset=GraduateTrainingStatusFormSet)
 
     initial = [
         {
@@ -202,7 +202,7 @@ def status_training(request, id):
     ]
 
     formset = ChangeStatusFormSet(data=request.POST or None, initial=initial,
-                                  training_materials=training_materials)
+                                  graduate=graduate)
 
     if formset.is_valid():
         formset.save(user)
@@ -256,3 +256,12 @@ def add_training_material(request, id):
         'form': form
     }
     return render(request, 'backoffice/form.html', context)
+
+
+@staff_member_required
+def delete_training_status(request, id, graduate_id):
+    training_status = get_object_or_404(TrainingStatus, id=id)
+    training_status.delete()
+
+    messages.success(request, 'Berhasil menghapus materi pelatihan')
+    return redirect('backoffice:graduates:status_training', graduate_id)

@@ -9,7 +9,11 @@ from academy.apps.students.models import TrainingMaterial
 def materials(request):
     user = request.user
     student = user.get_student()
-    training_materials = student.training.materials.prefetch_related('training_status')
+
+    if hasattr(student, 'graduate'):
+        training_materials = user.get_training_materials()
+    else:
+        training_materials = student.training.materials.prefetch_related('training_status')
 
     context = {
         'title': 'Daftar Pelatihan',
