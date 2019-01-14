@@ -65,7 +65,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Yakin ingin menghapus <strong id="confirmDeleteName"></strong>
+                Yakin ingin menghapus <strong id="confirmDeleteTitle"></strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
@@ -86,7 +86,7 @@
 
             var modal = $(this);
             modal.find('#confirmDeleteButton').attr("href", url);
-            modal.find('#confirmDeleteName').html(name);
+            modal.find('#confirmDeleteTitle').html(title);
         })
     })
 </script>
