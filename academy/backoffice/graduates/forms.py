@@ -1,7 +1,10 @@
 from django import forms
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
+from django.urls import reverse
 
+from academy.backoffice.users.forms import BaseStatusTrainingFormSet
 from academy.apps.students.models import Student, Training, TrainingStatus, TrainingMaterial
 from academy.apps.accounts.models import User
 from academy.core.fields import TrainingMaterialField
@@ -97,3 +100,37 @@ class AddTrainingStatus(forms.ModelForm):
         training_status.user = self.user
         training_status.save()
         return training_status
+
+
+class GraduateTrainingStatusFormSet(BaseStatusTrainingFormSet):
+
+    def __init__(self, graduate, *args, **kwargs):
+        """
+        create label any button to action delete training status
+        training material data get form user, not from batch
+        """
+        self.graduate = graduate
+        self.user = graduate.user
+        self.trainig = {
+            'materials': [],
+            'status': []
+        }
+        for ts in self.user.training_status.all():
+            self.trainig['status'].append(ts)
+            self.trainig['materials'].append(ts.training_material)
+
+        super().__init__(training_materials=self.trainig['materials'], *args, **kwargs)
+        for i, form in enumerate(self.forms):
+            # skip or continue last loop
+            if i > len(self.training_materials) - 1:
+                continue
+            material = self.trainig['materials'][i]
+            status = self.trainig['status'][i]
+
+            # create button to combine with label
+            url = reverse('backoffice:graduates:delete_training_status', args=[status.id, graduate.id])
+            html_button = '<a href="#" class="btn btn-primary btn-pill btn-sm" data-toggle="modal" data-target="#confirmDeleteModal"' \
+                f'data-url="{url}" data-title="{material.title}" ><i class="fa fa-trash"></i></a>'
+            label = mark_safe(f"{html_button} {material.code} - {material.title}")
+
+            form.fields['training_material'].label = label
