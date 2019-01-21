@@ -51,7 +51,7 @@ class FileFieldExtended(forms.FileField):
             raise forms.ValidationError('Ukuran file maksimal 2 MB')
 
         if self.allowed_content_type and f.content_type not in self.allowed_content_type:
-            raise forms.ValidationError('Tipe file yang diperbolehkan hanya .pdf, .docx, dan .odt')
+            raise forms.ValidationError('Tipe file tidak diperbolehkan')
 
         return f
 

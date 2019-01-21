@@ -4,6 +4,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import int_to_base36
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 from model_utils import Choices
 
 from academy.apps.accounts.models import User, Profile
@@ -52,13 +53,14 @@ class ProfileForm(forms.ModelForm):
     phone_number = forms.CharField(max_length=16, validators=[validate_mobile_phone],
                                    label='Nomor Ponsel')
     curriculum_vitae = fields.FileFieldExtended(
-        label='Curriculum Vitae (.pdf, .doc, .docx, .odt. Max 2 MB)',
+        label=mark_safe('Curriculum Vitae<br/>'
+                        '<a href="https://www.dropbox.com/s/nqjoadgifz7zpb0/template_cv_nolsatu.docx?dl=0">'
+                        'Download Template CV</a>'),
+        help_text="File Type: .doc, .docx. Max 2 MB. Mohon gunakan template yang disediakan",
         max_mb_file_size=2,
         allowed_content_type=[
-            'application/pdf',
             'application/msword',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            'application/vnd.oasis.opendocument.text '
         ]
     )
 
