@@ -1,12 +1,12 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 app_name = 'survey'
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'(?P<id>\d+)/edit/$', views.edit, name='edit'),
-    url(r'(?P<id>\d+)/delete/$', views.delete, name='delete'),
-    url(r'^add/$', views.add, name='add'),
+    path('', views.index, name='index'),
+    path('<int:id>/edit/', views.edit, name='edit'),
+    path('<int:id>/delete/', views.delete, name='delete'),
+    path('add/', views.add, name='add'),
 ]
