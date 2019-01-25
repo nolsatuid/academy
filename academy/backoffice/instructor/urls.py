@@ -1,13 +1,13 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 app_name = 'instructor'
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'(?P<id>\d+)/edit/$', views.edit, name='edit'),
-    url(r'(?P<id>\d+)/delete/$', views.delete, name='delete'),
-    url(r'^add/$', views.add, name='add'),
-    url(r'^find-user/$', views.ajax_find_user, name='ajax_find_user'),
+    path('', views.index, name='index'),
+    path('<int:id>/edit/', views.edit, name='edit'),
+    path('<int:id>/delete/', views.delete, name='delete'),
+    path('add/', views.add, name='add'),
+    path('find-user/', views.ajax_find_user, name='ajax_find_user'),
 ]
