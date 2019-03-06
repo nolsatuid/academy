@@ -1,0 +1,80 @@
+{% extends 'backoffice/base.html' %}
+{% load form_tags %}
+
+{% block content-dashboard %}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">{{ title }}</h4>
+        </div>
+        <div class="card-body">
+            <a href="{% url 'backoffice:campuses:add' %}" class="btn btn-primary btn-pill">Tambah Kampus</a>
+            <div class="datatable content table-responsive table-full-width mt-3">
+                <table id="datatable" class="table table-striped">
+                    <thead>
+                        <th>Nama</th>
+                        <th>Logo</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Registrasi</th>
+                        <th>Aksi</th>
+                    </thead>
+                    <tbody>
+                        {% for campus in campuses %}
+                            <tr>
+                                <td>{{ campus.name }}</td>
+                                <td width="15%">{% if campus.logo %} <img src="{{ campus.logo.url }}" class="img-fluid"  alt="{{ campus.name }}"/></td>{% endif %}
+                                <td>{{ campus.email }}</td>
+                                <td>{{ campus.phone }}</td>
+                                <td>{% if campus.open_registration %} Buka {% else %} Tutup {% endif %}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-pill btn-info" href="{% url 'backoffice:campuses:details' campus.id %}">Detail</a>
+                                    <a class="btn btn-sm btn-pill btn-secondary" href="{% url 'backoffice:campuses:edit' campus.id %}">Edit</a>
+                                    <button class="btn btn-sm btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:campuses:delete' campus.id %}" data-name="{{ campus.name}}" >Hapus</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+    </div>
+</div>
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Yakin ingin menghapus <strong id="confirmDeleteName"></strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <a id="confirmDeleteButton" class="btn btn-success" >Ya</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var url = button.data('delete-url');
+            var name = button.data('name');
+
+            var modal = $(this);
+            modal.find('#confirmDeleteButton').attr("href", url);
+            modal.find('#confirmDeleteName').html(name);
+        })
+    })
+</script>
+{% endblock %}
