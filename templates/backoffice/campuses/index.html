@@ -8,7 +8,7 @@
             <h4 class="pull-left">{{ title }}</h4>
         </div>
         <div class="card-body">
-            <a href="{% url 'backoffice:campus:add' %}" class="btn btn-primary btn-pill">Tambah Kampus</a>
+            <a href="{% url 'backoffice:campuses:add' %}" class="btn btn-primary btn-pill">Tambah Kampus</a>
             <div class="datatable content table-responsive table-full-width mt-3">
                 <table id="datatable" class="table table-striped">
                     <thead>
@@ -20,16 +20,17 @@
                         <th>Aksi</th>
                     </thead>
                     <tbody>
-                        {% for item in campus %}
+                        {% for campus in campuses %}
                             <tr>
-                                <td>{{ item.name }}</td>
-                                <td width="15%"><img src="{{ item.image.url }}" class="img-fluid"  alt="{{ item.name }}"/></td>
-                                <td>{{ item.email }}</td>
-                                <td>{{ item.phone }}</td>
-                                <td>{{ item.open_registration }}</td>
+                                <td>{{ campus.name }}</td>
+                                <td width="15%">{% if campus.logo %} <img src="{{ campus.logo.url }}" class="img-fluid"  alt="{{ campus.name }}"/></td>{% endif %}
+                                <td>{{ campus.email }}</td>
+                                <td>{{ campus.phone }}</td>
+                                <td>{% if campus.open_registration %} Buka {% else %} Tutup {% endif %}</td>
                                 <td>
-                                    <a class="btn btn-pill btn-secondary" href="{% url 'backoffice:campus:edit' item.id %}">Edit</a>
-                                    <button class="btn btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:campus:delete' item.id %}" data-name="{{ item.name}}" >Hapus</button>
+                                    <a class="btn btn-sm btn-pill btn-info" href="{% url 'backoffice:campuses:details' campus.id %}">Detail</a>
+                                    <a class="btn btn-sm btn-pill btn-secondary" href="{% url 'backoffice:campuses:edit' campus.id %}">Edit</a>
+                                    <button class="btn btn-sm btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:campuses:delete' campus.id %}" data-name="{{ campus.name}}" >Hapus</button>
                                 </td>
                             </tr>
                         {% endfor %}

@@ -13,9 +13,9 @@ def index(request):
     context = {
         'title': 'Kampus',
         'page_active': 'campus',
-        'campus': campus_list
+        'campuses': campus_list
     }
-    return render(request, 'backoffice/campus/index.html', context)
+    return render(request, 'backoffice/campuses/index.html', context)
 
 
 @staff_member_required
@@ -25,7 +25,7 @@ def add(request):
     if form.is_valid():
         form.save()
         messages.success(request, 'Berhasil tambah kampus')
-        return redirect('backoffice:campus:index')
+        return redirect('backoffice:campuses:index')
 
     context = {
         'title': 'Tambah Kampus',
@@ -42,7 +42,7 @@ def edit(request, id):
     if form.is_valid():
         form.save()
         messages.success(request, 'Berhasil edit kampus')
-        return redirect('backoffice:campus:index')
+        return redirect('backoffice:campuses:index')
 
     context = {
         'title': 'Edit Kampus',
@@ -56,4 +56,15 @@ def delete(request, id):
     campus = get_object_or_404(Campus, id=id)
     campus.delete()
     messages.success(request, 'Berhasil hapus kampus')
-    return redirect('backoffice:campus:index')
+    return redirect('backoffice:campuses:index')
+
+
+@staff_member_required
+def details(request, id):
+    campus = get_object_or_404(Campus, id=id)
+
+    context = {
+        'title': 'Edit Kampus',
+        'campus': campus
+    }
+    return render(request, 'backoffice/campuses/details.html', context)

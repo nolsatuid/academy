@@ -29,8 +29,11 @@
                                 {% for field in form %}
                                     <div class="form-group col-md-12">
                                         <label>{{ field.label }}</label><br>
-
-                                        {{ field|addclass:"form-control" }}
+                                        {% if field.name != 'open_registration' and field.name != 'is_visible' %}
+                                            {{ field|addclass:"form-control" }}
+                                        {% else %}
+                                            {{ field }}
+                                        {% endif %}
                                         <span class="help_text">
                                             {{ field.help_text|safe }}
                                         </span>
