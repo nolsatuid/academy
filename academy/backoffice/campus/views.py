@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from academy.apps.campuses.model import Campus
+from academy.apps.campuses.models import Campus
 from academy.backoffice.campus.form import CampusForm
 
 

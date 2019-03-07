@@ -1,6 +1,6 @@
 from django import forms
 
-from academy.apps.campuses.model import Campus
+from academy.apps.campuses.models import Campus
 
 
 class CampusForm(forms.ModelForm):
