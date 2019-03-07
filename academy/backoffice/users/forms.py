@@ -201,7 +201,8 @@ class TrainingForm(forms.ModelForm):
             'start_date': 'Boleh kosong',
             'end_date': 'Boleh kosong',
             'materials': ('Gunakan tombol shift/ctrl untuk memilih '
-                          'beberapa materi sekaligus')
+                          'beberapa materi sekaligus'),
+            'batch': 'Gunakan awalan NSC- jika akan membuat ngkatan baru untuk NolSatu Kampus, mis. NCS-1'
         }
 
 

@@ -14,7 +14,7 @@ def get_sentinel_user():
 
 
 class Training(models.Model):
-    batch = models.PositiveIntegerField(unique=True)
+    batch = models.CharField(max_length=255, unique=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
