@@ -50,6 +50,17 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
     objects = CustomUserManager()
 
+    def get_return_value(self):
+        if self.email:
+            return self.email
+        elif self.username:
+            return self.username
+        elif self.name:
+            return self.name
+
+    def __str__(self):
+        return self.get_return_value()
+
     @property
     def name(self):
         name = self.get_full_name()

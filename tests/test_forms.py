@@ -75,4 +75,7 @@ class AccountsTestForm(TestCase):
         }
         form = StudentForm(data=data)
         self.assertTrue(form.is_valid())
-        form.save()
+        student = form.save()
+        self.assertEqual(student.user, user)
+        self.assertEqual(student.training, training)
+        self.assertEqual(student.campus, campus)

@@ -104,7 +104,7 @@ class ProfileForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ('user', 'training')
+        fields = ('user', 'training', 'campus')
 
 
 class ForgotPasswordForm(forms.Form):
