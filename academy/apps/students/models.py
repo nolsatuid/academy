@@ -49,6 +49,8 @@ class Student(models.Model):
     )
     status = models.PositiveIntegerField(choices=STATUS, default=STATUS.selection)
     objects = StudentManager()
+    campus = models.ForeignKey('campuses.Campus', related_name='students',
+                               on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.user.email
