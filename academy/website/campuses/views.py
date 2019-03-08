@@ -26,8 +26,8 @@ def register(request, campus_id):
 
     form = SignupForm(request.POST or None)
     if form.is_valid():
+        # set data registration on session to pass profile form
         request.session['registration_data'] = request.POST
-        # form.save()
         messages.success(request, 'Lanjutkan melengkapi data profil')
         return redirect('website:campuses:complete_profile', campus.id)
 
