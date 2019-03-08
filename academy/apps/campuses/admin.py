@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .model import Campus
+from .models import Campus
 
 admin.site.register(Campus)

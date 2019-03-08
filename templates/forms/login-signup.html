@@ -11,7 +11,7 @@
                     <label class="pull-left">{{ field.label }}</label>
 
                     {{ field|addclass:"form-control" }}
-                    {% if not page == "sign-up" and not page == 'reset-password' %}
+                    {% if not page == "sign-up" and not page == 'reset-password' and not page == 'campus-registration' %}
                         <span class="help_text">
                             {{ field.help_text|safe }}
                         </span>
@@ -35,6 +35,8 @@
                     <p class="help-block pull-right mt-2">
                         Punya Akun? <a href="{% url 'website:accounts:login' %}">Masuk</a>
                     </p>
+                {% elif page == "campus-registration" %}
+                    <input type="submit" class="btn btn-primary btn-pill pull-right" value="Selanjutnya" />
                 {% else %}
                     <input type="submit" class="btn btn-primary btn-pill" value="Kirim" />
                 {% endif %}

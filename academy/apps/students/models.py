@@ -14,7 +14,7 @@ def get_sentinel_user():
 
 
 class Training(models.Model):
-    batch = models.PositiveIntegerField(unique=True)
+    batch = models.CharField(max_length=255, unique=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -49,6 +49,8 @@ class Student(models.Model):
     )
     status = models.PositiveIntegerField(choices=STATUS, default=STATUS.selection)
     objects = StudentManager()
+    campus = models.ForeignKey('campuses.Campus', related_name='students',
+                               on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.user.email

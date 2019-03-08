@@ -54,7 +54,7 @@ class ProfileForm(forms.ModelForm):
                                    label='Nomor Ponsel')
     curriculum_vitae = fields.FileFieldExtended(
         label=mark_safe('Curriculum Vitae<br/>'
-                        '<a href="https://www.dropbox.com/s/nqjoadgifz7zpb0/template_cv_nolsatu.docx?dl=0">'
+                        '<a href="https://www.dropbox.com/s/nqjoadgifz7zpb0/template_cv_nolsatu.docx?dl=0" target="_blank">'
                         'Download Template CV</a>'),
         help_text="File Type: .doc, .docx. Max 2 MB. Mohon gunakan template yang disediakan",
         max_mb_file_size=2,

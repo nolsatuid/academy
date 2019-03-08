@@ -19,7 +19,11 @@
             {% endfor %}
 
             <div class="form-group col-md-12">
-                <button type="submit" class="btn btn-primary btn-pill"/>Simpan</button>
+                {% if page == 'campus-registration' %}
+                    <button type="submit" class="btn btn-primary btn-pill pull-right"/>Daftar</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary btn-pill"/>Simpan</button>
+                {% endif %}
             </div>
         </div>
     </div>

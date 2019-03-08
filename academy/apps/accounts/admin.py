@@ -15,7 +15,7 @@ class UserAdmin(DjangoUserAdmin):
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
-    list_display = ('username', 'email', 'is_staff')
+    list_display = ('username', 'email', 'is_active', 'is_staff')
 
 
 class UserProfile(admin.ModelAdmin):
