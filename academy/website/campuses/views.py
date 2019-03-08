@@ -54,6 +54,9 @@ def complete_profile(request, campus_id):
         form.save(user)
 
         training = Training.objects.filter(batch__contains="NSC").last()
+        if not training:
+            training = Training.objects.create(batch="NSC-0")
+
         form_student = StudentForm(data={'user': user.id, 'training': training.id, 'campus': campus.id})
         if form_student.is_valid():
             form_student.save()

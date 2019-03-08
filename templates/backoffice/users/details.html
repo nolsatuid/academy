@@ -66,6 +66,14 @@
                                                 <small><a href="{% url 'backoffice:users:edit_student_batch' student.id %}">edit</a></small>
                                             </td>
                                         </tr>
+                                        {% if student.campus %}
+                                        <tr>
+                                            <td class="font-weight-bold">Kampus</td>
+                                            <td>
+                                                {{ student.campus.name }}
+                                            </td>
+                                        </tr>
+                                        {% endif %}
                                         <tr>
                                             <td colspan="2"></td>
                                         </tr>

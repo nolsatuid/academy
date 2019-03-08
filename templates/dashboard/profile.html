@@ -54,6 +54,14 @@
                                                 {{ student.status|status_display:"True" }}
                                             </td>
                                         </tr>
+                                        {% if student.campus %}
+                                        <tr>
+                                            <td class="font-weight-bold">Kampus</td>
+                                            <td>
+                                                {{ student.campus.name }}
+                                            </td>
+                                        </tr>
+                                        {% endif %}
                                         <tr>
                                             {% if graduate %}
                                                 <td colspan="2" class="font-weight-bold">Sertifikat<embed class="pb-5" src="{{ graduate.certificate_file.url }}" type="application/pdf" width="100%" height="600px" /></td>
