@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from academy.apps.accounts.models import Instructor
 from academy.apps.accounts.models import User
-from academy.apps.offices.models import LogoPartner
+from academy.apps.offices.models import LogoPartner,LogoSponsor
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 
@@ -20,7 +20,8 @@ def index(request):
         'pengguna': User.objects.actived().count(),
         'peserta': Student.objects.participants().count(),
         'lulus': Student.objects.graduated().count(),
-        'logo_partners': LogoPartner.objects.filter(is_visible=True).order_by('display_order')
+        'logo_partners': LogoPartner.objects.filter(is_visible=True).order_by('display_order'),
+        'logo_sponsors': LogoSponsor.objects.filter(is_visible=True).order_by('display_order')
     }
     return render(request, 'website/home.html', context)
 

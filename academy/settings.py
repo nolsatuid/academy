@@ -33,6 +33,8 @@ SECRET_KEY = 'n-@n7d!%na!&^cd4^%al(z4%2vq0umr+fy_m6gmc(0_4uxbuwx'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+# do not mark / at the end of the host
 HOST = 'http://academy.btech.id'
 
 # Application definition

@@ -168,17 +168,17 @@
     <!-- / Our Services Section -->
 
     {% if instructors %}
-        {% include 'website/instructor.html' %}
+        {% include 'website/partials/instructor.html' %}
     {% endif %}
-    
+
     <!-- Statistik Peserta -->
     <div id="statisik" class="bg-primary text-light section py-4" style="border-bottom: 1px solid #EA413A;">
         <h3 class="section-title text-center text-white my-5">Statistik Peserta</h3>
         <div class="features py-4 mb-4">
             <div class="container">
-                <div class="row">                    
+                <div class="row">
                     <div class="col-md-3">
-                        <span class="statistik rounded-circle mx-auto mb-3">                            
+                        <span class="statistik rounded-circle mx-auto mb-3">
                             <center>
                                 <i class="fa fa-users mx-auto mb-3"></i>
                             </center>
@@ -189,7 +189,7 @@
                         </h4>
                     </div>
                     <div class="col-md-3">
-                        <span class="statistik rounded-circle mx-auto mb-3">                            
+                        <span class="statistik rounded-circle mx-auto mb-3">
                             <center>
                                 <i class="fa fa-user mx-auto mb-3"></i>
                             </center>
@@ -200,7 +200,7 @@
                         </h4>
                     </div>
                     <div class="col-md-3">
-                        <span class="statistik rounded-circle mx-auto mb-3">                            
+                        <span class="statistik rounded-circle mx-auto mb-3">
                             <center>
                                 <i class="fa fa-user-check mx-auto mb-3"></i>
                             </center>
@@ -211,7 +211,7 @@
                         </h4>
                     </div>
                     <div class="col-md-3">
-                        <span class="statistik rounded-circle mx-auto mb-3">                            
+                        <span class="statistik rounded-circle mx-auto mb-3">
                             <center>
                                 <i class="fa fa-user-graduate mx-auto mb-3"></i>
                             </center>
@@ -220,7 +220,7 @@
                         <h4>
                         <center><strong><h4 class="text-white">Lulusan</h4></strong></center>
                         </h4>
-                    </div>                 
+                    </div>
                 </div>
             </div>
         </div>
@@ -230,9 +230,15 @@
 
     <!-- Logo Mitra -->
     {% if logo_partners %}
-        {% include 'website/partner.html' %}
+        {% include 'website/partials/partner.html' %}
     {% endif %}
     <!-- / Logo Mitra -->
+
+    <!-- Logo Sponsor -->
+    {% if logo_sponsors %}
+        {% include 'website/partials/sponsor.html' %}
+    {% endif %}
+    <!-- / Logo Sponsor -->
 
     <!-- Subscribe Section -->
     <div id="hubungi-kami" class="subscribe section bg-dark py-4">
