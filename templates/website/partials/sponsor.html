@@ -1,0 +1,20 @@
+{% load static %}
+<div id="sponsor" class="section py-4" style="display: none">
+    <h3 class="section-title text-center my-5">Sponsor</h3>
+    <div class="py-4 mb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="slider sponsor-slider">
+                        {% for logo in logo_sponsors %}
+                            <div class="p-4">
+                                <a href="{{ logo.website }}" target="_blank"><img class="img-fluid" src="{{ logo.image.url }}" alt="{{ logo.name }}"></a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
