@@ -16,7 +16,7 @@ class LogoPartner(models.Model):
 
 class LogoSponsor(models.Model):
     name = models.CharField(max_length=150)
-    image = models.ImageField(upload_to=image_upload_path('partners', use_dir_date=False))
+    image = models.ImageField(upload_to=image_upload_path('sponsors', use_dir_date=False))
     display_order = models.PositiveSmallIntegerField()
     is_visible = models.BooleanField(default=True)
     website = models.URLField(max_length=255)
