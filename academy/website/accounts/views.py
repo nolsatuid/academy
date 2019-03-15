@@ -266,4 +266,4 @@ def auth_user(request, uidb36, token):
         return redirect("website:accounts:edit_survey")
     
     messages.warning(request, 'Maaf link tidak valid')
-    return redirect('website:accounts:index')
+    return redirect('website:index')
