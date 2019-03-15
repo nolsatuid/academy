@@ -18,5 +18,7 @@ urlpatterns = [
             views.reset_password, name='reset_password'),
     path('trainings/', include('academy.website.accounts.trainings.urls', namespace='trainings')),
     path('survey/', views.survey, name='survey'),
-    path('survey/edit/', views.edit_survey, name='edit_survey')
+    path('survey/edit/', views.edit_survey, name='edit_survey'),
+    re_path(r'^auth-user/(?P<uidb36>[0-9A-Za-z]+)/(?P<token>.+)/$',
+            views.auth_user, name='auth_user'),
 ]
