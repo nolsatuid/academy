@@ -263,7 +263,10 @@ def auth_user(request, uidb36, token):
     user = get_object_or_404(User, id=uid_int)
     if user and default_token_generator.check_token(user, token):
         login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-        return redirect("website:accounts:edit_survey")
+        if hasattr(user, 'survey'):
+            return redirect("website:accounts:edit_survey")
+        else:
+            return redirect("website:accounts:survey")
     
     messages.warning(request, 'Maaf link tidak valid')
     return redirect('website:index')
