@@ -7,23 +7,18 @@ from academy.apps.surveys.model import Survey
 from academy.website.accounts.forms import SurveyForm
 
 
-class AuthUserTest(TestCase):
+class AuthUserViewTest(TestCase):
     fixtures = ['accounts.json', 'students.json']
 
-    def test_edit_survey(self):
+    def test_auth_user(self):
         user = User.objects.get(email='user2@gmail.com')
         url = user.generate_auth_url()
         response = self.client.get(url)
-        if hasattr(user, 'survey'):
-            print("Has Survey")
-            self.assertRedirects(response, '/accounts/survey/edit/', status_code=302, target_status_code=200, fetch_redirect_response=True)
-        else:
-            print("Not Yet")
-            self.assertRedirects(response, '/accounts/survey/', status_code=302, target_status_code=200, fetch_redirect_response=True)
-            self.create_survey(user)
-            self.test_edit_survey()
+        
+        # kalau belom punya survey harus redirect ke survey
+        self.assertRedirects(response, '/accounts/survey/', status_code=302, target_status_code=200, fetch_redirect_response=True)
 
-    def create_survey(self, user):
+        #test untuk user yang sudah memiliki memiliki survey
         #create survey
         data = {
             'working_status': Survey.WORKING_STATUS_CHOICES.employee,
@@ -31,5 +26,11 @@ class AuthUserTest(TestCase):
             'graduate_channeled_when': Survey.GRADUATE_CHANNELED_TIME_CHOICES.soon
         }
         form = SurveyForm(data=data)
-        self.assertTrue(form.is_valid())
         form.save(user)
+
+        user.refresh_from_db()
+        url = user.generate_auth_url()
+        response = self.client.get(url)
+
+        # kalau sudah punya survey harus redirect ke survey edit
+        self.assertRedirects(response, '/accounts/survey/edit/', status_code=302, target_status_code=200, fetch_redirect_response=True)
