@@ -11,6 +11,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import int_to_base36
 from django.template.loader import render_to_string
 from django.utils.six import StringIO
+from django.urls import reverse
 
 from academy.core.utils import image_upload_path, file_upload_path
 from academy.core.validators import validate_mobile_phone
@@ -146,6 +147,10 @@ class User(AbstractUser):
             training_materials.append(ts.training_material)
 
         return training_materials
+    
+    def generate_auth_url(self):
+        url = reverse('website:accounts:auth_user', args=[int_to_base36(self.id), default_token_generator.make_token(self)])
+        return f'{settings.HOST}{url}'
 
 
 class Profile(models.Model):

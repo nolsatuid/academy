@@ -252,3 +252,21 @@ def edit_survey(request):
         'page': 'survey'
     }
     return render(request, 'accounts/survey-form.html', context)
+
+
+def auth_user(request, uidb36, token):
+    try:
+        uid_int = base36_to_int(uidb36)
+    except ValueError:
+        raise Http404
+
+    user = get_object_or_404(User, id=uid_int)
+    if user and default_token_generator.check_token(user, token):
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+        if hasattr(user, 'survey'):
+            return redirect("website:accounts:edit_survey")
+        else:
+            return redirect("website:accounts:survey")
+    
+    messages.warning(request, 'Maaf link tidak valid')
+    return redirect('website:index')
