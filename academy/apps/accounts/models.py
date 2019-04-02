@@ -12,6 +12,7 @@ from django.utils.http import int_to_base36
 from django.template.loader import render_to_string
 from django.utils.six import StringIO
 from django.urls import reverse
+from django.core.cache import cache
 
 from academy.core.utils import image_upload_path, file_upload_path
 from academy.core.validators import validate_mobile_phone
@@ -70,7 +71,12 @@ class User(AbstractUser):
         return name
 
     def get_student(self):
-        return self.students.select_related('training').last()
+        query_cached = cache.get(f'student-{self.id}', None)
+        if query_cached:
+            return query_cached
+        query_cached = self.students.select_related('training').last()
+        cache.set(f'student-{self.id}', query_cached, 3600)
+        return query_cached
 
     def notification_register(self):
         data = {
@@ -106,7 +112,9 @@ class User(AbstractUser):
         return send
 
     def get_count_training_status(self):
-        count_status = self.training_status.aggregate(
+        student = self.get_student()
+        materi_ids = student.training.materials.values_list('id', flat=True)
+        count_status = self.training_status.filter(training_material_id__in=materi_ids).aggregate(
             graduate=Count(
                 Case(When(status=TrainingStatus.STATUS.graduate, then=1),
                      output_field=IntegerField())
@@ -147,7 +155,7 @@ class User(AbstractUser):
             training_materials.append(ts.training_material)
 
         return training_materials
-    
+
     def generate_auth_url(self):
         url = reverse('website:accounts:auth_user', args=[int_to_base36(self.id), default_token_generator.make_token(self)])
         return f'{settings.HOST}{url}'
