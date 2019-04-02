@@ -143,7 +143,8 @@ class User(AbstractUser):
                 status=training.status,
                 user=self,
                 student=self.get_student()
-            ) for training in self.training_status.select_related('training_material')
+            ) for training in self.training_status.exclude(status=TrainingStatus.STATUS.not_yet)\
+                    .select_related('training_material')
         ])
 
     def delete_training_status(self):
