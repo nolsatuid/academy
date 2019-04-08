@@ -116,8 +116,9 @@ class GraduateTrainingStatusFormSet(BaseStatusTrainingFormSet):
             'status': []
         }
         for ts in self.user.training_status.all():
-            self.trainig['status'].append(ts)
-            self.trainig['materials'].append(ts.training_material)
+            if ts.training_material:
+                self.trainig['status'].append(ts)
+                self.trainig['materials'].append(ts.training_material)
 
         super().__init__(training_materials=self.trainig['materials'], *args, **kwargs)
         for i, form in enumerate(self.forms):
