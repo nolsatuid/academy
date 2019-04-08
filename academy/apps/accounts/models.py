@@ -153,7 +153,8 @@ class User(AbstractUser):
     def get_training_materials(self):
         training_materials = []
         for ts in self.training_status.all():
-            training_materials.append(ts.training_material)
+            if ts.training_material:
+                training_materials.append(ts.training_material)
 
         return training_materials
 
