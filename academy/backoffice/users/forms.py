@@ -151,7 +151,8 @@ class BaseStatusTrainingFormSet(BaseFormSet):
             if i > len(self.training_materials) - 1:
                 continue
             material = self.training_materials[i]
-            form.fields['training_material'].label = f"{material.code} - {material.title}"
+            if material:
+                form.fields['training_material'].label = f"{material.code} - {material.title}"
 
     def clean(self):
         if any(self.errors):
