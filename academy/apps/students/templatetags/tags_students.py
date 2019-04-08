@@ -6,6 +6,9 @@ register = Library()
 
 @register.filter
 def get_status(materi, user=None):
+    if not materi:
+        return None
+
     trainig_status = materi.get_training_status(user)
     if not trainig_status:
         return None
