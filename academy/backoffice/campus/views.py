@@ -1,9 +1,15 @@
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect, get_object_or_404
 
+from academy.core.utils import pagination
 from academy.apps.campuses.models import Campus
+from academy.apps.students.models import Student
+from academy.apps.accounts.models import User
 from academy.backoffice.campus.form import CampusForm
+
+from .form import ParticipantsFilterForm
 
 
 @staff_member_required
@@ -68,3 +74,38 @@ def details(request, id):
         'campus': campus
     }
     return render(request, 'backoffice/campuses/details.html', context)
+
+
+@staff_member_required
+def participants(request):
+    user_ids = Student.objects.filter(status=Student.STATUS.participants, campus__isnull=False) \
+        .distinct('user_id').values_list('user_id', flat=True)
+    user_list = Student.objects.exclude(user__is_superuser=True).exclude(user__is_staff=True) \
+        .filter(user__id__in=user_ids)
+    user_count = user_list.count()
+
+    download = request.GET.get('download', '')
+    form = ParticipantsFilterForm(request.GET or None)
+    if form.is_valid():
+        user_list = form.get_data()
+        if download:
+            csv_buffer = form.generate_to_csv()
+            response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+            response['Content-Disposition'] = 'attachment; filename=daftar-peserta.csv'
+            return response
+
+    page = request.GET.get('page', 1)
+    users, page_range = pagination(user_list, page)
+
+    context = {
+        'title': 'Peserta',
+        'page_active': 'participants',
+        'users': users,
+        'form': form,
+        'user_count': user_count,
+        'filter_count': user_list.count(),
+        'query_params':'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''), 
+            request.GET.get('start_date', ''), request.GET.get('end_date', ''), request.GET.get('status', 2), request.GET.get('batch', '')),
+        'page_range': page_range
+    }
+    return render(request, 'backoffice/campuses/participant.html', context)
