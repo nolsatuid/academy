@@ -60,11 +60,11 @@ class BaseFilterForm(forms.Form):
 
         user_ids = students.distinct('user_id') \
             .values_list('user_id', flat=True)
-        users = Student.objects.filter(user__id__in=user_ids).exclude(user__is_superuser=True).exclude(user__is_staff=True)
+        users = User.objects.filter(id__in=user_ids).exclude(is_superuser=True).exclude(is_staff=True)
 
         if name:
-            users = users.filter(Q(user__first_name__icontains=name) | Q(user__last_name__icontains=name) |
-                                 Q(user__username__icontains=name))
+            users = users.filter(Q(first_name__icontains=name) | Q(last_name__icontains=name) |
+                                 Q(username__icontains=name))
 
         self.users = users
         return self.users
@@ -75,10 +75,9 @@ class BaseFilterForm(forms.Form):
         writer.writerow([
             'No.', 'ID', 'Name', 'Username', 'Email', 'No. Ponsel', 'Kampus', 'Status'
         ])
-        students = self.users.select_related('user')
-        for index, student in enumerate(students, 1):
+        for index, student in enumerate(self.users, 1):
             writer.writerow([
-                index, student.user.id, student.user.name, student.user.username, student.user.email, student.user.phone, student.campus,
+                index, user.id, user.name, user.username, user.email, user.phone, user.get_student().campus,
                 status_to_display(get_status_student(student.user))
             ])
 

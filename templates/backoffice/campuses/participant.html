@@ -29,17 +29,17 @@
                         <th>Aksi</th>
                     </thead>
                     <tbody>
-                        {% for student in users %}
+                        {% for user in users %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ student.user.name }}</td>
-                                <td>{{ student.user.username }}</td>
-                                <td>{{ student.user|get_status_student|status_display:'True' }}</td>
-                                <td>{{ student.user.email }}</td>
-                                <td>{{ student.user.phone|default_if_none:"-" }}</td>
-                                <td>{{ student.campus }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user|get_status_student|status_display:'True' }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone|default_if_none:"-" }}</td>
+                                <td>{{ user.get_student.campus }}</td>
                                 <td>
-                                    <a href="{% url 'backoffice:users:details' student.user.id %}">Detail</a>
+                                    <a href="{% url 'backoffice:users:details' user.id %}">Detail</a>
                                 </td>
                             </tr>
                         {% endfor %}

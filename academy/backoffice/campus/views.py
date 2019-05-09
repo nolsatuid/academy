@@ -7,9 +7,7 @@ from academy.core.utils import pagination
 from academy.apps.campuses.models import Campus
 from academy.apps.students.models import Student
 from academy.apps.accounts.models import User
-from academy.backoffice.campus.form import CampusForm
-
-from .form import ParticipantsFilterForm
+from academy.backoffice.campus.forms import CampusForm, ParticipantsFilterForm
 
 
 @staff_member_required
@@ -80,8 +78,8 @@ def details(request, id):
 def participants(request):
     user_ids = Student.objects.filter(status=Student.STATUS.participants, campus__isnull=False) \
         .distinct('user_id').values_list('user_id', flat=True)
-    user_list = Student.objects.exclude(user__is_superuser=True).exclude(user__is_staff=True) \
-        .filter(user__id__in=user_ids)
+    user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
+        .filter(id__in=user_ids)
     user_count = user_list.count()
 
     download = request.GET.get('download', '')
