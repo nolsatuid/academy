@@ -45,7 +45,13 @@
             </li>
             <li><a href="{% url 'backoffice:instructors:index' %}"><i class="fa fa-fw fa-user "></i> Instruktur </a></li>
             <li><a href="{% url 'backoffice:surveys:index' %}"><i class="fa fa-fw fa-sticky-note "></i> Survey </a></li>
-            <li><a href="{% url 'backoffice:campuses:index' %}"><i class="fa fa-fw fa-university "></i> Kampus </a></li>
+            <li>
+                <a href="#campuses" data-toggle="collapse"><i class="fa fa-fw fa-university"></i> Kampus</a>
+                <ul id="campuses" class="list-unstyled collapse">
+                    <li><a href="{% url 'backoffice:campuses:index' %}"></i> Tambah Kampus </a></li>
+                    <li><a href="{% url 'backoffice:campuses:participants' %}"> Daftar Peserta</a></li>
+                </ul>
+            </li>
             <li><a href="{% url 'backoffice:partners:index' %}"><i class="fa fa-fw fa-handshake "></i> Mitra </a></li>
             <li><a href="{% url 'backoffice:sponsors:index' %}"><i class="fa fa-fw fa-user-friends "></i> Sponsor </a></li>
             <li><hr></li>
