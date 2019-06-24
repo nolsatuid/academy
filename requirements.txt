@@ -12,3 +12,4 @@ django-extensions==2.0.7
 django-qr-code==1.0.0
 
 sentry-sdk==0.6.2
+python-magic==0.4.15
