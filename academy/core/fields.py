@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from academy.apps.students.models import TrainingMaterial
 from academy.core.widget import AjaxSelect
+import magic
 
 
 class AjaxModelChoiceField(forms.ChoiceField):
@@ -50,7 +51,7 @@ class FileFieldExtended(forms.FileField):
         if self.max_mb_file_size and f.size > self.max_mb_file_size * 1048576:
             raise forms.ValidationError('Ukuran file maksimal 2 MB')
 
-        if self.allowed_content_type and f.content_type not in self.allowed_content_type:
+        if self.allowed_content_type and magic.from_buffer(f.read(), mime=True) not in self.allowed_content_type:
             raise forms.ValidationError('Tipe file tidak diperbolehkan')
 
         return f
