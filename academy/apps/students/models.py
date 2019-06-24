@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.cache import cache
 from django.db.models import Q
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -81,6 +82,10 @@ class Student(models.Model):
             html_message=render_to_string(template, context=data)
         )
         return send
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'student-{self.user.id}')
 
 
 class TrainingMaterial(models.Model):

@@ -20,6 +20,8 @@ def index(request):
     user = request.user
     training = Training.objects.filter(is_active=True) \
         .exclude(batch__contains='NSC').order_by('batch').last()
+    if not training:
+        training = Training.objects.create(batch="0")
 
     if hasattr(user, 'profile'):
         student = request.user.get_student()
