@@ -18,7 +18,8 @@ def index(request):
         return redirect("website:accounts:survey")
 
     user = request.user
-    training = Training.objects.filter(is_active=True).order_by('batch').last()
+    training = Training.objects.filter(is_active=True) \
+        .exclude(batch__contains='NSC').order_by('batch').last()
 
     if hasattr(user, 'profile'):
         student = request.user.get_student()
@@ -267,6 +268,6 @@ def auth_user(request, uidb36, token):
             return redirect("website:accounts:edit_survey")
         else:
             return redirect("website:accounts:survey")
-    
+
     messages.warning(request, 'Maaf link tidak valid')
     return redirect('website:index')
