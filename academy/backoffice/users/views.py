@@ -29,7 +29,7 @@ def index(request):
             response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
             response['Content-Disposition'] = 'attachment; filename=daftar-pengguna.csv'
             return response
-    
+
     page = request.GET.get('page', 1)
     users, page_range = pagination(user_list, page)
 
@@ -40,7 +40,7 @@ def index(request):
         'form': form,
         'user_count': user_count,
         'filter_count': user_list.count(),
-        'query_params': 'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''), 
+        'query_params': 'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''),
             request.GET.get('start_date', ''), request.GET.get('end_date', ''), request.GET.get('status', ''), request.GET.get('batch', '')),
         'page_range': page_range
     }
@@ -92,7 +92,7 @@ def participants(request):
         'form': form,
         'user_count': user_count,
         'filter_count': user_list.count(),
-        'query_params':'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''), 
+        'query_params':'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''),
             request.GET.get('start_date', ''), request.GET.get('end_date', ''), request.GET.get('status', 2), request.GET.get('batch', '')),
         'page_range': page_range
     }
