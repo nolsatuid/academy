@@ -23,7 +23,7 @@ class BaseFilterForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': 'Cari: nama/username'}),
         required=False
     )
-    STATUS = Choices (
+    STATUS = Choices(
         ('', 'none', '-- Pilih --'),
         (1, 'selection', 'Seleksi'),
         (2, 'participants', 'Peserta'),
@@ -75,10 +75,10 @@ class BaseFilterForm(forms.Form):
         writer.writerow([
             'No.', 'ID', 'Name', 'Username', 'Email', 'No. Ponsel', 'Kampus', 'Status'
         ])
-        for index, student in enumerate(self.users, 1):
+        for index, user in enumerate(self.users, 1):
             writer.writerow([
                 index, user.id, user.name, user.username, user.email, user.phone, user.get_student().campus,
-                status_to_display(get_status_student(student.user))
+                status_to_display(get_status_student(user))
             ])
 
         return csv_buffer

@@ -14,7 +14,7 @@ from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining
 
 @staff_member_required
 def index(request):
-    user_ids = Student.objects.exclude(status=Student.STATUS.graduate)\
+    user_ids = Student.objects.exclude(status=Student.STATUS.graduate).filter(campus__isnull=True) \
         .distinct('user_id').values_list('user_id', flat=True)
     user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
         .filter(id__in=user_ids)

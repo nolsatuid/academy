@@ -11,4 +11,5 @@ urlpatterns = [
     path('add/', views.add, name='add'),
     path('details/<int:id>', views.details, name='details'),
     path('participants/', views.participants, name='participants'),
+    path('users/selection/', views.users_selection, name='users_selection'),
 ]

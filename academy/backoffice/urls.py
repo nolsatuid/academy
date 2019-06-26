@@ -14,6 +14,6 @@ urlpatterns = [
     path('instructors/', include('academy.backoffice.instructor.urls', namespace='instructors')),
     path('surveys/', include('academy.backoffice.surveys.urls', namespace='surveys')),
     path('partners/', include('academy.backoffice.partner.urls', namespace='partners')),
-    path('campuses/', include('academy.backoffice.campus.urls', namespace='campuses')),
+    path('campuses/', include('academy.backoffice.campuses.urls', namespace='campuses')),
     path('sponsors/', include('academy.backoffice.sponsors.urls', namespace='sponsors')),
 ]
