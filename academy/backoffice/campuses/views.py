@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views import View
 
 from academy.core.utils import pagination
 from academy.apps.campuses.models import Campus
@@ -74,71 +76,53 @@ def details(request, id):
     return render(request, 'backoffice/campuses/details.html', context)
 
 
-@staff_member_required
-def participants(request):
+class ParticipantsView(View):
+    form_class = ParticipantsFilterForm
+    template_name = 'backoffice/campuses/participant.html'
     user_ids = Student.objects.filter(status=Student.STATUS.participants, campus__isnull=False) \
         .distinct('user_id').values_list('user_id', flat=True)
-    user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
-        .filter(id__in=user_ids)
-    user_count = user_list.count()
+    title = 'Peserta'
+    page_active = 'participants'
+    file_title = 'daftar-peserta-nolsatu-kampus.csv'
 
-    download = request.GET.get('download', '')
-    form = ParticipantsFilterForm(request.GET or None)
-    if form.is_valid():
-        user_list = form.get_data()
-        if download:
-            csv_buffer = form.generate_to_csv()
-            response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
-            response['Content-Disposition'] = 'attachment; filename=daftar-peserta.csv'
-            return response
+    @method_decorator(staff_member_required)
+    def get(self, request, *args, **kwargs):
+        user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
+            .filter(id__in=self.user_ids)
+        user_count = user_list.count()
 
-    page = request.GET.get('page', 1)
-    users, page_range = pagination(user_list, page)
+        download = request.GET.get('download', '')
+        form = self.form_class(request.GET or None)
+        if form.is_valid():
+            user_list = form.get_data()
+            if download:
+                csv_buffer = form.generate_to_csv()
+                response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+                response['Content-Disposition'] = f'attachment; filename={self.file_title}'
+                return response
 
-    context = {
-        'title': 'Peserta',
-        'page_active': 'participants',
-        'users': users,
-        'form': form,
-        'user_count': user_count,
-        'filter_count': user_list.count(),
-        'query_params': 'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''),
-            request.GET.get('start_date', ''), request.GET.get('end_date', ''), request.GET.get('status', 2), request.GET.get('batch', '')),
-        'page_range': page_range
-    }
-    return render(request, 'backoffice/campuses/participant.html', context)
+        page = request.GET.get('page', 1)
+        users, page_range = pagination(user_list, page)
+
+        context = {
+            'title': self.title,
+            'page_active': self.page_active,
+            'users': users,
+            'form': form,
+            'user_count': user_count,
+            'filter_count': user_list.count(),
+            'query_params': 'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''),
+                request.GET.get('start_date', ''), request.GET.get('end_date', ''), request.GET.get('status', 2), request.GET.get('batch', '')),
+            'page_range': page_range
+        }
+        return render(request, self.template_name, context)
 
 
-@staff_member_required
-def users_selection(request):
+class UserSelectionView(ParticipantsView):
+    form_class = BaseFilterForm
+    template_name = 'backoffice/campuses/participant.html'
     user_ids = Student.objects.exclude(status=Student.STATUS.graduate).filter(campus__isnull=False) \
         .distinct('user_id').values_list('user_id', flat=True)
-    user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
-        .filter(id__in=user_ids)
-    user_count = user_list.count()
-
-    download = request.GET.get('download', '')
-    form = BaseFilterForm(request.GET or None)
-    if form.is_valid():
-        user_list = form.get_data()
-        if download:
-            csv_buffer = form.generate_to_csv()
-            response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
-            response['Content-Disposition'] = 'attachment; filename=daftar-pengguna-nolsatu-kampus.csv'
-            return response
-
-    page = request.GET.get('page', 1)
-    users, page_range = pagination(user_list, page)
-
-    context = {
-        'title': 'Pengguna Nolsatu Kampus',
-        'page_active': 'user',
-        'users': users,
-        'form': form,
-        'user_count': user_count,
-        'filter_count': user_list.count(),
-        'query_params': 'name=%s&start_date=%s&end_date=%s&status=%s&batch=%s' % (request.GET.get('name', ''),
-            request.GET.get('start_date', ''), request.GET.get('end_date', ''), request.GET.get('status', ''), request.GET.get('batch', '')),
-        'page_range': page_range
-    }
-    return render(request, 'backoffice/campuses/participant.html', context)
+    title = 'Pengguna Nolsatu Kampus'
+    page_active = 'user'
+    file_title = 'daftar-pengguna-nolsatu-kampus.csv'
