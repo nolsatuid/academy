@@ -1,0 +1,38 @@
+{% load form_tags %}
+
+<div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="{{ id }}form" action="{{ action }}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {% for field in form %}
+                        <div class="form-group col-md-12">
+                            <label>{{ field.label }}</label><br>
+                            {% if field.name != 'open_registration' and field.name != 'is_visible' %}
+                                {{ field|addclass:"form-control" }}
+                            {% else %}
+                                {{ field }}
+                            {% endif %}
+                            <span class="help_text">
+                                {{ field.help_text|safe }}
+                            </span>
+                            {{ field.errors }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                    <button type="submit" id="confirm{{ id }}" class="btn btn-success">Ya</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

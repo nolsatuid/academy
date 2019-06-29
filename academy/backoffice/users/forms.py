@@ -16,7 +16,6 @@ from model_utils import Choices
 
 
 class BaseFilterForm(forms.Form):
-
     name = forms.CharField(
         widget=forms.TextInput(attrs={'placeholder': 'Cari: nama/username'}),
         required=False
@@ -29,7 +28,7 @@ class BaseFilterForm(forms.Form):
         input_formats=["%Y-%m-%d"], label="Tanggal Akhir", required=False,
         widget=forms.TextInput(attrs={'placeholder': 'Tanggal Akhir'}),
     )
-    STATUS = Choices (
+    STATUS = Choices(
         ('', 'none', '-- Pilih --'),
         (1, 'selection', 'Seleksi'),
         (2, 'participants', 'Peserta'),
@@ -132,7 +131,7 @@ class ChangeStatusTraining(forms.ModelForm):
 
     class Meta:
         model = TrainingStatus
-        exclude = ('user', )
+        exclude = ('user',)
         widgets = {
             'training_material': forms.Select(attrs={'hidden': True}),
         }
@@ -184,7 +183,6 @@ class DateInput(forms.DateInput):
 
 
 class TrainingForm(forms.ModelForm):
-
     class Meta:
         model = Training
         fields = ('batch', 'materials', 'start_date', 'end_date')
@@ -208,7 +206,6 @@ class TrainingForm(forms.ModelForm):
 
 
 class StudentForm(forms.ModelForm):
-
     class Meta:
         model = Student
         fields = ('training',)
@@ -228,3 +225,13 @@ class ChangeStatusForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ('status',)
+
+
+class ChangeToParticipantForm(forms.Form):
+    training = forms.ModelChoiceField(queryset=Training.objects.order_by('batch'), label="Angkatan")
+
+    def save(self, student):
+        student.status = Student.STATUS.participants
+        student.training = self.cleaned_data['training']
+        student.save()
+        student.notification_status()
