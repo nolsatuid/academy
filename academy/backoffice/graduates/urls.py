@@ -18,4 +18,5 @@ urlpatterns = [
         name='add_training_material'),
     path('delete-training-status/<int:id>/<int:graduate_id>', views.delete_training_status,
         name='delete_training_status'),
+    path('is-channeled', views.change_is_channeled, name='change_is_channeled'),
 ]
