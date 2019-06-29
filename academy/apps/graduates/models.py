@@ -25,6 +25,7 @@ class Graduate(models.Model):
     student = models.OneToOneField('students.Student', null=True, on_delete=models.SET_NULL)
     certificate_file = models.FileField(upload_to=image_upload_path('certificates'),
                                         blank=True, null=True)
+    is_channeled = models.BooleanField(default=False)
     created = AutoCreatedField()
 
     def __str__(self):

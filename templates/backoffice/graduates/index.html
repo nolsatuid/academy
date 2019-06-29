@@ -25,7 +25,7 @@
                         <th>Name</th>
                         <th>No. Sertifikat</th>
                         <th>Email</th>
-                        <th>No. Ponsel</th>
+                        <th>Tersalurkan</th>
                         <th>Aksi</th>
                     </thead>
                     <tbody>
@@ -35,7 +35,12 @@
                                 <td>{{ graduate.user.name }}</td>
                                 <td>{{ graduate.certificate_number|default:'-' }}</td>
                                 <td>{{ graduate.user.email }}</td>
-                                <td>{{ graduate.user.phone|default_if_none:"-" }}</td>
+                                <td>
+                                    <label class="custom-control custom-toggle d-block my-2">
+                                        <input type="checkbox" data-id="{{ graduate.id }}" class="custom-control-input toggleChanneled" required {{ graduate.is_channeled|yesno:'checked, '}}>
+                                        <span class="custom-control-indicator"></span>
+                                    </label>
+                                </td>
                                 <td>
                                     <a href="{% url 'backoffice:graduates:details' graduate.id %}">Detail</a>
                                 </td>
@@ -98,4 +103,20 @@
         <div class="card-footer"></div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $('.toggleChanneled').change(function() {
+        Id = $(this).data("id");
+        $.ajax({
+            url: "{% url 'backoffice:graduates:change_is_channeled' %}",
+            data: {'is_channeled': this.checked, 'id': Id},
+            dataType: 'json',
+            error:function (xhr, ajaxOptions, thrownError){
+                alert(thrownError);
+            }
+        });
+    });
+</script>
 {% endblock %}

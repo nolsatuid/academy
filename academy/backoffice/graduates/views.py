@@ -1,4 +1,5 @@
 import csv
+import json
 
 from io import StringIO
 
@@ -9,6 +10,7 @@ from django.contrib import messages
 from django.db import transaction
 from django.contrib.admin.views.decorators import staff_member_required
 from django.forms import formset_factory
+from django.http import JsonResponse
 
 from academy.core.utils import pagination
 from academy.apps.graduates.models import Graduate
@@ -20,7 +22,7 @@ from .forms import ParticipantsRepeatForm, AddTrainingStatus, GraduateTrainingSt
 
 @staff_member_required
 def index(request):
-    graduates = Graduate.objects.select_related('user')
+    graduates = Graduate.objects.select_related('user').order_by('id')
     download = request.GET.get('download', '')
 
     if download:
@@ -265,3 +267,16 @@ def delete_training_status(request, id, graduate_id):
 
     messages.success(request, 'Berhasil menghapus materi pelatihan')
     return redirect('backoffice:graduates:status_training', graduate_id)
+
+
+@staff_member_required
+def change_is_channeled(request):
+    id = request.GET['id']
+    is_channeled = True if request.GET['is_channeled'] == 'true' else False
+    graduate = get_object_or_404(Graduate, id=id)
+    graduate.is_channeled = is_channeled
+    graduate.save()
+    data = {
+        'message': 'Berhasil Ubah Status'
+    }
+    return JsonResponse(data)
