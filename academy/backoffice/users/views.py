@@ -1,15 +1,14 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.forms import formset_factory
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 
-from academy.core.utils import pagination
 from academy.apps.accounts.models import User
-from academy.apps.students.models import Student, TrainingMaterial, Training
-
+from academy.apps.students.models import Student, Training
+from academy.core.utils import pagination
 from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
-                    BaseStatusTrainingFormSet, TrainingForm, StudentForm, ChangeStatusForm)
+                    BaseStatusTrainingFormSet, TrainingForm, StudentForm, ChangeStatusForm, ChangeToParticipantForm)
 
 
 @staff_member_required
@@ -59,7 +58,10 @@ def details(request, id):
         'page_active': 'user',
         'title': 'User Detail',
         'survey': survey,
-        'student': user.get_student()
+        'student': user.get_student(),
+        'to_participant_form': ChangeToParticipantForm(initial={
+            'training': user.get_student().training
+        })
     }
     return render(request, 'backoffice/users/details.html', context)
 
@@ -105,12 +107,13 @@ def change_to_participant(request, id):
     student = user.get_student()
 
     if student.status == Student.STATUS.selection:
-        student.status = Student.STATUS.participants
-        student.save(update_fields=['status'])
-        student.notification_status()
+        form = ChangeToParticipantForm(request.POST or None)
 
-        messages.success(request, 'Status berhasil diubah menjadi peserta')
-        return redirect('backoffice:users:details', id=user.id)
+        if form.is_valid():
+            form.save(student)
+
+            messages.success(request, 'Status berhasil diubah menjadi peserta')
+            return redirect('backoffice:users:details', id=user.id)
 
     messages.success(request, 'Maaf, pengguna ini sudah menjadi peserta atau sudah lulus')
     return redirect('backoffice:users:index')
