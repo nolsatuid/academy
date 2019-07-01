@@ -1,3 +1,8 @@
+import csv
+
+from io import StringIO
+
+from django.db.models import Q
 from django import forms
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -8,6 +13,7 @@ from academy.backoffice.users.forms import BaseStatusTrainingFormSet
 from academy.apps.students.models import Student, Training, TrainingStatus, TrainingMaterial
 from academy.apps.accounts.models import User
 from academy.core.fields import TrainingMaterialField
+from academy.apps.graduates.models import Graduate
 
 from post_office import mail
 from model_utils import Choices
@@ -17,7 +23,7 @@ class ParticipantsRepeatForm(forms.Form):
     batch = forms.ModelChoiceField(
         label='Angkatan', queryset=Training.objects.order_by('batch'), empty_label="Pilih Angkatan",
         help_text="Pemberitahuan akan dikirim kesemua peserta tidak " \
-            "lulus pada angkatan yang dipilih"
+        "lulus pada angkatan yang dipilih"
     )
 
     def __init__(self, *args, **kwargs):
@@ -36,7 +42,7 @@ class ParticipantsRepeatForm(forms.Form):
         for user in users:
             status = user.get_count_training_status()
             if status['graduate'] < settings.INDICATOR_GRADUATED and status['not_yet'] == 0 \
-                and status['repeat'] >= settings.INDICATOR_REPEATED:
+                    and status['repeat'] >= settings.INDICATOR_REPEATED:
                 self.users_repeat.append({'user': user, 'status': status})
 
         if not self.users_repeat:
@@ -135,3 +141,57 @@ class GraduateTrainingStatusFormSet(BaseStatusTrainingFormSet):
             label = mark_safe(f"{html_button} {material.code} - {material.title}")
 
             form.fields['training_material'].label = label
+
+
+class BaseFilterForm(forms.Form):
+    name = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Cari: nama/username'}),
+        required=False
+    )
+    batch = forms.ModelChoiceField(
+        queryset=Training.objects.order_by('batch'), empty_label="Pilih Angkatan", required=False
+    )
+    STATUS = (
+        (None, 'Pilih Status'),
+        (True, 'Tersalurkan'),
+        (False, 'Belum Tersalurkan'),
+    )
+    is_channeled = forms.ChoiceField(label='Tersalurkan', required=False, choices=STATUS)
+
+    def __init__(self, *args, **kwargs):
+        self.graduates = None
+        super().__init__(*args, **kwargs)
+
+    def get_data(self):
+        name = self.cleaned_data['name']
+        batch = self.cleaned_data['batch']
+        is_channeled = self.cleaned_data['is_channeled']
+        graduates = Graduate.objects.select_related('user')
+
+        if batch:
+            graduates = graduates.filter(student__training=batch)
+        if is_channeled:
+            graduates = graduates.filter(is_channeled=is_channeled)
+        if name:
+            graduates = graduates.filter(
+                Q(user__first_name__icontains=name) | Q(user__last_name__icontains=name) |
+                Q(user__username__icontains=name)
+            )
+
+        self.graduates = graduates
+        return self.graduates
+
+    def generate_to_csv(self):
+        csv_buffer = StringIO()
+        writer = csv.writer(csv_buffer)
+        writer.writerow([
+            'No.', 'Nama', 'No.Sertifikat', 'Email', 'No. Ponsel', 'Tersalurkan'
+        ])
+        for index, graduate in enumerate(self.graduates, 1):
+            writer.writerow([
+                index, graduate.user.name, graduate.certificate_number,
+                graduate.user.email, graduate.user.phone,
+                'Ya' if graduate.is_channeled else 'Tidak'
+            ])
+
+        return csv_buffer
