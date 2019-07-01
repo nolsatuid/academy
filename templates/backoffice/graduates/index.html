@@ -12,12 +12,16 @@
     <div class="card">
         <div class="card-header">
             <h4 class="pull-left">{{ title }}</h4>
-            <form method="GET" >
-                <button name="download" value="true" class="btn btn-secondary btn-pill pull-right">Unduh</button>
-            </form>
+        </div>
+        <div class="card-body">
+            {% include 'forms/filter.html' %}
         </div>
         <div class="card-body">
             {% if graduates %}
+            <p>
+                Total data <span class="badge badge-primary">{{ graduates_count }}</span>
+                Total penyaringan <span class="badge badge-info">{{ filter_count }}</span>
+            </p>
             <div class="datatable content table-responsive table-full-width">
                 <table id="datatable" class="table table-striped">
                     <thead>

@@ -1,5 +1,4 @@
 import csv
-import json
 
 from io import StringIO
 
@@ -11,47 +10,55 @@ from django.db import transaction
 from django.contrib.admin.views.decorators import staff_member_required
 from django.forms import formset_factory
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+from django.views import View
 
 from academy.core.utils import pagination
 from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial, TrainingStatus
 from academy.apps.accounts.models import User
-from academy.backoffice.users.forms import ChangeStatusTraining, BaseStatusTrainingFormSet
-from .forms import ParticipantsRepeatForm, AddTrainingStatus, GraduateTrainingStatusFormSet
+from academy.backoffice.users.forms import ChangeStatusTraining
+from .forms import (
+    ParticipantsRepeatForm, AddTrainingStatus, GraduateTrainingStatusFormSet, BaseFilterForm
+)
 
 
-@staff_member_required
-def index(request):
-    graduates = Graduate.objects.select_related('user').order_by('id')
-    download = request.GET.get('download', '')
+class IndexView(View):
+    form_class = BaseFilterForm
+    template_name = 'backoffice/graduates/index.html'
+    title = 'Data Lulusan'
+    page_active = 'graduates'
+    file_title = 'daftar-lulusan.csv'
 
-    if download:
-        csv_buffer = StringIO()
-        writer = csv.writer(csv_buffer)
-        writer.writerow([
-            'No.', 'Nama', 'No.Sertifikat', 'Email', 'No. Ponsel'
-        ])
+    @method_decorator(staff_member_required)
+    def get(self, request, *args, **kwargs):
+        graduates = Graduate.objects.select_related('user').order_by('id')
+        graduates_count = graduates.count()
+        download = request.GET.get('download', '')
 
-        for index, graduate in enumerate(graduates, 1):
-            writer.writerow([
-                index, graduate.user.name, graduate.certificate_number,
-                graduate.user.email, graduate.user.phone
-            ])
+        form = self.form_class(request.GET or None)
+        if form.is_valid():
+            graduates = form.get_data()
+            if download:
+                csv_buffer = form.generate_to_csv()
+                response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+                response['Content-Disposition'] = f'attachment; filename={self.file_title}'
+                return response
 
-        response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
-        response['Content-Disposition'] = 'attachment; filename=daftar-lulusan.csv'
-        return response
+        page = request.GET.get('page', 1)
+        data_graduates, page_range = pagination(graduates, page)
 
-    page = request.GET.get('page', 1)
-    data_graduates, page_range = pagination(graduates, page)
-
-    context = {
-        'graduates': graduates,
-        'title': "Daftar Lulusan",
-        'data_graduates': data_graduates,
-        'page_range': page_range
-    }
-    return render(request, 'backoffice/graduates/index.html', context)
+        context = {
+            'graduates': graduates,
+            'title': self.title,
+            'page_active': self.page_active,
+            'data_graduates': data_graduates,
+            'page_range': page_range,
+            'form': form,
+            'graduates_count': graduates_count,
+            'filter_count': graduates.count(),
+        }
+        return render(request, self.template_name, context)
 
 
 @staff_member_required
@@ -225,14 +232,12 @@ def status_training(request, id):
 @staff_member_required
 def show_certificate(request, id):
     graduate = get_object_or_404(Graduate, id=id)
-    user = graduate.user
     force = False
 
     if request.GET.get('regenerate') and request.GET['regenerate'] == 'yes':
         force = True
 
     graduate.generate_certificate_file(force)
-
     context = {
         'title': f'Certificate {graduate.certificate_number}',
         'graduate': graduate
