@@ -195,3 +195,15 @@ class BaseFilterForm(forms.Form):
             ])
 
         return csv_buffer
+
+
+class GraduateHasChanneledForm(forms.Form):
+    channeled_at = forms.CharField(label='Tersalurkan pada', max_length=150, help_text='Nama Perusahaan')
+    graduate_id = forms.CharField(max_length=100, label='', widget=forms.HiddenInput())
+
+    def save(self):
+        cleaned_data = super().clean()
+        graduate = Graduate.objects.get(id=cleaned_data['graduate_id'])
+        graduate.channeled_at = cleaned_data['channeled_at']
+        graduate.is_channeled = True
+        graduate.save()

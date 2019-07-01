@@ -3,12 +3,6 @@
 
 {% block content-dashboard %}
 <div class="container">
-    <div class="alert alert-info pt-4 pb-4" role="alert">
-        <h3 class="alert-heading">Perhatian !</h3>
-        <p>Anda dapat melihat daftar peserta yang udah memenuhi indikator kelulusan dengan klik tombol di bawah ini</p>
-        <a href="{% url 'backoffice:graduates:candidates' %}" class="btn btn-secondary">Lihat data</a>
-    </div>
-
     <div class="card">
         <div class="card-header">
             <h4 class="pull-left">{{ title }}</h4>
@@ -107,20 +101,45 @@
         <div class="card-footer"></div>
     </div>
 </div>
+
+
+{% url 'backoffice:graduates:change_is_channeled' as form_action %}
+{% include 'backoffice/common/simple-form-modal.html' with id="channeledFormModal" title="Lulusan Tersalurkan" form=channeled_form action=form_action %}
+
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
+    /*
+        switch toggle to change change status channeled
+
+        - if switch on, then show modal form and enter campany name then POST data to save
+          is_channeled to True and channeled_at
+        - if switch off, hit api for change is_channeled to False and channeled_at to empty string
+    */
     $('.toggleChanneled').change(function() {
-        Id = $(this).data("id");
-        $.ajax({
-            url: "{% url 'backoffice:graduates:change_is_channeled' %}",
-            data: {'is_channeled': this.checked, 'id': Id},
-            dataType: 'json',
-            error:function (xhr, ajaxOptions, thrownError){
-                alert(thrownError);
-            }
-        });
+        $toggleSelected = $(this)
+        Id = $toggleSelected.data("id");
+        $('#id_graduate_id').val(Id);
+        if(this.checked) {
+            $('#channeledFormModal').modal('show')
+            $('#channeledFormModal').on('hidden.bs.modal', function () {
+                $toggleSelected.prop("checked", false);
+            });
+            return;
+        }
+        else {
+            $.ajax({
+                url: "{% url 'backoffice:graduates:change_is_channeled' %}",
+                data: {'id': Id},
+                dataType: 'json',
+                error:function (xhr, ajaxOptions, thrownError){
+                    alert(thrownError);
+                }
+            });
+        }
     });
+
 </script>
 {% endblock %}
