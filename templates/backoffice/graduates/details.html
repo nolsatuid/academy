@@ -36,6 +36,8 @@
                                             <td class="font-weight-bold">Tersalurkan</td>
                                             <td>
                                                 {{ graduate.is_channeled|yesno:"<span class='badge badge-success'><i class='fa fa-check'></i></span>, <span class='badge badge-danger'><i class='fa fa-times'></i></span>"|safe }}
+
+                                                {% if graduate.channeled_at and graduate.is_channeled %} di {{ graduate.channeled_at }} {% endif %}
                                             </td>
                                         </tr>
                                         <tr>

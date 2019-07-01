@@ -26,6 +26,7 @@ class Graduate(models.Model):
     certificate_file = models.FileField(upload_to=image_upload_path('certificates'),
                                         blank=True, null=True)
     is_channeled = models.BooleanField(default=False)
+    channeled_at = models.CharField(max_length=200, default='')
     created = AutoCreatedField()
 
     def __str__(self):

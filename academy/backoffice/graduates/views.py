@@ -19,7 +19,8 @@ from academy.apps.students.models import Student, TrainingMaterial, TrainingStat
 from academy.apps.accounts.models import User
 from academy.backoffice.users.forms import ChangeStatusTraining
 from .forms import (
-    ParticipantsRepeatForm, AddTrainingStatus, GraduateTrainingStatusFormSet, BaseFilterForm
+    ParticipantsRepeatForm, AddTrainingStatus, GraduateTrainingStatusFormSet, BaseFilterForm,
+    GraduateHasChanneledForm
 )
 
 
@@ -55,6 +56,7 @@ class IndexView(View):
             'data_graduates': data_graduates,
             'page_range': page_range,
             'form': form,
+            'channeled_form': GraduateHasChanneledForm(),
             'graduates_count': graduates_count,
             'filter_count': graduates.count(),
         }
@@ -276,10 +278,18 @@ def delete_training_status(request, id, graduate_id):
 
 @staff_member_required
 def change_is_channeled(request):
+    if request.POST:
+        form = GraduateHasChanneledForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('backoffice:graduates:details', form.cleaned_data['graduate_id'])
+        messages.success(request, 'Maaf, pengguna ini sudah menjadi peserta atau sudah lulus')
+        return redirect('backoffice:graduates:index')
+
     id = request.GET['id']
-    is_channeled = True if request.GET['is_channeled'] == 'true' else False
     graduate = get_object_or_404(Graduate, id=id)
-    graduate.is_channeled = is_channeled
+    graduate.is_channeled = False
+    graduate.channeled_at = ''
     graduate.save()
     data = {
         'message': 'Berhasil Ubah Status'
