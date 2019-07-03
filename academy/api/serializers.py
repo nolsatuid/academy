@@ -1,5 +1,7 @@
 from django.conf import settings
+
 from academy.apps.accounts.models import User
+from academy.apps.offices.models import LogoPartner
 
 
 def user_profile(user: User) -> dict:
@@ -27,4 +29,13 @@ def user_profile(user: User) -> dict:
         'instagram': profile.instagram,
         'telegram_id': profile.telegram_id,
         'curriculum_vitae': cv
+    }
+
+
+def logo_partner(logo: LogoPartner) -> dict:
+    return {
+        'name': logo.name,
+        'image': logo.image.url,
+        'display_order': logo.display_order,
+        'website': logo.website
     }
