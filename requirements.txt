@@ -13,3 +13,6 @@ django-qr-code==1.0.0
 
 sentry-sdk==0.6.2
 python-magic==0.4.15
+
+django-rest-framework==0.1.0
+djangorestframework-simplejwt==4.3.0
