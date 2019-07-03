@@ -1,7 +1,6 @@
 from django.conf import settings
 
 from academy.apps.accounts.models import User
-from academy.apps.offices.models import LogoPartner
 
 
 def user_profile(user: User) -> dict:
@@ -32,7 +31,10 @@ def user_profile(user: User) -> dict:
     }
 
 
-def logo_partner(logo: LogoPartner) -> dict:
+def logo(logo):
+    """
+    this serializer for LogoPerner and LogoSponsor
+    """
     return {
         'name': logo.name,
         'image': logo.image.url,

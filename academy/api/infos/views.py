@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
-from academy.apps.offices.models import LogoPartner
-from academy.api.serializers import logo_partner
+from academy.apps.offices.models import LogoPartner, LogoSponsor
+from academy.api import serializers
 
 
 class GetStatisticsView(APIView):
@@ -22,9 +22,14 @@ class GetStatisticsView(APIView):
 
 
 class GetLogoPartners(APIView):
+    logos = LogoPartner.objects.filter(is_visible=True).order_by('display_order')
 
     def get(self, request):
         context = [
-            logo_partner(logo) for logo in LogoPartner.objects.filter(is_visible=True).order_by('display_order')
+            serializers.logo(logo) for logo in self.logos
         ]
         return Response(context)
+
+
+class GetLogoSponsors(GetLogoPartners):
+    logos = LogoSponsor.objects.filter(is_visible=True).order_by('display_order')
