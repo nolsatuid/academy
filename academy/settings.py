@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sentry_sdk
-import datetime
 
+from datetime import timedelta
 from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['*']
 
 # do not mark / at the end of the host
 HOST = 'http://academy.btech.id'
+MEDIA_HOST = HOST
 
 # Application definition
 
@@ -178,10 +179,9 @@ sentry_sdk.init(
 )
 
 # JWT Config
-JWT_AUTH = {
-    'JWT_VERIFY': True,
-    'JWT_VERIFY_EXPIRATION': True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
 try:
