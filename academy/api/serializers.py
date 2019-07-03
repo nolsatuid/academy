@@ -37,7 +37,7 @@ def logo(logo):
     """
     return {
         'name': logo.name,
-        'image': logo.image.url,
+        'image': settings.MEDIA_HOST + logo.image.url,
         'display_order': logo.display_order,
         'website': logo.website
     }
