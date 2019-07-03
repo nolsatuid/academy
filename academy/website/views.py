@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from academy.apps.accounts.models import Instructor
 from academy.apps.accounts.models import User
-from academy.apps.offices.models import LogoPartner,LogoSponsor
+from academy.apps.offices.models import LogoPartner, LogoSponsor
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 
