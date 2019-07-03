@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('academy.website.urls', namespace='website')),
     path('backoffice/', include('academy.backoffice.urls', namespace='backoffice')),
+    path('api/', include('academy.api.urls', namespace='api')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

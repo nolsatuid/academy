@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sentry_sdk
+import datetime
+
 from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -60,6 +62,7 @@ INSTALLED_APPS = [
     'post_office',
     'django_extensions',
     'qr_code',
+    'rest_framework',
 
 ]
 
@@ -173,6 +176,13 @@ sentry_sdk.init(
     dsn="https://c9a271a3699648e18769f6370f4d7488@sentry.io/1339389",
     integrations=[DjangoIntegration()]
 )
+
+# JWT Config
+JWT_AUTH = {
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
 
 try:
     from .local_settings import *
