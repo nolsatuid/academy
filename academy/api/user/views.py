@@ -13,7 +13,11 @@ class GetProfileView(UserAuthAPIView):
         return Response(user_profile(request.user))
 
     def post(self, request):
-        form = ProfileForm(data=request.data, files=request.FILES, instance=request.user.profile)
+        if hasattr(request.user, 'profile'):
+            form = ProfileForm(data=request.data, files=request.FILES, instance=request.user.profile)
+        else:
+            form = ProfileForm(data=request.data, files=request.FILES)
+
         if form.is_valid():
             form.save(request.user)
             return Response(user_profile(request.user))

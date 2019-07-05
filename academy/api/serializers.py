@@ -4,31 +4,50 @@ from academy.apps.accounts.models import User
 
 
 def user_profile(user: User) -> dict:
-    profile = user.profile
-    avatar = settings.MEDIA_HOST + profile.avatar.url \
-        if profile.avatar else None
-    cv = settings.MEDIA_HOST + profile.curriculum_vitae.url \
-        if user.profile.curriculum_vitae else None
-
-    return {
+    user_data = {
         'name': user.name,
         'username': user.username,
         'email': user.email,
         'phone': user.phone,
         'is_active': user.is_active,
-        'gender': profile.get_gender_display(),
-        'birthday': profile.birthday.strftime("%Y-%m-%d") if profile.birthday else None,
-        'avatar': avatar,
-        'linkedin': profile.linkedin,
-        'git_repo': profile.git_repo,
-        'blog': profile.blog,
-        'facebook': profile.facebook,
-        'youtube': profile.youtube,
-        'twitter': profile.twitter,
-        'instagram': profile.instagram,
-        'telegram_id': profile.telegram_id,
-        'curriculum_vitae': cv
+        'gender': "",
+        'birthday': "",
+        'avatar': "",
+        'linkedin': "",
+        'git_repo': "",
+        'blog': "",
+        'facebook': "",
+        'youtube': "",
+        'twitter': "",
+        'instagram': "",
+        'telegram_id': "",
+        'curriculum_vitae': ""
     }
+
+    if hasattr(user, 'profile'):
+        profile = user.profile
+        avatar = settings.MEDIA_HOST + profile.avatar.url \
+            if profile.avatar else None
+        cv = settings.MEDIA_HOST + profile.curriculum_vitae.url \
+            if user.profile.curriculum_vitae else None
+
+        user_data['gender'] = profile.get_gender_display()
+        user_data['birthday'] = profile.birthday.strftime("%Y-%m-%d") if profile.birthday else None
+        user_data['avatar'] = avatar
+        user_data['linkedin'] = profile.linkedin
+        user_data['git_repo'] = profile.git_repo
+        user_data['blog'] = profile.blog
+        user_data['facebook'] = profile.facebook
+        user_data['facebook'] = profile.facebook
+        user_data['youtube'] = profile.youtube
+        user_data['youtube'] = profile.youtube
+        user_data['twitter'] = profile.twitter
+        user_data['instagram'] = profile.instagram
+        user_data['telegram_id'] = profile.telegram_id
+        user_data['telegram_id'] = profile.telegram_id
+        user_data['cv'] = cv
+
+    return user_data
 
 
 def logo(logo):
