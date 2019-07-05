@@ -157,14 +157,14 @@ def edit_profile(request):
         'linkedin': user.profile.linkedin,
         'git_repo': user.profile.git_repo,
         'blog': user.profile.blog,
-        'facebook':user.profile.facebook,
+        'facebook': user.profile.facebook,
         'youtube': user.profile.youtube,
         'twitter': user.profile.twitter,
         'instagram': user.profile.instagram
     }
 
     form = ProfileForm(request.POST or None, request.FILES or None,
-                          initial=initial, instance=user.profile)
+                       initial=initial, instance=user.profile)
     if form.is_valid():
         form.save(user)
         messages.success(request, 'Profil berhasil diubah')

@@ -89,13 +89,12 @@ class ProfileForm(forms.ModelForm):
         return telegram_id
 
     def save(self, user, *args, **kwargs):
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.phone = self.cleaned_data['phone_number']
-        user.save()
-
         profile = super().save(commit=False)
         profile.user = user
+        profile.user.first_name = self.cleaned_data['first_name']
+        profile.user.last_name = self.cleaned_data['last_name']
+        profile.user.phone = self.cleaned_data['phone_number']
+        profile.user.save()
         profile.save()
 
         return profile
