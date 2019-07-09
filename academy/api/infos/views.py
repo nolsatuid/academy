@@ -9,7 +9,6 @@ from academy.api import serializers
 
 
 class GetStatisticsView(APIView):
-
     def get(self, request):
         context = {
             'registrants': User.objects.registered().count(),

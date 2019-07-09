@@ -1,16 +1,19 @@
+import json
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
 from academy.api.authentications import UserAuthAPIView
 from academy.api.serializers import user_profile
+from academy.api.response import ErrorResponse
 from academy.website.accounts.forms import ProfileForm
 
 
 class GetProfileView(UserAuthAPIView):
 
     def get(self, request):
-        return Response(user_profile(request.user))
+        return Response(user_profile(request.user), status=status.HTTP_200_OK)
 
     def post(self, request):
         if hasattr(request.user, 'profile'):
@@ -21,4 +24,4 @@ class GetProfileView(UserAuthAPIView):
         if form.is_valid():
             form.save(request.user)
             return Response(user_profile(request.user))
-        return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+        return ErrorResponse(form)

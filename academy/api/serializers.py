@@ -45,7 +45,7 @@ def user_profile(user: User) -> dict:
         user_data['instagram'] = profile.instagram
         user_data['telegram_id'] = profile.telegram_id
         user_data['telegram_id'] = profile.telegram_id
-        user_data['cv'] = cv
+        user_data['curriculum_vitae'] = cv
 
     return user_data
 
