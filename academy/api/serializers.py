@@ -21,7 +21,8 @@ def user_profile(user: User) -> dict:
         'twitter': "",
         'instagram': "",
         'telegram_id': "",
-        'curriculum_vitae': ""
+        'curriculum_vitae': "",
+        'has_profile': False
     }
 
     if hasattr(user, 'profile'):
@@ -31,6 +32,7 @@ def user_profile(user: User) -> dict:
         cv = settings.MEDIA_HOST + profile.curriculum_vitae.url \
             if user.profile.curriculum_vitae else None
 
+        user_data['has_profile'] = True
         user_data['gender'] = profile.get_gender_display()
         user_data['birthday'] = profile.birthday.strftime("%Y-%m-%d") if profile.birthday else None
         user_data['avatar'] = avatar

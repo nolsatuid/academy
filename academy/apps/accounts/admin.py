@@ -11,11 +11,11 @@ class UserAdmin(DjangoUserAdmin):
         (None, {'fields': ('email', 'username', 'password')}),
         ('Personal Info', {'fields': ('first_name', 'last_name', 'phone')}),
         ('Permissions', {'fields': (
-            'role', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions',)}),
+            'role', 'is_active', 'is_staff', 'is_superuser', 'registered_via', 'groups', 'user_permissions',)}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
-    list_display = ('username', 'email', 'is_active', 'is_staff')
+    list_display = ('username', 'email', 'is_active', 'is_staff', 'registered_via')
 
 
 class UserProfile(admin.ModelAdmin):
