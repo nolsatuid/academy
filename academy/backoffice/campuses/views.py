@@ -79,7 +79,7 @@ def details(request, id):
 class ParticipantsView(View):
     form_class = ParticipantsFilterForm
     template_name = 'backoffice/campuses/participant.html'
-    user_ids = Student.objects.participants().filter(status=Student.STATUS.participants, campus__isnull=False) \
+    user_ids = Student.objects.filter(status=Student.STATUS.participants, campus__isnull=False) \
         .distinct('user_id').values_list('user_id', flat=True)
     title = 'Peserta'
     page_active = 'participants'
@@ -121,7 +121,7 @@ class ParticipantsView(View):
 class UserSelectionView(ParticipantsView):
     form_class = BaseFilterForm
     template_name = 'backoffice/campuses/participant.html'
-    user_ids = Student.objects.graduated().filter(campus__isnull=False) \
+    user_ids = Student.objects.exclude(status=Student.STATUS.graduate).filter(campus__isnull=False) \
         .distinct('user_id').values_list('user_id', flat=True)
     title = 'Pengguna Nolsatu Kampus'
     page_active = 'user'
