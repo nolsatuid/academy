@@ -14,7 +14,7 @@ from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining
 @staff_member_required
 def index(request):
     user_ids = Student.objects.exclude(status=Student.STATUS.graduate).filter(campus__isnull=True) \
-        .distinct('user_id').values_list('user_id', flat=True)
+        .exclude(user__username='deleted').distinct('user_id').values_list('user_id', flat=True)
     user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
         .filter(id__in=user_ids)
     user_count = user_list.count()
@@ -69,7 +69,7 @@ def details(request, id):
 @staff_member_required
 def participants(request):
     user_ids = Student.objects.filter(status=Student.STATUS.participants) \
-        .distinct('user_id').values_list('user_id', flat=True)
+        .exclude(user__username='deleted').distinct('user_id').values_list('user_id', flat=True)
     user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True) \
         .filter(id__in=user_ids)
     user_count = user_list.count()

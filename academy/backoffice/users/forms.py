@@ -76,7 +76,7 @@ class BaseFilterForm(forms.Form):
         name = self.cleaned_data['name']
         batch = self.cleaned_data['batch']
 
-        students = Student.objects.all()
+        students = Student.objects.exclude(user__username='deleted')
         if status:
             students = students.filter(status=status)
 
