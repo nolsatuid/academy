@@ -10,8 +10,6 @@ def user_profile(user: User) -> dict:
         'email': user.email,
         'phone': user.phone,
         'is_active': user.is_active,
-        'gender': "",
-        'birthday': "",
         'avatar': "",
         'linkedin': "",
         'git_repo': "",
@@ -33,8 +31,6 @@ def user_profile(user: User) -> dict:
             if user.profile.curriculum_vitae else None
 
         user_data['has_profile'] = True
-        user_data['gender'] = profile.get_gender_display()
-        user_data['birthday'] = profile.birthday.strftime("%Y-%m-%d") if profile.birthday else None
         user_data['avatar'] = avatar
         user_data['linkedin'] = profile.linkedin
         user_data['git_repo'] = profile.git_repo
