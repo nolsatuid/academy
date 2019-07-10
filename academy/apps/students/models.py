@@ -28,7 +28,10 @@ class Training(models.Model):
 
 class StudentManager(models.Manager):
     def participants(self):
-        participants = self.exclude(Q(user__is_superuser=True) | Q(status=Student.STATUS.selection))
+        participants = self.exclude(
+            Q(user__is_superuser=True) | Q(status=Student.STATUS.selection) |
+            Q(user__isnull=True)
+        )
         return participants
 
     def graduated(self):
