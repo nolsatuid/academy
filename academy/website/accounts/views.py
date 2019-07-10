@@ -110,8 +110,13 @@ def active_account(request, uidb36, token):
     if user and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save(update_fields=['is_active'])
-        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+        # TODO: if registered via mobile, auth login into mobile app
         messages.success(request, 'Selamat, akun Anda sudah aktif')
+        if user.registered_via == User.VIA.mobile:
+            return redirect("website:index")
+
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
     else:
         messages.warning(request, 'Maaf, ada masalah dengan aktivasi akun')
 

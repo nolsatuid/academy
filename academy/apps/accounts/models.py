@@ -47,7 +47,11 @@ class User(AbstractUser):
         (2, 'company', 'Company'),
     )
     role = models.PositiveIntegerField(choices=ROLE, blank=True, null=True)
-
+    VIA = Choices(
+        (1, 'web', 'Web'),
+        (2, 'mobile', 'Mobile'),
+    )
+    registered_via = models.PositiveIntegerField(choices=VIA, default=VIA.web, blank=True, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
     objects = CustomUserManager()
