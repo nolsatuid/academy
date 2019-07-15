@@ -13,7 +13,7 @@ method: `POST`
 body:
 ```json
 {
-    "email": "youremail@example.com",
+    "username": "{email or username}",
     "password": "acjd1123"
 }
 ```
@@ -21,8 +21,26 @@ body:
 response:
 ```json
 {
-    "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU2MjIwNDkyOCwianRpIjoiMzFlMGY4ZDE5ZDEzNDQwNmIzODA1M2Y4MWZlY2Q1YWIiLCJ1c2VyX2lkIjozfQ.TQXXRcjjaThOSE4P-4_IhGfz5X5xiNkDFIQjb",
-    "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTYyMTE4ODI4LCJqdGkiOiJhNDAzZGQwMzhjOWU0NzM5OGZlNjE4Y2JkMzQwZTQ0NyIsInVzZXJfaWQiOjN9.gwk0mwg9r4xejoMBNlax9rztmyUh9MaoCyGOGr"
+    "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTU2Mzc4NzY3OCwianRpIjoiMjY5NjczM2NmYzQ4NDU2Y2I0MzI2NjZhMTViZGJlMTIiLCJ1c2VyX2lkIjo1fQ.yK06YE03iaortWQ3KumhAQMDomU3RLbQF4qN2ir9zcw",
+    "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTYzNDQyMDc4LCJqdGkiOiIzNWM0OGVmNTFhYjY0Njc4OTJhMGViODBkZmJmOGVmMSIsInVzZXJfaWQiOjV9.yJk6jz-ijZVEq6NbLVYB2BxbB3izwzCnNv_mwnWrA4Y",
+    "user": {
+        "name": "Muhammad Lutfi",
+        "username": "lutfi",
+        "email": "lutfi@gmail.com",
+        "phone": "08978950954",
+        "is_active": true,
+        "avatar": null,
+        "linkedin": "",
+        "git_repo": "",
+        "blog": "",
+        "facebook": "",
+        "youtube": "",
+        "twitter": "",
+        "instagram": "",
+        "telegram_id": "",
+        "curriculum_vitae": "",
+        "has_profile": false
+    }
 }
 ```
 
@@ -205,4 +223,26 @@ response:
         "website": "https://www.biznetgio.com/"
     }
 ]
+```
+
+## Get statistics
+url: `/api/infos/statistics`
+
+header:
+```
+Conten-Type application/json
+Authorization Bearer {token access}
+```
+
+method: `GET`
+
+response:
+```json
+{
+    "registrants": 3,
+    "users": 3,
+    "participants": 2,
+    "graduates": 0,
+    "channeled": 0
+}
 ```
