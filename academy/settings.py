@@ -145,6 +145,10 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 DEFAULT_RECIPIANT_EMAIL = 'contact@btech.id'
 
+POST_OFFICE = {
+    'BATCH_SIZE': 100
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
