@@ -9,9 +9,7 @@ class Command(BaseCommand):
     help = 'Change status email failed to queued to resend'
 
     def handle(self, *args, **options):
-        now = timezone.now()
-
-        emails = Email.objects.filter(status=STATUS.failed, created__lt=now.date())   
+        emails = Email.objects.filter(status=STATUS.failed, created__lt=timezone.now())
         failed = emails.count()
         emails.update(status=STATUS.queued)
         print('%s email success change status to queued' % failed)
