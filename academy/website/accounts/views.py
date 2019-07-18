@@ -89,7 +89,7 @@ def sign_up(request):
     form = SignupForm(request.POST or None)
     if form.is_valid():
         form.save()
-        messages.success(request, 'Mohon cek email Anda untuk mengaktifkan akun')
+        messages.success(request, 'Mohon cek kotak masuk/spam pada email Anda untuk mengaktifkan akun')
         return redirect('website:accounts:sign_up')
 
     context = {
