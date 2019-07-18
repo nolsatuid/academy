@@ -52,6 +52,7 @@ class User(AbstractUser):
         (2, 'mobile', 'Mobile'),
     )
     registered_via = models.PositiveIntegerField(choices=VIA, default=VIA.web, blank=True, null=True)
+    has_valid_email = models.BooleanField(default=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
     objects = CustomUserManager()
