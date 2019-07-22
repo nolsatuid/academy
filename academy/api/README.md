@@ -135,7 +135,7 @@ url: `/api/user/profile`
 
 header:
 ```
-Conten-Type multipart/form-data
+Conten-Type application/json
 Authorization Bearer {token access}
 ```
 
@@ -143,18 +143,19 @@ method: `POST`
 
 body: `form-data`
 ```
-name = "Muhammad Irfan"
-username = "irfanpule"
-phone = "08978950954"
-linkedin = ""
-git_repo = "https://github.com/irfanpule"
-blog = ""
-facebook = ""
-youtube = ""
-twitter = ""
-instagram = "irfanpule"
-telegram_id = ""
-curriculum_vitae = template_cv_nolsatu.docx
+{
+	"first_name": "Muhammad",
+	"last_name": "Irfan",
+	"phone_number": "08978950954",
+	"linkedin": "",
+	"git_repo": "https://github.com/irfanpule",
+	"blog": "",
+	"youtube": "",
+	"facebook": "",
+	"instagram": "irfanpule",
+	"twitter": "",
+	"telegram_id": ""
+}
 ```
 
 response:
@@ -174,7 +175,7 @@ response:
     "twitter": "",
     "instagram": "irfanpule",
     "telegram_id": "",
-    "curriculum_vitae": "http://localhost:8000/media/files/cv/2019/07/10/template_cv_nolsatu.docx",
+    "curriculum_vitae": null,
     "has_profile": true
 }
 ```

@@ -17,9 +17,12 @@ class GetProfileView(UserAuthAPIView):
 
     def post(self, request):
         if hasattr(request.user, 'profile'):
-            form = ProfileForm(data=request.data, files=request.FILES, instance=request.user.profile)
+            form = ProfileForm(
+                data=request.data, files=request.FILES, instance=request.user.profile,
+                cv_required=False
+            )
         else:
-            form = ProfileForm(data=request.data, files=request.FILES)
+            form = ProfileForm(data=request.data, files=request.FILES, cv_required=False)
 
         if form.is_valid():
             form.save(request.user)
