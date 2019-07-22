@@ -141,7 +141,7 @@ Authorization Bearer {token access}
 
 method: `POST`
 
-body: `form-data`
+body:
 ```
 {
 	"first_name": "Muhammad",
@@ -176,6 +176,44 @@ response:
     "instagram": "irfanpule",
     "telegram_id": "",
     "curriculum_vitae": null,
+    "has_profile": true
+}
+```
+
+## Upload CV
+url: `/api/user/upload/cv`
+
+header:
+```
+Conten-Type multipart/form-data
+Authorization Bearer {token access}
+```
+
+method: `POST`
+
+body:
+```
+curriculum_vitae = {file}
+```
+
+response: user payload
+```json
+{
+    "name": "Muhammad Irfan",
+    "username": "irfanpule",
+    "email": "irfanpule@btech.id",
+    "phone": "08978950954",
+    "is_active": true,
+    "avatar": null,
+    "linkedin": "",
+    "git_repo": "https://github.com/irfanpule",
+    "blog": "",
+    "facebook": "",
+    "youtube": "",
+    "twitter": "",
+    "instagram": "irfanpule",
+    "telegram_id": "",
+    "curriculum_vitae": "https://nolsatu.id/media/files/cv/2019/07/22/template_cv_nolsatu_QYHIHvA.docx",
     "has_profile": true
 }
 ```
