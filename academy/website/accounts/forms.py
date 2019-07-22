@@ -79,6 +79,13 @@ class ProfileForm(forms.ModelForm):
             'telegram_id': ('contoh "@namaanda"'),
         }
 
+    def __init__(self, cv_required=True, *args, **kwargs):
+        # cv_required is argument to create optional this form required cv or not
+        # by default cv_required is True
+        self.cv_required = cv_required
+        super().__init__(*args, **kwargs)
+        self.fields['curriculum_vitae'].required = self.cv_required
+
     def clean_telegram_id(self):
         telegram_id = self.cleaned_data['telegram_id']
         if not telegram_id:
