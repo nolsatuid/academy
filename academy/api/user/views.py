@@ -7,6 +7,8 @@ from rest_framework import status
 from academy.api.authentications import UserAuthAPIView
 from academy.api.serializers import user_profile
 from academy.api.response import ErrorResponse
+from academy.api.user.forms import UploadCVForm
+
 from academy.website.accounts.forms import ProfileForm
 
 
@@ -26,5 +28,18 @@ class GetProfileView(UserAuthAPIView):
 
         if form.is_valid():
             form.save(request.user)
+            return Response(user_profile(request.user))
+        return ErrorResponse(form)
+
+
+class UploadCV(UserAuthAPIView):
+    def post(self, request):
+        if hasattr(request.user, 'profile'):
+            form = UploadCVForm(files=request.FILES, instance=request.user.profile)
+        else:
+            form = UploadCVForm(files=request.FILES)
+
+        if form.is_valid():
+            form.save()
             return Response(user_profile(request.user))
         return ErrorResponse(form)
