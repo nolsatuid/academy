@@ -1,15 +1,13 @@
-import json
-
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.http import JsonResponse
 from rest_framework import status
+from rest_framework.response import Response
 
 from academy.api.authentications import UserAuthAPIView
-from academy.api.serializers import user_profile
 from academy.api.response import ErrorResponse
+from academy.api.serializers import user_profile
 from academy.api.user.forms import UploadCVForm
-
-from academy.website.accounts.forms import ProfileForm
+from academy.api.user.serializer import SurveySerializer
+from academy.website.accounts.forms import ProfileForm, SurveyForm
 
 
 class GetProfileView(UserAuthAPIView):
@@ -42,4 +40,28 @@ class UploadCV(UserAuthAPIView):
         if form.is_valid():
             form.save()
             return Response(user_profile(request.user))
+        return ErrorResponse(form)
+
+
+class SurveyView(UserAuthAPIView):
+    @staticmethod
+    def build_response(survey=None):
+        return {
+            "data": SurveySerializer(survey).data if survey else None
+        }
+
+    def get(self, request):
+        survey = request.user.survey
+        return JsonResponse(self.build_response(survey))
+
+    def post(self, request):
+        form = SurveyForm(data=request.data)
+        survey = request.user.survey
+        if form.is_valid():
+            if survey:
+                survey.delete()
+
+            form.save(request.user)
+            return JsonResponse(self.build_response(request.user.survey))
+
         return ErrorResponse(form)
