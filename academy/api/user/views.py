@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from academy.api.authentications import UserAuthAPIView
 from academy.api.response import ErrorResponse
 from academy.api.serializers import user_profile
-from academy.api.user.forms import UploadCVForm
+from academy.api.user.forms import UploadCVForm, UploadAvatarForm
 from academy.api.user.serializer import SurveySerializer
 from academy.website.accounts.forms import ProfileForm, SurveyForm
 
@@ -64,4 +64,18 @@ class SurveyView(UserAuthAPIView):
             form.save(request.user)
             return JsonResponse(self.build_response(request.user.survey))
 
+        return ErrorResponse(form)
+
+
+class UploadAvatar(UserAuthAPIView):
+    def post(self, request):
+        print("kesini")
+        if hasattr(request.user, 'profile'):
+            form = UploadAvatarForm(files=request.FILES, instance=request.user.profile)
+        else:
+            form = UploadAvatarForm(files=request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return Response(user_profile(request.user))
         return ErrorResponse(form)

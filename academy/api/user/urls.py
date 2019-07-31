@@ -7,4 +7,5 @@ urlpatterns = [
     path('profile', views.GetProfileView.as_view(), name='profile'),
     path('upload/cv', views.UploadCV.as_view(), name='upload_cv'),
     path('survey', views.SurveyView.as_view(), name='survey'),
+    path('upload/avatar', views.UploadAvatar.as_view(), name='upload_avatar'),
 ]
