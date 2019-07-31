@@ -6,4 +6,4 @@ from academy.apps.surveys.model import Survey
 class SurveySerializer(serializers.ModelSerializer):
     class Meta:
         model = Survey
-        exclude = ["user"]
+        exclude = ["id", "user"]

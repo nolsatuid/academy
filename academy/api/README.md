@@ -85,7 +85,7 @@ method: `POST`
 body:
 ```json
 {
-    "refresh": "{your token access get after login}",
+    "refresh": "{your token access get after login}"
 }
 ```
 
@@ -285,3 +285,115 @@ response:
     "channeled": 0
 }
 ```
+
+## Get Survey Answer
+url: `/api/user/survey`
+
+header:
+```
+Conten-Type application/json
+Authorization Bearer {token access}
+```
+
+method: `GET`
+
+response (data survey tersedia):
+```json
+{
+    "data": {
+        "working_status": 1,
+        "working_status_other": "",
+        "graduate_channeled": false,
+        "graduate_channeled_when": 1,
+        "graduate_channeled_when_other": "",
+        "channeled_location": [
+            "Jakarta"
+        ],
+        "channeled_location_other": ["Blabla", "Bla"]
+    }
+}
+```
+
+response (data survey tidak tersedia):
+```json
+{
+    "data": null
+}
+```
+
+Mapping dan value yang tersedia untuk beberapa property
+
+```
+working_status:
+    1 = employee/Karyawan
+    2 = student/Mahasiswa
+    3 = unemployed/Belum Bekerja
+    99 = other/Lain-lain
+
+graduate_channeled_when:
+    1 = soon/Segera,
+    99 = other/Lain-lain
+
+channeled_location = [
+    'Jakarta',
+    'Yogyakarta', 
+    'Bandung',
+    'Lain-lain'
+]
+```
+
+## Isi Survey
+url: `/api/user/survey`
+
+header:
+```
+Conten-Type application/json
+Authorization Bearer {token access}
+```
+
+method: `POST`
+
+request:
+```json
+{
+	"working_status": 99,
+	"working_status_other": "Nganggur",
+	"graduate_channeled": true,
+	"graduate_channeled_when": 99,
+	"graduate_channeled_when_other": "Kapan Aja",
+	"channeled_location": [
+	    "Jakarta",
+	    "Lain-lain"
+	],
+	"channeled_location_other": "Zimbabwe,Kuvukiland"
+}
+```
+
+response:
+```json
+{
+    "data": {
+        "working_status": 99,
+        "working_status_other": "Nganggur",
+        "graduate_channeled": true,
+        "graduate_channeled_when": 99,
+        "graduate_channeled_when_other": "Kapan Aja",
+        "channeled_location": [
+            "Jakarta",
+            "Lain-lain"
+        ],
+        "channeled_location_other": [
+            "Zimbabwe",
+            "Kuvukiland"
+        ]
+    }
+}
+```
+
+Mapping dan value yang tersedia untuk beberapa property dapat dilihat diatas.
+
+Karena form yang digunakan sama dengan yang ada di web, maka ada beberapa aturan yang harus di ikuti:
+
+1. `channeled_location_other` adalah string yang dipisahkan dengan koma
+2. `channeled_location_other` tidak akan disimpan jika dalam `channeled_location` tidak ada `Lain-lain`
+
