@@ -69,7 +69,6 @@ class SurveyView(UserAuthAPIView):
 
 class UploadAvatar(UserAuthAPIView):
     def post(self, request):
-        print("kesini")
         if hasattr(request.user, 'profile'):
             form = UploadAvatarForm(files=request.FILES, instance=request.user.profile)
         else:
