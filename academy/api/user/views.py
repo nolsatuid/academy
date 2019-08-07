@@ -52,7 +52,7 @@ class SurveyView(UserAuthAPIView):
         }
 
     def get(self, request):
-        return JsonResponse(self.build_response(request.user))
+        return Response(self.build_response(request.user))
 
     def post(self, request):
         form = SurveyForm(data=request.data)
@@ -62,7 +62,7 @@ class SurveyView(UserAuthAPIView):
                 survey.delete()
 
             form.save(request.user)
-            return JsonResponse(self.build_response(request.user))
+            return Response(self.build_response(request.user))
 
         return ErrorResponse(form)
 
