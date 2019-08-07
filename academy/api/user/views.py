@@ -45,24 +45,24 @@ class UploadCV(UserAuthAPIView):
 
 class SurveyView(UserAuthAPIView):
     @staticmethod
-    def build_response(survey=None):
+    def build_response(user):
+        survey = getattr(user, "survey", None)
         return {
             "data": SurveySerializer(survey).data if survey else None
         }
 
     def get(self, request):
-        survey = request.user.survey
-        return JsonResponse(self.build_response(survey))
+        return JsonResponse(self.build_response(request.user))
 
     def post(self, request):
         form = SurveyForm(data=request.data)
-        survey = request.user.survey
+        survey = getattr(request.user, "survey", None)
         if form.is_valid():
             if survey:
                 survey.delete()
 
             form.save(request.user)
-            return JsonResponse(self.build_response(request.user.survey))
+            return JsonResponse(self.build_response(request.user))
 
         return ErrorResponse(form)
 
