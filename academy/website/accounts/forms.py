@@ -190,7 +190,9 @@ class SurveyForm(forms.ModelForm):
 
     def save(self, user, *args, **kwargs):
         survey = super().save(commit=False)
-        survey.user = user
+        if not hasattr(survey, 'user'):
+            survey.user = user
+
         survey.save()
 
         return survey
