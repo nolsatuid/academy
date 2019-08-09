@@ -270,14 +270,16 @@ method: `GET`
 
 response:
 ```json
-[
-    {
-        "name": "BINAR ACADEMY",
-        "image": "https://www.nolsatu.id/media/images/partners/binar_3bvDd3s.png",
-        "display_order": 1,
-        "website": "https://binar.co.id/"
-    }
-]
+{
+    "data":[
+        {
+            "name": "BINAR ACADEMY",
+            "image": "https://www.nolsatu.id/media/images/partners/binar_3bvDd3s.png",
+            "display_order": 1,
+            "website": "https://binar.co.id/"
+        }
+    ]
+}
 ```
 
 ## Get Logo Sponsors
@@ -293,14 +295,16 @@ method: `GET`
 
 response:
 ```json
-[
-    {
-        "name": "BIZET GIO CLOUD",
-        "image": "https://www.nolsatu.id/media/images/sponsors/biznet_gio_.png",
-        "display_order": 1,
-        "website": "https://www.biznetgio.com/"
-    }
-]
+{
+    "data":[
+        {
+            "name": "BIZET GIO CLOUD",
+            "image": "https://www.nolsatu.id/media/images/sponsors/biznet_gio_.png",
+            "display_order": 1,
+            "website": "https://www.biznetgio.com/"
+        }
+    ]
+}
 ```
 
 ## Get statistics

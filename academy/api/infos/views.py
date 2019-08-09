@@ -24,9 +24,9 @@ class GetLogoPartners(APIView):
     logos = LogoPartner.objects.filter(is_visible=True).order_by('display_order')
 
     def get(self, request):
-        context = [
-            serializers.logo(logo) for logo in self.logos
-        ]
+        context = {
+            "data": [serializers.logo(logo) for logo in self.logos]
+        }
         return Response(context)
 
 
