@@ -3,7 +3,7 @@ from rest_framework.response import Response
 
 from academy.api.authentications import UserAuthAPIView
 from academy.api.response import ErrorResponse
-from academy.api.serializers import user_profile
+from academy.api.serializers import user_profile, training_material
 from academy.api.user.forms import UploadCVForm, UploadAvatarForm
 from academy.api.user.serializer import SurveySerializer
 from academy.website.accounts.forms import ProfileForm, SurveyForm
@@ -29,7 +29,7 @@ class GetProfileView(UserAuthAPIView):
         return ErrorResponse(form)
 
 
-class UploadCV(UserAuthAPIView):
+class UploadCVView(UserAuthAPIView):
     def post(self, request):
         if hasattr(request.user, 'profile'):
             form = UploadCVForm(files=request.FILES, instance=request.user.profile)
@@ -63,7 +63,7 @@ class SurveyView(UserAuthAPIView):
         return ErrorResponse(form)
 
 
-class UploadAvatar(UserAuthAPIView):
+class UploadAvatarView(UserAuthAPIView):
     def post(self, request):
         if hasattr(request.user, 'profile'):
             form = UploadAvatarForm(files=request.FILES, instance=request.user.profile)
@@ -74,3 +74,16 @@ class UploadAvatar(UserAuthAPIView):
             form.save()
             return Response(user_profile(request.user))
         return ErrorResponse(form)
+
+
+class MaterialsView(UserAuthAPIView):
+    def get(self, request):
+        user = request.user
+        student = user.get_student()
+
+        training_materials = student.training.materials.prefetch_related('training_status')
+        return Response({
+            "data": [
+                training_material(materi, user) for materi in training_materials
+            ]
+        })

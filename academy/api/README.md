@@ -436,3 +436,32 @@ Karena form yang digunakan sama dengan yang ada di web, maka ada beberapa aturan
 1. `channeled_location_other` adalah string yang dipisahkan dengan koma
 2. `channeled_location_other` tidak akan disimpan jika dalam `channeled_location` tidak ada `Lain-lain`
 
+
+## Get Training Material
+url: `/api/user/materials`
+
+header:
+```
+Conten-Type application/json
+Authorization Bearer {token access}
+```
+
+method: `GET`
+
+response:
+```json
+{
+    "data": [
+        {
+            "code": "OSB",
+            "title": "OpenStack Beginner",
+            "status": "Lulus"
+        },
+        {
+            "code": "DO",
+            "title": "Docker",
+            "status": "Belum"
+        }
+    ]
+}
+```
