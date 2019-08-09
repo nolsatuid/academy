@@ -1,7 +1,7 @@
 from django.conf import settings
 
 from academy.apps.accounts.models import User
-
+from academy.apps.students.templatetags.tags_students import get_status, status_to_display
 
 def user_profile(user: User) -> dict:
     user_data = {
@@ -57,4 +57,13 @@ def logo(logo):
         'image': settings.MEDIA_HOST + logo.image.url,
         'display_order': logo.display_order,
         'website': logo.website
+    }
+
+
+def training_material(materi, user):
+    status = get_status(materi, user)
+    return {
+        "code": materi.code,
+        "title": materi.title,
+        "status": status_to_display(status) if status else "Belum"
     }
