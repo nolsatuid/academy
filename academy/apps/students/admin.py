@@ -4,7 +4,9 @@ from academy.apps.students.models import Training, Student, TrainingMaterial, Tr
 
 
 class StudentAdmin(admin.ModelAdmin):
+    search_fields = ('user__email', 'user__username',)
     list_display = ('user', 'training', 'status')
+    raw_id_fields = ('user',)
 
 
 class TrainingMaterialAdmin(admin.ModelAdmin):
