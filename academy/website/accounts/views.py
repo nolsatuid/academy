@@ -38,7 +38,7 @@ def index(request):
         }
         return render(request, 'dashboard/index.html', context)
 
-    form = ProfileForm(request.POST or None, request.FILES or None)
+    form = ProfileForm(data=request.POST or None, files=request.FILES or None)
     if form.is_valid():
         form.save(user)
         form_student = StudentForm(data={'user': user.id, 'training': training.id})
