@@ -168,7 +168,7 @@ def edit_profile(request):
         'instagram': user.profile.instagram
     }
 
-    form = ProfileForm(request.POST or None, request.FILES or None,
+    form = ProfileForm(data=request.POST or None, files=request.FILES or None,
                        initial=initial, instance=user.profile)
     if form.is_valid():
         form.save(user)
