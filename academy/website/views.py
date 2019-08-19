@@ -12,6 +12,7 @@ from academy.apps.graduates.models import Graduate
 
 from .forms import CertificateVerifyForm
 
+
 def index(request):
     context = {
         'title': 'Home',
@@ -27,9 +28,13 @@ def index(request):
 
 
 def faq(request):
+    navbar = request.GET.get('navbar')
+
     context = {
-        'title': 'Tilil (Q&A)'
+        'title': 'Tilil (Q&A)',
+        'navbar': navbar if navbar == 'hidden' else 'default'
     }
+
     return render(request, 'website/faq.html', context)
 
 
