@@ -30,17 +30,10 @@ def index(request):
 def faq(request):
     navbar = request.GET.get('navbar')
 
-    if navbar == 'hidden':
-        context = {
-            'title': 'Tilil (Q&A)',
-            'navbar': 'hidden'
-        }
-
-    else:
-        context = {
-            'title': 'Tilil (Q&A)',
-            'navbar': 'block'
-        }
+    context = {
+        'title': 'Tilil (Q&A)',
+        'navbar': navbar if navbar == 'hidden' else 'default'
+    }
 
     return render(request, 'website/faq.html', context)
 
