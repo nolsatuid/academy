@@ -3,7 +3,7 @@ from rest_framework.response import Response
 
 from academy.api.authentications import UserAuthAPIView
 from academy.api.response import ErrorResponse
-from academy.api.serializers import user_profile, training_material
+from academy.api.serializers import user_profile, training_material, graduate_data
 from academy.api.user.forms import UploadCVForm, UploadAvatarForm
 from academy.api.user.serializer import SurveySerializer
 from academy.website.accounts.forms import ProfileForm, SurveyForm
@@ -87,3 +87,14 @@ class MaterialsView(UserAuthAPIView):
                 training_material(materi, user) for materi in training_materials
             ]
         })
+
+
+class GetGraduateView(UserAuthAPIView):
+    def get(self, request):
+        student = request.user.get_student()
+        graduate = None
+
+        if hasattr(student, 'graduate'):
+            graduate = student.graduate
+
+        return Response(graduate_data(graduate))

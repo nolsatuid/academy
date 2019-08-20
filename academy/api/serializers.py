@@ -67,3 +67,13 @@ def training_material(materi, user):
         "title": materi.title,
         "status": status_to_display(status) if status else "Belum"
     }
+
+
+def graduate_data(graduate):
+    return {
+        "certificate_url": settings.MEDIA_HOST + graduate.certificate_file.url,
+        "certificate_number": graduate.certificate_number,
+        "is_channeled": graduate.is_channeled,
+        "channeled_at": graduate.channeled_at,
+
+    }

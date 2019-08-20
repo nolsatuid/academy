@@ -9,4 +9,5 @@ urlpatterns = [
     path('survey', views.SurveyView.as_view(), name='survey'),
     path('upload/avatar', views.UploadAvatarView.as_view(), name='upload_avatar'),
     path('materials', views.MaterialsView.as_view(), name='materials'),
+    path('graduate', views.GetGraduateView.as_view(), name='graduate'),
 ]
