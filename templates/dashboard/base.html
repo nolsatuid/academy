@@ -20,6 +20,7 @@
                     <a class="dropdown-item" href="{% url 'website:accounts:profile' %}" id="navbarDropdownMenuLink">
                         Profil
                     </a>
+                    <a class="dropdown-item" href="{%url 'website:accounts:change_password' %}">Ubah Sandi</a>
                     <a class="dropdown-item" href="{% url 'website:accounts:logout' %}">Keluar</a>
                 </div>
             </li>
@@ -45,6 +46,7 @@
             {% if user.is_staff == True %}
             <li><a href="{% url 'backoffice:index' %}"><i class="fa fa-fw fa-user-cog"></i> Backoffice </a></li>
             {% endif %}
+            <li><a href="{%url 'website:accounts:change_password' %}"><i class="fa fa-fw fa-key"></i> Ubah Sandi </a></li>
             <li><a href="{% url 'website:accounts:logout' %}"><i class="fa fa-fw fa-sign-out-alt"></i> Keluar </a></li>
 
         </ul>

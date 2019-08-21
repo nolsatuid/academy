@@ -1,11 +1,11 @@
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import base36_to_int
 from django.contrib.auth.tokens import default_token_generator
 from django.http import Http404
-from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Training, Student
@@ -177,6 +177,27 @@ def edit_profile(request):
 
     context = {
         'title': 'Ubah Profil',
+        'form': form
+    }
+    return render(request, 'dashboard/edit_profile.html', context)
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Password berhasil diubah!')
+            return redirect('website:accounts:profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+
+    context = {
+        'title': 'Ubah Password',
         'form': form
     }
     return render(request, 'dashboard/edit_profile.html', context)
