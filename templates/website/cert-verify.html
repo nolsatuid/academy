@@ -64,7 +64,7 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'website/js/instascan.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'website/js/instascan.min.js' %}"></script>
 <script type="text/javascript">
     let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
     scanner.addListener('scan', function (content) {
