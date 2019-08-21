@@ -92,9 +92,13 @@ class MaterialsView(UserAuthAPIView):
 class GetGraduateView(UserAuthAPIView):
     def get(self, request):
         student = request.user.get_student()
-        graduate = None
 
         if hasattr(student, 'graduate'):
-            graduate = student.graduate
+            response = {
+                "data": graduate_data(student.graduate)
+            }
+        else:
+            response = {"data": None}
 
-        return Response(graduate_data(graduate))
+        return Response(response)
+

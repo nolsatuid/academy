@@ -75,5 +75,4 @@ def graduate_data(graduate):
         "certificate_number": graduate.certificate_number,
         "is_channeled": graduate.is_channeled,
         "channeled_at": graduate.channeled_at,
-
     }
