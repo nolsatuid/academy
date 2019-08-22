@@ -8,6 +8,8 @@ from academy.api.user.forms import UploadCVForm, UploadAvatarForm
 from academy.api.user.serializer import SurveySerializer
 from academy.website.accounts.forms import ProfileForm, SurveyForm
 
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 class GetProfileView(UserAuthAPIView):
 
@@ -102,3 +104,13 @@ class GetGraduateView(UserAuthAPIView):
 
         return Response(response)
 
+
+class ChangePasswordView(UserAuthAPIView):
+    def post(self, request):
+        form = PasswordChangeForm(user=request.user, data=request.data or None)
+
+        if form.is_valid():
+            form.save()
+            return Response({'message': f'Password berhasil diubah'})
+
+        return ErrorResponse(form)
