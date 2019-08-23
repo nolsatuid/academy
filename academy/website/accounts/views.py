@@ -190,8 +190,6 @@ def change_password(request):
         update_session_auth_hash(request, user)
         messages.success(request, 'Password berhasil diubah!')
         return redirect('website:accounts:profile')
-    else:
-        messages.error(request, 'Please correct the error below.')
 
     context = {
         'title': 'Ubah Password',
