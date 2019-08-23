@@ -13,6 +13,7 @@ urlpatterns = [
             views.active_account, name='active_account'),
     path('profile/', views.profile, name='profile'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('change-password/', views.change_password, name='change_password'),
     path('forgot-password/', views.forgot_password, name='forgot_password'),
     re_path(r'^reset-password/(?P<uidb36>[0-9A-Za-z]+)/(?P<token>.+)/$',
             views.reset_password, name='reset_password'),
