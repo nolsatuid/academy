@@ -184,17 +184,14 @@ def edit_profile(request):
 
 @login_required
 def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)
-            messages.success(request, 'Password berhasil diubah!')
-            return redirect('website:accounts:profile')
-        else:
-            messages.error(request, 'Please correct the error below.')
+    form = PasswordChangeForm(request.user, request.POST)
+    if form.is_valid():
+        user = form.save()
+        update_session_auth_hash(request, user)
+        messages.success(request, 'Password berhasil diubah!')
+        return redirect('website:accounts:profile')
     else:
-        form = PasswordChangeForm(request.user)
+        messages.error(request, 'Please correct the error below.')
 
     context = {
         'title': 'Ubah Password',
