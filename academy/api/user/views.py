@@ -111,6 +111,6 @@ class ChangePasswordView(UserAuthAPIView):
 
         if form.is_valid():
             form.save()
-            return Response({'message': f'Password berhasil diubah'})
+            return Response({'message': 'Password berhasil diubah'})
 
         return ErrorResponse(form)
