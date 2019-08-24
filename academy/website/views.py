@@ -41,13 +41,11 @@ def faq(request):
 def certificate_verify(request):
     form = CertificateVerifyForm(request.POST or None)
     result = None
-    valid_date = None
 
     if form.is_valid():
         student = form.verification()
         if student:
             result = student
-            valid_date = student.created + timedelta(days=1095)
         else:
             result = ""
 
@@ -55,7 +53,6 @@ def certificate_verify(request):
         'title': 'Verifikasi Sertifikat',
         'form': form,
         'result': result,
-        'valid_date': valid_date
     }
 
     if request.is_ajax():

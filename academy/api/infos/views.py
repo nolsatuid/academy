@@ -44,12 +44,11 @@ class VerifyCertificate(APIView):
         if form.is_valid():
             student = form.verification()
             if student:
-                valid_date = student.created + timedelta(days=1095)
                 context = {
-                    'pemilik': f'{student.user.first_name} {student.user.last_name}',
-                    'nomor_sertifikat': student.certificate_number,
-                    'tanggal_sertifikat': student.created.strftime('%d %b %Y'),
-                    'berlaku_hingga': valid_date.strftime('%d %b %Y')
+                    'full_name': student.user.get_full_name(),
+                    'certificate_number': student.certificate_number,
+                    'issued_at': student.created.strftime('%d %b %Y'),
+                    'valid_until': student.valid_until.strftime('%d %b %Y')
                 }
                 return Response(context)
 

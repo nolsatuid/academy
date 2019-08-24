@@ -517,10 +517,10 @@ request:
 response:
 ```json
 {
-    "pemilik": "Setyo Nugroho",
-    "nomor_sertifikat": "NS-0105-2019-0822",
-    "tanggal_sertifikat": "22 Aug 2019",
-    "berlaku_hingga": "21 Aug 2022"
+    "full_name": "Setyo Nugroho",
+    "certificate_number": "NS-0105-2019-0822",
+    "issued_at": "22 Aug 2019",
+    "valid_until": "21 Aug 2022"
 }
 ```
 

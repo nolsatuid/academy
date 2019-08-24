@@ -1,17 +1,16 @@
-import pdfkit
+from datetime import timedelta
 
+import pdfkit
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import models
 from django.http import HttpResponse
-from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
-from django.template.loader import get_template
 from django.template.defaultfilters import slugify
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.contrib.auth import get_user_model
+from django.template.loader import get_template
+from model_utils.fields import AutoCreatedField
 
 from academy.core.utils import image_upload_path
-from model_utils import Choices
-from model_utils.fields import AutoCreatedField
 
 
 def get_sentinel_user():
@@ -91,3 +90,7 @@ class Graduate(models.Model):
         upload_file = SimpleUploadedFile(filename, certificate_file.read())
         self.certificate_file = upload_file
         self.save()
+
+    @property
+    def valid_until(self):
+        return self.created + timedelta(days=1095)
