@@ -469,7 +469,32 @@ response:
     ]
 }
 ```
+## API Change Password
+url: `/api/user/change-password`
 
+header:
+```
+Conten-Type application/json
+Authorization Bearer {token access}
+```
+
+method: `POST`
+
+body:
+```json
+{
+    "old_password": "{old password}",
+    "new_password1": "{new password}",
+    "new_password2": "{confirm new password}"
+}
+```
+
+response:
+```json
+{
+    "message": "Password berhasil diubah"
+}
+```
 ## Verify Certificate
 url: `/api/infos/verify`
 
