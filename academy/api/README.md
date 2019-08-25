@@ -495,3 +495,41 @@ response:
     "message": "Password berhasil diubah"
 }
 ```
+## Verify Certificate
+url: `/api/infos/verify`
+
+header:
+```
+Conten-Type application/json
+Authorization Bearer {token access}
+```
+
+method: `POST`
+
+request:
+```json
+{
+	"certificate_number": "NS-0105-2019-0822",
+	"last_name": "Nugroho"
+}
+```
+
+response:
+```json
+{
+    "full_name": "Setyo Nugroho",
+    "certificate_number": "NS-0105-2019-0822",
+    "issued_at": "22 Aug 2019",
+    "valid_until": "21 Aug 2022"
+}
+```
+
+certificate not found error (http status 400):
+
+```json
+{
+    "detail": "Your request cannot be completed",
+    "error_message": "Maaf, kami tidak dapat menemukan sertifikat dengan nomor sertifikat dan nama belakang tersebut.",
+    "error_code": "invalid_request"
+}
+```
