@@ -32,7 +32,7 @@ def faq(request):
 
     context = {
         'title': 'Tilil (Q&A)',
-        'navbar': navbar if navbar == 'hidden' else 'default'
+        'navbar': navbar
     }
 
     return render(request, 'website/faq.html', context)
