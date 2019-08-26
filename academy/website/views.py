@@ -95,6 +95,19 @@ def company(request):
     return render(request, 'website/company.html', context)
 
 
+def statistic(request):
+    context = {
+        'title': 'Statistik',
+        'navbar': 'hidden',
+        'footer': 'hidden',
+        'pengguna': User.objects.actived().count(),
+        'peserta': Student.objects.participants().count(),
+        'lulus': Student.objects.graduated().count(),
+        'tersalurkan': Graduate.objects.filter(is_channeled=True).count(),
+    }
+    return render(request, 'website/statistic.html', context)
+
+
 def error_404(request):
     return render(request, '404.html', {})
 
