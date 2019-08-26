@@ -68,6 +68,15 @@ def home(request):
     return render(request, 'website/home2.html', context)
 
 
+def about(request):
+    context = {
+        'title': 'About',
+        'navbar': 'hidden',
+        'footer': 'hidden'
+    }
+    return render(request, 'website/about.html', context)
+
+
 def error_404(request):
     return render(request, '404.html', {})
 

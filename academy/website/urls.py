@@ -13,4 +13,5 @@ urlpatterns = [
     path('accounts/', include('academy.website.accounts.urls', namespace='accounts')),
     path('verify/', views.certificate_verify, name='cert-verify'),
     path('campuses/', include('academy.website.campuses.urls')),
+    path('about/', views.about, name='about'),
 ]
