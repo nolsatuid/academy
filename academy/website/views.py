@@ -77,6 +77,24 @@ def about(request):
     return render(request, 'website/about.html', context)
 
 
+def talent(request):
+    context = {
+        'title': 'Talenta & Proffesional',
+        'navbar': 'hidden',
+        'footer': 'hidden'
+    }
+    return render(request, 'website/talent.html', context)
+
+
+def company(request):
+    context = {
+        'title': 'Perusahaan',
+        'navbar': 'hidden',
+        'footer': 'hidden'
+    }
+    return render(request, 'website/company.html', context)
+
+
 def error_404(request):
     return render(request, '404.html', {})
 
