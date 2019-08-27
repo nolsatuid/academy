@@ -533,3 +533,21 @@ certificate not found error (http status 400):
     "error_code": "invalid_request"
 }
 ```
+
+## Get Instructors
+url: `/api/infos/instructors`
+
+method: `GET`
+
+response:
+```json
+{
+    "data": [
+        {
+            "name": "Utian Ayuba",
+            "specialization": "IaaS Cloud Architect",
+            "linkedin": "https://www.linkedin.com/in/utianayuba/"
+        }
+    ]
+}
+```
