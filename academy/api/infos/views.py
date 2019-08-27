@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from academy.api.response import ErrorResponse
-from academy.apps.accounts.models import User
+from academy.apps.accounts.models import User, Instructor
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 from academy.apps.offices.models import LogoPartner, LogoSponsor
@@ -56,3 +56,13 @@ class VerifyCertificate(APIView):
                                                'nomor sertifikat dan nama belakang tersebut.')
 
         return ErrorResponse(form)
+
+
+class GetInstructorsView(APIView):
+    instructors = Instructor.objects.order_by('order')
+
+    def get(self, request):
+        context = {
+            "data": [serializers.instructor(instructor) for instructor in self.instructors]
+        }
+        return Response(context)

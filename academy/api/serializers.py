@@ -76,3 +76,11 @@ def graduate_data(graduate):
         "is_channeled": graduate.is_channeled,
         "channeled_at": graduate.channeled_at,
     }
+
+
+def instructor(instructor):
+    return {
+        'name': instructor.user.name,
+        'specialization': instructor.user.profile.specialization,
+        'linkedin': instructor.user.profile.linkedin
+    }
