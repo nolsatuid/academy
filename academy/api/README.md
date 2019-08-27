@@ -551,3 +551,25 @@ response:
     ]
 }
 ```
+## Get Graduate
+url: `/api/user/graduate`
+
+header:
+```
+Conten-Type application/json
+Authorization Bearer {token access}
+```
+
+method: `GET`
+
+response:
+```json
+{
+    "data": {
+        "certificate_url": "http://127.0.0.1:8000/media/images/certificates/2019/01/24/certificate-muhammad-hanif.pdf",
+        "certificate_number": "NS-0022-2018-0603",
+        "is_channeled": true,
+        "channeled_at": "tes"
+    }
+}
+```
