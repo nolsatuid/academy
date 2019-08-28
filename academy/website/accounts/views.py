@@ -200,6 +200,7 @@ def change_password(request):
 
 def forgot_password(request):
     form = ForgotPasswordForm(request.POST or None)
+    navbar = request.GET.get('navbar')
 
     if form.is_valid():
         form.send_email(form.cleaned_data['email'])
@@ -209,6 +210,7 @@ def forgot_password(request):
     context = {
         'title': 'Lupa kata sandi',
         'form': form,
+        'navbar': navbar
     }
     return render(request, 'accounts/form.html', context)
 
