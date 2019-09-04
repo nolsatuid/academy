@@ -80,7 +80,7 @@ def graduate_data(graduate):
 def instructor(instructor):
     return {
         'name': instructor.user.name,
-        'photo': instructor.user.profile.avatar.url,
+        'photo': settings.MEDIA_HOST + instructor.user.profile.avatar.url,
         'specialization': instructor.user.profile.specialization,
         'linkedin': instructor.user.profile.linkedin
     }
