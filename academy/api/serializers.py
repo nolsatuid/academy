@@ -1,5 +1,4 @@
 from django.conf import settings
-
 from academy.apps.accounts.models import User
 from academy.apps.students.templatetags.tags_students import get_status, status_to_display
 
@@ -10,7 +9,7 @@ def user_profile(user: User) -> dict:
         'email': user.email,
         'phone': user.phone,
         'is_active': user.is_active,
-        'avatar': "",
+        'avatar': user.avatar,
         'linkedin': "",
         'git_repo': "",
         'blog': "",
@@ -81,6 +80,7 @@ def graduate_data(graduate):
 def instructor(instructor):
     return {
         'name': instructor.user.name,
+        'photo': settings.MEDIA_HOST + instructor.user.profile.avatar.url,
         'specialization': instructor.user.profile.specialization,
         'linkedin': instructor.user.profile.linkedin
     }
