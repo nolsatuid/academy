@@ -205,6 +205,7 @@ response: user payload
     "email": "irfanpule@btech.id",
     "phone": "08978950954",
     "is_active": true,
+    "status": 1,
     "avatar": null,
     "linkedin": "",
     "git_repo": "https://github.com/irfanpule",
@@ -218,6 +219,17 @@ response: user payload
     "has_profile": true
 }
 ```
+
+Mapping dan value yang tersedia untuk status user
+
+```
+status:
+    1 = seleksi
+    2 = peserta
+    3 = mengulang
+    4 = lulus
+```
+
 
 ## Upload Avatar
 url: `/api/user/upload/avatar`
@@ -243,6 +255,7 @@ response: user payload
     "email": "irfanpule@btech.id",
     "phone": "08978950954",
     "is_active": true,
+    "status": 1,
     "avatar": "http://localhost:8000/media/images/avatar/2019/07/31/avatar-wanita.png",
     "linkedin": "",
     "git_repo": "https://github.com/irfanpule",

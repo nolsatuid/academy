@@ -9,7 +9,8 @@ def user_profile(user: User) -> dict:
         'email': user.email,
         'phone': user.phone,
         'is_active': user.is_active,
-        'avatar': user.avatar,
+        'status': 1,
+        'avatar': "",
         'linkedin': "",
         'git_repo': "",
         'blog': "",
@@ -43,6 +44,10 @@ def user_profile(user: User) -> dict:
         user_data['telegram_id'] = profile.telegram_id
         user_data['telegram_id'] = profile.telegram_id
         user_data['curriculum_vitae'] = cv
+
+    if hasattr(user, 'student'):
+        student = user.get_student()
+        user_data['status'] = student.status
 
     return user_data
 
