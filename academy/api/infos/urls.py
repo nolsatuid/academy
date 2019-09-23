@@ -8,4 +8,5 @@ urlpatterns = [
     path('logo/sponsors', views.GetLogoSponsors.as_view(), name='logo-sponsors'),
     path('verify', views.VerifyCertificate.as_view(), name='verify-certificate'),
     path('instructors', views.GetInstructorsView.as_view(), name='instructors'),
+    path('news', views.GetNewsView.as_view(), name='news'),
 ]

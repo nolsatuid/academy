@@ -16,3 +16,5 @@ python-magic==0.4.15
 
 django-rest-framework==0.1.0
 djangorestframework-simplejwt==4.3.0
+
+feedparser==5.2.1

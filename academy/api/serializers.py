@@ -89,3 +89,13 @@ def instructor(instructor):
         'specialization': instructor.user.profile.specialization,
         'linkedin': instructor.user.profile.linkedin
     }
+
+
+def news(source, post, identifier=""):
+    return {
+        "source_name": source["name"],
+        "source_link": source["link"],
+        "source_identifier": identifier,
+        "post_title": post["title"],
+        "post_link": post["link"],
+    }

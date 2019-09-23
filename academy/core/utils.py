@@ -1,4 +1,6 @@
 import datetime
+import feedparser
+from typing import List
 
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -56,3 +58,16 @@ def pagination(data, page, lenght=25):
     end_index = 5 if index <= 3 else (index + 2 if index < max_index - 2 else max_index)
     page_range = list(paginator.page_range)[start_index:end_index]
     return (data_pagination, page_range)
+
+
+def get_feed_blog(url: str, limit: int = 10) -> dict:
+    response = feedparser.parse(url)
+    posts = response['entries']
+    data = {
+        "source": {
+            "name": response["feed"]["title"],
+            "link": response["feed"]["link"]
+        },
+        "posts": posts[:limit]
+    }
+    return data
