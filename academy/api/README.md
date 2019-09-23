@@ -586,3 +586,27 @@ response:
     }
 }
 ```
+
+## Get News
+url: `/api/infos/news`
+
+header:
+```
+Conten-Type application/json
+```
+
+method: `GET`
+
+```json
+{
+    "data": [
+        {
+            "source_name": "Linuxtoday.com",
+            "source_link": "https://www.linuxtoday.com/",
+            "source_identifier": "linux_today",
+            "post_title": "Manjaro 18.1: Goes Arch One Better",
+            "post_link": "http://feedproxy.google.com/~r/LinuxToday/~3/pTuZ32M08zs/manjaro-18.1-goes-arch-one-better.html"
+        },
+    ]
+}
+```

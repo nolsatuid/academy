@@ -10,6 +10,7 @@ from academy.apps.graduates.models import Graduate
 from academy.apps.offices.models import LogoPartner, LogoSponsor
 from academy.api import serializers
 from academy.website.forms import CertificateVerifyForm
+from academy.core.utils import get_feed_blog
 
 
 class GetStatisticsView(APIView):
@@ -64,5 +65,32 @@ class GetInstructorsView(APIView):
     def get(self, request):
         context = {
             "data": [serializers.instructor(instructor) for instructor in self.instructors]
+        }
+        return Response(context)
+
+
+class GetNewsView(APIView):
+
+    def get(self, request):
+        rss_source = {
+            'medium': {"url": "https://medium.com/feed/topic/software-engineering"},
+            'google': {
+                "url": "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGR"
+                "qTVhZU0FtbGtHZ0pKUkNnQVAB?hl=id&gl=ID&ceid=ID:id"
+            },
+            'the_hacker_news': {"url": "https://feeds.feedburner.com/TheHackersNews"},
+            'linux_today': {"url": "https://feeds.feedburner.com/LinuxToday"}
+        }
+
+        news = []
+        for key, source in rss_source.items():
+            feed = get_feed_blog(rss_source[key]["url"], 6)
+            data = []
+            for post in feed["posts"]:
+                data.append(serializers.news(feed["source"], post, key))
+            news += data
+
+        context = {
+            'data': news
         }
         return Response(context)
