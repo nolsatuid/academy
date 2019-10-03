@@ -1,16 +1,18 @@
-{% extends 'dashboard/base.html' %}
+{% extends 'base-adminlte.html' %}
 
-{% block content-dashboard %}
-<div class="card">
-        <div class="card-header">
-            <h4 class="pull-left">
-                {{ title }}
-            </h4>
+{% block content %}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header border-transparent">
+            <h3 class="card-title"></h3>
         </div>
+
         <div class="card-body">
-                {% include 'dashboard/form.html' %}
+            {% include 'dashboard/form.html' %}
         </div>
-        <div class="card-footer"></div>
-        
+
+    </div>
+
 </div>
 {% endblock %}
