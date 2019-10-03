@@ -34,7 +34,8 @@ def index(request):
         context = {
             'title': 'Dasbor',
             'student': student,
-            'graduate': graduate
+            'graduate': graduate,
+            'menu_active': 'dashboard'
         }
         return render(request, 'dashboard/index.html', context)
 
@@ -193,7 +194,8 @@ def change_password(request):
 
     context = {
         'title': 'Ubah Password',
-        'form': form
+        'form': form,
+        'menu_active': 'change_password'
     }
     return render(request, 'dashboard/edit_profile.html', context)
 
