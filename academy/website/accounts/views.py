@@ -34,7 +34,8 @@ def index(request):
         context = {
             'title': 'Dasbor',
             'student': student,
-            'graduate': graduate
+            'graduate': graduate,
+            'menu_active': 'dashboard'
         }
         return render(request, 'dashboard/index.html', context)
 
@@ -184,7 +185,7 @@ def edit_profile(request):
 
 @login_required
 def change_password(request):
-    form = PasswordChangeForm(request.user, request.POST)
+    form = PasswordChangeForm(request.user, request.POST or None)
     if form.is_valid():
         user = form.save()
         update_session_auth_hash(request, user)
@@ -193,7 +194,8 @@ def change_password(request):
 
     context = {
         'title': 'Ubah Password',
-        'form': form
+        'form': form,
+        'menu_active': 'change_password'
     }
     return render(request, 'dashboard/edit_profile.html', context)
 
