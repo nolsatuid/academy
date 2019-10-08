@@ -1,14 +1,14 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/base-adminlte.html' %}
 {% load form_tags %}
 
-{% block content-dashboard %}
-<div class="container">
+{% block content %}
+<div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="pull-left">
+            <h4 class="float-left">
                 Profil
             </h4>
-            <div class="pull-right">
+            <div class="float-right">
                 {% if student.status|status_display == 'seleksi' %}
                     <a class="btn btn-success text-white" data-toggle="modal" data-target="#changeToParticipantModal">Jadikan Peserta</a>
                 {% elif student.status|status_display == 'peserta' %}

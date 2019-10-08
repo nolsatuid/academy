@@ -1,4 +1,4 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/base-adminlte.html' %}
 {% load static form_tags tags_students %}
 
 {% block extra_css %}
@@ -6,7 +6,8 @@
     <link href="{% static 'website/css/select2.min.css' %}" rel="stylesheet"/>
 {% endblock %}
 
-{% block content-dashboard %}
+{% block content %}
+<div class="col-md-12">
     <div class="card">
         <div class="card-header">
             <h4 class="pull-left">
@@ -60,6 +61,7 @@
         <div class="card-footer"></div>
 
     </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}

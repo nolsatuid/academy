@@ -1,13 +1,14 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/base-adminlte.html' %}
 {% load form_tags %}
 
-{% block content-dashboard %}
-<div class="card">
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
         <div class="card-header">
-            <h4 class="pull-left">
+            <h4 class="float-left">
                 Sertifikat
             </h4>
-            <span class="pull-right">
+            <span class="float-right">
                 <a href="?regenerate=yes" class="btn btn-primary">Regenerate</a>
             </span>
         </div>
@@ -21,6 +22,6 @@
             </div>
         </div>
         <div class="card-footer"></div>
-
+    </div>
 </div>
 {% endblock %}
