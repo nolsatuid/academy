@@ -43,7 +43,7 @@
                 </ul>
             </li> -->
             <li><hr></li>
-            {% if user.is_staff == True %}
+            {% if user.is_superuser == True %}
             <li><a href="{% url 'backoffice:index' %}"><i class="fa fa-fw fa-user-cog"></i> Backoffice </a></li>
             {% endif %}
             <li><a href="{%url 'website:accounts:change_password' %}"><i class="fa fa-fw fa-key"></i> Ubah Sandi </a></li>

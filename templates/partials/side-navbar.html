@@ -62,6 +62,15 @@
                 </a>
             </li>
 
+            {% if user.is_superuser == True %}
+            <li class="nav-header">Admin Panel</li>
+            <li class="nav-item">
+                <a href="{% url 'backoffice:index' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                    <i class="nav-icon fas fa-user-cog"></i>
+                    <p>Backoffice</p>
+                </a>
+            </li>
+            {% endif %}
 
         </ul>
         </nav>
