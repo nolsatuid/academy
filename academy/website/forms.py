@@ -5,7 +5,7 @@ from academy.apps.graduates.models import Graduate
 
 class CertificateVerifyForm(forms.Form):
     certificate_number = forms.CharField(
-        label='Nomor Sertifikat', max_length=25,
+        label='Nomor Sertifikat', max_length=35,
         widget=forms.TextInput(attrs={'placeholder': 'ex: NS-XXXXX-XXXX-XXXX'})
     )
     last_name = forms.CharField(label='Nama Belakang', help_text="Nama Belakang harus sesuai dengan yang tertetera pada profil Anda.")
