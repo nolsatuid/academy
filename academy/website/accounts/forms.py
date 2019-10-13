@@ -196,3 +196,9 @@ class SurveyForm(forms.ModelForm):
         survey.save()
 
         return survey
+
+
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['avatar']

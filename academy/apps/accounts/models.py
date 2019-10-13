@@ -8,6 +8,7 @@ from django.db import models
 from django.db.models import When, Case, Count, IntegerField, Q
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.auth.tokens import default_token_generator
+from django.templatetags.static import static
 from django.utils.http import int_to_base36
 from django.template.loader import render_to_string
 from django.utils.six import StringIO
@@ -203,6 +204,12 @@ class Profile(models.Model):
             img = Image.open(self.avatar)
             img = ImageOps.fit(img, (200, 200))
             img.save(self.avatar.path)
+
+    def get_avatar(self):
+        if self.avatar is not None:
+            return self.avatar.url
+        else:
+            return static('website/images/avatar_placeholder.png')
 
 
 class Instructor(models.Model):
