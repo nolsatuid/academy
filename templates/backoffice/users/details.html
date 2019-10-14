@@ -56,14 +56,14 @@
                                             <td class="font-weight-bold">Status</td>
                                             <td>
                                                 {{ student.status|status_display:"True" }}
-                                                <small><a href="{% url 'backoffice:users:edit_status' student.id %}">edit</a></small>
+                                                <small><a href="{% url 'backoffice:users:edit_status' student.id %}"> <i class="fas fa-edit"></i></a></small>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="font-weight-bold">Angkatan</td>
                                             <td>
                                                 {{ student.training.batch }}
-                                                <small><a href="{% url 'backoffice:users:edit_student_batch' student.id %}">edit</a></small>
+                                                <small><a href="{% url 'backoffice:users:edit_student_batch' student.id %}"> <i class="fas fa-edit"></i></a></small>
                                             </td>
                                         </tr>
                                         {% if student.campus %}
