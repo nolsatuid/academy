@@ -1,86 +1,84 @@
-{% extends 'backoffice/base-adminlte.html' %}
+{% extends 'backoffice/base.html' %}
 
-{% block content %}
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-header">
-                <h4 class="pull-left">
-                    Kampus
-                </h4>
-                <div class="pull-right">
-                    <a class="btn btn-sm btn-pill btn-secondary" href="{% url 'backoffice:campuses:edit' campus.id %}">Edit</a>
-                    <button class="btn btn-sm btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:campuses:delete' campus.id %}" data-name="{{ campus.name}}" >Hapus</button>
-                </div>
+{% block content-dashboard %}
+<div class="card">
+    <div class="card-header">
+            <h4 class="pull-left">
+                Kampus
+            </h4>
+            <div class="pull-right">
+                <a class="btn btn-sm btn-pill btn-secondary" href="{% url 'backoffice:campuses:edit' campus.id %}">Edit</a>
+                <button class="btn btn-sm btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:campuses:delete' campus.id %}" data-name="{{ campus.name}}" >Hapus</button>
             </div>
-            <div class="card-body">
-                <div class="row-fluid">
-                    <div class="row">
-                        <div class=" col-md-12 col-lg-12 ">
-                            <div class="tab-content">
-                                <div id="pane-pribadi" class="tab-pane active in">
-                                    <div class="table-responsive box box-info">
-                                        <table class="table table-user-information">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="font-weight-bold">Nama</td>
-                                                    <td>{{ campus.name }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="font-weight-bold">Logo</td>
-                                                    <td>
-                                                        {% if campus.logo %}
-                                                        <img width="500px" src="{{ campus.logo.url }}" class="img-fluid" alt="{{ campus.name }}"/>
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="font-weight-bold">Deskripsi</td>
-                                                    <td><p>{{ campus.description }}</p></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="font-weight-bold">Alamat</td>
-                                                    <td>{{ campus.address }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="font-weight-bold">Email</td>
-                                                    <td>{{ campus.email }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="font-weight-bold">Phone</td>
-                                                    <td>{{ campus.phone }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="font-weight-bold">Registrasi</td>
-                                                    <td>{% if campus.open_registration %} Buka {% else %} Tutup {% endif %}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+        </div>
+        <div class="card-body">
+            <div class="row-fluid">
+                <div class="row">
+                    <div class=" col-md-12 col-lg-12 ">
+                        <div class="tab-content">
+                            <div id="pane-pribadi" class="tab-pane active in">
+                                <div class="table-responsive box box-info">
+                                    <table class="table table-user-information">
+                                        <tbody>
+                                            <tr>
+                                                <td class="font-weight-bold">Nama</td>
+                                                <td>{{ campus.name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Logo</td>
+                                                <td>
+                                                    {% if campus.logo %} 
+                                                    <img width="500px" src="{{ campus.logo.url }}" class="img-fluid" alt="{{ campus.name }}"/>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Deskripsi</td>
+                                                <td><p>{{ campus.description }}</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Alamat</td>
+                                                <td>{{ campus.address }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Email</td>
+                                                <td>{{ campus.email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Phone</td>
+                                                <td>{{ campus.phone }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold">Registrasi</td>
+                                                <td>{% if campus.open_registration %} Buka {% else %} Tutup {% endif %}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card-footer"></div>
-    </div>
+        </div>
+        <div class="card-footer"></div>
+</div>
 
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Yakin ingin menghapus <strong id="confirmDeleteName"></strong>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                    <a id="confirmDeleteButton" class="btn btn-success" >Ya</a>
-                </div>
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Yakin ingin menghapus <strong id="confirmDeleteName"></strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <a id="confirmDeleteButton" class="btn btn-success" >Ya</a>
             </div>
         </div>
     </div>

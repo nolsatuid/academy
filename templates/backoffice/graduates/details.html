@@ -1,14 +1,13 @@
-{% extends 'backoffice/base-adminlte.html' %}
+{% extends 'backoffice/base.html' %}
 {% load form_tags %}
 
-{% block content %}
-<div class="col-md-12">
-    <div class="card">
+{% block content-dashboard %}
+<div class="card">
         <div class="card-header">
-            <h4 class="float-left">
+            <h4 class="pull-left">
                 Profil
             </h4>
-            <div class="float-right">
+            <div class="pull-right">
                 <a class="btn btn-success text-white" href="{% url 'backoffice:graduates:show_certificate' graduate.id %}">Lihat Sertifikat</a>
                 <a class="btn btn-secondary text-white" href="{% url 'backoffice:graduates:status_training' graduate.id %}">Status Pelatihan</a>
             </div>
@@ -165,6 +164,6 @@
             </div>
         </div>
         <div class="card-footer"></div>
-    </div>
+
 </div>
 {% endblock %}
