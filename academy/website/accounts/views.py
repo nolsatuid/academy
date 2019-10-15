@@ -139,7 +139,8 @@ def profile(request):
         survey = user.survey
 
     context = {
-        'title': 'Dashboard',
+        'title': 'Profil',
+        'menu_active': 'profil',
         'user': user,
         'student': student,
         'graduate': graduate,

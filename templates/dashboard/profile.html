@@ -1,13 +1,10 @@
-{% extends 'dashboard/base.html' %}
+{% extends 'base-adminlte.html' %}
 {% load form_tags %}
 
-{% block content-dashboard %}
-<div class="card">
+{% block content %}
+<div class="col-md-12 card">
         <div class="card-header">
-            <h4 class="pull-left">
-                Profil
-            </h4>
-            <div class="pull-right">
+            <div class="fa-pull-right">
                 <a class="btn btn-primary text-white" href="{% url 'website:accounts:edit_profile' %}">Ubah</a>
             </div>
         </div>
@@ -117,7 +114,7 @@
 
                                         <tr class="thead-dark">
                                             <th colspan="2">Data Pekerjaan
-                                                <div class="pull-right">
+                                                <div class="fa-pull-right">
                                                     <a class="btn btn-info text-white" href="{% url 'website:accounts:edit_survey' %}">Ubah</a>
                                                 </div>
                                             </th>
