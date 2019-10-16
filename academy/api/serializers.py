@@ -45,7 +45,7 @@ def user_profile(user: User) -> dict:
         user_data['telegram_id'] = profile.telegram_id
         user_data['curriculum_vitae'] = cv
 
-    if hasattr(user, 'student'):
+    if hasattr(user, 'students'):
         student = user.get_student()
         user_data['status'] = student.status
 
