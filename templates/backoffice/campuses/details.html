@@ -1,12 +1,12 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/base-adminlte.html' %}
 
-{% block content-dashboard %}
+{% block content %}
 <div class="card">
     <div class="card-header">
-            <h4 class="pull-left">
+            <h4 class="fa-pull-left">
                 Kampus
             </h4>
-            <div class="pull-right">
+            <div class="fa-pull-right">
                 <a class="btn btn-sm btn-pill btn-secondary" href="{% url 'backoffice:campuses:edit' campus.id %}">Edit</a>
                 <button class="btn btn-sm btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:campuses:delete' campus.id %}" data-name="{{ campus.name}}" >Hapus</button>
             </div>
