@@ -148,6 +148,7 @@ def profile(request):
     }
     return render(request, 'dashboard/profile.html', context)
 
+
 @login_required
 def edit_avatar(request):
     form = AvatarForm(data=request.POST or None, files=request.FILES or None, instance=request.user.profile)
@@ -156,7 +157,10 @@ def edit_avatar(request):
         form.save()
         return redirect("website:accounts:profile")
 
-    return render(request, 'dashboard/edit_avatar.html')
+    context = {
+        'title': 'Edit Avatar',
+    }
+    return render(request, 'dashboard/edit_avatar.html', context)
 
 
 @login_required
