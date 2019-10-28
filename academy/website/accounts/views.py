@@ -9,7 +9,8 @@ from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Training, Student
-from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm, SurveyForm
+from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm, SurveyForm, \
+    AvatarForm
 
 
 @login_required
@@ -150,6 +151,20 @@ def profile(request):
 
 
 @login_required
+def edit_avatar(request):
+    form = AvatarForm(data=request.POST or None, files=request.FILES or None, instance=request.user.profile)
+
+    if form.is_valid():
+        form.save()
+        return redirect("website:accounts:profile")
+
+    context = {
+        'title': 'Edit Avatar',
+    }
+    return render(request, 'dashboard/edit_avatar.html', context)
+
+
+@login_required
 def edit_profile(request):
     user = request.user
 
@@ -219,7 +234,6 @@ def forgot_password(request):
 
 
 def reset_password(request, uidb36, token):
-
     try:
         uid_int = base36_to_int(uidb36)
     except ValueError:
@@ -234,7 +248,7 @@ def reset_password(request, uidb36, token):
             return redirect('website:accounts:login')
     else:
         messages.warning(request, 'Maaf, permintaan atur ulang kata sandi sudah'
-                         'kadaluarsa. Silahkan coba lagi')
+                                  'kadaluarsa. Silahkan coba lagi')
         return redirect('website:accounts:login')
 
     context = {

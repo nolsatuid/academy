@@ -60,12 +60,12 @@
         <!-- user profile-->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <img src="{% static 'adminlte/dist/img/user2-160x160.jpg' %}" style="max-height:100%" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ user.profile.get_avatar }}" style="max-height:100%" class="img-circle elevation-2" alt="User Image">
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-header">{{ user.first_name }} {{ user.last_name }}</span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
+                <a href="{% url 'website:accounts:edit_avatar' %}" class="dropdown-item">
                     <i class="fas fa-user-circle mr-2"></i> Ubah Avatar
                     <span class="float-right text-muted text-sm"><i class="right fas fa-angle-right"></i></span>
                 </a>
