@@ -199,8 +199,7 @@ class TrainingForm(forms.ModelForm):
         help_texts = {
             'start_date': 'Boleh kosong',
             'end_date': 'Boleh kosong',
-            'materials': ('Gunakan tombol shift/ctrl untuk memilih '
-                          'beberapa materi sekaligus'),
+            'materials': '',
             'batch': 'Gunakan awalan NSC- jika akan membuat angkatan baru untuk NolSatu Kampus, mis. NSC-1'
         }
 
