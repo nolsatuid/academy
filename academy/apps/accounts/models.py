@@ -206,7 +206,7 @@ class Profile(models.Model):
             img.save(self.avatar.path)
 
     def get_avatar(self):
-        if self.avatar is not None:
+        if self.avatar:
             return self.avatar.url
         else:
             return static('website/images/avatar_placeholder.png')
