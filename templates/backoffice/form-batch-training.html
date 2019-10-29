@@ -1,5 +1,10 @@
 {% extends 'backoffice/base-adminlte.html' %}
 {% load form_tags tags_students %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'select2/select2.min.css' %}" rel="stylesheet" />
+{% endblock %}
 
 {% block content %}
 <div class="col-md-12">
@@ -13,7 +18,7 @@
             <div class="row-fluid">
                 <div class="row">
                     <div class=" col-md-12 col-lg-12 ">
-                        <h5>Dafar Angkatan</h5>
+                        <h5>Daftar Angkatan</h5>
                     </div>
                     <div class=" col-md-12 col-lg-12 ">
                         <div class="tab-content">
@@ -42,8 +47,11 @@
                                 {% for field in form %}
                                     <div class="form-group col-md-12">
                                         <label class="pull-left">{{ field.label }}</label>
-
-                                        {{ field|addclass:"form-control" }}
+                                        {% if field.name == 'materials' %}
+                                            {{ field|addclass:"form-control select2" }}
+                                        {% else %}
+                                            {{ field|addclass:"form-control" }}
+                                        {% endif %}
                                         <span class="help_text">
                                             {{ field.help_text|safe }}
                                         </span>
@@ -64,4 +72,13 @@
         <div class="card-footer"></div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'select2/select2.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
 {% endblock %}
