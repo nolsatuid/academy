@@ -24,10 +24,6 @@ from model_utils import Choices
 from post_office import mail
 
 
-def get_sentinel_user():
-    return get_user_model().objects.get_or_create(username='deleted')[0]
-
-
 class CustomUserManager(UserManager):
     def create_user(self, username, email, password, is_active=False, **extra_fields):
         user = super().create_user(username, email, password, is_active=False, **extra_fields)
@@ -237,7 +233,7 @@ class Instructor(models.Model):
 
 class Inbox(models.Model):
     user = models.ForeignKey('accounts.User', related_name='recipient',
-                             on_delete=models.SET(get_sentinel_user))
+                             on_delete=models.CASCADE)
     subject = models.CharField(max_length=50)
     content = models.TextField()
     sent_date = models.DateTimeField()

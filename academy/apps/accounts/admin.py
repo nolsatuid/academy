@@ -28,7 +28,8 @@ class InstructorAdmin(admin.ModelAdmin):
 
 
 class InboxAdmin(admin.ModelAdmin):
-    search_fields = ('subject',)
+    search_fields = ('user__username','subject',)
+    list_display = ('user', 'subject', 'is_read', 'sent_date')
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Profile, UserProfile)
