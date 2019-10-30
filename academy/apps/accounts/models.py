@@ -229,3 +229,15 @@ class Instructor(models.Model):
                 self.order = last_order.order + 1
 
         super().save(*args, **kwargs)
+
+
+class Inbox(models.Model):
+    user = models.ForeignKey('accounts.User', related_name='recipient',
+                             on_delete=models.CASCADE)
+    subject = models.CharField(max_length=50)
+    content = models.TextField()
+    sent_date = models.DateTimeField()
+    is_read = models.BooleanField() 
+
+    def __str__(self):
+        return self.subject

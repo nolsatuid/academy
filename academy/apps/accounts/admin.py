@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
-from .models import User, Profile, Instructor
+from .models import User, Profile, Instructor, Inbox
 
 
 class UserAdmin(DjangoUserAdmin):
@@ -27,6 +27,11 @@ class InstructorAdmin(admin.ModelAdmin):
     search_fields = ('user__username',)
 
 
+class InboxAdmin(admin.ModelAdmin):
+    search_fields = ('user__username','subject',)
+    list_display = ('user', 'subject', 'is_read', 'sent_date')
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Profile, UserProfile)
 admin.site.register(Instructor, InstructorAdmin)
+admin.site.register(Inbox, InboxAdmin)

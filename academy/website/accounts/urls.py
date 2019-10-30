@@ -23,4 +23,6 @@ urlpatterns = [
     path('survey/edit/', views.edit_survey, name='edit_survey'),
     re_path(r'^auth-user/(?P<uidb36>[0-9A-Za-z]+)/(?P<token>.+)/$',
             views.auth_user, name='auth_user'),
+    path('inbox/', views.inbox, name='inbox'),
+    path('inbox/<int:id>', views.inbox_detail, name='inbox_detail'),
 ]

@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import Http404
 from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 
-from academy.apps.accounts.models import User
+from academy.apps.accounts.models import User, Inbox
 from academy.apps.students.models import Training, Student
 from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm, SurveyForm, \
     AvatarForm
@@ -313,3 +313,42 @@ def auth_user(request, uidb36, token):
 
     messages.warning(request, 'Maaf link tidak valid')
     return redirect('website:index')
+
+
+@login_required
+def inbox(request):
+    if request.POST :
+        data = request.POST
+        for id in data.getlist('checkMark'):
+            inbox = Inbox.objects.get(id=id)
+            if inbox:
+                if data['action'] == "unread" :
+                    inbox.is_read = False
+                if data['action'] == "read" :
+                    inbox.is_read = True
+                inbox.save()
+
+    user = request.user
+    inboxs = Inbox.objects.filter(user=user).order_by('-sent_date')
+
+    context = {
+        'title': 'Inbox',
+        'menu_active': 'inbox',
+        'inboxs': inboxs
+    }
+    return render(request, 'dashboard/inbox.html', context)
+
+
+@login_required
+def inbox_detail(request, id):
+    inbox = get_object_or_404(Inbox, id=id)
+    if not inbox.is_read:
+        inbox.is_read = True
+        inbox.save()
+
+    context = {
+        'title': 'Detail Inbox',
+        'menu_active': 'inbox',
+        'inbox': inbox
+    }
+    return render(request, 'dashboard/inbox_detail.html', context)
