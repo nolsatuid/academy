@@ -85,10 +85,6 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-header">{{ user.first_name }} {{ user.last_name }}</span>
                 <div class="dropdown-divider"></div>
-                <a href="{% url 'website:accounts:edit_avatar' %}" class="dropdown-item">
-                    <i class="fas fa-user-circle mr-2"></i> Ubah Avatar
-                    <span class="float-right text-muted text-sm"><i class="right fas fa-angle-right"></i></span>
-                </a>
                 <a href="{% url 'website:accounts:profile' %}" class="dropdown-item">
                     <i class="fas fa-user mr-2"></i> Profil
                     <span class="float-right text-muted text-sm"><i class="right fas fa-angle-right"></i></span>

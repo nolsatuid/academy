@@ -156,12 +156,8 @@ def edit_avatar(request):
 
     if form.is_valid():
         form.save()
-        return redirect("website:accounts:profile")
-
-    context = {
-        'title': 'Edit Avatar',
-    }
-    return render(request, 'dashboard/edit_avatar.html', context)
+        
+    return redirect("website:accounts:profile")
 
 
 @login_required
