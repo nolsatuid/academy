@@ -19,7 +19,7 @@
             </div>
             <!-- /.mailbox-controls -->
             <div class="mailbox-read-message">
-            <pre style='font-size:1rem; font-family:"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" '>{{ inbox.content }}</pre>
+            <p>{{ inbox.content|safe }}</p>
             </div>
             <!-- /.mailbox-read-message -->
         </div>
