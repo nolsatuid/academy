@@ -43,6 +43,13 @@
             <div class="table-responsive mailbox-messages">
             <table class="table table-hover">
                 <tbody>
+                {% if not inboxs %}
+                    <tr>
+                        <td>
+                        <h6><center>Tidak ada pesan</center></h6>
+                        </td>
+                    </tr>
+                {% endif %}
                 <form action="" method="post" id="actionMark">
                 {% csrf_token %}
                 <input type="hidden" name="action" id="action">
