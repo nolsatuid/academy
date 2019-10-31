@@ -17,6 +17,7 @@ def materials(request):
 
     context = {
         'title': 'Daftar Pelatihan',
+        'menu_active': 'materi',
         'training_materials': training_materials,
         'student': request.user.get_student()
     }

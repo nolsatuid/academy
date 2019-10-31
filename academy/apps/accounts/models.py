@@ -8,6 +8,7 @@ from django.db import models
 from django.db.models import When, Case, Count, IntegerField, Q
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.auth.tokens import default_token_generator
+from django.templatetags.static import static
 from django.utils.http import int_to_base36
 from django.template.loader import render_to_string
 from django.utils.six import StringIO
@@ -107,12 +108,15 @@ class User(AbstractUser):
             'training_materials': training_materials,
             'email_title': 'Status Pelatihan'
         }
-
+        subject = 'Status Pelatihan'
+        html_message = render_to_string('emails/training-status.html', context=data)
+        Inbox.objects.create(user=self, subject=subject, content=html_message)
+        
         send = mail.send(
             [self.email],
             settings.DEFAULT_FROM_EMAIL,
-            subject='Status Pelatihan',
-            html_message=render_to_string('emails/training-status.html', context=data)
+            subject=subject,
+            html_message=html_message
         )
         return send
 
@@ -204,6 +208,12 @@ class Profile(models.Model):
             img = ImageOps.fit(img, (200, 200))
             img.save(self.avatar.path)
 
+    def get_avatar(self):
+        if self.avatar:
+            return self.avatar.url
+        else:
+            return static('website/images/avatar_placeholder.png')
+
 
 class Instructor(models.Model):
     user = models.OneToOneField('accounts.User', related_name='instructor',
@@ -222,3 +232,15 @@ class Instructor(models.Model):
                 self.order = last_order.order + 1
 
         super().save(*args, **kwargs)
+
+
+class Inbox(models.Model):
+    user = models.ForeignKey('accounts.User', related_name='recipient',
+                             on_delete=models.CASCADE)
+    subject = models.CharField(max_length=50)
+    content = models.TextField()
+    sent_date = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False) 
+
+    def __str__(self):
+        return self.subject

@@ -1,0 +1,80 @@
+{% load static %}
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar elevation-4 sidebar-light-danger">
+    <!-- Brand Logo -->
+    <!-- Brand Logo -->
+    <a href="{% url 'website:index' %}" class="brand-link">
+      <img src="{% static 'website/images/logo/logo-polos-warna-30.png' %}" alt="NOLSATU Logo" class="brand-image"
+           style="opacity: .8">
+      <span class="brand-text font-weight-bold color-white">NOLSATU</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+            <img src="{{ user.profile.get_avatar }}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+            <a href="#" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+        </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="{% url 'website:accounts:index' %}" class="nav-link {% if menu_active == 'dashboard' %}active{% endif %}">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'website:accounts:profile' %}" class="nav-link {% if menu_active == 'profil' %}active{% endif %}">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>Profil</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'website:accounts:trainings:materials' %}" class="nav-link {% if menu_active == 'materi' %}active{% endif %}">
+                    <i class="nav-icon fas fa-th-list"></i>
+                    <p>Daftar Pelatihan</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{%url 'website:accounts:change_password' %}" class="nav-link {% if menu_active == 'change_password' %}active{% endif %}">
+                    <i class="nav-icon fas fa-key"></i>
+                    <p>Ubah Sandi</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{% url 'website:accounts:logout' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p>Keluar</p>
+                </a>
+            </li>
+
+            {% if user.is_staff == True %}
+            <li class="nav-header">Admin Panel</li>
+            <li class="nav-item">
+                <a href="{% url 'backoffice:index' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                    <i class="nav-icon fas fa-user-cog"></i>
+                    <p>Backoffice</p>
+                </a>
+            </li>
+            {% endif %}
+
+        </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

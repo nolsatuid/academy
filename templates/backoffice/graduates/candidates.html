@@ -1,8 +1,8 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/base-adminlte.html' %}
 {% load form_tags %}
 
-{% block content-dashboard %}
-<div class="container">
+{% block content %}
+<div class="col-md-12">
     <div class="card">
         <div class="card-header">
             <h4 class="pull-left">{{ title }}</h4>
@@ -12,13 +12,13 @@
                 dan peserta yang terindikasi mengulang karena terdapat {{ repeat_indicator }} materi dengan status ulang
             </p>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-11">
                     <h4 class="pull-left">Calon Lulusan</h4>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-1 pull-right">
                     <form method="GET" >
-                        <button name="download-calon-lulusan" value="true" class="btn btn-secondary btn-pill pull-right">Unduh</button>
-                    </form>                    
+                        <button name="download-calon-lulusan" value="true" class="btn btn-secondary btn-pill">Unduh</button>
+                    </form>
                 </div>
             </div>
             <p>Total data <span class="badge badge-primary">{{ cantidate_graduates|length }}</span></p>
@@ -51,7 +51,7 @@
                                                 <i class="fa fa-graduation-cap "></i>
                                             </button>
                                         {% else %}
-                                            <button class="btn btn-default" data-toggle="tooltip" 
+                                            <button class="btn btn-default" data-toggle="tooltip"
                                                 data-placement="top" title="Belum menyelesaikan semua materi">
                                                 <i class="fa fa-graduation-cap "></i>
                                             </button>
@@ -140,7 +140,7 @@
                 <div class="col-md-6">
                     <form method="GET" >
                         <button name="download-calon-mengulang" value="true" class="btn btn-secondary btn-pill pull-right">Unduh</button>
-                    </form>                    
+                    </form>
                 </div>
             </div>
             <p>Total data <span class="badge badge-primary">{{ cantidate_repeats|length }}</span></p>

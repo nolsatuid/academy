@@ -1,9 +1,7 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/base-adminlte.html' %}
 
-{% block content-dashboard %}
+{% block content %}
 <div class="col-md-12 card p-5">
-    <h1 class="display-5 mb-4">{{ title }}</h1>
-
     <div class="row mb-5">
         <div class="col-xl-3 col-sm-6">
             <div class="card bg-success text-white h-100">
@@ -14,9 +12,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">                                                   
+                        <div class="col-md-4">
                             <div class="rotate">
-                                <i class="fa fa-users fa-2x"></i>                                
+                                <i class="fa fa-users fa-2x"></i>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -35,9 +33,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">                                                   
+                        <div class="col-md-4">
                             <div class="rotate">
-                                <i class="fa fa-user fa-2x"></i>                                
+                                <i class="fa fa-user fa-2x"></i>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -56,9 +54,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">                                                   
+                        <div class="col-md-4">
                             <div class="rotate">
-                                <i class="fa fa-user-check fa-2x"></i>                                
+                                <i class="fa fa-user-check fa-2x"></i>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -77,9 +75,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">                                                   
+                        <div class="col-md-4">
                             <div class="rotate">
-                                <i class="fa fa-user-graduate fa-2x"></i>                                
+                                <i class="fa fa-user-graduate fa-2x"></i>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -101,7 +99,7 @@
 {% block extra_js %}
 <!-- charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
-    
+
 <script>
     var ctx = document.getElementById("bar-lulus").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -109,15 +107,15 @@
         data: {
             labels: [
                     {% for i in angkatan %}
-                        "Batch {{ i.batch }}",    
+                        "Batch {{ i.batch }}",
                     {% endfor %}
             ],
-            datasets: [            
+            datasets: [
             {
                 label: 'Lulus',
                 data: [
                     {% for j in jumlah_lulus %}
-                        "{{ j.num_graduate }}",    
+                        "{{ j.num_graduate }}",
                     {% endfor %}
                 ],
                 backgroundColor: [
@@ -136,17 +134,17 @@
                 label: 'Tidak Lulus',
                 data: [
                     {% for i in jumlah_ulang %}
-                        "{{ i.num_repeat }}",    
+                        "{{ i.num_repeat }}",
                     {% endfor %}
                 ],
                 backgroundColor: [
                     {% for i in angkatan %}
-                        'rgba(255,99,132,0.5)',  
+                        'rgba(255,99,132,0.5)',
                     {% endfor %}
                 ],
                 borderColor: [
                     {% for i in angkatan %}
-                        'rgba(255,99,132,1)',  
+                        'rgba(255,99,132,1)',
                     {% endfor %}
                 ],
                 borderWidth: 1
@@ -168,7 +166,7 @@
             }
         }
     });
-    
+
     new Chart(
         document.getElementById("line-pendaftar"),
         {
@@ -178,7 +176,7 @@
                 "labels":
                 [
                     {% for i in jumlah_pendaftar %}
-                        "{{ i.month|date:'F Y' }}",    
+                        "{{ i.month|date:'F Y' }}",
                     {% endfor %}
                 ],
                 "datasets"  :
@@ -187,7 +185,7 @@
                     "label":"Pendaftar",
                     "data": [
                                 {% for i in jumlah_pendaftar %}
-                                    "{{ i.id__count }}",    
+                                    "{{ i.id__count }}",
                                 {% endfor %}
                             ],
                     "fill":false,
@@ -199,6 +197,6 @@
             "options":{}
         }
     );
-    
+
 </script>
 {% endblock %}

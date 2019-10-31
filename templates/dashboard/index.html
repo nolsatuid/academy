@@ -1,41 +1,51 @@
-{% extends 'dashboard/base.html' %}
+{% extends 'base-adminlte.html' %}
 {% load form_tags %}
 
-{% block content-dashboard %}
-<div class="col-md-12 card p-5">
-    {% if student.status|status_display == 'seleksi' %}
-        <h3>Halo {{ student.user.name }},</h3>
-        <p>
-            Anda telah terdaftar dan aktif sebagai talenta/profesional di NolSatu.
-            Kami sedang mempelajari profil keren anda dan sesegera mungkin kami akan kabari anda saat kursi kelas
-            periode terdekat tersedia untuk anda. Jika profil anda belum lengkap, silahkan lengkapi profil anda
-            sehingga membantu kami untuk dapat lebih mengenal anda.
-        </p>
-        <a href="{% url 'website:accounts:profile' %}" class="btn btn-primary">Lihat profil Anda</a>
-    {% elif student.status|status_display == 'peserta' %}
-        <h3>Halo {{ student.user.name }},</h3>
-        <p>
-            Selamat anda terpilih menjadi peserta pelatihan NolSatu.<br>
-            Berikut beberapa informasi untuk anda:<br>
-            <ul>
-                <li>Kelas akan dilaksanakan setiap hari Senin & Kamis atau Selasa & Jumat atau Rabu & Sabtu pukul 19.00 s.d. 22.00 WIB di <a href="https://kelas.nolsatu.id">https://kelas.nolsatu.id</a></li>
-                <li>Nomor ponsel anda akan dimasukkan ke grup Telegram bersama dengan peserta sekelas lain dan instruktur kelas.</a></li>
-                <li>Performa anda di kelas dan di lab akan dinilai oleh instruktur dan menjadi acuan keputusan anda lulus atau mengulang pada materi pelatihan yang diikuti.</a></li>
-                <li>Jika anda lulus pada seluruh materi pelatihan, anda akan direkomendasikan ke perusahaan yang membutuhkan SDM sesuai profil anda.</a></li>
-            </ul>
+{% block content %}
 
-            Selamat mengikuti pelatihan NolSatu.
-        </p>
-        <a href="{% url 'website:accounts:trainings:materials' %}" class="btn btn-primary">Lihat daftar pelatihan</a>
-    {% elif student.status|status_display == 'lulus' %}
-        <h3>Halo {{ student.user.name }},</h3>
-        <p>
-            Selamat, Anda telah berhasil menyelesaikan persyaratan yang diperlukan untuk mendapatkan Sertifikasi kelulusan NolSatu!.<br>
-            <embed class="pt-5 pb-5" src="{{ graduate.certificate_file.url }}" type="application/pdf" width="100%" height="600px" />
-            Harap luangkan beberapa menit untuk menyelesaikan survei tentang pengalaman Anda selama menjadi peserta NolSatu dibawah ini.
-        </p>
-        <a href="https://goo.gl/forms/uJBb2rGZTJmjMFYq1" target="blank_" class="btn btn-primary">Form Feedback</a>
-    {% endif %}
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header border-transparent">
+            <h3 class="card-title"></h3>
+        </div>
+
+        <div class="card-body">
+            {% if student.status|status_display == 'seleksi' %}
+                <h3>Halo {{ student.user.name }},</h3>
+                <p>
+                    Anda telah terdaftar dan aktif sebagai talenta/profesional di NolSatu.
+                    Kami sedang mempelajari profil keren anda dan sesegera mungkin kami akan kabari anda saat kursi kelas
+                    periode terdekat tersedia untuk anda. Jika profil anda belum lengkap, silahkan lengkapi profil anda
+                    sehingga membantu kami untuk dapat lebih mengenal anda.
+                </p>
+                <a href="{% url 'website:accounts:profile' %}" class="btn btn-danger">Lihat profil Anda</a>
+            {% elif student.status|status_display == 'peserta' %}
+                <h3>Halo {{ student.user.name }},</h3>
+                <p>
+                    Selamat anda terpilih menjadi peserta pelatihan NolSatu.<br>
+                    Berikut beberapa informasi untuk anda:<br>
+                    <ul>
+                        <li>Kelas akan dilaksanakan setiap hari Senin & Kamis atau Selasa & Jumat atau Rabu & Sabtu pukul 19.00 s.d. 22.00 WIB di <a href="https://kelas.nolsatu.id">https://kelas.nolsatu.id</a></li>
+                        <li>Nomor ponsel anda akan dimasukkan ke grup Telegram bersama dengan peserta sekelas lain dan instruktur kelas.</a></li>
+                        <li>Performa anda di kelas dan di lab akan dinilai oleh instruktur dan menjadi acuan keputusan anda lulus atau mengulang pada materi pelatihan yang diikuti.</a></li>
+                        <li>Jika anda lulus pada seluruh materi pelatihan, anda akan direkomendasikan ke perusahaan yang membutuhkan SDM sesuai profil anda.</a></li>
+                    </ul>
+
+                    Selamat mengikuti pelatihan NolSatu.
+                </p>
+                <a href="{% url 'website:accounts:trainings:materials' %}" class="btn btn-danger">Lihat daftar pelatihan</a>
+            {% elif student.status|status_display == 'lulus' %}
+                <h3>Halo {{ student.user.name }},</h3>
+                <p>
+                    Selamat, Anda telah berhasil menyelesaikan persyaratan yang diperlukan untuk mendapatkan Sertifikasi kelulusan NolSatu!.<br>
+                    <embed class="pt-5 pb-5" src="{{ graduate.certificate_file.url }}" type="application/pdf" width="100%" height="600px" />
+                    Harap luangkan beberapa menit untuk menyelesaikan survei tentang pengalaman Anda selama menjadi peserta NolSatu dibawah ini.
+                </p>
+                <a href="https://goo.gl/forms/uJBb2rGZTJmjMFYq1" target="blank_" class="btn btn-danger">Form Feedback</a>
+            {% endif %}
+        </div>
+
+    </div>
 
 </div>
 {% endblock %}

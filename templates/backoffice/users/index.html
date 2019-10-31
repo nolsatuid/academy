@@ -1,15 +1,11 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/base-adminlte.html' %}
 {% load form_tags %}
 
-{% block content-dashboard %}
-<div class="container">
+{% block content %}
+<div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="pull-left">{{ title }}</h4>
-        </div>
-        <div class="card-body">
             {% include 'forms/filter.html' %}
-
         </div>
         <div class="card-body">
             <p>

@@ -1,13 +1,20 @@
-{% extends 'dashboard/base.html' %}
+{% extends 'base-adminlte.html' %}
 {% load form_tags %}
+{% load static %}
 
-{% block content-dashboard %}
-<div class="card">
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'website/css/dropzone.css' %}">
+    <style>
+    .dropzone .dz-preview:hover .dz-image img{
+        filter:blur(0px)
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12 card">
         <div class="card-header">
-            <h4 class="pull-left">
-                Profil
-            </h4>
-            <div class="pull-right">
+            <div class="fa-pull-right">
                 <a class="btn btn-primary text-white" href="{% url 'website:accounts:edit_profile' %}">Ubah</a>
             </div>
         </div>
@@ -17,56 +24,76 @@
                     <div class=" col-md-12 col-lg-12 ">
                         <div class="tab-content">
                             <div id="pane-pribadi" class="tab-pane active in">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                            <form action="{% url 'website:accounts:edit_avatar' %}" id="my-awesome-dropzone" class="dropzone">
+                                            {% csrf_token %}
+                                            <center>
+                                                <img id="old-avatar" class="profile-user-img img-fluid img-rounded" src="{{ user.profile.get_avatar }}" alt="User profile picture">
+                                            </center>
+                                            <div class="dz-message" data-dz-message><span>Drop image here to change avatar</span></div>
+                                        </form>
+                                        <center>
+                                            <button id="cancel-avatar" class="mt-1 btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Batal">&nbsp;<i class="fas fa-times"></i>&nbsp;</button>
+                                            <button id="save-avatar" class="mt-1 btn btn-sm btn-success" data-toggle="tooltip" data-placement="bottom" title="Simpan"><i class="fas fa-check"></i></button>
+                                        </center>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="font-weight-bold">Nama Depan</td>
+                                                    <td>{{ user.first_name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold">Nama Belakang</td>
+                                                    <td>{{ user.last_name }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold">Username</td>
+                                                    <td>{{ user.username }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold">Email</td>
+                                                    <td>{{ user.email }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold">Nomor Ponsel</td>
+                                                    <td>
+                                                        {{ user.phone }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold">Status</td>
+                                                    <td>
+                                                        {{ student.status|status_display:"True" }}
+                                                    </td>
+                                                </tr>
+                                                {% if student.campus %}
+                                                <tr>
+                                                    <td class="font-weight-bold">Kampus</td>
+                                                    <td>
+                                                        {{ student.campus.name }}
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
+                                                <tr>
+                                                    {% if graduate %}
+                                                        <td colspan="2" class="font-weight-bold">Sertifikat<embed class="pb-5" src="{{ graduate.certificate_file.url }}" type="application/pdf" width="100%" height="600px" /></td>
+                                                    {% endif %}
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                                 <div class="table-responsive box box-info">
                                     <table class="table table-user-information">
                                         <colgroup>
                                             <col class="col-xs-1">
                                             <col class="col-xs-6">
                                         </colgroup>
-
-                                        <input data-val="true" data-val-number="The field ID must be a number." data-val-required="The ID field is required." id="ID" name="ID" value="64130" type="hidden">
-
-                                        <tbody><tr>
-                                            <td class="font-weight-bold">Nama Depan</td>
-                                            <td>{{ user.first_name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Nama Belakang</td>
-                                            <td>{{ user.last_name }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Username</td>
-                                            <td>{{ user.username }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Email</td>
-                                            <td>{{ user.email }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Nomor Ponsel</td>
-                                            <td>
-                                                {{ user.phone }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="font-weight-bold">Status</td>
-                                            <td>
-                                                {{ student.status|status_display:"True" }}
-                                            </td>
-                                        </tr>
-                                        {% if student.campus %}
-                                        <tr>
-                                            <td class="font-weight-bold">Kampus</td>
-                                            <td>
-                                                {{ student.campus.name }}
-                                            </td>
-                                        </tr>
-                                        {% endif %}
-                                        <tr>
-                                            {% if graduate %}
-                                                <td colspan="2" class="font-weight-bold">Sertifikat<embed class="pb-5" src="{{ graduate.certificate_file.url }}" type="application/pdf" width="100%" height="600px" /></td>
-                                            {% endif %}
-                                        </tr>
+                                        <input data-val="true" data-val-number="The field ID must be a number." data-val-required="The ID field is required." id="ID" name="ID" value="64130" type="hidden">                                        
+                                        <tbody>
                                         <tr class="thead-dark">
                                             <th colspan="2">Data Pendukung</th>
                                         </tr>
@@ -117,7 +144,7 @@
 
                                         <tr class="thead-dark">
                                             <th colspan="2">Data Pekerjaan
-                                                <div class="pull-right">
+                                                <div class="fa-pull-right">
                                                     <a class="btn btn-info text-white" href="{% url 'website:accounts:edit_survey' %}">Ubah</a>
                                                 </div>
                                             </th>
@@ -171,4 +198,52 @@
         <div class="card-footer"></div>
 
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'website/js/dropzone.js' %}"></script>
+<script>
+    $('#cancel-avatar').hide();
+    $('#save-avatar').hide();
+    Dropzone.options.myAwesomeDropzone = {
+        paramName: "avatar",
+        maxFilesize: 2, // MB
+        maxFiles: 1,
+        acceptedFiles: 'image/*',
+        autoProcessQueue: false,
+        maxfilesexceeded: function (file) {
+            this.removeAllFiles();
+            this.addFile(file);
+        },
+        init: function() {
+            this.on("addedfile", function(file) {                 
+                $('#old-avatar').hide();
+                $('.dz-details').hide();
+                $('.dz-progress').hide();
+                $('#cancel-avatar').show();
+                $('#save-avatar').show();
+                if(this.files.length > 1){
+                    this.removeAllFiles();
+                    this.addFile(file);
+                }
+            });
+
+            this.on("success", function(file) {                  
+                location.reload(); 
+            });
+        }
+    };
+
+    $('#cancel-avatar').click(function() {
+        $('#old-avatar').show();
+        $('#cancel-avatar').hide();
+        $('#save-avatar').hide();
+        Dropzone.forElement("#my-awesome-dropzone").removeAllFiles(true);    
+    });
+
+    $('#save-avatar').click(function() {
+        $('.dz-progress').show();
+        Dropzone.forElement("#my-awesome-dropzone").processQueue();
+    });
+</script>
 {% endblock %}

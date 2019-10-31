@@ -1,8 +1,9 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/base-adminlte.html' %}
 {% load form_tags tags_students %}
 
-{% block content-dashboard %}
-<div class="card">
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
         <div class="card-header">
             <h4 class="pull-left">
                 {{ title }}
@@ -44,6 +45,6 @@
             </div>
         </div>
         <div class="card-footer"></div>
-
+    </div>
 </div>
 {% endblock %}

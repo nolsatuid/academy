@@ -1,0 +1,137 @@
+{% extends 'base-adminlte.html' %}
+
+{% block content %}
+
+<div class="col-lg-12">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">{{title}}</h3>
+            <!--
+            <div class="card-tools">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="Search Mail">
+                <div class="input-group-append">
+                <div class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </div>
+                </div>
+            </div>
+            </div>
+             /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">        
+            <div class="mailbox-controls">
+            <!-- Check all button -->
+            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+            </button>
+            <div class="btn-group">
+                <button type="button" onclick="unReadMark()" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="Tandai belum dibaca"><i class="far fa-envelope"></i></button>
+                <button type="button" onclick="readMark()" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="Tandai sudah dibaca"><i class="far fa-envelope-open"></i></button>
+            </div>
+            <!-- 
+            <div class="float-right">
+                1-50/200
+                <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            -->
+            <!-- /.float-right -->
+            </div>
+            <div class="table-responsive mailbox-messages">
+            <table class="table table-hover">
+                <tbody>
+                {% if not inboxs %}
+                    <tr>
+                        <td>
+                        <h6><center>Tidak ada pesan</center></h6>
+                        </td>
+                    </tr>
+                {% endif %}
+                <form action="" method="post" id="actionMark">
+                {% csrf_token %}
+                <input type="hidden" name="action" id="action">
+                {% for inbox in inboxs %}
+                {% if inbox.is_read %}
+                <tr>
+                {% else %}
+                <tr style="background-color: rgba(0, 0, 0, 0.05)">
+                {% endif %}
+                <td>
+                    <div class="icheck-primary">
+                    <input type="checkbox" name="checkMark" value="{{inbox.id}}" id="check{{ inbox.id }}" class="checkMark">
+                    <label for="check{{ inbox.id }}"></label>
+                    </div>
+                </td>
+                <td class="mailbox-name"><a href="{% url 'website:accounts:inbox_detail' inbox.id %}">nolsatu.id</a></td>
+                <td class="mailbox-subject"><span class="{{inbox.is_read|yesno:'font-weight-normal, font-weight-bold'}}">{{ inbox.subject }}</span> {{ inbox.content|safe|truncatechars:90 }}
+                </td>
+                <td class="mailbox-attachment"></td>
+                <td class="mailbox-date">{{ inbox.sent_date|date:"d M y" }}</td>
+                </tr>
+                {% endfor %}
+                </form>
+                </tbody>
+            </table>
+            <!-- /.table -->
+            </div>
+            <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer p-0">
+            <div class="mailbox-controls">
+            <!-- Check all button -->
+            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+            </button>
+            <div class="btn-group">
+                <button type="button" onclick="unReadMark()" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="Tandai belum dibaca"><i class="far fa-envelope"></i></button>
+                <button type="button" onclick="readMark()" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="Tandai sudah dibaca"><i class="far fa-envelope-open"></i></button>
+            </div>
+            <!--
+            <div class="float-right">
+                1-50/200
+                <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            -->
+            <!-- /.float-right -->
+            </div>
+        </div>
+    </div>
+    <!-- /.card -->    
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(function () {
+        //Enable check and uncheck all functionality
+        $('.checkbox-toggle').click(function () {
+        var clicks = $(this).data('clicks')
+        if (clicks) {
+            //Uncheck all checkboxes
+            $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
+            $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
+        } else {
+            //Check all checkboxes
+            $('.mailbox-messages input[type=\'checkbox\']').prop('checked', true)
+            $('.checkbox-toggle .far.fa-square').removeClass('fa-square').addClass('fa-check-square')
+        }
+        $(this).data('clicks', !clicks)
+        })
+    })
+
+    function unReadMark(){
+        $('#action').val("unread");
+        $('#actionMark').attr('action', "{% url 'website:accounts:inbox' %}").submit();
+    }
+    function readMark(){
+        $('#action').val("read");
+        $('#actionMark').attr('action', "{% url 'website:accounts:inbox' %}").submit();
+    }
+</script>
+{% endblock%}

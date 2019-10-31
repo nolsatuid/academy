@@ -1,13 +1,13 @@
-{% extends 'backoffice/base.html' %}
+{% extends 'backoffice/base-adminlte.html' %}
 {% load form_tags %}
 
-{% block content-dashboard %}
-<div class="card">
+{% block content %}
+<div class="col-md-12 card">
         <div class="card-header">
-            <h4 class="pull-left">
+            <h4 class="fa-pull-left">
                 Profil
             </h4>
-            <div class="pull-right">
+            <div class="fa-pull-right">
                 <a class="btn btn-success text-white" href="{% url 'backoffice:graduates:show_certificate' graduate.id %}">Lihat Sertifikat</a>
                 <a class="btn btn-secondary text-white" href="{% url 'backoffice:graduates:status_training' graduate.id %}">Status Pelatihan</a>
             </div>
