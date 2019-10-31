@@ -66,7 +66,7 @@
                     </div>
                 </td>
                 <td class="mailbox-name"><a href="{% url 'website:accounts:inbox_detail' inbox.id %}">nolsatu.id</a></td>
-                <td class="mailbox-subject"><b>{{ inbox.subject }}</b> - {{ inbox.content|truncatechars:90 }}
+                <td class="mailbox-subject"><span class="{{inbox.is_read|yesno:'font-weight-normal, font-weight-bold'}}">{{ inbox.subject }}</span> {{ inbox.content|safe|truncatechars:90 }}
                 </td>
                 <td class="mailbox-attachment"></td>
                 <td class="mailbox-date">{{ inbox.sent_date|date:"d M y" }}</td>
