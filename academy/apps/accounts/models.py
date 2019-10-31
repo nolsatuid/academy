@@ -108,12 +108,15 @@ class User(AbstractUser):
             'training_materials': training_materials,
             'email_title': 'Status Pelatihan'
         }
-
+        subject = 'Status Pelatihan'
+        html_message = render_to_string('emails/training-status.html', context=data)
+        Inbox.objects.create(user=self, subject=subject, content=html_message)
+        
         send = mail.send(
             [self.email],
             settings.DEFAULT_FROM_EMAIL,
-            subject='Status Pelatihan',
-            html_message=render_to_string('emails/training-status.html', context=data)
+            subject=subject,
+            html_message=html_message
         )
         return send
 
@@ -236,8 +239,8 @@ class Inbox(models.Model):
                              on_delete=models.CASCADE)
     subject = models.CharField(max_length=50)
     content = models.TextField()
-    sent_date = models.DateTimeField()
-    is_read = models.BooleanField() 
+    sent_date = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False) 
 
     def __str__(self):
         return self.subject

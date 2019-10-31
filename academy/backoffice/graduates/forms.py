@@ -11,7 +11,7 @@ from django.urls import reverse
 
 from academy.backoffice.users.forms import BaseStatusTrainingFormSet
 from academy.apps.students.models import Student, Training, TrainingStatus, TrainingMaterial
-from academy.apps.accounts.models import User
+from academy.apps.accounts.models import User, Inbox
 from academy.core.fields import TrainingMaterialField
 from academy.apps.graduates.models import Graduate
 
@@ -62,12 +62,15 @@ class ParticipantsRepeatForm(forms.Form):
         for data in self.users_repeat:
             context['user'] = data['user']
             context['graduate'] = data['status']['graduate']
+            html_message=render_to_string('emails/participants_repeat.html', context=context)
+
+            Inbox.objects.create(user=data['user'], subject=title, content=html_message)
 
             mail.send(
                 data['user'].email,
                 settings.DEFAULT_FROM_EMAIL,
                 subject=title,
-                html_message=render_to_string('emails/participants_repeat.html', context=context)
+                html_message=html_message
             )
             student = data['user'].get_student()
             student.status = Student.STATUS.repeat
