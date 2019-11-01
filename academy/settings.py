@@ -190,9 +190,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
+SESSION_COOKIE_DOMAIN = '.nolsatu.id'
+
 try:
     from .local_settings import *
 except ImportError:
     pass
 
-SESSION_COOKIE_DOMAIN = '.nol.satu' # TODO: Change this to domain
