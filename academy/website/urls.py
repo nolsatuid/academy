@@ -6,6 +6,7 @@ app_name = 'website'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('profile/', views.profile, name='profile'),
     path('home/', views.home, name='home'),
     path('error404/', views.error_404, name='error404'),
     path('error500/', views.error_500, name='error500'),

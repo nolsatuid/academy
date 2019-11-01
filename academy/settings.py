@@ -77,6 +77,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SESSION_ENGINE = 'redis_sessions.session'
+
 ROOT_URLCONF = 'academy.urls'
 
 TEMPLATES = [
@@ -192,3 +194,5 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+SESSION_COOKIE_DOMAIN = '.nol.satu' # TODO: Change this to domain

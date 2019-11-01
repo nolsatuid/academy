@@ -1,6 +1,9 @@
+import json
+
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from datetime import datetime, timedelta
 
@@ -114,3 +117,14 @@ def error_404(request):
 
 def error_500(request):
     return render(request, '500.html', {})
+
+
+@login_required
+def profile(request):
+    return HttpResponse(json.dumps({
+        "id": request.user.id,
+        "username": request.user.username,
+        "email": request.user.email,
+        "first_name": request.user.first_name,
+        "last_name": request.user.last_name
+    }), content_type="application/json")
