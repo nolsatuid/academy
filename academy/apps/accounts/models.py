@@ -111,7 +111,7 @@ class User(AbstractUser):
         subject = 'Status Pelatihan'
         html_message = render_to_string('emails/training-status.html', context=data)
         Inbox.objects.create(user=self, subject=subject, content=html_message)
-        
+
         send = mail.send(
             [self.email],
             settings.DEFAULT_FROM_EMAIL,
@@ -152,7 +152,7 @@ class User(AbstractUser):
                 status=training.status,
                 user=self,
                 student=self.get_student()
-            ) for training in self.training_status.exclude(status=TrainingStatus.STATUS.not_yet)\
+            ) for training in self.training_status.exclude(Q(status=TrainingStatus.STATUS.not_yet) | Q(training_material=None))\
                     .select_related('training_material')
         ])
 
@@ -240,7 +240,7 @@ class Inbox(models.Model):
     subject = models.CharField(max_length=50)
     content = models.TextField()
     sent_date = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False) 
+    is_read = models.BooleanField(default=False)
 
     def __str__(self):
         return self.subject

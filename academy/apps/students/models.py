@@ -107,7 +107,7 @@ class TrainingMaterial(models.Model):
 class TrainingStatus(models.Model):
     training_material = models.ForeignKey(
         'students.TrainingMaterial', related_name='training_status',
-        null=True, on_delete=models.SET_NULL
+        null=True, on_delete=models.CASCADE
     )
     STATUS = Choices(
         (1, 'not_yet', _('Not Yet')),
