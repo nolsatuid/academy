@@ -77,6 +77,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SESSION_ENGINE = 'redis_sessions.session'
+
 ROOT_URLCONF = 'academy.urls'
 
 TEMPLATES = [
@@ -188,7 +190,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
+SESSION_COOKIE_DOMAIN = '.nolsatu.id'
+
 try:
     from .local_settings import *
 except ImportError:
     pass
+

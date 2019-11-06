@@ -29,3 +29,5 @@ sentry_sdk.init(
     dsn="",
     integrations=[]
 )
+
+SESSION_COOKIE_DOMAIN = 'localhost'
