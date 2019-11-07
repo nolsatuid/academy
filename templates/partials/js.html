@@ -1,8 +1,10 @@
-{% load static %}
+{% load static compress %}
 
+{% compress js %}
 <!-- jQuery -->
 <script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
 <!-- Bootstrap 4 -->
 <script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'adminlte/dist/js/adminlte.min.js' %}"></script>
+{% endcompress %}

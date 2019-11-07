@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'qr_code',
     'rest_framework',
+    'compressor',
 
 ]
 
@@ -190,8 +191,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
+# django redis coockies
 SESSION_COOKIE_DOMAIN = '.nolsatu.id'
 
+# django cache using redis
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -202,6 +205,15 @@ CACHES = {
         }
     }
 }
+
+# django compressor
+COMPRESS_ENABLED = True
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
 
 try:
     from .local_settings import *
