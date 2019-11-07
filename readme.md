@@ -4,6 +4,7 @@
   - Python 3.6.x already installed on system or using virtualenv
   - Postgresql 9.6.x
   - wkhtmltopdf 0.12.3
+  - Redis Server 3.0 or latter
 
 ## Development Setup
 Install dependencies
@@ -18,7 +19,7 @@ Create your own settings and modify as your preference
 $ cp academy/local_settings.py.sample academy/local_settings.py
 ```
 
-Configure database connection in `local_settings.py` with the database, database user, and database password you configure in postgreSQL.
+Configure database connection in `local_settings.py` with the database, database user, redis cookies domain and database password you configure in postgreSQL.
 
 Migrate database
 
