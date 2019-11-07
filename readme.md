@@ -33,6 +33,12 @@ Collect Static
 $ python manage.py collectstatic
 ```
 
+Compress Static File
+
+```
+$ python manage.py compress --force
+```
+
 Create superuser
 
 ```
