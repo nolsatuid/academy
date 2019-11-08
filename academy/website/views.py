@@ -126,5 +126,8 @@ def profile(request):
         "username": request.user.username,
         "email": request.user.email,
         "first_name": request.user.first_name,
-        "last_name": request.user.last_name
+        "last_name": request.user.last_name,
+        "is_superuser": request.user.is_superuser,
+        "is_active": request.user.is_active,
+        "is_staff": request.user.is_staff
     }), content_type="application/json")
