@@ -44,6 +44,18 @@
                             </strong>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="pull-right">
+                            Rating :
+                        </td>
+                        <td>
+                            <strong style="font-weight: bold;">
+                                &nbsp;&nbsp;&nbsp;
+                                {{ result.get_rating_stars|safe }}
+                                {{ rating_accumulation }} - dari {{ rating_respondents }} responden
+                            </strong>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>

@@ -58,6 +58,10 @@ def certificate_verify(request):
         'result': result,
     }
 
+    if result:
+        context['rating_accumulation'] = result.rating_accumulation()
+        context['rating_respondents'] = result.ratings.count()
+
     if request.is_ajax():
         html = loader.render_to_string('website/result-verify.html', context)
         return JsonResponse({'html': html})

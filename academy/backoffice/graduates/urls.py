@@ -19,4 +19,6 @@ urlpatterns = [
     path('delete-training-status/<int:id>/<int:graduate_id>', views.delete_training_status,
          name='delete_training_status'),
     path('is-channeled', views.change_is_channeled, name='change_is_channeled'),
+    path('add-rating/<int:id>/', views.add_rating,
+         name='add_rating'),
 ]

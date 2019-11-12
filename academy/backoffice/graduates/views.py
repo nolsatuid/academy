@@ -20,7 +20,7 @@ from academy.apps.accounts.models import User
 from academy.backoffice.users.forms import ChangeStatusTraining
 from .forms import (
     ParticipantsRepeatForm, AddTrainingStatus, GraduateTrainingStatusFormSet, BaseFilterForm,
-    GraduateHasChanneledForm
+    GraduateHasChanneledForm, RatingForm
 )
 
 
@@ -295,3 +295,22 @@ def change_is_channeled(request):
         'message': 'Berhasil Ubah Status'
     }
     return JsonResponse(data)
+
+
+@staff_member_required
+def add_rating(request, id):
+    graduate = get_object_or_404(Graduate, id=id)
+    form = RatingForm(request.POST or None)
+
+    if form.is_valid():
+        rating = form.save(commit=False)
+        rating.graduate = graduate
+        rating.save()
+        messages.success(request, "Berhasil tambah rating")
+        return redirect('backoffice:graduates:index')
+
+    context = {
+        'title': 'Tambah Rating',
+        'form': form,
+    }
+    return render(request, 'backoffice/form.html', context)
