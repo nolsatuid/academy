@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 import pdfkit
+from django.db.models import Avg
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -95,6 +96,9 @@ class Graduate(models.Model):
     @property
     def valid_until(self):
         return self.created + timedelta(days=1095)
+
+    def rating_accumulation(self):
+        return self.ratings.aggregate(avg=Avg('rating'))['avg']
 
 
 class Rating(models.Model):
