@@ -40,7 +40,8 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <a href="{% url 'backoffice:graduates:details' graduate.id %}">Detail</a>
+                                    <a class="btn btn-info" href="{% url 'backoffice:graduates:details' graduate.id %}"><i class="fa fa-eye"></i></a>
+                                    <a class="btn btn-primary" href="{% url 'backoffice:graduates:add_rating' graduate.id %}"><i class="fa fa-star"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}

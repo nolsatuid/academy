@@ -13,7 +13,7 @@ from academy.backoffice.users.forms import BaseStatusTrainingFormSet
 from academy.apps.students.models import Student, Training, TrainingStatus, TrainingMaterial
 from academy.apps.accounts.models import User, Inbox
 from academy.core.fields import TrainingMaterialField
-from academy.apps.graduates.models import Graduate
+from academy.apps.graduates.models import Graduate, Rating
 
 from post_office import mail
 from model_utils import Choices
@@ -210,3 +210,13 @@ class GraduateHasChanneledForm(forms.Form):
         graduate.channeled_at = cleaned_data['channeled_at']
         graduate.is_channeled = True
         graduate.save()
+
+
+class RatingForm(forms.ModelForm):
+
+    class Meta:
+        model = Rating
+        exclude = ('graduate',)
+        help_texts = {
+            'respondent_name': 'Nama reponden bisa perusahaan, personal, atau jabatan.'
+        }

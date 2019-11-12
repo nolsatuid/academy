@@ -100,6 +100,23 @@ class Graduate(models.Model):
     def rating_accumulation(self):
         return self.ratings.aggregate(avg=Avg('rating'))['avg']
 
+    def get_rating_stars(self, rating_accumulation=None):
+        html_stars = []
+
+        if rating_accumulation:
+            count = rating_accumulation
+        else:
+            count = self.rating_accumulation()
+
+        for i in range(0, 5):
+            i += 1
+            if i <= int(count):
+                html_stars.append('<i class="fa fa-star"></i>')
+            else:
+                html_stars.append('<i class="far fa-star"></i>') 
+
+        return "".join(html_stars)
+
 
 class Rating(models.Model):
     respondent_name = models.CharField(max_length=150, blank=True, null=True)
