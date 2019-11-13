@@ -108,6 +108,9 @@ class Graduate(models.Model):
         else:
             count = self.rating_accumulation()
 
+        if not count:
+            return "-"
+
         for i in range(0, 5):
             i += 1
             if i <= int(count):

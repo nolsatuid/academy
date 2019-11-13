@@ -51,8 +51,12 @@
                         <td>
                             <strong style="font-weight: bold;">
                                 &nbsp;&nbsp;&nbsp;
-                                {{ result.get_rating_stars|safe }}
-                                {{ rating_accumulation }} - dari {{ rating_respondents }} responden
+                                {% if rating_accumulation %}
+                                    {{ result.get_rating_stars|safe }}
+                                    {{ rating_accumulation }} - dari {{ rating_respondents }} responden
+                                {% else %}
+                                    -
+                                {% endif %}
                             </strong>
                         </td>
                     </tr>
