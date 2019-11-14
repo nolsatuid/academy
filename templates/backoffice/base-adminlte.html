@@ -38,6 +38,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- /.content-header -->
         <div class="content">
             <div class="container-fluid">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible" {% endif %} >
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            {{ message }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+
                 <div class="row">
                     {% block content %}
                     {% endblock  %}

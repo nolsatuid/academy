@@ -35,14 +35,14 @@
             </li>
 
             <li class="nav-item">
-                <a href="{% url 'backoffice:users:index' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                <a href="{% url 'backoffice:users:index' %}" class="nav-link {% if menu_active == 'user' %}active{% endif %}">
                     <i class="nav-icon fas fa-users"></i>
                     <p>Data Pengguna</p>
                 </a>
             </li>
 
             <li class="nav-item {% if menu_active == '' %}has-treeview menu-open{% endif %}">
-                <a href="#" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                <a href="#" class="nav-link {% if menu_active == 'participants' %}active{% endif %}">
                     <i class="nav-icon fas fa-id-card"></i>
                     <p>Peserta<i class="right fas fa-angle-left"></i></p>
                 </a>
@@ -63,21 +63,21 @@
             </li>
 
             <li class="nav-item">
-                <a href="{% url 'backoffice:users:batch_training' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                <a href="{% url 'backoffice:users:batch_training' %}" class="nav-link {% if menu_active == 'batch' %}active{% endif %}">
                     <i class="nav-icon fas fa-certificate"></i>
                     <p>Angkatan</p>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{% url 'backoffice:training_materials:index' %}" class="nav-link {% if menu_active == 'change_password' %}active{% endif %}">
+                <a href="{% url 'backoffice:training_materials:index' %}" class="nav-link {% if menu_active == 'materials' %}active{% endif %}">
                     <i class="nav-icon fas fa-th-list"></i>
                     <p>Materi Pelatihan</p>
                 </a>
             </li>
 
-            <li class="nav-item {% if menu_active == '' %}has-treeview menu-open{% endif %}">
-                <a href="#" class="nav-link {% if menu_active == '' %}active{% endif %}">
+            <li class="nav-item {% if menu_active == 'graduates' %}has-treeview menu-open{% endif %}">
+                <a href="#" class="nav-link {% if menu_active == 'graduates' %}active{% endif %}">
                     <i class="nav-icon fas fa-user-graduate"></i>
                     <p>Lulusan<i class="right fas fa-angle-left"></i></p>
                 </a>
@@ -104,21 +104,21 @@
             </li>
 
             <li class="nav-item">
-                <a href="{% url 'backoffice:instructors:index' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                <a href="{% url 'backoffice:instructors:index' %}" class="nav-link {% if menu_active == 'instrukturs' %}active{% endif %}">
                     <i class="nav-icon fas fa-chalkboard-teacher"></i>
                     <p>Instruktur</p>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{% url 'backoffice:surveys:index' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                <a href="{% url 'backoffice:surveys:index' %}" class="nav-link {% if menu_active == 'surveys' %}active{% endif %}">
                     <i class="nav-icon fas fa-poll-h"></i>
                     <p>Survey</p>
                 </a>
             </li>
 
-            <li class="nav-item {% if menu_active == '' %}has-treeview menu-open{% endif %}">
-                <a href="#" class="nav-link {% if menu_active == '' %}active{% endif %}">
+            <li class="nav-item {% if menu_active == 'campus' %}has-treeview menu-open{% endif %}">
+                <a href="#" class="nav-link {% if menu_active == 'campus' %}active{% endif %}">
                     <i class="nav-icon fas fa-university"></i>
                     <p>Kampus<i class="right fas fa-angle-left"></i></p>
                 </a>
@@ -145,14 +145,14 @@
             </li>
 
             <li class="nav-item">
-                <a href="{% url 'backoffice:partners:index' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                <a href="{% url 'backoffice:partners:index' %}" class="nav-link {% if menu_active == 'partner' %}active{% endif %}">
                     <i class="nav-icon fas fa-handshake"></i>
                     <p>Mitra</p>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{% url 'backoffice:sponsors:index' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                <a href="{% url 'backoffice:sponsors:index' %}" class="nav-link {% if menu_active == 'sponsors' %}active{% endif %}">
                     <i class="nav-icon fas fa-user-friends"></i>
                     <p>Sponsor</p>
                 </a>

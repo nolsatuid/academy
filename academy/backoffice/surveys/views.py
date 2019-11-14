@@ -28,7 +28,7 @@ def index(request):
 
     context = {
         'title': 'Survey',
-        'page_active': 'surveys',
+        'menu_active': 'surveys',
         'surveys': survey,
         'form': form,
         'survey_count': survey_count,

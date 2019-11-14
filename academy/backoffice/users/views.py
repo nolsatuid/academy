@@ -34,7 +34,7 @@ def index(request):
 
     context = {
         'title': 'Pengguna',
-        'page_active': 'user',
+        'menu_active': 'user',
         'users': users,
         'form': form,
         'user_count': user_count,
@@ -55,7 +55,7 @@ def details(request, id):
 
     context = {
         'user': user,
-        'page_active': 'user',
+        'menu_active': 'user',
         'title': 'User Detail',
         'survey': survey,
         'student': user.get_student(),
@@ -89,7 +89,7 @@ def participants(request):
 
     context = {
         'title': 'Peserta',
-        'page_active': 'participants',
+        'menu_active': 'participants',
         'users': users,
         'form': form,
         'user_count': user_count,
@@ -165,6 +165,7 @@ def batch_training(request):
 
     context = {
         'form': form,
+        'menu_active': 'batch',
         'title': 'Tambah Angkatan',
         'trainings': trainings
     }
@@ -186,6 +187,7 @@ def edit_batch_training(request, id):
     context = {
         'form': form,
         'title': 'Edit Angkatan',
+        'menu_active': 'batch',
         'trainings': trainings
     }
 
@@ -205,6 +207,7 @@ def edit_student_batch(request, student_id):
     context = {
         'form': form,
         'title': 'Ubah Data Angkatan',
+        'menu_active': 'batch',
         'title_extra': student.user.name,
     }
 
