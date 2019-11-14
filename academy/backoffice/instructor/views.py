@@ -13,6 +13,7 @@ def index(request):
     instructors = Instructor.objects.order_by('order')
     context = {
         'title': 'Instruktur',
+        'menu_active': 'instrukturs',
         'instructors': instructors
     }
     return render(request, 'backoffice/instructor/index.html', context)
@@ -29,6 +30,7 @@ def add(request):
 
     context = {
         'title': 'Tambah Instruktur',
+        'menu_active': 'instrukturs',
         'form': form
     }
     return render(request, 'backoffice/instructor/add.html', context)
@@ -77,6 +79,7 @@ def edit(request, id):
 
     context = {
         'title': 'Edit Instruktur',
+        'menu_active': 'instrukturs',
         'form': form
     }
     return render(request, 'backoffice/form.html', context)

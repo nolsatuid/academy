@@ -18,7 +18,7 @@ def index(request):
 
     context = {
         'title': 'Kampus',
-        'page_active': 'campus',
+        'menu_active': 'campus',
         'campuses': campus_list
     }
     return render(request, 'backoffice/campuses/index.html', context)
@@ -35,6 +35,7 @@ def add(request):
 
     context = {
         'title': 'Tambah Kampus',
+        'menu_active': 'campus',
         'form': form
     }
     return render(request, 'backoffice/form.html', context)
@@ -52,6 +53,7 @@ def edit(request, id):
 
     context = {
         'title': 'Edit Kampus',
+        'menu_active': 'campus',
         'form': form
     }
     return render(request, 'backoffice/form.html', context)
@@ -71,6 +73,7 @@ def details(request, id):
 
     context = {
         'title': 'Edit Kampus',
+        'menu_active': 'campus',
         'campus': campus
     }
     return render(request, 'backoffice/campuses/details.html', context)
@@ -106,7 +109,7 @@ class ParticipantsView(View):
 
         context = {
             'title': self.title,
-            'page_active': self.page_active,
+            'menu_active': 'campus',
             'users': users,
             'form': form,
             'user_count': user_count,

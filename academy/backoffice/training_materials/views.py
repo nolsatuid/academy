@@ -13,6 +13,7 @@ def index(request):
     training_materials = TrainingMaterial.objects.all()
     context = {
         'title': 'Materi Pelatihan',
+        'menu_active': 'materials',
         'training_materials': training_materials
     }
     return render(request, 'backoffice/training_materials/index.html', context)
@@ -29,6 +30,7 @@ def add(request):
 
     context = {
         'title': 'Tambah Materi Pelatihan',
+        'menu_active': 'materials',
         'form': form
     }
     return render(request, 'backoffice/form.html', context)
@@ -46,6 +48,7 @@ def edit(request, id):
 
     context = {
         'title': 'Edit Materi Pelatihan',
+        'menu_active': 'materials',
         'form': form
     }
     return render(request, 'backoffice/form.html', context)
@@ -93,6 +96,7 @@ def bulk_training_status(request):
 
     context = {
         'title': 'Status Pelatihan',
+        'menu_active': 'materials',
         'form': form,
         'formset': formset,
         'table_heading': table_heading
@@ -130,6 +134,7 @@ def bulk_material_status(request):
 
     context = {
         'title': 'Status Pelatihan',
+        'menu_active': 'participants',
         'form': form,
         'students': students,
         'table_heading': table_heading,

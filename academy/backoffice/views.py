@@ -23,6 +23,7 @@ def index(request):
 
     context = {
         'title': 'Dasbor',
+        'menu_active': 'dashboard',
         'data': data_dashboard,
         'angkatan': angkatan,
         'jumlah_pendaftar': users_month,

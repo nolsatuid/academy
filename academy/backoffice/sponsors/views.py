@@ -12,7 +12,7 @@ def index(request):
 
     context = {
         'title': 'Sponsor',
-        'page_active': 'sponsors',
+        'menu_active': 'sponsors',
         'sponsors': sponsors
     }
     return render(request, 'backoffice/sponsors/index.html', context)
@@ -29,6 +29,7 @@ def add(request):
 
     context = {
         'title': 'Tambah Sponsor',
+        'menu_active': 'sponsors',
         'form': form
     }
     return render(request, 'backoffice/form.html', context)
@@ -46,6 +47,7 @@ def edit(request, id):
 
     context = {
         'title': 'Edit Sponsor',
+        'menu_active': 'sponsors',
         'form': form
     }
     return render(request, 'backoffice/form.html', context)
