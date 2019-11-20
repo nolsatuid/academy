@@ -81,6 +81,10 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+
+    if 'next' in request.GET:
+        return redirect(request.GET.get('next'))
+
     return redirect("website:index")
 
 
