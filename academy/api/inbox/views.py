@@ -13,8 +13,13 @@ class GetInboxList(UserAuthAPIView):
         return Response(InboxSerializer(inbox, many=True).data)
 
 
-class BulkReadUnread(UserAuthAPIView):
+class InboxDetail(UserAuthAPIView):
+    def get(self, request, id):
+        inbox = get_object_or_404(Inbox, user=request.user, id=id)
+        return Response(InboxSerializer(inbox).data)
 
+
+class BulkReadUnread(UserAuthAPIView):
     def post(self, request):
         bulk_read = BulkReadUnreadSerializer(data=request.data)
 
@@ -33,17 +38,3 @@ class BulkReadUnread(UserAuthAPIView):
                 return Response(InboxSerializer(inbox, many=True).data)
         else:
             return ErrorResponse(serializer=bulk_read)
-
-
-class InboxDetail(UserAuthAPIView):
-    def get(self, request, id):
-        inbox = get_object_or_404(Inbox, user=request.user, id=id)
-        return Response(InboxSerializer(inbox).data)
-
-    def post(self, request, id):
-        is_read = request.data.get('is_read')
-        inbox = Inbox.objects.filter(user=request.user, id=id)
-        if is_read:
-            inbox.is_read = is_read
-            return Response(InboxSerializer(inbox).data)
-        return Response(InboxSerializer(inbox).data)
