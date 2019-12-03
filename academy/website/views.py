@@ -7,6 +7,7 @@ from django.http import JsonResponse, HttpResponse
 
 from datetime import datetime, timedelta
 
+from academy.api.serializers import user_profile
 from academy.apps.accounts.models import Instructor
 from academy.apps.accounts.models import User
 from academy.apps.offices.models import LogoPartner, LogoSponsor
@@ -125,13 +126,7 @@ def error_500(request):
 
 @login_required
 def profile(request):
-    return HttpResponse(json.dumps({
-        "id": request.user.id,
-        "username": request.user.username,
-        "email": request.user.email,
-        "first_name": request.user.first_name,
-        "last_name": request.user.last_name,
-        "is_superuser": request.user.is_superuser,
-        "is_active": request.user.is_active,
-        "is_staff": request.user.is_staff
-    }), content_type="application/json")
+    return HttpResponse(
+        json.dumps(user_profile(request.user)),
+        content_type="application/json"
+    )

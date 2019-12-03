@@ -4,11 +4,16 @@ from academy.apps.students.templatetags.tags_students import get_status, status_
 
 def user_profile(user: User) -> dict:
     user_data = {
+        'id': user.id,
         'name': user.name,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "is_superuser": user.is_superuser,
+        "is_active": user.is_active,
+        "is_staff": user.is_staff,
         'username': user.username,
         'email': user.email,
         'phone': user.phone,
-        'is_active': user.is_active,
         'status': 1,
         'avatar': "",
         'linkedin': "",
