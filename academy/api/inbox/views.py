@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
 from academy.api.authentications import UserAuthAPIView
-from academy.api.inbox.serializer import InboxSerializer, BulkReadUnreadSerializer
+from academy.api.inbox.serializer import InboxSerializer, BulkReadUnreadSerializer, InboxListSerializer
 from academy.api.response import ErrorResponse
 from academy.apps.accounts.models import Inbox
 
@@ -10,12 +10,14 @@ from academy.apps.accounts.models import Inbox
 class GetInboxList(UserAuthAPIView):
     def get(self, request):
         inbox = Inbox.objects.filter(user=request.user)
-        return Response(InboxSerializer(inbox, many=True).data)
+        return Response(InboxListSerializer(inbox, many=True).data)
 
 
 class InboxDetail(UserAuthAPIView):
     def get(self, request, id):
         inbox = get_object_or_404(Inbox, user=request.user, id=id)
+        inbox.is_read = True
+        inbox.save()
         return Response(InboxSerializer(inbox).data)
 
 
