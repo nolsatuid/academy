@@ -606,7 +606,92 @@ method: `GET`
             "source_identifier": "linux_today",
             "post_title": "Manjaro 18.1: Goes Arch One Better",
             "post_link": "http://feedproxy.google.com/~r/LinuxToday/~3/pTuZ32M08zs/manjaro-18.1-goes-arch-one-better.html"
-        },
+        }
     ]
 }
+```
+## Inbox
+
+### All Inbox
+url: `/api/inbox`
+
+header:
+```
+Conten-Type application/json
+```
+
+method: `GET`
+
+```json
+[
+    {
+        "id": 12,
+        "subject": "Tes",
+        "sent_date": "2019-12-03T05:04:57.858493Z",
+        "is_read": false
+    }
+]
+```
+
+### Detail Inbox
+url: `/api/inbox/<int:id>`
+
+header:
+```
+Conten-Type application/json
+```
+
+method: `GET`
+
+```json
+{
+    "id": 12,
+    "subject": "Tes",
+    "content": "tesssss",
+    "sent_date": "2019-12-03T05:04:57.858493Z",
+    "is_read": true
+}
+```
+
+### Bulk Read Unread
+url: `/api/inbox/read`
+
+header:
+```
+Conten-Type application/json
+```
+
+method: `GET`
+
+request: 
+
+```json
+{
+	"filter": [10, 12],
+	"read_state": false
+}
+```
+
+```json
+{
+	"filter": [-1],
+	"read_state": true
+}
+```
+
+param:
+- filter = list of inbox id or `[-1]` for all inbox for authenticated user
+- read_state = inbox `is_read` state
+
+response:
+```json
+[
+    {
+        "id": 12,
+        "subject": "Tes",
+        "content": "tesssss",
+        "sent_date": "2019-12-03T05:04:57.858493Z",
+        "is_read": false
+    }
+]
 ```
