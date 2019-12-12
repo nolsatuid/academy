@@ -57,6 +57,7 @@ def index(request):
 
 
 def login_view(request):
+    navbar = request.GET.get('navbar')
     if request.user.is_authenticated:
         return redirect('website:accounts:index')
 
@@ -74,7 +75,8 @@ def login_view(request):
     context = {
         'form': form,
         'title': 'Masuk',
-        'page': 'login'
+        'page': 'login',
+        'navbar': navbar
     }
     return render(request, 'accounts/form.html', context)
 
