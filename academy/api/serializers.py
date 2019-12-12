@@ -2,6 +2,7 @@ from django.conf import settings
 from academy.apps.accounts.models import User
 from academy.apps.students.templatetags.tags_students import get_status, status_to_display
 
+
 def user_profile(user: User) -> dict:
     user_data = {
         'id': user.id,
@@ -50,9 +51,8 @@ def user_profile(user: User) -> dict:
         user_data['telegram_id'] = profile.telegram_id
         user_data['curriculum_vitae'] = cv
 
-    if hasattr(user, 'students'):
-        student = user.get_student()
-        user_data['status'] = student.status
+    student = user.get_student()
+    user_data['status'] = student.status if student else 1
 
     return user_data
 
