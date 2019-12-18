@@ -241,6 +241,7 @@ class Inbox(models.Model):
     content = models.TextField()
     sent_date = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+    is_html_content = models.BooleanField(default=True)
 
     def __str__(self):
         return self.subject
