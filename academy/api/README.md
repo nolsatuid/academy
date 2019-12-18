@@ -628,7 +628,8 @@ method: `GET`
         "id": 12,
         "subject": "Tes",
         "sent_date": "2019-12-03T05:04:57.858493Z",
-        "is_read": false
+        "is_read": false,
+        "is_html_content": true
     }
 ]
 ```
@@ -649,7 +650,8 @@ method: `GET`
     "subject": "Tes",
     "content": "tesssss",
     "sent_date": "2019-12-03T05:04:57.858493Z",
-    "is_read": true
+    "is_read": true,
+    "is_html_content": true
 }
 ```
 
