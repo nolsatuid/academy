@@ -41,11 +41,25 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a href="{% url 'website:accounts:trainings:materials' %}" class="nav-link {% if menu_active == 'materi' %}active{% endif %}">
+            <li class="nav-item {% if menu_active == 'materi' %} has-treeview menu-open {% endif %}">
+                <a href="#" class="nav-link {% if menu_active == 'materi' %} active {% endif %}">
                     <i class="nav-icon fas fa-th-list"></i>
-                    <p>Daftar Pelatihan</p>
+                    <p>Daftar Pelatihan<i class="right fas fa-angle-left"></i></p>
                 </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                        <a href="{% url 'website:accounts:trainings:materials' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Ops</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ nolsatu_course_home_page }}/courses/" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Dev</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="nav-item">

@@ -39,6 +39,7 @@ ALLOWED_HOSTS = ['*']
 # do not mark / at the end of the host
 HOST = 'http://academy.btech.id'
 MEDIA_HOST = HOST
+NOLSATU_COURSE_HOST = 'https://course.nolsatu.id'
 
 # Application definition
 
@@ -93,6 +94,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'academy.core.context_processors.nolsatu_context',
             ],
         },
     },
@@ -219,4 +221,3 @@ try:
     from .local_settings import *
 except ImportError:
     pass
-
