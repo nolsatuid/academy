@@ -22,6 +22,7 @@ EMAIL_PORT = 587
 DEFAULT_RECIPIANT_EMAIL = 'no-reply@yourdomain.id'
 
 HOST = 'http://localhost:8000'
+NOLSATU_COURSE_HOST = 'https://course.nolsatu.id'
 
 INDICATOR_GRADUATED = 1
 
