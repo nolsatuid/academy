@@ -60,13 +60,16 @@ INSTALLED_APPS = [
     'academy.apps.surveys',
     'academy.apps.offices',
     'academy.apps.campuses',
+    'academy.apps.broadcasts',
 
     'post_office',
     'django_extensions',
     'qr_code',
     'rest_framework',
     'compressor',
-
+    'ckeditor',
+    'ckeditor_uploader',
+    'multiselectfield',
 ]
 
 MIDDLEWARE = [
@@ -217,6 +220,18 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
+# ckeditor
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'width': '100%',
+    },
+    'basic_ckeditor': {
+        'toolbar': 'Basic',
+        'width': '100%',
+    },
+}
 try:
     from .local_settings import *
 except ImportError:
