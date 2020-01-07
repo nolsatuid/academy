@@ -24,20 +24,19 @@
 
                             <form action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
-
-                                {{ form.non_field_errors }}
+                                
+                                <span class="text-danger">{{ form.non_field_errors }}</span>
                                 {% for field in form %}
                                     <div class="form-group col-md-12">
-                                        <label>{{ field.label }}</label><br>
-                                        {% if field.name != 'open_registration' and field.name != 'is_visible' %}
+                                        {% if field.name != 'open_registration' and field.name != 'is_visible'  and field.name != 'via' %}
+                                            <label>{{ field.label }}</label><br>
                                             {{ field|addclass:"form-control" }}
                                         {% else %}
+                                            <label>{{ field.label }}</label><br>
                                             {{ field }}
                                         {% endif %}
-                                        <span class="help_text">
-                                            {{ field.help_text|safe }}
-                                        </span>
-                                        {{ field.errors }}
+                                        <span class="help_text">{{ field.help_text|safe }}</span>
+                                        <span class="text-danger">{{ field.errors }}</span>
                                     </div>
                                 {% endfor %}
 
@@ -64,6 +63,8 @@
 
 {% block extra_js %}
     {{ block.super }}
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
     <script src="{% static 'website/js/select2.min.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
