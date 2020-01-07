@@ -41,3 +41,21 @@ def delete(request, id):
     broadcast.delete()
     messages.success(request, f"Berhasil menghapus {title}")
     return redirect('backoffice:broadcasts:index')
+
+
+@staff_member_required
+def edit(request, id):
+    broadcast = get_object_or_404(Broadcast, id=id)
+    form = BroadcastForm(data=request.POST or None, instance=broadcast)
+
+    if form.is_valid():
+        broadcast = form.save()
+        messages.success(request, f"Berhasil ubah data {broadcast.title}")
+        return redirect('backoffice:broadcasts:index')
+
+    context = {
+        'title': 'Edit Broadcast Message',
+        'menu_active': 'broadcast',
+        'form': form
+    }
+    return render(request, 'backoffice/broadcasts/form-broadcasts.html', context)

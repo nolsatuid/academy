@@ -22,7 +22,7 @@
                                 <td>{{ broadcast.title }}</td>
                                 <td>{{ broadcast.via }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-pill btn-secondary" href="{% url 'backoffice:campuses:edit' broadcast.id %}">Edit</a>
+                                    <a class="btn btn-sm btn-pill btn-secondary" href="{% url 'backoffice:broadcasts:edit' broadcast.id %}">Edit</a>
                                     <button class="btn btn-sm btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:broadcasts:delete' broadcast.id %}" data-name="{{ broadcast.title}}" >Hapus</button>
                                 </td>
                             </tr>
