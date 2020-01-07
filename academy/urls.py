@@ -24,3 +24,7 @@ urlpatterns = [
     path('backoffice/', include('academy.backoffice.urls', namespace='backoffice')),
     path('api/', include('academy.api.urls', namespace='api')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [
+    path('django-rq/', include('django_rq.urls'))
+]

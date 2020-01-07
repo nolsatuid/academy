@@ -1,4 +1,5 @@
 import csv
+import django_rq
 
 from io import StringIO
 
@@ -62,19 +63,20 @@ class ParticipantsRepeatForm(forms.Form):
         for data in self.users_repeat:
             context['user'] = data['user']
             context['graduate'] = data['status']['graduate']
-            html_message=render_to_string('emails/participants_repeat.html', context=context)
+            html_message = render_to_string('emails/participants_repeat.html', context=context)
 
             Inbox.objects.create(user=data['user'], subject=title, content=html_message)
 
-            mail.send(
-                data['user'].email,
-                settings.DEFAULT_FROM_EMAIL,
-                subject=title,
-                html_message=html_message
-            )
+            kwargs = {
+                'recipients': data['user'].email,
+                'sender': settings.DEFAULT_FROM_EMAIL,
+                'subject': title,
+                'html_message': html_message
+            }
             student = data['user'].get_student()
             student.status = Student.STATUS.repeat
             student.save(update_fields=['status'])
+            django_rq.enqueue(mail.send, **kwargs)
 
         return len(self.users_repeat)
 

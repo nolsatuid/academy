@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+import django_rq
 
 from PIL import Image, ImageOps
 from django.conf import settings
@@ -22,6 +21,7 @@ from academy.apps.logs.models import LogTrainingStatus
 
 from model_utils import Choices
 from post_office import mail
+from post_office.models import PRIORITY
 
 
 class CustomUserManager(UserManager):
@@ -92,14 +92,14 @@ class User(AbstractUser):
             'user': self,
             'email_title': 'Aktivasi Akun'
         }
-
-        send = mail.send(
-            [self.email],
-            settings.DEFAULT_FROM_EMAIL,
-            subject='Aktivasi Akun',
-            html_message=render_to_string('emails/register.html', context=data)
-        )
-        return send
+        kwargs = {
+            'recipients': [self.email],
+            'sender': settings.DEFAULT_FROM_EMAIL,
+            'subject': 'Aktivasi Akun',
+            'priority': PRIORITY.now,
+            'html_message': render_to_string('emails/register.html', context=data)
+        }
+        django_rq.enqueue(mail.send, **kwargs)
 
     def notification_status_training(self, training_materials):
         data = {
@@ -112,13 +112,13 @@ class User(AbstractUser):
         html_message = render_to_string('emails/training-status.html', context=data)
         Inbox.objects.create(user=self, subject=subject, content=html_message)
 
-        send = mail.send(
-            [self.email],
-            settings.DEFAULT_FROM_EMAIL,
-            subject=subject,
-            html_message=html_message
-        )
-        return send
+        kwargs = {
+            'recipients': [self.email],
+            'sender': settings.DEFAULT_FROM_EMAIL,
+            'subject': subject,
+            'html_message': html_message
+        }
+        django_rq.enqueue(mail.send, **kwargs)
 
     def get_count_training_status(self):
         student = self.get_student()

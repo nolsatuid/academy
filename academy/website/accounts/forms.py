@@ -1,3 +1,5 @@
+import django_rq
+
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.tokens import default_token_generator
@@ -137,13 +139,14 @@ class ForgotPasswordForm(forms.Form):
             'email_title': 'Lupa kata sandi'
         }
 
-        mail.send(
-            [user.email],
-            settings.DEFAULT_FROM_EMAIL,
-            subject='Lupa Kata Sandi',
-            context=data,
-            html_message=render_to_string('emails/forgot_password.html', context=data)
-        )
+        kwargs = {
+            'recipients': [user.email],
+            'sender': settings.DEFAULT_FROM_EMAIL,
+            'subject': 'Lupa Kata Sandi',
+            'context': data,
+            'html_message': render_to_string('emails/forgot_password.html', context=data)
+        }
+        django_rq.enqueue(mail.send, **kwargs)
 
 
 class SurveyForm(forms.ModelForm):

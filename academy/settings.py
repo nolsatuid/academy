@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'multiselectfield',
+    'django_rq',
 ]
 
 MIDDLEWARE = [
@@ -154,7 +155,8 @@ EMAIL_PORT = 587
 DEFAULT_RECIPIANT_EMAIL = 'contact@btech.id'
 
 POST_OFFICE = {
-    'BATCH_SIZE': 100
+    'BATCH_SIZE': 50,
+    'THREADS_PER_PROCESS': 10
 }
 
 # Internationalization
@@ -232,6 +234,29 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
     },
 }
+
+# django_rq
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    },
+    'high': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 500,
+    },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    }
+}
+
 try:
     from .local_settings import *
 except ImportError:
