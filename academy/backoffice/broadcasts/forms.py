@@ -10,6 +10,13 @@ class BroadcastForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        if not cleaned_data.get('title'):
+            raise forms.ValidationError("Title tidak boleh kosong")
+        if not cleaned_data.get('via'):
+            raise forms.ValidationError("Pilih via minimal satu")
+        if not cleaned_data.get('content'):
+            raise forms.ValidationError("Konten tidak boleh kosong")
+
         if 'sms' in cleaned_data['via'] or 'SMS' in cleaned_data['via']:
             self.add_error('via', "Broadcast via SMS belum tersedia untuk saat ini.")
 

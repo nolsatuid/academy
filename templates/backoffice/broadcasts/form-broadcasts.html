@@ -22,13 +22,13 @@
                     <div class=" col-md-12 col-lg-12 ">
                         <div class="tab-content">
 
-                            <form action="" method="post" enctype="multipart/form-data">
+                            <form action="" method="post" enctype="multipart/form-data" id="broadcastForm">
                                 {% csrf_token %}
                                 
                                 <span class="text-danger">{{ form.non_field_errors }}</span>
                                 {% for field in form %}
                                     <div class="form-group col-md-12">
-                                        {% if field.name != 'open_registration' and field.name != 'is_visible' %}
+                                        {% if field.name != 'via' %}
                                             <label>{{ field.label }}</label><br>
                                             {{ field|addclass:"form-control" }}
                                         {% else %}
@@ -39,18 +39,15 @@
                                         <span class="text-danger">{{ field.errors }}</span>
                                     </div>
                                 {% endfor %}
+                            </form>
 
                                 <div class="form-group col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-pill"/>
-                                    {% if custom_button_title %}
-                                        {{ custom_button_title }}
-                                    {% else %}
-                                        Simpan
-                                    {% endif %}
+                                    <button class="btn btn-primary btn-pill" data-toggle="modal" data-target="#confirmSendMessageModal">
+                                        Kirim Pesan
                                     </button>
                                 </div>
 
-                            </form>
+                            
                         </div>
                     </div>
                 </div>
@@ -59,33 +56,37 @@
         <div class="card-footer"></div>
 
     </div>
+    <div class="modal fade" id="confirmSendMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Aksi ini tidak dapat dibatalkan, pastikan kamu sudah yakin dengan pesan yang akan dikirim. Kirim sekarang ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                    <button id="confirmSubmitForm" class="btn btn-success" >Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extra_js %}
     {{ block.super }}
     <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
     <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-    <script src="{% static 'website/js/select2.min.js' %}"></script>
+
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('select').each(function () {
-                var widget = $(this);
-                if (!widget.data('isajax')) return;
-                widget.select2({
-                    ajax: {
-                        url: widget.data('url'),
-                        dataType: 'json',
-                        processResults: function (data) {
-                            return {
-                                results: data.data
-                            };
-                        },
-                        cache: true
-                    },
-                    placeholder: widget.data('placeholder'),
-                    minimumInputLength: 1,
-                });
+        $(document).ready(function() {
+            $('#confirmSubmitForm').on('click', function(){
+                $("#broadcastForm").submit();
             });
-        });
+        })
     </script>
 {% endblock %}

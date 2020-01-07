@@ -1,0 +1,74 @@
+{% extends 'backoffice/base-adminlte.html' %}
+{% load form_tags %}
+
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="pull-left">{{ title }}</h4>
+        </div>
+        <div class="card-body">
+            <a href="{% url 'backoffice:broadcasts:add' %}" class="btn btn-primary btn-pill">Tambah</a>
+            <div class="datatable content table-responsive table-full-width mt-3">
+                <table id="datatable" class="table table-striped">
+                    <thead>
+                        <th>Judul</th>
+                        <th>Via</th>
+                        <th>Aksi</th>
+                    </thead>
+                    <tbody>
+                        {% for broadcast in broadcasts %}
+                            <tr>
+                                <td>{{ broadcast.title }}</td>
+                                <td>{{ broadcast.via }}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-pill btn-info" href="{% url 'backoffice:campuses:details' broadcast.id %}">Detail</a>
+                                    <a class="btn btn-sm btn-pill btn-secondary" href="{% url 'backoffice:campuses:edit' broadcast.id %}">Edit</a>
+                                    <button class="btn btn-sm btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:campuses:delete' broadcast.id %}" data-name="{{ broadcast.title}}" >Hapus</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+    </div>
+</div>
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Yakin ingin menghapus <strong id="confirmDeleteName"></strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <a id="confirmDeleteButton" class="btn btn-success" >Ya</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var url = button.data('delete-url');
+            var name = button.data('name');
+
+            var modal = $(this);
+            modal.find('#confirmDeleteButton').attr("href", url);
+            modal.find('#confirmDeleteName').html(name);
+        })
+    })
+</script>
+{% endblock %}
