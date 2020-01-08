@@ -78,8 +78,7 @@ def detail(request, id):
 @staff_member_required
 def broadcast_now(request, id):
     broadcast = get_object_or_404(Broadcast, id=id)
-    users = User.objects.registered().exclude(has_valid_email=False) \
-        .exclude(email=None)
+    users = User.objects.registered().exclude(has_valid_email=False).exclude(email=None)
     broadcast.send(users)
     messages.success(request, f"Berhasil menyirkan pesan {broadcast.title}")
     return redirect("backoffice:broadcasts:index")
