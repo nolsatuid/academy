@@ -9,7 +9,11 @@
         </div>
         <div class="card-body">
             <h5>{{ broadcast.title }}</h5>
-            {{ broadcast.title|safe }}
+            {% if html_content %}
+                {{ html_content|safe }}
+            {% else %}
+                <p> {{ broadcast.short_content }}</p>
+            {% endif %}
         </div>
         <div class="card-footer"></div>
 

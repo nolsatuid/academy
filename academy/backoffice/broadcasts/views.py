@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from academy.backoffice.broadcasts.forms import BroadcastForm
 from academy.apps.broadcasts.models import Broadcast
+from academy.apps.accounts.models import User
 
 
 @staff_member_required
@@ -64,10 +65,12 @@ def edit(request, id):
 @staff_member_required
 def detail(request, id):
     broadcast = get_object_or_404(Broadcast, id=id)
+    html_content = broadcast.preview(request.user) if 'email' in broadcast.via else None
     context = {
         'title': 'Detail Pesan Siaran',
         'menu_active': 'broadcast',
-        'broadcast': broadcast
+        'broadcast': broadcast,
+        'html_content': html_content
     }
     return render(request, 'backoffice/broadcasts/detail.html', context)
 
@@ -75,5 +78,7 @@ def detail(request, id):
 @staff_member_required
 def broadcast_now(request, id):
     broadcast = get_object_or_404(Broadcast, id=id)
+    users = User.objects.registered().exclude(has_valid_email=False)
+    broadcast.send(users)
     messages.success(request, f"Berhasil menyirkan pesan {broadcast.title}")
     return redirect("backoffice:broadcasts:index")
