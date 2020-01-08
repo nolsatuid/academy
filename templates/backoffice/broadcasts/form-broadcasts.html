@@ -39,14 +39,11 @@
                                         <span class="text-danger">{{ field.errors }}</span>
                                     </div>
                                 {% endfor %}
-                            </form>
 
                                 <div class="form-group col-md-12">
-                                    <button class="btn btn-primary btn-pill" data-toggle="modal" data-target="#confirmSendMessageModal">
-                                        Kirim Pesan
-                                    </button>
+                                    <button class="btn btn-primary btn-pill" type="submit">Simpan</button>
                                 </div>
-
+                            </form>
                             
                         </div>
                     </div>
@@ -56,37 +53,10 @@
         <div class="card-footer"></div>
 
     </div>
-    <div class="modal fade" id="confirmSendMessageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Aksi ini tidak dapat dibatalkan, pastikan kamu sudah yakin dengan pesan yang akan dikirim. Kirim sekarang ?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                    <button id="confirmSubmitForm" class="btn btn-success" >Ya</button>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}
 
 {% block extra_js %}
     {{ block.super }}
     <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
     <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#confirmSubmitForm').on('click', function(){
-                $("#broadcastForm").submit();
-            });
-        })
-    </script>
 {% endblock %}

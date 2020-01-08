@@ -5,10 +5,10 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="pull-left">{{ title }}</h4>
+            <h4 class="pull-left float-left">{{ title }}</h4>
+            <a href="{% url 'backoffice:broadcasts:add' %}" class="btn btn-primary btn-pill float-right">Tambah</a>
         </div>
         <div class="card-body">
-            <a href="{% url 'backoffice:broadcasts:add' %}" class="btn btn-primary btn-pill">Tambah</a>
             <div class="datatable content table-responsive table-full-width mt-3">
                 <table id="datatable" class="table table-striped">
                     <thead>
@@ -22,8 +22,10 @@
                                 <td>{{ broadcast.title }}</td>
                                 <td>{{ broadcast.via }}</td>
                                 <td>
+                                    <a class="btn btn-sm btn-pill btn-primary" href="{% url 'backoffice:broadcasts:detail' broadcast.id %}">Detail</a>
                                     <a class="btn btn-sm btn-pill btn-secondary" href="{% url 'backoffice:broadcasts:edit' broadcast.id %}">Edit</a>
-                                    <button class="btn btn-sm btn-primary btn-pill" data-toggle="modal" data-target="#confirmDeleteModal" data-delete-url="{% url 'backoffice:broadcasts:delete' broadcast.id %}" data-name="{{ broadcast.title}}" >Hapus</button>
+                                    <button class="btn btn-sm btn-danger btn-pill" data-toggle="modal" data-target="#confirmModal" data-id="broadcastDelete" data-url="{% url 'backoffice:broadcasts:delete' broadcast.id %}" data-name="{{ broadcast.title}}" >Hapus</button>
+                                    <button class="btn btn-sm btn-warning btn-pill" data-toggle="modal" data-target="#confirmModal" data-id="barodcast" data-url="{% url 'backoffice:broadcasts:broadcast_now' broadcast.id %}" data-name="{{ broadcast.title}}" ><i class="fas fa-bullhorn"></i> Siarkan</button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -35,7 +37,8 @@
 
     </div>
 </div>
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -45,11 +48,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                Yakin ingin menghapus <strong id="confirmDeleteName"></strong>
+                <p id="confirmMessage"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                <a id="confirmDeleteButton" class="btn btn-success" >Ya</a>
+                <a id="confirmButton" class="btn btn-success" >Ya</a>
             </div>
         </div>
     </div>
@@ -59,14 +62,22 @@
 {% block extra_js %}
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        $('#confirmModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
-            var url = button.data('delete-url');
+            var url = button.data('url');
             var name = button.data('name');
+            var id = button.data('id');
+            var message = ""
 
+            if (id == 'broadcastDelete') {
+                message = "Yakin ingin menghapus <strong>" + name +"</strong>?"
+            } else {
+                message = "Sudah yakin dengan isi pesan dari <strong>"+ name +"</strong>?. Proses ini tidak bisa dibatalkan lhoo. Siarkan sekarang?"
+            }
+            
             var modal = $(this);
-            modal.find('#confirmDeleteButton').attr("href", url);
-            modal.find('#confirmDeleteName').html(name);
+            modal.find('#confirmButton').attr("href", url);
+            modal.find('#confirmMessage').html(message);
         })
     })
 </script>

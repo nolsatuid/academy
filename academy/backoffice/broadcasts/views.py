@@ -10,7 +10,7 @@ from academy.apps.broadcasts.models import Broadcast
 def index(request):
     broadcasts = Broadcast.objects.all()
     context = {
-        'title': 'Broadcast Message',
+        'title': 'Pesan Siaran',
         'menu_active': 'broadcast',
         'broadcasts': broadcasts
     }
@@ -27,7 +27,7 @@ def add(request):
         return redirect('backoffice:broadcasts:index')
 
     context = {
-        'title': 'Add Broadcast Message',
+        'title': 'Tambah Pesan Siaran',
         'menu_active': 'broadcast',
         'form': form
     }
@@ -54,8 +54,26 @@ def edit(request, id):
         return redirect('backoffice:broadcasts:index')
 
     context = {
-        'title': 'Edit Broadcast Message',
+        'title': 'Edit Pesan Siaran',
         'menu_active': 'broadcast',
         'form': form
     }
     return render(request, 'backoffice/broadcasts/form-broadcasts.html', context)
+
+
+@staff_member_required
+def detail(request, id):
+    broadcast = get_object_or_404(Broadcast, id=id)
+    context = {
+        'title': 'Detail Pesan Siaran',
+        'menu_active': 'broadcast',
+        'broadcast': broadcast
+    }
+    return render(request, 'backoffice/broadcasts/detail.html', context)
+
+
+@staff_member_required
+def broadcast_now(request, id):
+    broadcast = get_object_or_404(Broadcast, id=id)
+    messages.success(request, f"Berhasil menyirkan pesan {broadcast.title}")
+    return redirect("backoffice:broadcasts:index")
