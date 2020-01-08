@@ -14,8 +14,17 @@ class BroadcastForm(forms.ModelForm):
             raise forms.ValidationError("Title tidak boleh kosong")
         if not cleaned_data.get('via'):
             raise forms.ValidationError("Pilih via minimal satu")
-        if not cleaned_data.get('content'):
-            raise forms.ValidationError("Konten tidak boleh kosong")
+
+        if 'push_notification' in cleaned_data['via']:
+            if not cleaned_data.get('short_content'):
+                self.add_error('short_content', "Konten push notification tidak boleh kosong")
+
+        if 'email' in cleaned_data['via']:
+            if not cleaned_data.get('html_content'):
+                self.add_error('html_content', "HTML Konten tidak boleh kosong")
+
+        # if not cleaned_data.get('content'):
+        #     raise forms.ValidationError("Konten tidak boleh kosong")
 
         if 'sms' in cleaned_data['via'] or 'SMS' in cleaned_data['via']:
             self.add_error('via', "Broadcast via SMS belum tersedia untuk saat ini.")

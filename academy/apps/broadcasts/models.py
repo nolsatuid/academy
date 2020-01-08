@@ -12,7 +12,12 @@ class Broadcast(models.Model):
         ('sms', 'SMS'),
     )
     via = MultiSelectField(choices=VIA)
-    content = RichTextField()
+    short_content = models.TextField(
+        max_length=140, blank=True, null=True,
+        help_text="Kontek untuk siaran via Push Notification dan SMS"
+    )
+    html_content = RichTextField(
+        blank=True, null=True, help_text="Kontek untuk siaran via Email")
 
     def __str__(self):
         return self.title
