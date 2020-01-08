@@ -60,13 +60,17 @@ INSTALLED_APPS = [
     'academy.apps.surveys',
     'academy.apps.offices',
     'academy.apps.campuses',
+    'academy.apps.broadcasts',
 
     'post_office',
     'django_extensions',
     'qr_code',
     'rest_framework',
     'compressor',
-
+    'ckeditor',
+    'ckeditor_uploader',
+    'multiselectfield',
+    'django_rq',
 ]
 
 MIDDLEWARE = [
@@ -151,7 +155,8 @@ EMAIL_PORT = 587
 DEFAULT_RECIPIANT_EMAIL = 'contact@btech.id'
 
 POST_OFFICE = {
-    'BATCH_SIZE': 100
+    'BATCH_SIZE': 50,
+    'THREADS_PER_PROCESS': 10
 }
 
 # Internationalization
@@ -216,6 +221,41 @@ STATICFILES_FINDERS = (
     # other finders..
     'compressor.finders.CompressorFinder',
 )
+
+# ckeditor
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'width': '100%',
+    },
+    'basic_ckeditor': {
+        'toolbar': 'Basic',
+        'width': '100%',
+    },
+}
+
+# django_rq
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    },
+    'high': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 500,
+    },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    }
+}
 
 try:
     from .local_settings import *

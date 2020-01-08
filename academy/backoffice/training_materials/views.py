@@ -107,7 +107,7 @@ def bulk_training_status(request):
 @staff_member_required
 def bulk_material_status(request):
     form = StudentFilterForm(request.GET or None)
-    table_heading= {}
+    table_heading = {}
     student_ids = []
     bulk_form = None
     students = None
