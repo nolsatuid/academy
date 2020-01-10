@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.template.loader import render_to_string
+from fcm_django.models import FCMDevice
 
 from academy.apps.accounts.models import Inbox
 
@@ -44,6 +45,18 @@ class Broadcast(models.Model):
     def send(self, users):
         if 'email' in self.via:
             self.send_email(users)
+
+        if 'push_notification' in self.via:
+            self.send_push_notif(users)
+
+    def send_push_notif(self, users):
+        for user in users:
+            devices = FCMDevice.objects.filter(user=user).all()
+            devices.send_message(data={
+                "type": "notification",
+                "title": self.title,
+                "short_content": self.short_content
+            })
 
     def send_email(self, users):
         kwargs_list = []
