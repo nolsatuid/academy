@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'multiselectfield',
     'django_rq',
+    'fcm_django'
 ]
 
 MIDDLEWARE = [
@@ -108,7 +109,6 @@ FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 WSGI_APPLICATION = 'academy.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -118,7 +118,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -255,6 +254,13 @@ RQ_QUEUES = {
         'DB': 0,
         'DEFAULT_TIMEOUT': 360,
     }
+}
+
+FCM_DJANGO_SETTINGS = {
+    "APP_VERBOSE_NAME": "NolSatu",
+    "FCM_SERVER_KEY": "AAAAu5HREU4:APA91bGnwXyUyjp3lMxIzu_EIi1nCObp2sTfBLdng66hn9lD2OLumt1U4abayeX7B11qnWL2Bdqub25XvXkyDkogttjPOJ_UxOOKp0_HDU1zPs2OQjRD_p8_pv8sCohofcRz37JwY3AQ",
+    "ONE_DEVICE_PER_USER": False,
+    "DELETE_INACTIVE_DEVICES": True,
 }
 
 try:
