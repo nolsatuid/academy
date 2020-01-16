@@ -145,13 +145,13 @@ AUTHENTICATION_BACKENDS = (
 
 # other app
 EMAIL_BACKEND = 'post_office.EmailBackend'
-DEFAULT_FROM_EMAIL = 'notification@btech.co.id'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'notification@btech.co.id'
-EMAIL_HOST_PASSWORD = '!N0t1f1c4t10n@w388t3ch!'
+DEFAULT_FROM_EMAIL = 'no-reply@nolsatu.id'
+EMAIL_HOST = 'mail.nolsatu.id'
+EMAIL_HOST_USER = 'no-reply@nolsatu.id'
+EMAIL_HOST_PASSWORD = '!N0LSATu@B15m1llah!'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-DEFAULT_RECIPIANT_EMAIL = 'contact@btech.id'
+DEFAULT_RECIPIANT_EMAIL = 'no-replay@nolsatu.id'
 
 POST_OFFICE = {
     'BATCH_SIZE': 50,
