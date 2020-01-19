@@ -41,11 +41,31 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a href="{% url 'website:accounts:trainings:materials' %}" class="nav-link {% if menu_active == 'materi' %}active{% endif %}">
+            <li class="nav-item {% if menu_active == 'materi' %} has-treeview menu-open {% endif %}">
+                <a href="#" class="nav-link {% if menu_active == 'materi' %} active {% endif %}">
                     <i class="nav-icon fas fa-th-list"></i>
-                    <p>Daftar Pelatihan</p>
+                    <p>Daftar Pelatihan<i class="right fas fa-angle-left"></i></p>
                 </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                        <a href="{% url 'website:accounts:trainings:materials' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Ops</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        {% comment %}
+                        <a href="{{ nolsatu_course_home_page }}/courses/" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Dev</p>
+                        </a>
+                        {% endcomment %}
+                        <a href="#" class="nav-link" data-toggle="modal" data-target="#alertModal">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Dev</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="nav-item">
@@ -78,3 +98,22 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Untuk Materi Dev (development) sedang dalam proses, ditunggu ya!. Kita pasti akan kirim pemberitahuan ke kamu kok.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>

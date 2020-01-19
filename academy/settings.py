@@ -39,6 +39,7 @@ ALLOWED_HOSTS = ['*']
 # do not mark / at the end of the host
 HOST = 'http://academy.btech.id'
 MEDIA_HOST = HOST
+NOLSATU_COURSE_HOST = 'https://course.nolsatu.id'
 
 # Application definition
 
@@ -59,13 +60,18 @@ INSTALLED_APPS = [
     'academy.apps.surveys',
     'academy.apps.offices',
     'academy.apps.campuses',
+    'academy.apps.broadcasts',
 
     'post_office',
     'django_extensions',
     'qr_code',
     'rest_framework',
     'compressor',
-
+    'ckeditor',
+    'ckeditor_uploader',
+    'multiselectfield',
+    'django_rq',
+    'fcm_django'
 ]
 
 MIDDLEWARE = [
@@ -93,6 +99,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'academy.core.context_processors.nolsatu_context',
             ],
         },
     },
@@ -101,7 +108,6 @@ TEMPLATES = [
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 WSGI_APPLICATION = 'academy.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -112,7 +118,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -140,16 +145,17 @@ AUTHENTICATION_BACKENDS = (
 
 # other app
 EMAIL_BACKEND = 'post_office.EmailBackend'
-DEFAULT_FROM_EMAIL = 'notification@btech.co.id'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'notification@btech.co.id'
-EMAIL_HOST_PASSWORD = '!N0t1f1c4t10n@w388t3ch!'
+DEFAULT_FROM_EMAIL = 'no-reply@nolsatu.id'
+EMAIL_HOST = 'mail.nolsatu.id'
+EMAIL_HOST_USER = 'no-reply@nolsatu.id'
+EMAIL_HOST_PASSWORD = '!N0LSATu@B15m1llah!'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-DEFAULT_RECIPIANT_EMAIL = 'contact@btech.id'
+DEFAULT_RECIPIANT_EMAIL = 'no-replay@nolsatu.id'
 
 POST_OFFICE = {
-    'BATCH_SIZE': 100
+    'BATCH_SIZE': 50,
+    'THREADS_PER_PROCESS': 10
 }
 
 # Internationalization
@@ -215,8 +221,49 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
+# ckeditor
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'width': '100%',
+    },
+    'basic_ckeditor': {
+        'toolbar': 'Basic',
+        'width': '100%',
+    },
+}
+
+# django_rq
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    },
+    'high': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 500,
+    },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    }
+}
+
+FCM_DJANGO_SETTINGS = {
+    "APP_VERBOSE_NAME": "NolSatu",
+    "FCM_SERVER_KEY": "AAAAu5HREU4:APA91bGnwXyUyjp3lMxIzu_EIi1nCObp2sTfBLdng66hn9lD2OLumt1U4abayeX7B11qnWL2Bdqub25XvXkyDkogttjPOJ_UxOOKp0_HDU1zPs2OQjRD_p8_pv8sCohofcRz37JwY3AQ",
+    "ONE_DEVICE_PER_USER": False,
+    "DELETE_INACTIVE_DEVICES": True,
+}
+
 try:
     from .local_settings import *
 except ImportError:
     pass
-

@@ -697,3 +697,23 @@ response:
     }
 ]
 ```
+
+## FCM Devices
+
+
+### Register Token
+url: `/api/devices/`
+
+
+method: `GET`
+
+request: 
+
+```json
+{
+    "registration_id": "FCM_TOKEN",
+    "type": "android/ios/web"
+}
+```
+
+`registration_id` is unique.
