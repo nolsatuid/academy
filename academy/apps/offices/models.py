@@ -1,6 +1,7 @@
 from django.db import models
 
 from academy.core.utils import image_upload_path
+from ckeditor.fields import RichTextField
 
 
 class LogoPartner(models.Model):
@@ -23,3 +24,13 @@ class LogoSponsor(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class BannerInfo(models.Model):
+    title = models.CharField(max_length=150)
+    content = RichTextField(help_text="Tuliskan informasi yang akan ditampilkan.")
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title
