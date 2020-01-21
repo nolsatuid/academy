@@ -124,9 +124,11 @@ def change_to_pre_test(request, id):
     user = get_object_or_404(User, id=id)
     student = user.get_student()
 
-    if student.status == Student.STATUS.selection:
+    if student.status == Student.STATUS.selection or \
+            student.status == Student.STATUS.pre_test:
         student.status = Student.STATUS.pre_test
         student.save()
+        student.notification_status()
         messages.success(request, 'Status berhasil diubah menjadi pre-test')
         return redirect('backoffice:users:details', id=user.id)
 
