@@ -12,7 +12,7 @@ class AdminLogoSponsor(admin.ModelAdmin):
 
 
 class AdminBannerInfo(admin.ModelAdmin):
-    list_display = ('title', 'start_date', 'end_date')
+    list_display = ('title', 'start_date', 'end_date', 'is_active')
 
 
 admin.site.register(LogoPartner, AdminLogoPartners)

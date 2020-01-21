@@ -44,11 +44,15 @@ class BannerInfo(models.Model):
     )
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
 
     def is_show(self):
+        if not self.is_active:
+            return False
+
         now = timezone.now().date()
         if not self.start_date and not self.end_date:
             return True
