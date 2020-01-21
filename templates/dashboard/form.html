@@ -8,15 +8,13 @@
         <div class="form-group col-md-12">
             <label>{{ field.label }}</label><br>
             {{ field|addclass:"form-control" }}
-            <span class="help_text">
-                {{ field.help_text|safe }}
-            </span>
-            {{ field.errors }}
+            <small class="text-info">{{ field.help_text|safe }}</small>
+            <span class="text-danger">{{ field.errors }}</span>
         </div>
     {% endfor %}
 
     <div class="form-group col-md-12">
-        <button type="submit" class="btn btn-danger btn-pill"/>Simpan</button>
+        <button type="submit" class="btn btn-danger btn-pill">Simpan</button>
     </div>
 
 </form>

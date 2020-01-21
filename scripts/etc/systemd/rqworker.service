@@ -1,0 +1,12 @@
+[Unit]
+Description=Django-RQ Worker
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/html/academy/
+ExecStart=/var/www/html/academy/env/bin/python \
+    /var/www/html/academy/manage.py \
+    rqworker high default low
+
+[Install]
+WantedBy=multi-user.target

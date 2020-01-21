@@ -52,10 +52,8 @@
                                         {% else %}
                                             {{ field|addclass:"form-control" }}
                                         {% endif %}
-                                        <span class="help_text">
-                                            {{ field.help_text|safe }}
-                                        </span>
-                                        {{ field.errors }}
+                                        <small class="text-info">{{ field.help_text|safe }}</small>
+                                        <span class="text-danger">{{ field.errors }}</span>
                                     </div>
                                 {% endfor %}
 

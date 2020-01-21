@@ -1,0 +1,59 @@
+{% extends 'backoffice/base-adminlte.html' %}
+
+{% block content %}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="pull-left float-left">Pratayang Siaran Pesan</h4>
+            <button class="btn btn-warning btn-pill float-right" data-toggle="modal" data-target="#confirmModal" data-url="{% url 'backoffice:broadcasts:broadcast_now' broadcast.id %}" data-name="{{ broadcast.title}}" ><i class="fas fa-bullhorn"></i> Siarkan</button>
+        </div>
+        <div class="card-body">
+            <h5>{{ broadcast.title }}</h5>
+            {% if html_content %}
+                {{ html_content|safe }}
+            {% else %}
+                <p> {{ broadcast.short_content }}</p>
+            {% endif %}
+        </div>
+        <div class="card-footer"></div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                <a id="confirmButton" class="btn btn-success" >Ya</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#confirmModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var url = button.data('url');
+            var name = button.data('name');
+            var message = "Sudah yakin dengan isi pesan dari <strong>"+ name +"</strong>?. Proses ini tidak bisa dibatalkan lhoo. Siarkan sekarang?"
+            
+            var modal = $(this);
+            modal.find('#confirmButton').attr("href", url);
+            modal.find('#confirmMessage').html(message);
+        })
+    })
+</script>
+{% endblock %}

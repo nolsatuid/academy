@@ -118,6 +118,7 @@ Then create systemd file, just copy sample file and modify as your preference
 
 ```
 $ sudo cp scripts/etc/systemd/system/academy.service /etc/systemd/system/
+$ sudo cp scripts/etc/systemd/system/rqworker.service /etc/systemd/system/
 ```
 
 
@@ -143,7 +144,10 @@ $ mkdir logs
 Then start the service
 
 ```
+$ sudo systemctl enable academy
 $ sudo systemctl start academy
+$ sudo systemctl enable rqworker
+$ sudo systemctl start rqworker
 $ sudo systemctl restart nginx
 ```
 
