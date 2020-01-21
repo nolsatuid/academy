@@ -9,6 +9,7 @@ from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 
 from academy.apps.accounts.models import User, Inbox
 from academy.apps.students.models import Training, Student
+from academy.apps.offices.models import BannerInfo
 from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm, SurveyForm, \
     AvatarForm
 
@@ -36,7 +37,8 @@ def index(request):
             'title': 'Dasbor',
             'student': student,
             'graduate': graduate,
-            'menu_active': 'dashboard'
+            'menu_active': 'dashboard',
+            'banner_info': BannerInfo.objects.last()
         }
         return render(request, 'dashboard/index.html', context)
 
