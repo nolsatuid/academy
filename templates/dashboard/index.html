@@ -4,6 +4,14 @@
 {% block content %}
 
 <div class="col-lg-12">
+    {% if banner_info %}
+        <div class="alert alert-{{ banner_info.color_style }} alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-info"></i> {{ banner_info.title }}</h5>
+            {{ banner_info.content|safe }}
+        </div>
+    {% endif %}
+
     <div class="card">
         <div class="card-header border-transparent">
             <h3 class="card-title"></h3>
@@ -11,7 +19,7 @@
 
         <div class="card-body">
             {% if student.status|status_display == 'seleksi' %}
-                <h3>Halo {{ student.user.name }},</h3>
+                <h3>Halo {{ student.user.name }}, kaksdfk</h3>
                 <p>
                     Anda telah terdaftar dan aktif sebagai talenta/profesional di NolSatu.
                     Kami sedang mempelajari profil keren anda dan sesegera mungkin kami akan kabari anda saat kursi kelas
