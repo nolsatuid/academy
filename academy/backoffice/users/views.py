@@ -106,7 +106,8 @@ def change_to_participant(request, id):
     user = get_object_or_404(User, id=id)
     student = user.get_student()
 
-    if student.status == Student.STATUS.selection:
+    if student.status == Student.STATUS.selection or \
+            student.status == Student.STATUS.pre_test:
         form = ChangeToParticipantForm(request.POST or None)
 
         if form.is_valid():
