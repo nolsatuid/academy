@@ -18,8 +18,8 @@
         </div>
 
         <div class="card-body">
+            <h3>Halo {{ student.user.name }},</h3>
             {% if student.status|status_display == 'seleksi' %}
-                <h3>Halo {{ student.user.name }},</h3>
                 <p>
                     Anda telah terdaftar dan aktif sebagai talenta/profesional di NolSatu.
                     Kami sedang mempelajari profil keren anda dan sesegera mungkin kami akan kabari anda saat kursi kelas
@@ -27,8 +27,12 @@
                     sehingga membantu kami untuk dapat lebih mengenal anda.
                 </p>
                 <a href="{% url 'website:accounts:profile' %}" class="btn btn-danger">Lihat profil Anda</a>
+            {% elif student.status|status_display == 'pre-test' %}
+                <p>
+                    Selamat kamu terpilih untuk mengikuti Pre-test, semoga kamu berhasil dan menjadi peserta Nolsatu.
+                </p>
+                <a href="{% url 'website:accounts:profile' %}" class="btn btn-danger">Lihat profil Anda</a>
             {% elif student.status|status_display == 'peserta' %}
-                <h3>Halo {{ student.user.name }},</h3>
                 <p>
                     Selamat anda terpilih menjadi peserta pelatihan NolSatu.<br>
                     Berikut beberapa informasi untuk anda:<br>
@@ -43,7 +47,6 @@
                 </p>
                 <a href="{% url 'website:accounts:trainings:materials' %}" class="btn btn-danger">Lihat daftar pelatihan</a>
             {% elif student.status|status_display == 'lulus' %}
-                <h3>Halo {{ student.user.name }},</h3>
                 <p>
                     Selamat, Anda telah berhasil menyelesaikan persyaratan yang diperlukan untuk mendapatkan Sertifikasi kelulusan NolSatu!.<br>
                     <embed class="pt-5 pb-5" src="{{ graduate.certificate_file.url }}" type="application/pdf" width="100%" height="600px" />

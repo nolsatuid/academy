@@ -46,6 +46,7 @@ class Student(models.Model):
                                  null=True, on_delete=models.SET_NULL)
     STATUS = Choices(
         (1, 'selection', _('Selection')),
+        (5, 'pre_test', _('Pre-Test')),
         (2, 'participants', _('Participants')),
         (3, 'repeat', _('Repeat')),
         (4, 'graduate', _('Graduate'))

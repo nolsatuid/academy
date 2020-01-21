@@ -34,6 +34,7 @@ class SurveyFilterForm(forms.Form):
     STATUS = Choices(
         ('', 'none', '-- Status --'),
         (1, 'selection', 'Seleksi'),
+        (5, 'pre_test', 'Pre-Test'),
         (2, 'participants', 'Peserta'),
         (3, 'repeat', 'Mengulang'),
         (4, 'graduate', 'Lulus'),
