@@ -9,7 +9,9 @@
                 Profil
             </h4>
             <div class="fa-pull-right">
-                {% if student.status|status_display == 'seleksi' %}
+
+                {% if student.status|status_display == 'pre-test' or student.status|status_display == 'seleksi'%}
+                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#confirmPreTest">Ikuti Pre-Test</a>
                     <a class="btn btn-success text-white" data-toggle="modal" data-target="#changeToParticipantModal">Jadikan Peserta</a>
                 {% elif student.status|status_display == 'peserta' %}
                     <a class="btn btn-secondary text-white" href="{% url 'backoffice:users:status_training' user.id %}">Status Pelatihan</a>
@@ -177,8 +179,12 @@
     </div>
 </div>
 
-{% if student.status|status_display == 'seleksi' %}
+{% if student.status|status_display == 'seleksi' or student.status|status_display == 'pre-test' %}
     {% url 'backoffice:users:change_to_participant' user.id as form_action %}
     {% include 'backoffice/common/simple-form-modal.html' with id="changeToParticipantModal" title="Jadikan Peserta" form=to_participant_form action=form_action %}
+
+    {% url 'backoffice:users:change_to_pre_test' user.id as url_action %}
+    {% include 'backoffice/common/simple-modal.html' with id="confirmPreTest" action=url_action title="Ikuti Pre-Test" content="Yakin pengguna ini untuk mengikuti Pre-Test" %}
+
 {% endif %}
 {% endblock %}

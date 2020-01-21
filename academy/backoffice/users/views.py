@@ -106,7 +106,8 @@ def change_to_participant(request, id):
     user = get_object_or_404(User, id=id)
     student = user.get_student()
 
-    if student.status == Student.STATUS.selection:
+    if student.status == Student.STATUS.selection or \
+            student.status == Student.STATUS.pre_test:
         form = ChangeToParticipantForm(request.POST or None)
 
         if form.is_valid():
@@ -114,6 +115,23 @@ def change_to_participant(request, id):
 
             messages.success(request, 'Status berhasil diubah menjadi peserta')
             return redirect('backoffice:users:details', id=user.id)
+
+    messages.success(request, 'Maaf, pengguna ini sudah menjadi peserta atau sudah lulus')
+    return redirect('backoffice:users:index')
+
+
+@staff_member_required
+def change_to_pre_test(request, id):
+    user = get_object_or_404(User, id=id)
+    student = user.get_student()
+
+    if student.status == Student.STATUS.selection or \
+            student.status == Student.STATUS.pre_test:
+        student.status = Student.STATUS.pre_test
+        student.save()
+        student.notification_status()
+        messages.success(request, 'Status berhasil diubah menjadi pre-test')
+        return redirect('backoffice:users:details', id=user.id)
 
     messages.success(request, 'Maaf, pengguna ini sudah menjadi peserta atau sudah lulus')
     return redirect('backoffice:users:index')

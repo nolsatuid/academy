@@ -30,13 +30,19 @@ class Training(models.Model):
 
 class StudentManager(models.Manager):
     def participants(self):
-        participants = self.exclude(Q(user__is_superuser=True) | Q(status=Student.STATUS.selection))
-        return participants
+        return self.exclude(
+            Q(user__is_superuser=True) | Q(status=Student.STATUS.selection)
+        )
 
     def graduated(self):
         graduated = self.exclude(user__is_superuser=True) \
             .filter(status=Student.STATUS.graduate)
         return graduated
+
+    def pre_test(self):
+        return self.exclude(
+            Q(user__is_superuser=True) | Q(status=Student.STATUS.pre_test)
+        )
 
 
 class Student(models.Model):
@@ -46,6 +52,7 @@ class Student(models.Model):
                                  null=True, on_delete=models.SET_NULL)
     STATUS = Choices(
         (1, 'selection', _('Selection')),
+        (5, 'pre_test', _('Pre-Test')),
         (2, 'participants', _('Participants')),
         (3, 'repeat', _('Repeat')),
         (4, 'graduate', _('Graduate'))
@@ -64,6 +71,10 @@ class Student(models.Model):
         if self.status == self.STATUS.participants:
             template = 'emails/change_to_participant.html'
             title = 'Selamat, Anda menjadi peserta'
+        elif self.status == self.STATUS.pre_test:
+            print("masuk sini")
+            template = 'emails/change_to_pre_test.html'
+            title = 'Selamat, Anda Mengikuti Test'
         elif self.status == self.STATUS.graduate:
             template = 'emails/change_to_graduate.html'
             title = 'Selamat, Anda lulus'

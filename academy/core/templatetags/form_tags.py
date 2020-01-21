@@ -15,6 +15,9 @@ def status_to_display(status, styling=False):
     if status == Student.STATUS.selection:
         status_display = 'seleksi'
         class_bagde = 'secondary'
+    elif status == Student.STATUS.pre_test:
+        status_display = 'pre-test'
+        class_bagde = 'info'
     elif status == Student.STATUS.participants:
         status_display = 'peserta'
         class_bagde = 'primary'

@@ -1,6 +1,9 @@
 from rest_framework import status
 from rest_framework.response import Response
 
+from academy.apps.students.models import Training
+from academy.website.accounts.forms import StudentForm
+
 from academy.api.authentications import UserAuthAPIView
 from academy.api.response import ErrorResponse
 from academy.api.serializers import user_profile, training_material, graduate_data
@@ -11,7 +14,7 @@ from academy.website.accounts.forms import ProfileForm, SurveyForm
 from django.contrib.auth.forms import PasswordChangeForm
 
 
-class GetProfileView(UserAuthAPIView):
+class ProfileView(UserAuthAPIView):
 
     def get(self, request):
         return Response(user_profile(request.user), status=status.HTTP_200_OK)
@@ -26,7 +29,19 @@ class GetProfileView(UserAuthAPIView):
             form = ProfileForm(data=request.data, files=request.FILES, cv_required=False)
 
         if form.is_valid():
-            form.save(request.user)
+            profile = form.save(request.user)
+
+            # if not object student, create student
+            if not profile.user.get_student():
+                training = Training.objects.filter(is_active=True) \
+                    .exclude(batch__contains='NSC').order_by('batch').last()
+                if not training:
+                    training = Training.objects.create(batch="0")
+
+                form_student = StudentForm(data={'user': profile.user.id, 'training': training.id})
+                if form_student.is_valid():
+                    form_student.save()
+
             return Response(user_profile(request.user))
         return ErrorResponse(form)
 

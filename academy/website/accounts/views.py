@@ -164,7 +164,7 @@ def edit_avatar(request):
 
     if form.is_valid():
         form.save()
-        
+
     return redirect("website:accounts:profile")
 
 

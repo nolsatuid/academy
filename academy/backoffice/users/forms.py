@@ -31,6 +31,7 @@ class BaseFilterForm(forms.Form):
     STATUS = Choices(
         ('', 'none', '-- Pilih --'),
         (1, 'selection', 'Seleksi'),
+        (5, 'pre_test', 'Pre-Test'),
         (2, 'participants', 'Peserta'),
         (3, 'repeat', 'Mengulang'),
         (4, 'graduate', 'Lulus'),
@@ -216,6 +217,7 @@ class StudentForm(forms.ModelForm):
 class ChangeStatusForm(forms.ModelForm):
     STATUS = Choices(
         (1, 'selection', 'Seleksi'),
+        (5, 'pre_test', 'Pre-Test'),
         (2, 'participants', 'Peserta'),
         (3, 'repeat', 'Mengulang')
     )
