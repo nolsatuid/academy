@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from academy.core.utils import image_upload_path
 from ckeditor.fields import RichTextField
@@ -46,3 +47,25 @@ class BannerInfo(models.Model):
 
     def __str__(self):
         return self.title
+
+    def is_show(self):
+        now = timezone.now().date()
+        if not self.start_date and not self.end_date:
+            return True
+        elif self.start_date and not self.end_date:
+            if self.start_date > now:
+                return False
+            elif self.start_date <= now:
+                return True
+        elif not self.start_date and self.end_date:
+            if self.end_date >= now:
+                return True
+            elif self.end_date < now:
+                return False
+        elif self.start_date and self.end_date:
+            if self.end_date >= now and self.end_date >= now:
+                return True
+            else:
+                return False
+        else:
+            return False
