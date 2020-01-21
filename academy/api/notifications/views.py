@@ -11,7 +11,8 @@ class SendNotification(UserAuthAPIView):
     def post(self, request):      
         form = AddInboxForm(request.data)
         if form.is_valid():
-            form.save()
+            inbox = form.save()
+            inbox.send_notification()
             return Response({'message': 'Pesan berhasil disimpan'})
 
         return ErrorResponse(form)

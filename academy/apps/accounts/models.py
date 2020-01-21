@@ -13,6 +13,8 @@ from django.template.loader import render_to_string
 from django.utils.six import StringIO
 from django.urls import reverse
 from django.core.cache import cache
+from django_rq import job
+from fcm_django.models import FCMDevice
 
 from academy.core.utils import image_upload_path, file_upload_path
 from academy.core.validators import validate_mobile_phone
@@ -111,7 +113,7 @@ class User(AbstractUser):
         subject = 'Status Pelatihan'
         html_message = render_to_string('emails/training-status.html', context=data)
         Inbox.objects.create(user=self, subject=subject, content=html_message)
-
+        
         kwargs = {
             'recipients': [self.email],
             'sender': settings.DEFAULT_FROM_EMAIL,
@@ -245,3 +247,34 @@ class Inbox(models.Model):
 
     def __str__(self):
         return self.subject
+
+    def preview(self):
+        data = {
+            'host': settings.HOST,
+            'user': self.user,
+            'body': self.content,
+            'email_title': self.subject
+        }
+        html_message = render_to_string(
+            'emails/universal_template.html', context=data)
+        return html_message
+
+    @job
+    def send_notification(self):
+        # push notification
+        devices = FCMDevice.objects.filter(user=self.user).all()
+        devices.send_message(data={
+            "type": "notification",
+            "title": self.subject,
+            "short_content": self.content
+        })
+
+        # send email        
+        html_message = self.preview()
+        kwargs = {
+            'recipients': [self.user.email],
+            'sender': settings.DEFAULT_FROM_EMAIL,
+            'subject': self.subject,
+            'html_message': html_message
+        }
+        django_rq.enqueue(mail.send, **kwargs)
