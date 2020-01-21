@@ -30,13 +30,19 @@ class Training(models.Model):
 
 class StudentManager(models.Manager):
     def participants(self):
-        participants = self.exclude(Q(user__is_superuser=True) | Q(status=Student.STATUS.selection))
-        return participants
+        return self.exclude(
+            Q(user__is_superuser=True) | Q(status=Student.STATUS.selection)
+        )
 
     def graduated(self):
         graduated = self.exclude(user__is_superuser=True) \
             .filter(status=Student.STATUS.graduate)
         return graduated
+
+    def pre_test(self):
+        return self.exclude(
+            Q(user__is_superuser=True) | Q(status=Student.STATUS.pre_test)
+        )
 
 
 class Student(models.Model):

@@ -18,11 +18,14 @@ from .forms import CertificateVerifyForm
 
 
 def index(request):
+    seleksi = Student.objects.pre_test().count()
+    peserta = Student.objects.participants().count(),
     context = {
         'title': 'Home',
         'instructors': Instructor.objects.order_by('order'),
         'pengguna': User.objects.actived().count(),
-        'peserta': Student.objects.participants().count(),
+        'seleksi': seleksi,
+        'peserta': peserta,
         'lulus': Student.objects.graduated().count(),
         'tersalurkan': Graduate.objects.filter(is_channeled=True).count(),
         'logo_partners': LogoPartner.objects.filter(is_visible=True).order_by('display_order'),
