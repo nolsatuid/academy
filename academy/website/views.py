@@ -19,7 +19,7 @@ from .forms import CertificateVerifyForm
 
 def index(request):
     seleksi = Student.objects.pre_test().count()
-    peserta = Student.objects.participants().count(),
+    peserta = Student.objects.participants().count()
     context = {
         'title': 'Home',
         'instructors': Instructor.objects.order_by('order'),
