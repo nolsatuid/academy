@@ -24,7 +24,7 @@ def index(request):
         'title': 'Home',
         'instructors': Instructor.objects.order_by('order'),
         'pengguna': User.objects.actived().count(),
-        'seleksi': seleksi,
+        'seleksi': seleksi + peserta,
         'peserta': peserta,
         'lulus': Student.objects.graduated().count(),
         'tersalurkan': Graduate.objects.filter(is_channeled=True).count(),

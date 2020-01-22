@@ -40,9 +40,8 @@ class StudentManager(models.Manager):
         return graduated
 
     def pre_test(self):
-        return self.exclude(
-            Q(user__is_superuser=True) | Q(status=Student.STATUS.pre_test)
-        )
+        return self.exclude(user__is_superuser=True) \
+            .filter(status=Student.STATUS.pre_test)
 
 
 class Student(models.Model):
