@@ -11,9 +11,3 @@ class AddInboxForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         return cleaned_data
-
-    def save(self, *args, **kwargs):
-        inbox = super().save()
-        inbox.content = inbox.preview()
-        inbox.save()
-        return inbox

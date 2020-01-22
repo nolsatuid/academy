@@ -277,4 +277,4 @@ class Inbox(models.Model):
             'subject': self.subject,
             'html_message': html_message
         }
-        django_rq.enqueue(mail.send, **kwargs)
+        mail.send(**kwargs)
