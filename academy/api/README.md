@@ -705,7 +705,7 @@ response:
 url: `/api/devices/`
 
 
-method: `GET`
+method: `POST`
 
 request: 
 

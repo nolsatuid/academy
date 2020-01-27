@@ -7,8 +7,9 @@ from academy.api.response import ErrorResponse
 
 from .forms import AddInboxForm
 
+
 class SendNotification(UserAuthAPIView):
-    def post(self, request):      
+    def post(self, request):
         form = AddInboxForm(request.data)
         if form.is_valid():
             inbox = form.save()
@@ -16,6 +17,3 @@ class SendNotification(UserAuthAPIView):
             return Response({'message': 'Pesan berhasil disimpan'})
 
         return ErrorResponse(form)
-
-        
-        
