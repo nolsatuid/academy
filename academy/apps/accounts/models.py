@@ -269,7 +269,7 @@ class Inbox(models.Model):
             "short_content": self.content
         })
 
-        # send email        
+        # send email
         html_message = self.preview()
         kwargs = {
             'recipients': [self.user.email],
