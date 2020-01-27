@@ -2,7 +2,6 @@ import django_rq
 
 from PIL import Image, ImageOps
 from django.conf import settings
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
 from django.db.models import When, Case, Count, IntegerField, Q
 from django.contrib.auth.models import AbstractUser, UserManager
@@ -10,15 +9,13 @@ from django.contrib.auth.tokens import default_token_generator
 from django.templatetags.static import static
 from django.utils.http import int_to_base36
 from django.template.loader import render_to_string
-from django.utils.six import StringIO
 from django.urls import reverse
 from django.core.cache import cache
-from django_rq import job
 from fcm_django.models import FCMDevice
 
 from academy.core.utils import image_upload_path, file_upload_path
 from academy.core.validators import validate_mobile_phone
-from academy.apps.students.models import Student, TrainingStatus
+from academy.apps.students.models import TrainingStatus
 from academy.apps.logs.models import LogTrainingStatus
 
 from model_utils import Choices
@@ -113,7 +110,7 @@ class User(AbstractUser):
         subject = 'Status Pelatihan'
         html_message = render_to_string('emails/training-status.html', context=data)
         Inbox.objects.create(user=self, subject=subject, content=html_message)
-        
+
         kwargs = {
             'recipients': [self.email],
             'sender': settings.DEFAULT_FROM_EMAIL,
@@ -243,7 +240,7 @@ class Instructor(models.Model):
 class Inbox(models.Model):
     user = models.ForeignKey('accounts.User', related_name='recipient',
                              on_delete=models.CASCADE)
-    subject = models.CharField(max_length=50)
+    subject = models.CharField(max_length=100)
     content = models.TextField()
     sent_date = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
@@ -263,15 +260,27 @@ class Inbox(models.Model):
             'emails/universal_template.html', context=data)
         return html_message
 
-    @job
     def send_notification(self):
         # push notification
-        devices = FCMDevice.objects.filter(user=self.user).all()
-        devices.send_message(data={
+        devices_other = FCMDevice.objects.filter(user=self.user) \
+            .exclude(type="ios")
+        devices_other.send_message(data={
             "type": "notification",
             "title": self.subject,
-            "short_content": self.content
+            "short_content": self.content,
+            "inbox_id": self.id
         })
+
+        devices_ios = FCMDevice.objects.filter(user=self.user, type="ios")
+        devices_ios.send_message(
+            title=self.subject, body=self.content,
+            sound=1, badge=1,
+            data={
+                "title": self.subject,
+                "short_content": self.content,
+                "inbox_id": self.id
+            }
+        )
 
         # send email
         html_message = self.preview()
@@ -281,4 +290,4 @@ class Inbox(models.Model):
             'subject': self.subject,
             'html_message': html_message
         }
-        mail.send(**kwargs)
+        django_rq.enqueue(mail.send, **kwargs)
