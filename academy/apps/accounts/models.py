@@ -210,11 +210,15 @@ class Profile(models.Model):
             img = ImageOps.fit(img, (200, 200))
             img.save(self.avatar.path)
 
-    def get_avatar(self):
+    def get_avatar(self, with_host=False):
         if self.avatar:
-            return self.avatar.url
+            avatar = self.avatar.url
         else:
-            return static('website/images/avatar_placeholder.png')
+            avatar = static('website/images/avatar_placeholder.png')
+
+        if with_host:
+            return settings.MEDIA_HOST + avatar
+        return avatar
 
 
 class Instructor(models.Model):
