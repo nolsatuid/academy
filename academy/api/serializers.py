@@ -31,13 +31,11 @@ def user_profile(user: User) -> dict:
 
     if hasattr(user, 'profile'):
         profile = user.profile
-        avatar = settings.MEDIA_HOST + profile.avatar.url \
-            if profile.avatar else None
         cv = settings.MEDIA_HOST + profile.curriculum_vitae.url \
             if user.profile.curriculum_vitae else None
 
         user_data['has_profile'] = True
-        user_data['avatar'] = avatar
+        user_data['avatar'] = profile.get_avatar(with_host=True)
         user_data['linkedin'] = profile.linkedin
         user_data['git_repo'] = profile.git_repo
         user_data['blog'] = profile.blog
