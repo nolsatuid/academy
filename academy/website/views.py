@@ -22,6 +22,7 @@ def index(request):
     peserta = Student.objects.participants().count()
     context = {
         'title': 'Home',
+        'mobile_layout': False,
         'instructors': Instructor.objects.order_by('order'),
         'pengguna': User.objects.actived().count(),
         'seleksi': seleksi + peserta,
@@ -82,8 +83,7 @@ def home(request):
 def about(request):
     context = {
         'title': 'About',
-        'navbar': 'hidden',
-        'footer': 'hidden'
+        'mobile_layout': True,
     }
     return render(request, 'website/about.html', context)
 
@@ -91,8 +91,7 @@ def about(request):
 def talent(request):
     context = {
         'title': 'Talenta & Proffesional',
-        'navbar': 'hidden',
-        'footer': 'hidden'
+        'mobile_layout': True,
     }
     return render(request, 'website/talent.html', context)
 
@@ -100,19 +99,20 @@ def talent(request):
 def company(request):
     context = {
         'title': 'Perusahaan',
-        'navbar': 'hidden',
-        'footer': 'hidden'
+        'mobile_layout': True,
     }
     return render(request, 'website/company.html', context)
 
 
 def statistic(request):
+    seleksi = Student.objects.pre_test().count()
+    peserta = Student.objects.participants().count()
     context = {
         'title': 'Statistik',
-        'navbar': 'hidden',
-        'footer': 'hidden',
+        'mobile_layout': True,
         'pengguna': User.objects.actived().count(),
-        'peserta': Student.objects.participants().count(),
+        'seleksi': seleksi + peserta,
+        'peserta': peserta,
         'lulus': Student.objects.graduated().count(),
         'tersalurkan': Graduate.objects.filter(is_channeled=True).count(),
     }

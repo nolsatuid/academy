@@ -4,61 +4,6 @@
 {% block content %}
 <!-- Page Content -->
 <div class="shards-app-promo-page--1">
-    <!-- Statistik Peserta -->
-    <div id="statisik" class="bg-primary text-light section py-4" style="border-bottom: 1px solid #EA413A;">
-        <h3 class="section-title text-center text-white my-5">Statistik</h3>
-        <div class="features py-4 mb-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <span class="statistik rounded-circle mx-auto mb-3">
-                            <center>
-                                <i class="fa fa-user mx-auto mb-3"></i>
-                            </center>
-                        </span>
-                        <center><h1 class="text-white">{{ pengguna }}</h1></center><br>
-                        <h4>
-                        <center><strong><h4 class="text-white">Pengguna</h4></strong></center>
-                        </h4>
-                    </div>
-                    <div class="col-md-3">
-                        <span class="statistik rounded-circle mx-auto mb-3">
-                            <center>
-                                <i class="fa fa-user-check mx-auto mb-3"></i>
-                            </center>
-                        </span>
-                        <center><h1 class="text-white">{{ peserta }}</h1></center><br>
-                        <h4>
-                        <center><strong><h4 class="text-white">Peserta</h4></strong></center>
-                        </h4>
-                    </div>
-                    <div class="col-md-3">
-                        <span class="statistik rounded-circle mx-auto mb-3">
-                            <center>
-                                <i class="fa fa-user-graduate mx-auto mb-3"></i>
-                            </center>
-                        </span>
-                        <center><h1 class="text-white">{{ lulus }}</h1></center><br>
-                        <h4>
-                        <center><strong><h4 class="text-white">Lulusan</h4></strong></center>
-                        </h4>
-                    </div>
-                    <div class="col-md-3">
-                        <span class="statistik rounded-circle mx-auto mb-3">
-                            <center>
-                                <i class="fa fa-user-tie mx-auto mb-3"></i>
-                            </center>
-                        </span>
-                        <center><h1 class="text-white">{{ tersalurkan }}</h1></center><br>
-                        <h4>
-                        <center><strong><h4 class="text-white">Disalurkan</h4></strong></center>
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- / Features -->
-    </div>
-    <!-- / Statistik Peserta -->
+    {% include 'website/partials/statistic.html' %}
 </div>
 {% endblock %}
