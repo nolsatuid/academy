@@ -78,7 +78,8 @@ def login_view(request):
         'form': form,
         'title': 'Masuk',
         'page': 'login',
-        'navbar': navbar
+        'navbar': navbar,
+        'mobile_layout': navbar
     }
     return render(request, 'accounts/form.html', context)
 
@@ -232,7 +233,8 @@ def forgot_password(request):
     context = {
         'title': 'Lupa kata sandi',
         'form': form,
-        'navbar': navbar
+        'navbar': navbar,
+        'mobile_layout': navbar
     }
     return render(request, 'accounts/form.html', context)
 
