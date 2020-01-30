@@ -109,7 +109,8 @@ class User(AbstractUser):
         }
         subject = 'Status Pelatihan'
         html_message = render_to_string('emails/training-status.html', context=data)
-        Inbox.objects.create(user=self, subject=subject, content=html_message)
+        inbox = Inbox.objects.create(user=self, subject=subject, content=html_message)
+        inbox.send_notification(subject_as_content=True, send_email=False)
 
         kwargs = {
             'recipients': [self.email],
@@ -260,34 +261,38 @@ class Inbox(models.Model):
             'emails/universal_template.html', context=data)
         return html_message
 
-    def send_notification(self):
+    def send_notification(self, subject_as_content=False, send_email=True):
+        title = "Info NolSatu" if subject_as_content else self.subject
+        short_content = self.subject if subject_as_content else self.content
+
         # push notification
         devices_other = FCMDevice.objects.filter(user=self.user) \
             .exclude(type="ios")
         devices_other.send_message(data={
             "type": "notification",
-            "title": self.subject,
-            "short_content": self.content,
+            "title": title,
+            "short_content": short_content,
             "inbox_id": self.id
         })
 
         devices_ios = FCMDevice.objects.filter(user=self.user, type="ios")
         devices_ios.send_message(
-            title=self.subject, body=self.content,
+            title=title, body=short_content,
             sound=1, badge=1,
             data={
-                "title": self.subject,
-                "short_content": self.content,
+                "title": title,
+                "short_content": short_content,
                 "inbox_id": self.id
             }
         )
 
         # send email
-        html_message = self.preview()
-        kwargs = {
-            'recipients': [self.user.email],
-            'sender': settings.DEFAULT_FROM_EMAIL,
-            'subject': self.subject,
-            'html_message': html_message
-        }
-        django_rq.enqueue(mail.send, **kwargs)
+        if send_email:
+            html_message = self.preview()
+            kwargs = {
+                'recipients': [self.user.email],
+                'sender': settings.DEFAULT_FROM_EMAIL,
+                'subject': self.subject,
+                'html_message': html_message
+            }
+            django_rq.enqueue(mail.send, **kwargs)

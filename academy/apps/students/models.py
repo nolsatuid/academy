@@ -90,7 +90,8 @@ class Student(models.Model):
         }
 
         html_message = render_to_string(template, context=data)
-        Inbox.objects.create(user=self.user, subject=title, content=html_message)
+        inbox = Inbox.objects.create(user=self.user, subject=title, content=html_message)
+        inbox.send_notification(subject_as_content=True, send_email=False)
 
         kwargs = {
             'recipients': [self.user.email],
