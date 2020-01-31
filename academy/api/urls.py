@@ -2,6 +2,7 @@ from django.urls import path, include
 
 app_name = "api"
 urlpatterns = [
+    path('', include('academy.api.gateway.urls')),
     path('auth/', include('academy.api.auth.urls')),
     path('user/', include('academy.api.user.urls')),
     path('infos/', include('academy.api.infos.urls')),
