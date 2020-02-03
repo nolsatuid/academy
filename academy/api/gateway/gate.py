@@ -1,9 +1,20 @@
+import datetime
+
+import jwt
 import requests
+from django.conf import settings
 from django.urls import path
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
+
+def get_server_token(user_id):
+    return jwt.encode({
+        'user_id': user_id,
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=30)
+    }, settings.SECRET_KEY)
 
 
 def gate_func(remote_base):
@@ -21,9 +32,10 @@ def gate_func(remote_base):
             'patch': requests.patch,
             'delete': requests.delete
         }
+        user_id = req.user.id if req.user and req.user.is_authenticated else None
+
         headers = {
-            'authorization': 'SERVER_KEY',  # TODO: Handle service authorization
-            'user_id': str(req.user.id) if req.user and req.user.is_authenticated else "0"
+            'authorization': f'Server {get_server_token(user_id)}'
         }
 
         res = method_map[method](url, headers=headers, data=data, files=req.FILES)
