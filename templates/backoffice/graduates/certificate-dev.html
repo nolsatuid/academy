@@ -81,7 +81,9 @@
         top: 96px;
         left: 0px;
         width: 600px;
+      }
 
+      p {
         font-size: 22px;
         text-align: left;
         font-family: 'Roboto-Medium';
@@ -101,7 +103,7 @@
         <div class="user-name">{{ user.name }}</div>
         <div class="graduation-date">{{ certificate.created|date:"d F Y" }}</div>
         <div class="certificate-desc">
-            Telah lulus dari pelatihan NolSatu dengan mengikuti dan menyelesaikan tugas dari materi {{ certificate.title }}
+            <p>Telah lulus dari pelatihan NolSatu dengan mengikuti dan menyelesaikan tugas dari materi {{ certificate.title }}</p>
         </div>
         <div class="certificate-number">
           Nomor Sertifikat:<br>
