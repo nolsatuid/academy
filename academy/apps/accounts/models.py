@@ -1,4 +1,5 @@
 import django_rq
+import pdfkit
 
 from PIL import Image, ImageOps
 from django.conf import settings
@@ -11,13 +12,17 @@ from django.utils.http import int_to_base36
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.core.cache import cache
-from fcm_django.models import FCMDevice
+from django.template.loader import get_template
+from django.template.defaultfilters import slugify
+from django.http import HttpResponse
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from academy.core.utils import image_upload_path, file_upload_path
 from academy.core.validators import validate_mobile_phone
 from academy.apps.students.models import TrainingStatus
 from academy.apps.logs.models import LogTrainingStatus
 
+from fcm_django.models import FCMDevice
 from model_utils import Choices
 from post_office import mail
 from post_office.models import PRIORITY
@@ -296,3 +301,56 @@ class Inbox(models.Model):
                 'html_message': html_message
             }
             django_rq.enqueue(mail.send, **kwargs)
+
+
+class Certificate(models.Model):
+    """
+    Model ini digunakan untuk menyimpan sertifikat secara jamak yang terkait dengan user.
+    tidak terikat dengan model Graduate
+    """
+    title = models.CharField(max_length=200)
+    number = models.CharField(max_length=200)
+    user = models.ForeignKey('accounts.User', related_name='certificates',
+                             on_delete=models.CASCADE)
+    certificate_file = models.FileField(upload_to=image_upload_path('certificates'),
+                                        blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.number} - {self.title}"
+
+    def generate(self):
+        filename = 'certificate-%s.pdf' % slugify(self.user.name)
+        filepath = '/tmp/%s' % filename
+        html_template = get_template('backoffice/graduates/certificate-dev.html')
+
+        last_name = (
+            self.user.last_name if self.user.last_name
+            else self.user.first_name
+        )
+
+        context = {
+            'certificate': self,
+            'user': self.user,
+            'host': settings.HOST,
+            'data_qr': f"{self.number}:{last_name}"
+        }
+        rendered_html = html_template.render(context)
+
+        options = {
+            'page-size': 'A4',
+            'orientation': 'Landscape',
+            'margin-top': '0in',
+            'margin-right': '0in',
+            'margin-bottom': '0in',
+            'margin-left': '0in',
+            'no-outline': None
+        }
+        pdf = pdfkit.from_string(rendered_html, filepath, options=options)
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename={filename}'
+
+        certificate_file = open(filepath, 'rb')
+        upload_file = SimpleUploadedFile(filename, certificate_file.read())
+        self.certificate_file = upload_file
+        self.save()

@@ -15,6 +15,7 @@ from academy.core.utils import image_upload_path
 
 from model_utils import Choices
 
+
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username='deleted')[0]
 
