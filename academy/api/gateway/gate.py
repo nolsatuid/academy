@@ -13,8 +13,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 def get_server_token(user_id):
     return jwt.encode({
         'user_id': user_id,
+        'server_key': settings.SERVER_KEY,
         'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=30)
-    }, settings.SECRET_KEY)
+    }, settings.SECRET_KEY).decode('utf-8')
 
 
 def gate_func(remote_base):

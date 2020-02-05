@@ -263,6 +263,8 @@ API_GATEWAY = [
     ('course', 'https://course.nolsatu.id/api/')
 ]
 
+SERVER_KEY = "serverToServerAuthKeyKeepItVerySecret"
+
 try:
     from .local_settings import *
 except ImportError:
