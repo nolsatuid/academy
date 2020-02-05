@@ -23,6 +23,7 @@ class Training(models.Model):
     is_active = models.BooleanField(default=True)
     materials = models.ManyToManyField('TrainingMaterial', blank=True,
                                        related_name='trainings')
+    link_group = models.URLField(blank=True, max_length=255)
 
     def __str__(self):
         return f"Batch {self.batch}"
@@ -84,6 +85,7 @@ class Student(models.Model):
         data = {
             'host': settings.HOST,
             'user': self.user,
+            'link_group': self.training.link_group,
             'email_title': title,
             'graduate': status['graduate'],
             'indicator': settings.INDICATOR_GRADUATED

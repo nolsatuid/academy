@@ -186,10 +186,11 @@ class DateInput(forms.DateInput):
 class TrainingForm(forms.ModelForm):
     class Meta:
         model = Training
-        fields = ('batch', 'materials', 'start_date', 'end_date')
+        fields = ('batch', 'materials', 'link_group', 'start_date', 'end_date')
         labels = {
             'batch': 'Angkatan',
             'materials': 'Materi Pelatihan',
+            'link_group': 'Link Grup Telegram',
             'start_date': 'Tanggal Mulai',
             'end_date': 'Tanggal Akhir'
         }
@@ -200,6 +201,7 @@ class TrainingForm(forms.ModelForm):
         help_texts = {
             'start_date': 'Boleh kosong',
             'end_date': 'Boleh kosong',
+            'link_group': 'Boleh kosong',
             'materials': '',
             'batch': 'Gunakan awalan NSC- jika akan membuat angkatan baru untuk NolSatu Kampus, mis. NSC-1'
         }

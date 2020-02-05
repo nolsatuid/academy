@@ -25,6 +25,7 @@
                             <table class="table">
                                 <tr>
                                     <td>Angkatan</td>
+                                    <td>Link Group</td>
                                     <td>Tanggal Mulai</td>
                                     <td>Tanggal Akhir</td>
                                     <td>Aksi</td>
@@ -32,6 +33,7 @@
                                 {% for training in trainings %}
                                 <tr>
                                     <td>{{ training.batch }}</td>
+                                    <td>{{ training.link_group }}</td>
                                     <td>{{ training.start_date|default:'-' }}</td>
                                     <td>{{ training.end_date|default:'-' }}</td>
                                     <td><a href="{% url 'backoffice:users:edit_batch_training' training.id %}">edit</a></td>
