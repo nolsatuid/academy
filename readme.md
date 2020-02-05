@@ -164,6 +164,7 @@ $ source env/bin/activate
 $ git pull origin master
 $ python manage.py migrate
 $ python manage.py collectstatic
+$ update_setting.sh dev/prod
 $ sudo systemctl restart academy
 ```
 

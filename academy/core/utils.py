@@ -1,6 +1,5 @@
 import datetime
 import feedparser
-from typing import List
 
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger

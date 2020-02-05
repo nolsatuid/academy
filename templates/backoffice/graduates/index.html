@@ -34,10 +34,10 @@
                                 <td>{{ graduate.certificate_number|default:'-' }}</td>
                                 <td>{{ graduate.user.email }}</td>
                                 <td>
-                                    <label class="custom-control custom-toggle d-block my-2">
-                                        <input type="checkbox" data-id="{{ graduate.id }}" class="custom-control-input toggleChanneled" required {{ graduate.is_channeled|yesno:'checked, '}}>
-                                        <span class="custom-control-indicator"></span>
-                                    </label>
+                                    <div class="custom-control custom-switch" id="btn-status-{{registrants.id}}">
+                                        <input type="checkbox" class="custom-control-input toggleChanneled" data-id="{{ graduate.id }}" id="customSwitch{{graduate.id}}" required {{ graduate.is_channeled|yesno:'checked, '}}>
+                                        <label class="custom-control-label" for="customSwitch{{graduate.id}}"></label>
+                                    </div>
                                 </td>
                                 <td>
                                     <a class="btn btn-info" href="{% url 'backoffice:graduates:details' graduate.id %}"><i class="fa fa-eye"></i></a>

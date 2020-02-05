@@ -148,7 +148,7 @@ EMAIL_BACKEND = 'post_office.EmailBackend'
 DEFAULT_FROM_EMAIL = 'no-reply@nolsatu.id'
 EMAIL_HOST = 'mail.nolsatu.id'
 EMAIL_HOST_USER = 'no-reply@nolsatu.id'
-EMAIL_HOST_PASSWORD = '!N0LSATu@B15m1llah!'
+EMAIL_HOST_PASSWORD = '--ENTER_YOUR_PASSWORD--'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 DEFAULT_RECIPIANT_EMAIL = 'no-replay@nolsatu.id'
@@ -185,11 +185,6 @@ STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
 
 INDICATOR_GRADUATED = 6
 INDICATOR_REPEATED = 3
-
-sentry_sdk.init(
-    dsn="https://c9a271a3699648e18769f6370f4d7488@sentry.io/1339389",
-    integrations=[DjangoIntegration()]
-)
 
 # JWT Config
 SIMPLE_JWT = {
@@ -258,7 +253,7 @@ RQ_QUEUES = {
 
 FCM_DJANGO_SETTINGS = {
     "APP_VERBOSE_NAME": "NolSatu",
-    "FCM_SERVER_KEY": "AAAA-EEZhoI:APA91bEKQMU4sVrZlHVUM27p-vP4TR5gdr_ASXv8cbv7SoCdrURrIU4oaybNb1y_y4DAZNStYFMhtW4lhXRV_6ssLomt9NpMygIH611r9n9pqX2oMGJvwL559g8hYBNxISVSDyNlBIzZ",
+    "FCM_SERVER_KEY": "--ENTER_YOUR_SERVER_KEY",
     "ONE_DEVICE_PER_USER": False,
     "DELETE_INACTIVE_DEVICES": True,
 }
