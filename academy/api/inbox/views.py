@@ -23,7 +23,7 @@ class InboxDetail(UserAuthAPIView):
     def delete(self, request, id):
         inbox = get_object_or_404(Inbox, user=request.user, id=id)
         inbox.delete()
-        return Response({'message': f'Pesan berhasil dihapus'})
+        return Response({'message': 'Pesan berhasil dihapus'})
 
 
 class BulkReadUnread(UserAuthAPIView):

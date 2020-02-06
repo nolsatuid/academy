@@ -655,6 +655,24 @@ method: `GET`
 }
 ```
 
+### Delete Inbox
+url: `/api/inbox/<int:id>`
+
+header:
+```
+Conten-Type application/json
+```
+
+method: `DELETE`
+
+response:
+```json
+{
+    "message": "Pesan berhasil dihapus"
+}
+```
+
+
 ### Bulk Read Unread
 url: `/api/inbox/read`
 
