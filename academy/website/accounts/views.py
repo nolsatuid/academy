@@ -330,9 +330,13 @@ def inbox(request):
             if inbox:
                 if data['action'] == "unread" :
                     inbox.is_read = False
-                if data['action'] == "read" :
+                    inbox.save()
+                elif data['action'] == "read" :
                     inbox.is_read = True
-                inbox.save()
+                    inbox.save()
+                elif data['action'] == "delete" :
+                    if inbox.delete():
+                        messages.success(request, 'Pesan berhasil dihapus')
 
     user = request.user
     inboxs = Inbox.objects.filter(user=user).order_by('-sent_date')
