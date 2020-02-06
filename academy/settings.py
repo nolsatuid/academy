@@ -258,6 +258,13 @@ FCM_DJANGO_SETTINGS = {
     "DELETE_INACTIVE_DEVICES": True,
 }
 
+
+API_GATEWAY = [
+    ('course', 'https://course.nolsatu.id/api/')
+]
+
+SERVER_KEY = "serverToServerAuthKeyKeepItVerySecret"
+
 try:
     from .local_settings import *
 except ImportError:
