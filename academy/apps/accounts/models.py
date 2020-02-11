@@ -250,16 +250,21 @@ class Inbox(models.Model):
     content = models.TextField()
     sent_date = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
-    is_html_content = models.BooleanField(default=True)
+    raw_content = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.subject
+
+    def save(self, *args, **kwargs):
+        if self.raw_content:
+            self.content = self.preview()
+        super().save(*args, *kwargs)
 
     def preview(self):
         data = {
             'host': settings.HOST,
             'user': self.user,
-            'body': self.content,
+            'body': self.raw_content,
             'email_title': self.subject
         }
         html_message = render_to_string(
@@ -268,7 +273,7 @@ class Inbox(models.Model):
 
     def send_notification(self, subject_as_content=False, send_email=True):
         title = "Info NolSatu" if subject_as_content else self.subject
-        short_content = self.subject if subject_as_content else self.content
+        short_content = self.subject if subject_as_content else self.raw_content
 
         # push notification
         devices_other = FCMDevice.objects.filter(user=self.user) \
@@ -293,12 +298,11 @@ class Inbox(models.Model):
 
         # send email
         if send_email:
-            html_message = self.preview()
             kwargs = {
                 'recipients': [self.user.email],
                 'sender': settings.DEFAULT_FROM_EMAIL,
                 'subject': self.subject,
-                'html_message': html_message
+                'html_message': self.content
             }
             django_rq.enqueue(mail.send, **kwargs)
 
