@@ -323,18 +323,18 @@ def auth_user(request, uidb36, token):
 
 @login_required
 def inbox(request):
-    if request.POST :
+    if request.POST:
         data = request.POST
         for id in data.getlist('checkMark'):
             inbox = Inbox.objects.get(id=id)
             if inbox:
-                if data['action'] == "unread" :
+                if data['action'] == "unread":
                     inbox.is_read = False
                     inbox.save()
-                elif data['action'] == "read" :
+                elif data['action'] == "read":
                     inbox.is_read = True
                     inbox.save()
-                elif data['action'] == "delete" :
+                elif data['action'] == "delete":
                     if inbox.delete():
                         messages.success(request, 'Pesan berhasil dihapus')
 
