@@ -50,16 +50,16 @@ class BulkReadUnread(UserAuthAPIView):
 class BulkDelete(UserAuthAPIView):
     def post(self, request):
         if not request.data.get('inbox_ids'):
-            return ErrorResponse({'message': 'Pesan tidak ditemukan'})
+            return ErrorResponse(error_message='Pesan tidak ditemukan')
 
         bulk_ids = request.data['inbox_ids']
         if len(bulk_ids) == 1 and bulk_ids[0] == -1:
-            # all filter
             inboxs = Inbox.objects.filter(user=request.user)
             inboxs.delete()
             return Response({'message': 'Berhasil hapus pesan yang dipilih'})
         else:
-            # partial filter
             inboxs = Inbox.objects.filter(user=request.user, id__in=bulk_ids)
+            if not inboxs:
+                return ErrorResponse(error_message='Pesan tidak ditemukan')
             inboxs.delete()
             return Response({'message': 'Berhasil hapus pesan yang dipilih'})
