@@ -35,13 +35,31 @@ class BulkReadUnread(UserAuthAPIView):
             read_state = bulk_read.data['read_state']
             if len(bulk_filter) == 1 and bulk_filter[0] == -1:
                 # all filter
-                inbox = Inbox.objects.filter(user=request.user)
-                inbox.update(is_read=read_state)
-                return Response(InboxSerializer(inbox, many=True).data)
+                inboxs = Inbox.objects.filter(user=request.user)
+                inboxs.update(is_read=read_state)
+                return Response(InboxSerializer(inboxs, many=True).data)
             else:
                 # partial filter
-                inbox = Inbox.objects.filter(user=request.user, id__in=bulk_filter)
-                inbox.update(is_read=read_state)
-                return Response(InboxSerializer(inbox, many=True).data)
+                inboxs = Inbox.objects.filter(user=request.user, id__in=bulk_filter)
+                inboxs.update(is_read=read_state)
+                return Response(InboxSerializer(inboxs, many=True).data)
         else:
             return ErrorResponse(serializer=bulk_read)
+
+
+class BulkDelete(UserAuthAPIView):
+    def post(self, request):
+        if not request.data.get('inbox_ids'):
+            return ErrorResponse({'message': 'Pesan tidak ditemukan'})
+
+        bulk_ids = request.data['inbox_ids']
+        if len(bulk_ids) == 1 and bulk_ids[0] == -1:
+            # all filter
+            inboxs = Inbox.objects.filter(user=request.user)
+            inboxs.delete()
+            return Response({'message': 'Berhasil hapus pesan yang dipilih'})
+        else:
+            # partial filter
+            inboxs = Inbox.objects.filter(user=request.user, id__in=bulk_ids)
+            inboxs.delete()
+            return Response({'message': 'Berhasil hapus pesan yang dipilih'})

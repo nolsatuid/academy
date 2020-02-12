@@ -715,6 +715,42 @@ response:
 ]
 ```
 
+### Bulk Delete
+url: `/api/inbox/delete`
+
+header:
+```
+Conten-Type application/json
+```
+
+method: `POST`
+
+request: 
+
+```json
+{
+	"inbox_ids": [10, 12]
+}
+```
+
+```json
+{
+	"inbox_ids": [-1]
+}
+```
+
+param:
+- inbox_ids = list of inbox id or `[-1]` for all inbox for authenticated user
+
+response:
+```json
+[
+    {
+        "message": "Berhasil hapus pesan yang dipilih"
+    }
+]
+```
+
 ## FCM Devices
 
 
