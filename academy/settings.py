@@ -71,7 +71,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'multiselectfield',
     'django_rq',
-    'fcm_django'
+    'fcm_django',
+    'taggit'
 ]
 
 MIDDLEWARE = [

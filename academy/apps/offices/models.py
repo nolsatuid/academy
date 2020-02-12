@@ -1,9 +1,15 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+from django.utils.text import slugify
 
-from academy.core.utils import image_upload_path
+from academy.apps.accounts.models import User
+
+from academy.core.utils import image_upload_path, generate_unique_slug
 from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from model_utils import Choices
+from taggit.managers import TaggableManager
 
 
 class LogoPartner(models.Model):
@@ -73,3 +79,31 @@ class BannerInfo(models.Model):
                 return False
         else:
             return False
+
+
+class Page(models.Model):
+    title = models.CharField(_("Judul"), max_length=220)
+    slug = models.SlugField(max_length=200, blank=True, help_text=_("Generate otomatis jika dikosongkan"))
+    short_content = RichTextField(_("Konten Singkat"), config_name='basic_ckeditor')
+    content = RichTextUploadingField(_("Konten"))
+    image = models.FileField(_("Gambar"), upload_to="images/", blank=True)
+    category = TaggableManager(_("Kategori"), help_text=_("Kategori dipisahkan dengan koma"))
+    is_visible = models.BooleanField(_("Terlihat"), default=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="authors")
+    STATUS = Choices(
+        (1, 'draft', _("Konsep")),
+        (2, 'publish', _("Terbit")),
+    )
+    status = models.PositiveIntegerField(choices=STATUS, default=STATUS.publish)
+
+    def __str__(self):
+        return self.title 
+
+    def save(self, *args, **kwargs):
+        if self.slug:  # edit
+            if slugify(self.title) != self.slug:
+                self.slug = generate_unique_slug(Page, self.title)
+        else:  # create
+            self.slug = generate_unique_slug(Page, self.title)
+        super().save(*args, **kwargs)
+
