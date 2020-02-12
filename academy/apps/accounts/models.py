@@ -258,7 +258,8 @@ class Inbox(models.Model):
     def save(self, *args, **kwargs):
         if self.raw_content:
             self.content = self.preview()
-        super().save(*args, *kwargs)
+        inbox = super().save()
+        return inbox
 
     def preview(self):
         data = {
