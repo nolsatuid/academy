@@ -128,3 +128,7 @@ class InternalAPIAuthentication(BaseAuthentication):
 class UserAuthAPIView(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication, APISessionAuthentication)
+
+
+class InternalAPIView(APIView):
+    authentication_classes = (InternalAPIAuthentication, )
