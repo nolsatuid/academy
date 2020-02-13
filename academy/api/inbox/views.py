@@ -2,7 +2,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
 from academy.api.authentications import UserAuthAPIView
-from academy.api.inbox.serializer import InboxSerializer, BulkReadUnreadSerializer, InboxListSerializer
+from academy.api.inbox.serializer import (
+    InboxSerializer, BulkReadUnreadSerializer, InboxListSerializer, BulkDeleteSerializer
+)
 from academy.api.response import ErrorResponse
 from academy.apps.accounts.models import Inbox
 
@@ -35,13 +37,30 @@ class BulkReadUnread(UserAuthAPIView):
             read_state = bulk_read.data['read_state']
             if len(bulk_filter) == 1 and bulk_filter[0] == -1:
                 # all filter
-                inbox = Inbox.objects.filter(user=request.user)
-                inbox.update(is_read=read_state)
-                return Response(InboxSerializer(inbox, many=True).data)
+                inboxs = Inbox.objects.filter(user=request.user)
+                inboxs.update(is_read=read_state)
+                return Response(InboxSerializer(inboxs, many=True).data)
             else:
                 # partial filter
-                inbox = Inbox.objects.filter(user=request.user, id__in=bulk_filter)
-                inbox.update(is_read=read_state)
-                return Response(InboxSerializer(inbox, many=True).data)
+                inboxs = Inbox.objects.filter(user=request.user, id__in=bulk_filter)
+                inboxs.update(is_read=read_state)
+                return Response(InboxSerializer(inboxs, many=True).data)
         else:
             return ErrorResponse(serializer=bulk_read)
+
+
+class BulkDelete(UserAuthAPIView):
+    def post(self, request):
+        bulk_delete = BulkDeleteSerializer(data=request.data)
+        if bulk_delete.is_valid():
+            bulk_ids = bulk_delete.data["inbox_ids"]
+            if len(bulk_ids) == 1 and bulk_ids[0] == -1:
+                inboxs = Inbox.objects.filter(user=request.user)
+                inboxs.delete()
+                return Response({'message': 'Berhasil hapus pesan yang dipilih'})
+            else:
+                inboxs = Inbox.objects.filter(id__in=bulk_ids, user=request.user)
+                inboxs.delete()
+                return Response({'message': 'Berhasil hapus pesan yang dipilih'})
+        else:
+            return ErrorResponse(error_message='Pesan tidak ditemukan')

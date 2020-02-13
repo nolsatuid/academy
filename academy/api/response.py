@@ -16,10 +16,12 @@ class ErrorResponse(Response):
         if not data.get('detail'):
             data['detail'] = "Your request cannot be completed"
             data["error_message"] = data['detail']
+            data["message"] = data['detail']
             data["error_code"] = "invalid_request"
 
         if error_message:
             data["error_message"] = error_message
+            data["message"] = error_message
 
         # only returns the first error
         if serializer is not None:
