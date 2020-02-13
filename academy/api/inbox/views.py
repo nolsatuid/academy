@@ -2,7 +2,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 
 from academy.api.authentications import UserAuthAPIView
-from academy.api.inbox.serializer import InboxSerializer, BulkReadUnreadSerializer, InboxListSerializer
+from academy.api.inbox.serializer import (
+    InboxSerializer, BulkReadUnreadSerializer, InboxListSerializer, BulkDeleteSerializer
+)
 from academy.api.response import ErrorResponse
 from academy.apps.accounts.models import Inbox
 
@@ -49,17 +51,16 @@ class BulkReadUnread(UserAuthAPIView):
 
 class BulkDelete(UserAuthAPIView):
     def post(self, request):
-        if not request.data.get('inbox_ids'):
-            return ErrorResponse(error_message='Pesan tidak ditemukan')
-
-        bulk_ids = request.data['inbox_ids']
-        if len(bulk_ids) == 1 and bulk_ids[0] == -1:
-            inboxs = Inbox.objects.filter(user=request.user)
-            inboxs.delete()
-            return Response({'message': 'Berhasil hapus pesan yang dipilih'})
+        bulk_delete = BulkDeleteSerializer(data=request.data)
+        if bulk_delete.is_valid():
+            bulk_ids = bulk_delete.data["inbox_ids"]
+            if len(bulk_ids) == 1 and bulk_ids[0] == -1:
+                inboxs = Inbox.objects.filter(user=request.user)
+                inboxs.delete()
+                return Response({'message': 'Berhasil hapus pesan yang dipilih'})
+            else:
+                inboxs = Inbox.objects.filter(id__in=bulk_ids, user=request.user)
+                inboxs.delete()
+                return Response({'message': 'Berhasil hapus pesan yang dipilih'})
         else:
-            inboxs = Inbox.objects.filter(user=request.user, id__in=bulk_ids)
-            if not inboxs:
-                return ErrorResponse(error_message='Pesan tidak ditemukan')
-            inboxs.delete()
-            return Response({'message': 'Berhasil hapus pesan yang dipilih'})
+            return ErrorResponse(error_message='Pesan tidak ditemukan')

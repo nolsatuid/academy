@@ -20,3 +20,9 @@ class BulkReadUnreadSerializer(serializers.Serializer):
         child=serializers.IntegerField()
     )
     read_state = serializers.BooleanField()
+
+
+class BulkDeleteSerializer(serializers.Serializer):
+    inbox_ids = serializers.ListField(
+        child=serializers.IntegerField()
+    )
