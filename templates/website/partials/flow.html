@@ -1,0 +1,215 @@
+{% load static %}
+{% block extra_css %}
+<style>
+    body {
+      font-family: Helvetica, sans-serif;
+    }
+    
+    /* The actual timeline (the vertical ruler) */
+    .timeline-custom {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* The actual timeline (the vertical ruler) */
+    .timeline-custom::after {
+      content: '';
+      position: absolute;
+      width: 7px;
+      background-color: white;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -3px;
+    }
+    
+    /* Container around content */
+    .container-timeline {
+      padding: 10px 40px;
+      position: relative;
+      background-color: inherit;
+      width: 50%;
+    }
+    
+    /* The circles on the timeline */
+    .container-timeline::after {
+      content: '';
+      position: absolute;
+      width: 35px;
+      height: 35px;
+      right: -17px;
+      background-color: white;
+      border: 4px solid #FF9F55;
+      top: 15px;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    /* Place the container to the left */
+    .left {
+      left: 0;
+    }
+    
+    /* Place the container to the right */
+    .right {
+      left: 50%;
+    }
+    
+    /* Add arrows to the left container (pointing right) */
+    .left::before {
+      content: " ";
+      height: 0;
+      position: absolute;
+      top: 22px;
+      width: 0;
+      z-index: 1;
+      right: 30px;
+      border: medium solid white;
+      border-width: 10px 0 10px 10px;
+      border-color: transparent transparent transparent white;
+    }
+    
+    /* Add arrows to the right container (pointing left) */
+    .right::before {
+      content: " ";
+      height: 0;
+      position: absolute;
+      top: 22px;
+      width: 0;
+      z-index: 1;
+      left: 30px;
+      border: medium solid white;
+      border-width: 10px 10px 10px 0;
+      border-color: transparent white transparent transparent;
+    }
+    
+    /* Fix the circle for containers on the right side */
+    .right::after {
+      left: -16px;
+    }
+    
+    /* The actual content */
+    .content-timeline {
+      padding: 20px 30px;
+      background-color: white;
+      position: relative;
+      border-radius: 6px;
+    }
+
+    .timeline-image {
+        width:100%;
+    }
+    
+    /* Media queries - Responsive timeline on screens less than 600px wide */
+    @media screen and (max-width: 600px) {
+      /* Place the timelime to the left */
+      .timeline-custom::after {
+      left: 31px;
+      }
+      
+      /* Full-width containers */
+      .container-timeline {
+      width: 100%;
+      padding-left: 70px;
+      padding-right: 25px;
+      }
+      
+      /* Make sure that all arrows are pointing leftwards */
+      .container-timeline::before {
+      left: 60px;
+      border: medium solid white;
+      border-width: 10px 10px 10px 0;
+      border-color: transparent white transparent transparent;
+      }
+    
+      /* Make sure all circles are at the same spot */
+      .left::after, .right::after {
+      left: 15px;
+      }
+      
+      /* Make all right containers behave like the left ones */
+      .right {
+      left: 0%;
+      }
+    }
+</style>
+{% endblock %}
+
+<div class="our-services bg-primary section py-4">
+    <h3 class="section-title text-center text-white my-5">Alur NolSatu</h3>
+    <div class="timeline-custom ">
+        <div class="container-timeline left">
+            <div class="content-timeline">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <center><img src="{% static 'website/images/flow-icon/alur_nolsatu_1.png' %}" alt="Tahap Satu" class="timeline-image"></center>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <p class="pt-2">Calon peserta mendaftarkan diri dan melengkapi profil melalui web NolSatu.</p>
+                    </div>  
+                </div>
+          </div>
+        </div>
+        <div class="container-timeline right">
+            <div class="content-timeline">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <p class="pt-2">Peserta yang telah mendaftarkan diri, akan diseleksi oleh tim NolSatu.</p>
+                    </div>          
+                    <div class="col-lg-6 col-md-12">
+                        <center><img src="{% static 'website/images/flow-icon/alur_nolsatu_2.png' %}" alt="Tahap Dua" class="timeline-image" style="width: 80%;"></center>
+                    </div> 
+                </div>                 
+            </div>
+        </div>
+        <div class="container-timeline left">
+            <div class="content-timeline">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <center><img src="{% static 'website/images/flow-icon/alur_nolsatu_3.png' %}" alt="Tahap Tiga" class="timeline-image" style="width: 70%;"></center>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <p class="pt-2">Peserta terpilih mendapatkan pemberitahuan melalui surel.</p>
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <div class="container-timeline right">
+            <div class="content-timeline">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <center><img src="{% static 'website/images/flow-icon/alur_nolsatu_4.png' %}" alt="Tahap Empat" class="timeline-image pt-3"></center>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <p class="pt-2">Setelah program magang dituntaskan dengan baik, peserta kemudian dicocokan dengan kriteria yang dibutuhkan perusahaan dan disalurkan ke perusahaan tersebut.</p>
+                    </div>    
+                </div>        
+            </div>
+        </div>
+        <div class="container-timeline left">
+            <div class="content-timeline">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <center><img src="{% static 'website/images/flow-icon/alur_nolsatu_5.png' %}" alt="Tahap Lima" class="timeline-image"></center>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <p class="pt-2">Setelah peserta dinyatakan lulus, maka peserta akan mengikuti program magang selama 3 bulan.</p>
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <div class="container-timeline right">
+            <div class="content-timeline">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <p class="pt-2">Peserta terpilih mengikuti beberapa kelas pelatihan daring, yang dipandu oleh instruktur bersertifikat dan berpengalaman dengan fasilitas praktikum sesuai standar industri.</p>
+                    </div>      
+                    <div class="col-lg-6 col-md-12">
+                        <center><img src="{% static 'website/images/flow-icon/alur_nolsatu_6.png' %}" alt="Tahap Enam" class="timeline-image"></center>
+                    </div>    
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
