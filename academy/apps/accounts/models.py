@@ -229,7 +229,10 @@ class Profile(models.Model):
 
     @property
     def curriculum_vitae_with_host(self):
-        return settings.MEDIA_HOST + self.curriculum_vitae.url
+        if self.curriculum_vitae:
+            return settings.MEDIA_HOST + self.curriculum_vitae.url
+        else:
+            return None
 
 
 class Instructor(models.Model):
