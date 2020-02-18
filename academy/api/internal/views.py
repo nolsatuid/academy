@@ -1,9 +1,13 @@
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from academy.api.authentications import InternalAPIView
 from academy.api.internal.forms import GenerateCertificateForm
 from academy.api.internal.serializers import CertificateSerializer
 from academy.api.response import ErrorResponse
+from academy.api.internal.serializer import UserSerializer, AddInboxSerializer
+from academy.api.response import ErrorResponse
+from academy.apps.accounts.models import User
 
 
 class DemoView(InternalAPIView):
@@ -28,3 +32,20 @@ class GenerateCertificateView(InternalAPIView):
             certificate = form.save()
             return Response(CertificateSerializer(certificate).data)
         return ErrorResponse(form)
+
+
+class UserView(InternalAPIView):
+    def get(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        return Response(UserSerializer(user).data)
+
+
+class SendNotification(InternalAPIView):
+    def post(self, request):
+        serializer = AddInboxSerializer(data=request.data)
+        if serializer.is_valid():
+            inbox = serializer.save()
+            inbox.send_notification()
+            return Response({'message': 'Pesan berhasil disimpan'})
+
+        return ErrorResponse(serializer=serializer)
