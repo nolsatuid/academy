@@ -223,6 +223,14 @@ class Profile(models.Model):
             return settings.MEDIA_HOST + avatar
         return avatar
 
+    @property
+    def avatar_with_host(self):
+        return self.get_avatar(with_host=True)
+
+    @property
+    def curriculum_vitae_with_host(self):
+        return settings.MEDIA_HOST + self.curriculum_vitae.url
+
 
 class Instructor(models.Model):
     user = models.OneToOneField('accounts.User', related_name='instructor',
