@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import Http404
 from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 
-from academy.apps.accounts.models import User, Inbox
+from academy.apps.accounts.models import User, Inbox, Certificate
 from academy.apps.students.models import Training, Student
 from academy.apps.offices.models import BannerInfo
 from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm, SurveyForm, \
@@ -362,3 +362,30 @@ def inbox_detail(request, id):
         'inbox': inbox
     }
     return render(request, 'dashboard/inbox_detail.html', context)
+
+
+@login_required
+def certificates(request):
+    certificates = []
+    for cert in Certificate.objects.filter(user=request.user):
+        if cert.certificate_file:
+            certificates.append({
+                "title": cert.title,
+                "number": cert.number,
+                "url": cert.certificate_file.url
+            })
+
+    for cert in request.user.graduates.all():
+        if cert.certificate_file:
+            certificates.append({
+                "title": "DevOps",
+                "number": cert.certificate_number,
+                "url": cert.certificate_file.url
+            })
+
+    context = {
+        'title': 'Sertifikat',
+        'menu_active': 'certificate',
+        'certificates': certificates
+    }
+    return render(request, 'dashboard/certificates.html', context)

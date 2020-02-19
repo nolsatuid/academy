@@ -25,4 +25,5 @@ urlpatterns = [
             views.auth_user, name='auth_user'),
     path('inbox/', views.inbox, name='inbox'),
     path('inbox/<int:id>', views.inbox_detail, name='inbox_detail'),
+    path('certificates/', views.certificates, name='certificates'),
 ]

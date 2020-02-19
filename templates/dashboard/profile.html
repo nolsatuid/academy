@@ -79,7 +79,8 @@
                                                 {% endif %}
                                                 <tr>
                                                     {% if graduate %}
-                                                        <td colspan="2" class="font-weight-bold">Sertifikat<embed class="pb-5" src="{{ graduate.certificate_file.url }}" type="application/pdf" width="100%" height="600px" /></td>
+                                                        <td class="font-weight-bold">Sertifikat</td>
+                                                        <td><a href="{% url 'website:accounts:certificates' %}">lihat disini</a></td>
                                                     {% endif %}
                                                 </tr>
                                             </tbody>
