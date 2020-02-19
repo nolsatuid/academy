@@ -6,27 +6,34 @@
     <div class="card">
 
         <div class="card-body">
-
-            <div class="accordion" id="accordionCert">
-                {% for cert in certificates %}
-                    
-                    <div class="card">
-                        <div class="card-header" id="heading{{ forloop.counter }}">
-                            <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
-                                <h5>{{ cert.title }}  <small>{{ cert.number }}</small></h5>
-                            </button>
-                            </h2>
-                        </div>
-                    
-                        <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordionCert">
-                            <div class="card-body">
-                                <embed class="pb-5" src="{{ cert.url }}" type="application/pdf" width="100%" height="600px">
+            {% if certificates %}
+                <div class="accordion" id="accordionCert">
+                    {% for cert in certificates %}
+                        
+                        <div class="card">
+                            <div class="card-header" id="heading{{ forloop.counter }}">
+                                <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                                    <h5>{{ cert.title }}  <small>{{ cert.number }}</small></h5>
+                                </button>
+                                </h2>
+                            </div>
+                        
+                            <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordionCert">
+                                <div class="card-body">
+                                    <embed class="pb-5" src="{{ cert.url }}" type="application/pdf" width="100%" height="600px">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                    <h5><i class="icon fas fa-info"></i> Info!</h5>
+                    Mohon maaf, kamu belom memiliki sertifikat apapun. Ikuti beberapa kelas yang tersedia dan dapatkan sertifikatnya.
+                </div>
+            {% endif %}
 
         </div>
     </div>
