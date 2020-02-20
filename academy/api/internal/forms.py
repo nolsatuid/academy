@@ -10,13 +10,15 @@ class GenerateCertificateForm(forms.Form):
 
     def save(self):
         cleaned_data = super().clean()
-        cert = Certificate.objects.create(
-            title=cleaned_data["title"],
+        cert, created = Certificate.objects.get_or_create(
             number=cleaned_data["certificate_number"],
-            user=cleaned_data["user_id"]
+            user=cleaned_data["user_id"],
+            defaults={'title': cleaned_data["title"]},
         )
         if cleaned_data["created"]:
             cert.created = cleaned_data["created"]
             cert.save()
-        cert.generate()
+
+        if not created and not cert.certificate_file:
+            cert.generate()
         return cert
