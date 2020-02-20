@@ -3,9 +3,10 @@ from rest_framework.response import Response
 
 from academy.api.authentications import InternalAPIView
 from academy.api.internal.forms import GenerateCertificateForm
-from academy.api.internal.serializers import CertificateSerializer
+from academy.api.internal.serializers import (
+    CertificateSerializer, UserSerializer, AddInboxSerializer
+)
 from academy.api.response import ErrorResponse
-from academy.api.internal.serializer import UserSerializer, AddInboxSerializer
 from academy.api.response import ErrorResponse
 from academy.apps.accounts.models import User
 
