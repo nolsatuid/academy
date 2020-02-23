@@ -17,8 +17,8 @@ class GenerateCertificateForm(forms.Form):
         )
         if cleaned_data["created"]:
             cert.created = cleaned_data["created"]
-            cert.save()
+        cert.save()
 
-        if not created and not cert.certificate_file:
+        if not cert.certificate_file:
             cert.generate()
         return cert
