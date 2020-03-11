@@ -283,30 +283,31 @@ class Inbox(models.Model):
             'emails/universal_template.html', context=data)
         return html_message
 
-    def send_notification(self, subject_as_content=False, send_email=True):
+    def send_notification(self, subject_as_content=False, send_email=True, send_push_notif=True):
         title = "Info NolSatu" if subject_as_content else self.subject
         short_content = self.subject if subject_as_content else self.raw_content
 
         # push notification
-        devices_other = FCMDevice.objects.filter(user=self.user) \
-            .exclude(type="ios")
-        devices_other.send_message(data={
-            "type": "notification",
-            "title": title,
-            "short_content": short_content,
-            "inbox_id": self.id
-        })
-
-        devices_ios = FCMDevice.objects.filter(user=self.user, type="ios")
-        devices_ios.send_message(
-            title=title, body=short_content,
-            sound=1, badge=1,
-            data={
+        if send_push_notif:
+            devices_other = FCMDevice.objects.filter(user=self.user) \
+                .exclude(type="ios")
+            devices_other.send_message(data={
+                "type": "notification",
                 "title": title,
                 "short_content": short_content,
                 "inbox_id": self.id
-            }
-        )
+            })
+
+            devices_ios = FCMDevice.objects.filter(user=self.user, type="ios")
+            devices_ios.send_message(
+                title=title, body=short_content,
+                sound=1, badge=1,
+                data={
+                    "title": title,
+                    "short_content": short_content,
+                    "inbox_id": self.id
+                }
+            )
 
         # send email
         if send_email:
