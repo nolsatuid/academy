@@ -1,15 +1,22 @@
+import django_rq
+
 from django.db import models
 from django.conf import settings
 from django.template.loader import render_to_string
-from fcm_django.models import FCMDevice
 
-from academy.apps.accounts.models import Inbox
+from academy.apps.accounts.models import Inbox, User
 
 from ckeditor.fields import RichTextField
 from multiselectfield import MultiSelectField
-from post_office import mail
-from post_office.models import PRIORITY
-from django_rq import job
+
+
+def _send(inbox_id, send_email, send_push_notif):
+    inbox = Inbox.objects.get(id=inbox_id)
+    inbox.send_notification(
+        subject_as_content=True,
+        send_email=send_email,
+        send_push_notif=send_push_notif
+    )
 
 
 class Broadcast(models.Model):
@@ -41,35 +48,31 @@ class Broadcast(models.Model):
             'emails/universal_template.html', context=data)
         return html_message
 
-    @job
-    def send(self, users):
+    def via_email(self):
         if 'email' in self.via:
-            self.send_email(users)
+            return True
+        else:
+            return False
 
+    def via_push_notif(self):
         if 'push_notification' in self.via:
-            self.send_push_notif(users)
+            return True
+        else:
+            return False
 
-    def send_push_notif(self, users):
-        for user in users:
-            devices = FCMDevice.objects.filter(user=user).all()
-            devices.send_message(data={
-                "type": "notification",
-                "title": self.title,
-                "short_content": self.short_content
-            })
-
-    def send_email(self, users):
-        kwargs_list = []
+    def send(self, users):
+        inbox_ids = []
         for user in users:
             html_message = self.preview(user)
-            Inbox.objects.create(
+            inbox = Inbox.objects.create(
                 user=user, subject=self.title, content=html_message)
+            inbox_ids.append(inbox.id)
 
+        queue = django_rq.get_queue('high')
+        for inbox_id in inbox_ids:
             kwargs = {
-                'recipients': [user.email],
-                'sender': settings.DEFAULT_FROM_EMAIL,
-                'subject': self.title,
-                'html_message': html_message
+                'inbox_id': inbox_id,
+                'send_email': self.via_email,
+                'send_push_notif': self.via_push_notif
             }
-            kwargs_list.append(kwargs)
-        mail.send_many(kwargs_list)
+            queue.enqueue(_send, **kwargs)
