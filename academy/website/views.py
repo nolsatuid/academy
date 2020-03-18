@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.http import JsonResponse, HttpResponse
+from django.conf import settings
 
 from datetime import datetime, timedelta
 
@@ -15,9 +16,22 @@ from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 
 from .forms import CertificateVerifyForm
+from meta.views import Meta
 
 
 def index(request):
+    meta = Meta(
+        description='''NolSatu hadir sebagai usaha untuk merespon masalah nasional yaitu banyak lulusan \
+TIK atau pekerja TIK yang kemampuannya rendah sementara perusahaan-perusahaan membutuhkan pekerja TIK \
+terbaik dengan kemampuan terkini.''',
+        keywords=[
+            'nolsatu', 'kursus', 'teknologi'
+        ],
+        image=settings.HOST + '/static/website/images/logo/logo-polos-warna-30.png',
+        use_og=True,
+        use_facebook=True
+    )
+
     seleksi = Student.objects.pre_test().count()
     peserta = Student.objects.participants().count()
     context = {
@@ -30,7 +44,8 @@ def index(request):
         'lulus': Student.objects.graduated().count(),
         'tersalurkan': Graduate.objects.filter(is_channeled=True).count(),
         'logo_partners': LogoPartner.objects.filter(is_visible=True).order_by('display_order'),
-        'logo_sponsors': LogoSponsor.objects.filter(is_visible=True).order_by('display_order')
+        'logo_sponsors': LogoSponsor.objects.filter(is_visible=True).order_by('display_order'),
+        'meta': meta
     }
     return render(request, 'website/home.html', context)
 

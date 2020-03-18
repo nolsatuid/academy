@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
+from django.conf import settings
 
 from academy.apps.accounts.models import User
 
@@ -10,6 +11,7 @@ from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from model_utils import Choices
 from taggit.managers import TaggableManager
+from meta.models import ModelMeta
 
 
 class LogoPartner(models.Model):
@@ -81,7 +83,7 @@ class BannerInfo(models.Model):
             return False
 
 
-class Page(models.Model):
+class Page(ModelMeta, models.Model):
     title = models.CharField(_("Judul"), max_length=220)
     slug = models.SlugField(max_length=200, blank=True, help_text=_("Generate otomatis jika dikosongkan"))
     short_content = RichTextField(_("Konten Singkat"), config_name='basic_ckeditor')
@@ -95,6 +97,18 @@ class Page(models.Model):
         (2, 'publish', _("Terbit")),
     )
     status = models.PositiveIntegerField(choices=STATUS, default=STATUS.publish)
+
+    _metadata = {
+        'title': 'title',
+        'description': 'content',
+        'keywords': 'slug',
+        'image': 'get_meta_image',
+        'use_og': True
+    }
+    
+    def get_meta_image(self):
+        if self.image:
+            return settings.HOST + '/static/website/' + self.image.url
 
     def __str__(self):
         return self.title 

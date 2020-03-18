@@ -1,17 +1,12 @@
-{% load static compress %}
+{% load static compress meta %}
 <!doctype html>
 <html class="no-js" lang="en">
 
-<head>
+<head {% meta_namespaces %}>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>NolSatu - {{title}}</title>
-    <meta name="description" content="
-        {% if meta_description %} {{ meta_description }} {% else %}
-        NolSatu hadir sebagai usaha untuk merespon masalah nasional yaitu banyak lulusan
-        TIK atau pekerja TIK yang kemampuannya rendah sementara perusahaan-perusahaan membutuhkan pekerja TIK
-        terbaik dengan kemampuan terkini. {% endif %}">
-
+    {% include "meta/meta.html" %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{% static 'website/images/nolsatu.ico' %}">
     {% compress css %}

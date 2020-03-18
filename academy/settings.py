@@ -72,7 +72,8 @@ INSTALLED_APPS = [
     'multiselectfield',
     'django_rq',
     'fcm_django',
-    'taggit'
+    'taggit',
+    "meta"
 ]
 
 MIDDLEWARE = [
