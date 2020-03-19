@@ -21,11 +21,16 @@ from meta.views import Meta
 
 def index(request):
     meta = Meta(
-        description='''NolSatu hadir sebagai usaha untuk merespon masalah nasional yaitu banyak lulusan \
-TIK atau pekerja TIK yang kemampuannya rendah sementara perusahaan-perusahaan membutuhkan pekerja TIK \
-terbaik dengan kemampuan terkini.''',
+        description='''NolSatu adalah Talent Hub dari Btech, Para peserta akan mendapatkan materi seputar DevOps, \
+Cloud Computing, Python dan pemrograman lainnya. Instruktur pemberi materi juga praktisi dilapangan, ketika memberikan materi \
+jadi dapat sharing tentang kondisi dunia TIK  terkini. Tools yang digunakan pun berbasis Open Source, sehingga menambah \
+add unique value jika kita mampu menguasai dan mengoptimalkannya. Peserta akan mendapatkan setiap proses itu. \
+Dan ingat, setiap menit yang kalian luangkan untuk membaca ini. Ada ratusan bahkan ribuan orang juga yang ingin \
+mendaftar. So, segera daftar karena setiap angkatan pun terbatas. NolSatu gratis, karena kami tau. Semua berawal dari Nol, \
+lalu menjadi Satu. Di NolSatu.''',
         keywords=[
-            'nolsatu', 'kursus', 'teknologi'
+            'NolSatu', 'Open Source', 'Pelatihan', 'Gratis', 
+            'Cloud Computing', 'DevOps', 'Btech', 'Pemrograman'
         ],
         image=settings.HOST + '/static/website/images/logo/logo-polos-warna-30.png',
         use_og=True,
