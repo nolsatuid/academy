@@ -31,3 +31,5 @@ django-multiselectfield==0.1.11
 fcm-django==0.3.2
 
 django-taggit==1.1.0
+
+django-meta==1.6.1

@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.http import JsonResponse, HttpResponse
+from django.conf import settings
 
 from datetime import datetime, timedelta
 
@@ -15,9 +16,27 @@ from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 
 from .forms import CertificateVerifyForm
+from meta.views import Meta
 
 
 def index(request):
+    meta = Meta(
+        description='''NolSatu adalah Talent Hub dari Btech, Para peserta akan mendapatkan materi seputar DevOps, \
+Cloud Computing, Python dan pemrograman lainnya. Instruktur pemberi materi juga praktisi dilapangan, ketika memberikan materi \
+jadi dapat sharing tentang kondisi dunia TIK  terkini. Tools yang digunakan pun berbasis Open Source, sehingga menambah \
+add unique value jika kita mampu menguasai dan mengoptimalkannya. Peserta akan mendapatkan setiap proses itu. \
+Dan ingat, setiap menit yang kalian luangkan untuk membaca ini. Ada ratusan bahkan ribuan orang juga yang ingin \
+mendaftar. So, segera daftar karena setiap angkatan pun terbatas. NolSatu gratis, karena kami tau. Semua berawal dari Nol, \
+lalu menjadi Satu. Di NolSatu.''',
+        keywords=[
+            'NolSatu', 'Open Source', 'Pelatihan', 'Gratis', 
+            'Cloud Computing', 'DevOps', 'Btech', 'Pemrograman'
+        ],
+        image=settings.HOST + '/static/website/images/logo/logo-polos-warna-30.png',
+        use_og=True,
+        use_facebook=True
+    )
+
     seleksi = Student.objects.pre_test().count()
     peserta = Student.objects.participants().count()
     context = {
@@ -30,7 +49,8 @@ def index(request):
         'lulus': Student.objects.graduated().count(),
         'tersalurkan': Graduate.objects.filter(is_channeled=True).count(),
         'logo_partners': LogoPartner.objects.filter(is_visible=True).order_by('display_order'),
-        'logo_sponsors': LogoSponsor.objects.filter(is_visible=True).order_by('display_order')
+        'logo_sponsors': LogoSponsor.objects.filter(is_visible=True).order_by('display_order'),
+        'meta': meta
     }
     return render(request, 'website/home.html', context)
 
