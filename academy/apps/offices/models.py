@@ -100,8 +100,8 @@ class Page(ModelMeta, models.Model):
 
     _metadata = {
         'title': 'title',
-        'description': 'content',
-        'keywords': 'slug',
+        'description': 'short_content',
+        'keywords': 'get_category_list',
         'image': 'get_meta_image',
         'use_og': True
     }
@@ -109,6 +109,9 @@ class Page(ModelMeta, models.Model):
     def get_meta_image(self):
         if self.image:
             return settings.HOST + '/static/website/' + self.image.url
+
+    def get_category_list(self):
+        return self.category.all().values_list('name', flat=True)
 
     def __str__(self):
         return self.title 

@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 from academy.api.serializers import user_profile
 from academy.apps.accounts.models import Instructor
 from academy.apps.accounts.models import User
-from academy.apps.offices.models import LogoPartner, LogoSponsor
+from academy.apps.offices.models import LogoPartner, LogoSponsor, Page
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 
@@ -153,3 +153,15 @@ def profile(request):
         json.dumps(user_profile(request.user)),
         content_type="application/json"
     )
+
+
+def blog(request, slug):
+    blog = get_object_or_404(Page, slug=slug)
+
+    context = {
+        'title': 'Blog',
+        'blog': blog,
+        'meta': blog.as_meta()
+    }
+
+    return render(request, 'website/blog.html', context)
