@@ -121,6 +121,11 @@ class Graduate(models.Model):
 
         return "".join(html_stars)
 
+    def is_name_valid(self, last_name):
+        cond1 = (self.user.last_name and self.user.last_name.lower() == last_name.lower())
+        cond2 = (not self.user.last_name and self.user.first_name and self.user.first_name.lower() == last_name.lower())
+        return cond1 or cond2
+
 
 class Rating(models.Model):
     respondent_name = models.CharField(max_length=150, blank=True, null=True)
