@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 import django_rq
 import pdfkit
 
@@ -173,7 +175,8 @@ class User(AbstractUser):
         return training_materials
 
     def generate_auth_url(self):
-        url = reverse('website:accounts:auth_user', args=[int_to_base36(self.id), default_token_generator.make_token(self)])
+        url = reverse('website:accounts:auth_user',
+                      args=[int_to_base36(self.id), default_token_generator.make_token(self)])
         return f'{settings.HOST}{url}'
 
 
@@ -336,6 +339,10 @@ class Certificate(models.Model):
     def __str__(self):
         return f"{self.number} - {self.title}"
 
+    @property
+    def valid_until(self):
+        return self.created + timedelta(days=1095)
+
     def generate(self):
         filename = 'certificate-%s.pdf' % slugify(self.user.name)
         filepath = '/tmp/%s' % filename
@@ -371,3 +378,8 @@ class Certificate(models.Model):
         upload_file = SimpleUploadedFile(filename, certificate_file.read())
         self.certificate_file = upload_file
         self.save()
+
+    def is_name_valid(self, last_name):
+        cond1 = (self.user.last_name and self.user.last_name.lower() == last_name.lower())
+        cond2 = (not self.user.last_name and self.user.first_name and self.user.first_name.lower() == last_name.lower())
+        return cond1 or cond2
