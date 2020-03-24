@@ -111,9 +111,14 @@ def change_to_participant(request, id):
         form = ChangeToParticipantForm(request.POST or None)
 
         if form.is_valid():
-            form.save(student)
-
-            messages.success(request, 'Status berhasil diubah menjadi peserta')
+            training = form.cleaned_data['training']
+            batch = Training.objects.get(id=training.id)
+            if batch.link_group:
+                form.save(student)
+                messages.success(request, 'Status berhasil diubah menjadi peserta')
+            else:
+                messages.error(request, 'Tidak dapat mengubah status menjadi peserta, karena link grup \
+                pada batch ini masih kosong')
             return redirect('backoffice:users:details', id=user.id)
 
     messages.success(request, 'Maaf, pengguna ini sudah menjadi peserta atau sudah lulus')
