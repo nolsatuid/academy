@@ -10,6 +10,7 @@ from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 from academy.apps.accounts.models import User, Inbox, Certificate
 from academy.apps.students.models import Training, Student
 from academy.apps.offices.models import BannerInfo
+from academy.core.utils import pagination
 from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm, SurveyForm, \
     AvatarForm
 
@@ -325,26 +326,46 @@ def auth_user(request, uidb36, token):
 def inbox(request):
     if request.POST:
         data = request.POST
-        for id in data.getlist('checkMark'):
-            inbox = Inbox.objects.get(id=id)
-            if inbox:
-                if data['action'] == "unread":
-                    inbox.is_read = False
-                    inbox.save()
-                elif data['action'] == "read":
-                    inbox.is_read = True
-                    inbox.save()
-                elif data['action'] == "delete":
-                    if inbox.delete():
-                        messages.success(request, 'Pesan berhasil dihapus')
+        page = data['page']
+        if data['action'] == "unread":
+            for id in data.getlist('checkMark'):
+                inbox = Inbox.objects.get(id=id)
+                inbox.is_read = False
+                inbox.save()
+        elif data['action'] == "read":
+            for id in data.getlist('checkMark'):
+                inbox = Inbox.objects.get(id=id)
+                inbox.is_read = True
+                inbox.save()
+        elif data['action'] == "delete":
+            for id in data.getlist('checkMark'):
+                inbox = Inbox.objects.get(id=id)
+                inbox.delete()
+            messages.success(request, 'Pesan berhasil dihapus')
+        return redirect(f'/accounts/inbox/?page={ page }')
 
     user = request.user
-    inboxs = Inbox.objects.filter(user=user).order_by('-sent_date')
+    inbox_list = Inbox.objects.filter(user=user).order_by('-sent_date')
+
+    #pagination
+    length = 50
+    page = request.GET.get('page', 1)
+    inboxs, page_range = pagination(inbox_list, page, length)
+    detail_page = {
+        'page': page,
+        'next': int(page)+1,
+        'prev': int(page)-1,
+        'start': length*int(page)-length+1,
+        'end': length*int(page),
+        'total': inbox_list.count()
+    }
 
     context = {
         'title': 'Inbox',
         'menu_active': 'inbox',
-        'inboxs': inboxs
+        'inboxs': inboxs,
+        'page_range': page_range,
+        'detail_page': detail_page
     }
     return render(request, 'dashboard/inbox.html', context)
 

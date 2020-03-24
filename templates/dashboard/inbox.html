@@ -30,15 +30,22 @@
                 <button type="button" onclick="readMark()" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="Tandai sudah dibaca"><i class="far fa-envelope-open"></i></button>
                 <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-toggle="tooltip" data-placement="bottom" title="Hapus pesan"><i class="far fa-trash-alt"></i></button>
             </div>
-            <!-- 
             <div class="float-right">
-                1-50/200
+                {{ detail_page.start }}-{{ detail_page.end }}/{{ detail_page.total }}
                 <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+                {% if inboxs.has_previous %}
+                <a href="?page={{ detail_page.prev }}" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></a>
+                {% else %}
+                <button type="button" class="btn btn-default btn-sm" disabled><i class="fas fa-chevron-left"></i></button>
+                {% endif %}
+
+                {% if inboxs.has_next %}
+                <a href="?page={{ detail_page.next }}" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></a>
+                {% else %}
+                <button type="button" class="btn btn-default btn-sm" disabled><i class="fas fa-chevron-right"></i></button>
+                {% endif %}                    
                 </div>
             </div>
-            -->
             <!-- /.float-right -->
             </div>
             <div class="table-responsive mailbox-messages">
@@ -54,6 +61,7 @@
                 <form action="" method="post" id="actionMark">
                 {% csrf_token %}
                 <input type="hidden" name="action" id="action">
+                <input type="hidden" name="page" value="{{ detail_page.page }}">
                 {% for inbox in inboxs %}
                 {% if inbox.is_read %}
                 <tr>
@@ -91,15 +99,22 @@
                 <button type="button" onclick="readMark()" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="Tandai sudah dibaca"><i class="far fa-envelope-open"></i></button>
                 <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-toggle="tooltip" data-placement="bottom" title="Hapus pesan"><i class="far fa-trash-alt"></i></button>
             </div>
-            <!--
             <div class="float-right">
-                1-50/200
+                {{ detail_page.start }}-{{ detail_page.end }}/{{ detail_page.total }}
                 <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+                {% if inboxs.has_previous %}
+                <a href="?page={{ detail_page.prev }}" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></a>
+                {% else %}
+                <button type="button" class="btn btn-default btn-sm" disabled><i class="fas fa-chevron-left"></i></button>
+                {% endif %}
+
+                {% if inboxs.has_next %}
+                <a href="?page={{ detail_page.next }}" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></a>
+                {% else %}
+                <button type="button" class="btn btn-default btn-sm" disabled><i class="fas fa-chevron-right"></i></button>
+                {% endif %}                    
                 </div>
             </div>
-            -->
             <!-- /.float-right -->
             </div>
         </div>
