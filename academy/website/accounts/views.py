@@ -326,18 +326,23 @@ def auth_user(request, uidb36, token):
 def inbox(request):
     if request.POST:
         data = request.POST
-        for id in data.getlist('checkMark'):
-            inbox = Inbox.objects.get(id=id)
-            if inbox:
-                if data['action'] == "unread":
-                    inbox.is_read = False
-                    inbox.save()
-                elif data['action'] == "read":
-                    inbox.is_read = True
-                    inbox.save()
-                elif data['action'] == "delete":
-                    if inbox.delete():
-                        messages.success(request, 'Pesan berhasil dihapus')
+        page = data['page']
+        if data['action'] == "unread":
+            for id in data.getlist('checkMark'):
+                inbox = Inbox.objects.get(id=id)
+                inbox.is_read = False
+                inbox.save()
+        elif data['action'] == "read":
+            for id in data.getlist('checkMark'):
+                inbox = Inbox.objects.get(id=id)
+                inbox.is_read = True
+                inbox.save()
+        elif data['action'] == "delete":
+            for id in data.getlist('checkMark'):
+                inbox = Inbox.objects.get(id=id)
+                inbox.delete()
+            messages.success(request, 'Pesan berhasil dihapus')
+        return redirect(f'/accounts/inbox/?page={ page }')
 
     user = request.user
     inbox_list = Inbox.objects.filter(user=user).order_by('-sent_date')
@@ -347,6 +352,7 @@ def inbox(request):
     page = request.GET.get('page', 1)
     inboxs, page_range = pagination(inbox_list, page, length)
     detail_page = {
+        'page': page,
         'next': int(page)+1,
         'prev': int(page)-1,
         'start': length*int(page)-length+1,

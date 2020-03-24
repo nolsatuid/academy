@@ -61,6 +61,7 @@
                 <form action="" method="post" id="actionMark">
                 {% csrf_token %}
                 <input type="hidden" name="action" id="action">
+                <input type="hidden" name="page" value="{{ detail_page.page }}">
                 {% for inbox in inboxs %}
                 {% if inbox.is_read %}
                 <tr>
