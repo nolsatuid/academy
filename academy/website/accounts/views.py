@@ -10,6 +10,7 @@ from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 from academy.apps.accounts.models import User, Inbox, Certificate
 from academy.apps.students.models import Training, Student
 from academy.apps.offices.models import BannerInfo
+from academy.core.utils import pagination
 from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm, SurveyForm, \
     AvatarForm
 
@@ -339,12 +340,26 @@ def inbox(request):
                         messages.success(request, 'Pesan berhasil dihapus')
 
     user = request.user
-    inboxs = Inbox.objects.filter(user=user).order_by('-sent_date')
+    inbox_list = Inbox.objects.filter(user=user).order_by('-sent_date')
+
+    #pagination
+    length = 50
+    page = request.GET.get('page', 1)
+    inboxs, page_range = pagination(inbox_list, page, length)
+    detail_page = {
+        'next': int(page)+1,
+        'prev': int(page)-1,
+        'start': length*int(page)-length+1,
+        'end': length*int(page),
+        'total': inbox_list.count()
+    }
 
     context = {
         'title': 'Inbox',
         'menu_active': 'inbox',
-        'inboxs': inboxs
+        'inboxs': inboxs,
+        'page_range': page_range,
+        'detail_page': detail_page
     }
     return render(request, 'dashboard/inbox.html', context)
 
