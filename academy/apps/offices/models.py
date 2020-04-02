@@ -139,17 +139,18 @@ class Setting(models.Model):
     )
     site_name = models.CharField(max_length=50)
     footer_title = models.CharField(max_length=100, blank=True, null=True)
+    footer_url = models.CharField(max_length=200, blank=True, null=True)
     COLOR_THEME = Choices(
-        (1, 'danger', 'Danger'),
-        (2, 'warning', 'Warning'),
-        (3, 'primary', 'Primary'),
-        (4, 'success', 'Success'),
-        (5, 'dark', 'Dark'),
+        (1, 'danger', 'danger'),
+        (2, 'warning', 'warning'),
+        (3, 'primary', 'primary'),
+        (4, 'success', 'success'),
+        (5, 'dark', 'dark'),
     )
     color_theme = models.PositiveIntegerField(choices=COLOR_THEME, default=COLOR_THEME.danger)
     SIDEBAR_COLOR = Choices(
-        (1, 'light', 'Light'),
-        (2, 'dark', 'Dark'),
+        (1, 'light', 'light'),
+        (2, 'dark', 'dark'),
     )
     sidebar_color = models.PositiveIntegerField(choices=SIDEBAR_COLOR, default=SIDEBAR_COLOR.light)
 
