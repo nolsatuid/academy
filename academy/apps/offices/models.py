@@ -191,9 +191,9 @@ class Setting(models.Model):
             return ""
 
         if self.sidebar_color == self.SIDEBAR_COLOR.light:
-            return self.get_logo_light
-        else:
             return self.get_logo_dark
+        else:
+            return self.get_logo_light
 
     @classmethod
     def get_data(cls):
