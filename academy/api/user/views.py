@@ -98,12 +98,17 @@ class MaterialsView(UserAuthAPIView):
         user = request.user
         student = user.get_student()
 
-        training_materials = student.training.materials.prefetch_related('training_status')
-        return Response({
-            "data": [
-                training_material(materi, user) for materi in training_materials
-            ]
-        })
+        if student:
+            training_materials = student.get_training_materials()
+        else:
+            training_materials = None
+
+        if training_materials:
+            data = [training_material(materi, user) for materi in training_materials]
+        else:
+            data = []
+
+        return Response({"data": data})
 
 
 class GetGraduateView(UserAuthAPIView):
