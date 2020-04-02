@@ -138,6 +138,7 @@ class Setting(models.Model):
         help_text=_("Akan digunakan pada latar gelap"),
         blank=True, null=True
     )
+    hide_logo = models.BooleanField(default=False)
     site_name = models.CharField(max_length=50)
     footer_title = models.CharField(max_length=100, blank=True, null=True)
     footer_url = models.CharField(max_length=200, blank=True, null=True)
@@ -159,6 +160,9 @@ class Setting(models.Model):
         return self.name
 
     def get_logo_light(self, with_host=False):
+        if self.hide_logo:
+            return ""
+
         if self.logo_light:
             logo = self.logo_light.url
         else:
@@ -169,6 +173,9 @@ class Setting(models.Model):
         return logo
 
     def get_logo_dark(self, with_host=False):
+        if self.hide_logo:
+            return ""
+
         if self.logo_dark:
             logo = self.logo_dark.url
         else:
@@ -179,6 +186,9 @@ class Setting(models.Model):
         return logo
 
     def get_logo(self):
+        if self.hide_logo:
+            return ""
+
         if self.sidebar_color == self.SIDEBAR_COLOR.light:
             return self.get_logo_light
         else:

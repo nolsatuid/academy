@@ -22,7 +22,10 @@ class AdminPage(admin.ModelAdmin):
 
 
 class AdminSetting(admin.ModelAdmin):
-    list_display = ('site_name', 'color_theme', 'sidebar_color', 'footer_title')
+    list_display = (
+        'site_name', 'color_theme', 'sidebar_color', 'footer_title',
+        'hide_logo'
+    )
 
 
 admin.site.register(LogoPartner, AdminLogoPartners)

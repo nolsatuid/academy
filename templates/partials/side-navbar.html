@@ -5,8 +5,11 @@
     <!-- Brand Logo -->
     <!-- Brand Logo -->
     <a href="{% url 'website:index' %}" class="brand-link">
+        {% if not hide_logo %}
       <img src="{{ brand_logo }}" alt="{{ site_name }} Logo" class="brand-image"
            style="opacity: .8">
+        {% endif %}
+        
       <span class="brand-text font-weight-bold color-white">{{ site_name }}</span>
     </a>
 
