@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from django.conf import settings
+from django.templatetags.static import static
 
 from academy.apps.accounts.models import User
 
@@ -156,3 +157,29 @@ class Setting(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_logo_light(self, with_host=False):
+        if self.logo_light:
+            logo = self.logo_light.url
+        else:
+            return static('website/images/logo/logo-polos.png')
+
+        if with_host:
+            return settings.MEDIA_HOST + logo
+        return logo
+
+    def get_logo_dark(self, with_host=False):
+        if self.logo_dark:
+            logo = self.logo_dark.url
+        else:
+            return static('website/images/logo/logo-polos-warna-30.png')
+
+        if with_host:
+            return settings.MEDIA_HOST + logo
+        return logo
+
+    def get_logo(self):
+        if self.sidebar_color == self.SIDEBAR_COLOR.light:
+            return self.get_logo_light
+        else:
+            return self.get_logo_dark
