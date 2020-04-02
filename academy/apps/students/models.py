@@ -107,6 +107,13 @@ class Student(models.Model):
         super().save(*args, **kwargs)
         cache.delete(f'student-{self.user.id}')
 
+    def get_training_materials(self):
+        if hasattr(self, 'graduate'):
+            training_materials = self.user.get_training_materials()
+        else:
+            training_materials = self.training.materials.prefetch_related('training_status')
+        return training_materials
+
 
 class TrainingMaterial(models.Model):
     code = models.CharField(max_length=200)

@@ -7,14 +7,10 @@ from academy.apps.students.models import TrainingMaterial
 
 @login_required
 def materials(request):
-    user = request.user
-    student = user.get_student()
+    student = request.user.get_student()
 
     if student:
-        if hasattr(student, 'graduate'):
-            training_materials = user.get_training_materials()
-        else:
-            training_materials = student.training.materials.prefetch_related('training_status')
+        training_materials = student.get_training_materials()
     else:
         training_materials = None
 
