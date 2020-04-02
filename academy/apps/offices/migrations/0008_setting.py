@@ -7,7 +7,13 @@ from academy.apps.offices.models import Setting
 def initial_apperance(apps, schema_editor):
     # initial apperance setting data
     Setting.objects.update_or_create(
-        name="Apperance", defaults={'site_name': 'NolSatu'})
+        name="Apperance",
+        defaults={
+            'site_name': 'NolSatu',
+            'footer_title': 'PT. Boer Technology (Btech)',
+            'footer_url': 'https://btech.id/',
+        }
+    )
 
 
 class Migration(migrations.Migration):
