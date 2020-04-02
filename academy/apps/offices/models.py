@@ -1,3 +1,5 @@
+from rest_framework import serializers
+
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -186,25 +188,46 @@ class Setting(models.Model):
             return settings.MEDIA_HOST + logo
         return logo
 
-    def get_logo(self):
+    def get_logo(self, with_host=False):
         if self.hide_logo:
             return ""
 
         if self.sidebar_color == self.SIDEBAR_COLOR.light:
-            return self.get_logo_dark
+            return self.get_logo_dark(with_host)
         else:
-            return self.get_logo_light
+            return self.get_logo_light(with_host)
 
     @classmethod
     def get_data(cls):
         setting = cls.objects.first()
         key = f'setting-{setting.id}'
+        expired = 3600*24*7
+
         query_cached = cache.get(key, None)
         if query_cached:
             return query_cached
-        cache.set(key, setting, 3600*24)
+        cache.set(key, setting, expired)
+
+        # cache data to consume course app
+        cache.set(
+            "setting-apperance",
+            SettingSerializer(setting).data,
+            expired
+        )
         return setting
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         cache.delete(f'setting-{self.id}')
+
+
+class SettingSerializer(serializers.ModelSerializer):
+    logo_light = serializers.CharField(source='get_logo_light')
+    logo_dark = serializers.CharField(source='get_logo_dark')
+    logo = serializers.CharField(source='get_logo')
+    color_theme = serializers.CharField(source='get_color_theme_display')
+    sidebar_color = serializers.CharField(source='get_sidebar_color_display')
+
+    class Meta:
+        model = Setting
+        fields = ('__all__')
