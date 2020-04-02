@@ -105,7 +105,7 @@ class Page(ModelMeta, models.Model):
         'image': 'get_meta_image',
         'use_og': True
     }
-    
+
     def get_meta_image(self):
         if self.image:
             return settings.HOST + '/static/website/' + self.image.url
@@ -124,3 +124,34 @@ class Page(ModelMeta, models.Model):
             self.slug = generate_unique_slug(Page, self.title)
         super().save(*args, **kwargs)
 
+
+class Setting(models.Model):
+    name = models.CharField(max_length=50, default="Apperance")
+    logo_light = models.ImageField(
+        upload_to=image_upload_path('settings', use_dir_date=False),
+        help_text=_("Akan digunakan pada latar terang"),
+        blank=True, null=True
+    )
+    logo_dark = models.ImageField(
+        upload_to=image_upload_path('settings', use_dir_date=False),
+        help_text=_("Akan digunakan pada latar gelap"),
+        blank=True, null=True
+    )
+    site_name = models.CharField(max_length=50)
+    footer_title = models.CharField(max_length=100, blank=True, null=True)
+    COLOR_THEME = Choices(
+        (1, 'danger', 'Danger'),
+        (2, 'warning', 'Warning'),
+        (3, 'primary', 'Primary'),
+        (4, 'success', 'Success'),
+        (5, 'dark', 'Dark'),
+    )
+    color_theme = models.PositiveIntegerField(choices=COLOR_THEME, default=COLOR_THEME.danger)
+    SIDEBAR_COLOR = Choices(
+        (1, 'light', 'Light'),
+        (2, 'dark', 'Dark'),
+    )
+    sidebar_color = models.PositiveIntegerField(choices=SIDEBAR_COLOR, default=SIDEBAR_COLOR.light)
+
+    def __str__(self):
+        return self.name
