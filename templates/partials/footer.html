@@ -5,5 +5,5 @@
 
 </div>
 <!-- Default to the left -->
-<strong>&copy; {% now "Y" %} — <a href="https://btech.id/">PT. Boer Technology (Btech)</a>.</strong>
+<strong>&copy; {% now "Y" %} — <a href="{{ footer_url|default_if_none:'#' }}">{{ footer_title }}</a>.</strong>
 </footer>

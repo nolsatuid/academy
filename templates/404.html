@@ -207,7 +207,7 @@ button:hover {box-shadow: 0 0 20px 0 #C0D7DD;}
                 <p class="page-msg"> Oops! Halaman tidak ditemukan..</p>
                 <a href="{% url 'website:index' %}"><button class="go-back">Go Home</button></a>
                 <br><br>
-                <a href="{% url 'website:index' %}"><img src="{% static 'website/images/logo/logo-putih.png' %}" alt="nolsatu" class="mr-2" height="30px"></a>
+                <a href="{% url 'website:index' %}"><img src="{{ brand_logo_dark }}" alt="{{ site_name }}" class="mr-2" height="30px"></a>
             </div>
         </div>
         

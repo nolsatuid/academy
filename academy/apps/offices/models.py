@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from django.conf import settings
+from django.templatetags.static import static
+from django.core.cache import cache
 
 from academy.apps.accounts.models import User
 
@@ -105,7 +107,7 @@ class Page(ModelMeta, models.Model):
         'image': 'get_meta_image',
         'use_og': True
     }
-    
+
     def get_meta_image(self):
         if self.image:
             return settings.HOST + '/static/website/' + self.image.url
@@ -124,3 +126,85 @@ class Page(ModelMeta, models.Model):
             self.slug = generate_unique_slug(Page, self.title)
         super().save(*args, **kwargs)
 
+
+class Setting(models.Model):
+    name = models.CharField(max_length=50, default="Apperance")
+    logo_light = models.ImageField(
+        upload_to=image_upload_path('settings', use_dir_date=False),
+        help_text=_("Akan digunakan pada latar terang"),
+        blank=True, null=True
+    )
+    logo_dark = models.ImageField(
+        upload_to=image_upload_path('settings', use_dir_date=False),
+        help_text=_("Akan digunakan pada latar gelap"),
+        blank=True, null=True
+    )
+    hide_logo = models.BooleanField(default=False)
+    site_name = models.CharField(max_length=50)
+    footer_title = models.CharField(max_length=100, blank=True, null=True)
+    footer_url = models.CharField(max_length=200, blank=True, null=True)
+    COLOR_THEME = Choices(
+        (1, 'danger', 'danger'),
+        (2, 'warning', 'warning'),
+        (3, 'primary', 'primary'),
+        (4, 'success', 'success'),
+        (5, 'dark', 'dark'),
+    )
+    color_theme = models.PositiveIntegerField(choices=COLOR_THEME, default=COLOR_THEME.danger)
+    SIDEBAR_COLOR = Choices(
+        (1, 'light', 'light'),
+        (2, 'dark', 'dark'),
+    )
+    sidebar_color = models.PositiveIntegerField(choices=SIDEBAR_COLOR, default=SIDEBAR_COLOR.light)
+
+    def __str__(self):
+        return self.name
+
+    def get_logo_light(self, with_host=False):
+        if self.hide_logo:
+            return ""
+
+        if self.logo_light:
+            logo = self.logo_light.url
+        else:
+            return static('website/images/logo/logo-polos.png')
+
+        if with_host:
+            return settings.MEDIA_HOST + logo
+        return logo
+
+    def get_logo_dark(self, with_host=False):
+        if self.hide_logo:
+            return ""
+
+        if self.logo_dark:
+            logo = self.logo_dark.url
+        else:
+            return static('website/images/logo/logo-polos-warna-30.png')
+
+        if with_host:
+            return settings.MEDIA_HOST + logo
+        return logo
+
+    def get_logo(self):
+        if self.hide_logo:
+            return ""
+
+        if self.sidebar_color == self.SIDEBAR_COLOR.light:
+            return self.get_logo_dark
+        else:
+            return self.get_logo_light
+
+    @classmethod
+    def get_data(cls):
+        setting = cls.objects.first()
+        key = f'setting-{setting.id}'
+        query_cached = cache.get(key, None)
+        if query_cached:
+            return query_cached
+        cache.set(key, setting, 3600*24)
+        return setting
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'setting-{self.id}')
