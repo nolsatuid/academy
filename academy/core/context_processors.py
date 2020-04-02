@@ -3,8 +3,8 @@ from academy.apps.offices.models import Setting
 
 
 def nolsatu_context(request):
-    setting = Setting.objects.first()
-
+    setting = Setting.get_data()
+    print(setting)
     return {
         'nolsatu_course_home_page': settings.NOLSATU_COURSE_HOST,
         'site_name': setting.site_name,

@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.text import slugify
 from django.conf import settings
 from django.templatetags.static import static
+from django.core.cache import cache
 
 from academy.apps.accounts.models import User
 
@@ -193,3 +194,17 @@ class Setting(models.Model):
             return self.get_logo_light
         else:
             return self.get_logo_dark
+
+    @classmethod
+    def get_data(cls):
+        setting = cls.objects.first()
+        key = f'setting-{setting.id}'
+        query_cached = cache.get(key, None)
+        if query_cached:
+            return query_cached
+        cache.set(key, setting, 3600*24)
+        return setting
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'setting-{self.id}')
