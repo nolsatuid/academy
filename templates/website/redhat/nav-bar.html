@@ -1,9 +1,8 @@
 {% load static %}
 {% if not mobile_layout %}
 <nav class="navbar navbar-expand-lg navbar-light pt-4 px-0">
-    <span class="badge badge-danger">BETA</span>&nbsp;&nbsp;&nbsp;&nbsp;
     <img src="{{ brand_logo }}" alt="{{ site_name }}" class="mr-2" height="30px">
-    <a class="navbar-brand" href="{% url 'website:index' %}">{{site_name}}</a>
+    <a class="navbar-brand" href="{% url 'website:index' %}">{{ site_name }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-1"
             aria-controls="navbarNavDropdown-1"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -11,37 +10,9 @@
     </button>
     <div class="navbar-custom collapse navbar-collapse" id="navbarNavDropdown-1">
         <ul class="navbar-nav mr-auto">
-            {% comment %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                    data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    Home
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{% url 'website:index' %}">Home 1</a>
-                    <a class="dropdown-item" href="{% url 'website:home' %}">Home 2</a>
-                </div>
-            </li>
-            {% endcomment %}
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
                 <a class="nav-link" href="{% url 'website:index' %}#tentang-kami">Tentang Kami</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'website:index' %}#talenta">Talenta</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'website:index' %}#perusahaan">Perusahaan</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'website:index' %}#instruktur">Profil Instruktur</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'website:index' %}#hubungi-kami">Hubungi Kami</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'website:faq' %}">TILIL (Q&A)</a>
-            </li>
+            </li> {% endcomment %}
         </ul>
 
 

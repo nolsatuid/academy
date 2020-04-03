@@ -161,3 +161,10 @@ def blog(request, slug):
     }
 
     return render(request, 'website/blog.html', context)
+
+
+def home_redhat(request):
+    context = {
+        'title': 'Home'
+    }
+    return render(request, 'website/redhat/home2.html', context)

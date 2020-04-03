@@ -5,7 +5,7 @@ from . import views
 app_name = 'website'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.home_redhat, name='index'),
     path('profile/', views.profile, name='profile'),
     path('home/', views.home, name='home'),
     path('error404/', views.error_404, name='error404'),
