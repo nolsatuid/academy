@@ -169,7 +169,7 @@ class Setting(models.Model):
         if self.logo_light:
             logo = self.logo_light.url
         else:
-            return static('website/images/logo/logo-polos.png')
+            return static('website/images/logo/logo-polos-warna-30.png')
 
         if with_host:
             return settings.MEDIA_HOST + logo
@@ -182,7 +182,7 @@ class Setting(models.Model):
         if self.logo_dark:
             logo = self.logo_dark.url
         else:
-            return static('website/images/logo/logo-polos-warna-30.png')
+            return static('website/images/logo/logo-polos.png')
 
         if with_host:
             return settings.MEDIA_HOST + logo
