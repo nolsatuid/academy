@@ -131,6 +131,10 @@ class ForgotPasswordForm(forms.Form):
         return user
 
     def send_email(self, user):
+        # get setting appearance
+        from academy.apps.offices import utils
+        sett = utils.get_settings(serializer=True)
+
         data = {
             'token': default_token_generator.make_token(user),
             'uid': int_to_base36(user.id),
@@ -138,6 +142,7 @@ class ForgotPasswordForm(forms.Form):
             'user': user,
             'email_title': 'Lupa kata sandi'
         }
+        data.update(sett)
 
         kwargs = {
             'recipients': [user.email],

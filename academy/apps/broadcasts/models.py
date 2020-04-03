@@ -38,12 +38,18 @@ class Broadcast(models.Model):
         return self.title
 
     def preview(self, user):
+        # get setting appearance
+        from academy.apps.offices import utils
+        sett = utils.get_settings(serializer=True)
+
         data = {
             'host': settings.HOST,
             'user': user,
             'body': self.html_content,
             'email_title': self.title
         }
+        data.update(sett)
+
         html_message = render_to_string(
             'emails/universal_template.html', context=data)
         return html_message

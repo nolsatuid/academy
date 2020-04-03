@@ -91,6 +91,10 @@ class User(AbstractUser):
         return query_cached
 
     def notification_register(self):
+        # get setting appearance
+        from academy.apps.offices import utils
+        sett = utils.get_settings(serializer=True)
+
         data = {
             'token': default_token_generator.make_token(self),
             'uid': int_to_base36(self.id),
@@ -98,6 +102,7 @@ class User(AbstractUser):
             'user': self,
             'email_title': 'Aktivasi Akun'
         }
+        data.update(sett)
         kwargs = {
             'recipients': [self.email],
             'sender': settings.DEFAULT_FROM_EMAIL,
@@ -108,12 +113,18 @@ class User(AbstractUser):
         django_rq.enqueue(mail.send, **kwargs)
 
     def notification_status_training(self, training_materials):
+        # get setting appearance
+        from academy.apps.offices import utils
+        sett = utils.get_settings(serializer=True)
+
         data = {
             'host': settings.HOST,
             'user': self,
             'training_materials': training_materials,
             'email_title': 'Status Pelatihan'
         }
+        data.update(sett)
+
         subject = 'Status Pelatihan'
         html_message = render_to_string('emails/training-status.html', context=data)
         inbox = Inbox.objects.create(user=self, subject=subject, content=html_message)
@@ -276,18 +287,26 @@ class Inbox(models.Model):
         return inbox
 
     def preview(self):
+        # get setting appearance
+        from academy.apps.offices import utils
+        sett = utils.get_settings(serializer=True)
+
         data = {
             'host': settings.HOST,
             'user': self.user,
             'body': self.raw_content,
             'email_title': self.subject
         }
+        data.update(sett)
+
         html_message = render_to_string(
             'emails/universal_template.html', context=data)
         return html_message
 
     def send_notification(self, subject_as_content=False, send_email=True, send_push_notif=True):
-        title = "Info NolSatu" if subject_as_content else self.subject
+        from academy.apps.offices import utils
+        sett = utils.get_settings()
+        title = f"Info {sett.site_name}" if subject_as_content else self.subject
         short_content = self.subject if subject_as_content else self.raw_content
 
         # push notification

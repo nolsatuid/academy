@@ -68,11 +68,14 @@ class Student(models.Model):
     def notification_status(self):
         from academy.apps.accounts.models import Inbox
 
+        # get setting appearance
+        from academy.apps.offices import utils
+        sett = utils.get_settings(serializer=True)
+
         if self.status == self.STATUS.participants:
             template = 'emails/change_to_participant.html'
             title = 'Selamat, Anda menjadi peserta'
         elif self.status == self.STATUS.pre_test:
-            print("masuk sini")
             template = 'emails/change_to_pre_test.html'
             title = 'Selamat, Anda Mengikuti Test'
         elif self.status == self.STATUS.graduate:
@@ -90,6 +93,7 @@ class Student(models.Model):
             'graduate': status['graduate'],
             'indicator': settings.INDICATOR_GRADUATED
         }
+        data.update(sett)
 
         html_message = render_to_string(template, context=data)
         inbox = Inbox.objects.create(user=self.user, subject=title, content=html_message)
