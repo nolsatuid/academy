@@ -52,6 +52,10 @@ class ParticipantsRepeatForm(forms.Form):
         return batch
 
     def send_notification(self):
+        # get setting appearance
+        from academy.apps.offices import utils
+        sett = utils.get_settings(serializer=True)
+
         title = "Maaf, Anda belum bisa lanjut"
 
         context = {
@@ -59,6 +63,7 @@ class ParticipantsRepeatForm(forms.Form):
             'email_title': title,
             'indicator': settings.INDICATOR_GRADUATED
         }
+        context.update(sett)
 
         for data in self.users_repeat:
             context['user'] = data['user']
