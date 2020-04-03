@@ -22,7 +22,7 @@
           <!-- Navigation -->
           <nav class="navbar navbar-expand-lg navbar-dark pt-4 px-0">
             <a class="navbar-brand" href="#">
-              <img src="{{ brand_logo }}" class="mr-2" alt="{{site_name}}">
+              <img src="{{ brand_logo }}" class="mr-2" alt="{{site_name}}" style="width:70px;">
               {{site_name}}
             </a>
             {% comment %} <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,7 @@
         <div class="inner-wrapper mt-auto mb-auto container">
           <div class="row">
             <div class="col-md-7">
-                <h1 class="welcome-heading display-4 text-white">{{ site_name }}</h1>
+                <h1 class="welcome-heading display-4 text-white mb-4">{{ site_name }}</h1>
                 <p class="text-white">Kami bekerja sama dengan Kominfo memberikan pelatihan Containers, Kubernetes, and OpenShift akan mempelajari Teknologi Container, Kubernetes dan Red Hat Openshift sebagai Platform as a Service (PaaS). Pada pelatihan ini peserta akan diberikan teori dan praktik mengelola container images, membuat custom container images, role-based access control, melakukan konfigurasi service and container networking, scale a cluster, dan monitor cluster events and alerts.</p>
                 <a href="{% url 'website:accounts:sign_up' %}" class="btn btn-lg btn-outline-white btn-pill align-self-center">Daftar</a>
                 <a href="{% url 'website:accounts:login' %}" class="btn btn-lg btn-outline-white btn-pill align-self-center">Masuk</a>
