@@ -237,6 +237,7 @@ class SettingSerializer(serializers.ModelSerializer):
     logo = serializers.CharField(source='get_logo')
     color_theme = serializers.CharField(source='get_color_theme_display')
     sidebar_color = serializers.CharField(source='get_sidebar_color_display')
+    favicon = serializers.CharField(source='get_favicon')
 
     class Meta:
         model = Setting
