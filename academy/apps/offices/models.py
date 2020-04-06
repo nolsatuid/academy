@@ -141,6 +141,10 @@ class Setting(models.Model):
         help_text=_("Akan digunakan pada latar gelap"),
         blank=True, null=True
     )
+    favicon = models.ImageField(
+        upload_to=image_upload_path('settings', use_dir_date=False),
+        blank=True, null=True
+    )
     hide_logo = models.BooleanField(default=False)
     site_name = models.CharField(max_length=50)
     footer_title = models.CharField(max_length=100, blank=True, null=True)
@@ -196,6 +200,12 @@ class Setting(models.Model):
             return self.get_logo_light(with_host)
         else:
             return self.get_logo_dark(with_host)
+
+    def get_favicon(self):
+        if self.favicon:
+            return self.favicon.url
+        else:
+            return static('website/images/nolsatu.ico')
 
     @classmethod
     def get_data(cls):

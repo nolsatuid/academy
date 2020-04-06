@@ -15,4 +15,5 @@ def nolsatu_context(request):
         'brand_logo': setting.get_logo(),
         'brand_logo_dark': setting.get_logo_dark(),
         'brand_logo_light': setting.get_logo_light(),
+        'brand_favicon': setting.get_favicon(),
     }
