@@ -8,7 +8,7 @@
     <title>{{ site_name }} - {{title}}</title>
     {% include "meta/meta.html" %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{% static 'website/images/nolsatu.ico' %}">
+    <link rel="shortcut icon" href="{{brand_favicon}}">
     {% compress css %}
     <link rel="stylesheet" href="{% static 'bootstrap-4/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'website/css/font-awesome-4.min.css' %}">
