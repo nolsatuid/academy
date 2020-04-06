@@ -17,8 +17,8 @@ from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentFor
 
 @login_required
 def index(request):
-    if not hasattr(request.user, 'survey'):
-        return redirect("website:accounts:survey")
+    # if not hasattr(request.user, 'survey'):
+    #     return redirect("website:accounts:survey")
 
     user = request.user
     training = Training.objects.filter(is_active=True) \
