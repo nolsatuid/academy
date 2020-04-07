@@ -10,7 +10,7 @@
            style="opacity: .8">
         {% endif %}
         
-      <span class="brand-text font-weight-bold color-white">{{ site_name }}</span>
+      <span class="brand-text font-weight-bold color-white" style="font-size:88%;">{{ site_name }}</span>
     </a>
 
     <!-- Sidebar -->
@@ -99,6 +99,10 @@
                 <a href="{% url 'backoffice:index' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
                     <i class="nav-icon fas fa-user-cog"></i>
                     <p>Backoffice</p>
+                </a>
+                <a href="{{ nolsatu_course_home_page }}/backoffice" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                    <i class="nav-icon fas fa-user-cog"></i>
+                    <p>Backoffice Course</p>
                 </a>
             </li>
             {% endif %}
