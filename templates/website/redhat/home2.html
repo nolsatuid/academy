@@ -71,7 +71,7 @@
             <div class="col-md-7">
                 <h1 class="welcome-heading display-4 text-white mb-4">{{ site_name }}</h1>
                 <p class="text-white">Red Hat Digital Talent merupakan program kerjasama antara Red Hat dan Kementerian Komunikasi dan Informatika Republik Indonesia untuk penyelenggaraan Digital Talent Scholarship. Dua materi kami sediakan untuk mendukung peningkatan keahlian dan kompetensi sumber daya manusia Indonesia terkait komputasi awan (cloud computing) yaitu OpenStack Administration (IaaS Cloud) dan Container, Kubernetes dan OpenShift (PaaS Cloud).</p>
-                <a href="{% url 'website:accounts:sign_up' %}" class="btn btn-lg btn-outline-white btn-pill align-self-center">Daftar</a>
+                {% comment %} <a href="{% url 'website:accounts:sign_up' %}" class="btn btn-lg btn-outline-white btn-pill align-self-center">Daftar</a> {% endcomment %}
                 <a href="{% url 'website:accounts:login' %}" class="btn btn-lg btn-outline-white btn-pill align-self-center">Masuk</a>
             </div>
           </div>
