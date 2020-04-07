@@ -98,6 +98,12 @@ def sign_up(request):
     if request.user.is_authenticated:
         return redirect('website:accounts:index')
 
+    # special for rh academy
+    disable_register = True
+    if disable_register:
+        messages.warning(request, 'Mohon, pendaftaran belom dibuka.')
+        return redirect('website:accounts:index')
+
     form = SignupForm(request.POST or None)
     if form.is_valid():
         form.save()
