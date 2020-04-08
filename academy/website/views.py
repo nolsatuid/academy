@@ -151,13 +151,24 @@ def profile(request):
     )
 
 
-def blog(request, slug):
+def blog_details(request, slug):
     blog = get_object_or_404(Page, slug=slug)
 
     context = {
-        'title': 'Blog',
+        'title': blog.title,
         'blog': blog,
         'meta': blog.as_meta()
     }
 
-    return render(request, 'website/blog.html', context)
+    return render(request, 'website/blog-details.html', context)
+
+
+def blog_index(request):
+    blogs = Page.objects.filter(status=Page.STATUS.publish)
+
+    context = {
+        'title': 'Blog',
+        'blogs': blogs,
+    }
+
+    return render(request, 'website/blogs.html', context)

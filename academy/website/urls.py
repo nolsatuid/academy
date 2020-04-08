@@ -18,5 +18,6 @@ urlpatterns = [
     path('talent/', views.talent, name='talent'),
     path('company/', views.company, name='company'),
     path('statistic/', views.statistic, name='statistic'),
-    path('blog/<slug:slug>', views.blog, name='blog'),
+    path('blogs/<slug:slug>', views.blog_details, name='blog_details'),
+    path('blogs/', views.blog_index, name='blog_index'),
 ]
