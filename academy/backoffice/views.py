@@ -1,11 +1,16 @@
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 
 from django.db.models import Count, Q
 from django.db.models.functions import Coalesce
 from django.db import connection
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student, Training
+from academy.apps.offices.models import Setting
+from .form import SettingForm
+
 
 @staff_member_required
 def index(request):
@@ -32,3 +37,21 @@ def index(request):
     }
     
     return render(request, 'backoffice/index.html', context=context)
+
+
+@staff_member_required
+def setting_appearance(request):
+    setting = get_object_or_404(Setting, id=1)
+    form = SettingForm(request.POST or None, request.FILES or None, instance=setting)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Berhasil edit tampilan')
+        return redirect('backoffice:setting_appearance')
+
+    context = {
+        'title': 'Pengaturan Tampilan',
+        'menu_active': 'setting',
+        'form': form
+    }
+    return render(request, 'backoffice/form.html', context)
