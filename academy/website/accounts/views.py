@@ -7,7 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import Http404
 from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 
-from academy.apps.accounts.models import User, Inbox, Certificate
+from academy.apps.accounts.models import User, Inbox, Certificate, Profile
 from academy.apps.students.models import Training, Student
 from academy.apps.offices.models import BannerInfo
 from academy.core.utils import pagination
@@ -173,6 +173,9 @@ def edit_avatar(request):
 @login_required
 def edit_profile(request):
     user = request.user
+    if not hasattr(user, 'profile'):
+        Profile.objects.create(user=user, address="")
+        user.refresh_from_db()
 
     initial = {
         'first_name': user.first_name,
