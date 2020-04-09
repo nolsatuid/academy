@@ -18,4 +18,5 @@ urlpatterns = [
     path('sponsors/', include('academy.backoffice.sponsors.urls', namespace='sponsors')),
     path('broadcasts/', include('academy.backoffice.broadcasts.urls', namespace='broadcasts')),
     path('settings-appearance/', views.setting_appearance, name='setting_appearance'),
+    path('import-user/', views.import_users, name='import_users'),
 ]

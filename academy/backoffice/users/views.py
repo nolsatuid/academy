@@ -89,7 +89,7 @@ def participants(request):
 
     context = {
         'title': 'Peserta',
-        'menu_active': 'participants',
+        'menu_active': 'user',
         'users': users,
         'form': form,
         'user_count': user_count,

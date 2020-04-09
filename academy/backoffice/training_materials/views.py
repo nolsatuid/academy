@@ -134,7 +134,7 @@ def bulk_material_status(request):
 
     context = {
         'title': 'Status Pelatihan',
-        'menu_active': 'participants',
+        'menu_active': 'user',
         'form': form,
         'students': students,
         'table_heading': table_heading,
