@@ -8,11 +8,13 @@ from django.http import Http404
 from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 
 from academy.apps.accounts.models import User, Inbox, Certificate, Profile
-from academy.apps.students.models import Training, Student
+from academy.apps.students.models import Training
 from academy.apps.offices.models import BannerInfo
 from academy.core.utils import pagination
-from .forms import CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, ForgotPasswordForm, SurveyForm, \
-    AvatarForm
+from .forms import (
+    CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, 
+    ForgotPasswordForm, SurveyForm, AvatarForm
+)
 
 
 @login_required
@@ -21,10 +23,7 @@ def index(request):
     #     return redirect("website:accounts:survey")
 
     user = request.user
-    training = Training.objects.filter(is_active=True) \
-        .exclude(batch__contains='NSC').order_by('batch').last()
-    if not training:
-        training = Training.objects.create(batch="0")
+    training = Training.get_or_create_initial()
 
     if hasattr(user, 'profile'):
         student = request.user.get_student()

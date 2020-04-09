@@ -33,10 +33,7 @@ class ProfileView(UserAuthAPIView):
 
             # if not object student, create student
             if not profile.user.get_student():
-                training = Training.objects.filter(is_active=True) \
-                    .exclude(batch__contains='NSC').order_by('batch').last()
-                if not training:
-                    training = Training.objects.create(batch="0")
+                training = Training.get_or_create_initial()
 
                 form_student = StudentForm(data={'user': profile.user.id, 'training': training.id})
                 if form_student.is_valid():

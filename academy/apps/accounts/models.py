@@ -57,6 +57,7 @@ class User(AbstractUser):
     VIA = Choices(
         (1, 'web', 'Web'),
         (2, 'mobile', 'Mobile'),
+        (3, 'import_file', 'Import File'),
     )
     registered_via = models.PositiveIntegerField(choices=VIA, default=VIA.web, blank=True, null=True)
     has_valid_email = models.BooleanField(default=True)
