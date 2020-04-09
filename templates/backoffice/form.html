@@ -28,12 +28,12 @@
                                 <span class="text-danger">{{ form.non_field_errors }}</span>
                                 {% for field in form %}
                                     <div class="form-group col-md-12">
-                                        {% if field.name != 'open_registration' and field.name != 'is_visible' %}
+                                        {% if field.field.widget.input_type == 'checkbox' or field.field.widget.input_type == 'file' %}                                                    
                                             <label>{{ field.label }}</label><br>
-                                            {{ field|addclass:"form-control" }}
+                                            {{ field }}<br>
                                         {% else %}
                                             <label>{{ field.label }}</label><br>
-                                            {{ field }}
+                                            {{ field|addclass:"form-control" }}
                                         {% endif %}
                                         <small class="text-info">{{ field.help_text|safe }}</small>
                                         <span class="text-danger">{{ field.errors }}</span>
