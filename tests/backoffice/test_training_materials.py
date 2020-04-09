@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student, Training, TrainingStatus

@@ -28,6 +28,14 @@ class Training(models.Model):
     def __str__(self):
         return f"Batch {self.batch}"
 
+    @classmethod
+    def get_or_create_initial(cls):
+        training = cls.objects.filter(is_active=True) \
+            .exclude(batch__contains='NSC').order_by('batch').last()
+        if not training:
+            training = cls.objects.create(batch="0")
+        return training
+
 
 class StudentManager(models.Manager):
     def participants(self):

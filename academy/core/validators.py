@@ -13,6 +13,7 @@ from django.contrib.auth.password_validation import (MinimumLengthValidator as D
 def validate_email(email):
     return validate_email_address(email)
 
+
 def validate_email_address(email):
     try:
         django_validate_email(email)

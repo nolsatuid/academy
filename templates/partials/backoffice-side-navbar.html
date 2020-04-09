@@ -152,11 +152,25 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a href="{% url 'backoffice:setting_appearance' %}" class="nav-link {% if menu_active == 'setting' %}active{% endif %}">
-                    <i class="nav-icon fas fa-cog"></i>
-                    <p>Pengaturan Tampilan</p>
+            <li class="nav-item {% if menu_active == 'setting' %}has-treeview menu-open{% endif %}">
+                <a href="#" class="nav-link {% if menu_active == 'setting' %}active{% endif %}">
+                    <i class="nav-icon fas fas fa-cog"></i>
+                    <p>Pengaturan<i class="right fas fa-angle-left"></i></p>
                 </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url 'backoffice:setting_appearance' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Tampilan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'backoffice:import_users' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Impor Pengguna</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="nav-header">Data Master</li>
