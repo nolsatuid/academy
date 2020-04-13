@@ -8,6 +8,7 @@ from django.http import Http404
 from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 
 from academy.apps.accounts.models import User, Inbox, Certificate, Profile
+from academy.apps.offices.models import BannerInfo
 from academy.apps.students.models import Training
 from academy.core.utils import pagination
 from .forms import (
@@ -139,7 +140,8 @@ def profile(request):
         'user': user,
         'student': student,
         'graduate': graduate,
-        'survey': survey
+        'survey': survey,
+        'banner_info': BannerInfo.objects.filter(is_active=True).last()
     }
     return render(request, 'dashboard/profile.html', context)
 
