@@ -24,6 +24,13 @@ class ImportUserForm(forms.Form):
         help_text=f"Format kolom yang didikung `{', '.join(CSV_COLUMNS)}`",
         validators=[FileExtensionValidator(allowed_extensions=['csv'])]
     )
+    super_user = forms.BooleanField(
+        help_text="Buat akun sebagai super admin", required=False,
+        initial=False
+    )
+    status = forms.ChoiceField(
+        choices=User.ROLE
+    )
 
     def __init__(self, *args, **kwargs):
         self.reject_data = []
@@ -56,7 +63,8 @@ class ImportUserForm(forms.Form):
         user = User.objects.create_user(
             username=username, email=row[2], password="academy!@#",
             registered_via=User.VIA.import_file, role=User.ROLE.student,
-            first_name=row[0], last_name=row[1]
+            first_name=row[0], last_name=row[1], is_superuser=self.cleaned_data['super_user'],
+            is_staff=self.cleaned_data['super_user']
         )
         user.is_active = True
         user.save()
