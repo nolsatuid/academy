@@ -8,11 +8,11 @@ from django.http import Http404
 from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
 
 from academy.apps.accounts.models import User, Inbox, Certificate, Profile
-from academy.apps.students.models import Training
 from academy.apps.offices.models import BannerInfo
+from academy.apps.students.models import Training
 from academy.core.utils import pagination
 from .forms import (
-    CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm, 
+    CustomAuthenticationForm, SignupForm, ProfileForm, StudentForm,
     ForgotPasswordForm, SurveyForm, AvatarForm
 )
 
@@ -26,21 +26,7 @@ def index(request):
     training = Training.get_or_create_initial()
 
     if hasattr(user, 'profile'):
-        student = request.user.get_student()
-        graduate = None
-
-        if hasattr(student, 'graduate'):
-            graduate = student.graduate
-            graduate.generate_certificate_file()
-
-        context = {
-            'title': 'Dasbor',
-            'student': student,
-            'graduate': graduate,
-            'menu_active': 'dashboard',
-            'banner_info': BannerInfo.objects.last()
-        }
-        return render(request, 'dashboard/index.html', context)
+        return redirect("website:accounts:profile")
 
     form = ProfileForm(data=request.POST or None, files=request.FILES or None)
     if form.is_valid():
@@ -160,7 +146,8 @@ def profile(request):
         'user': user,
         'student': student,
         'graduate': graduate,
-        'survey': survey
+        'survey': survey,
+        'banner_info': BannerInfo.objects.filter(is_active=True).last()
     }
     return render(request, 'dashboard/profile.html', context)
 

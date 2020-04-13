@@ -31,16 +31,16 @@
             <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
             <li class="nav-item">
-                <a href="{% url 'website:accounts:index' %}" class="nav-link {% if menu_active == 'dashboard' %}active{% endif %}">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>Dashboard</p>
+                <a href="{% url 'website:accounts:profile' %}" class="nav-link {% if menu_active == 'profil' %}active{% endif %}">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>Profil</p>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{% url 'website:accounts:profile' %}" class="nav-link {% if menu_active == 'profil' %}active{% endif %}">
-                    <i class="nav-icon fas fa-user"></i>
-                    <p>Profil</p>
+                <a href="{% url 'website:accounts:inbox' %}" class="nav-link {% if menu_active == 'inbox' %}active{% endif %}">
+                    <i class="nav-icon fas fa-envelope"></i>
+                    <p>Inbox</p>
                 </a>
             </li>
 
@@ -96,11 +96,13 @@
             {% if user.is_staff == True %}
             <li class="nav-header">Admin Panel</li>
             <li class="nav-item">
-                <a href="{% url 'backoffice:index' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
+                <a href="{% url 'backoffice:index' %}" class="nav-link">
                     <i class="nav-icon fas fa-user-cog"></i>
                     <p>Backoffice</p>
                 </a>
-                <a href="{{ nolsatu_course_home_page }}/backoffice" class="nav-link {% if menu_active == '' %}active{% endif %}">
+            </li>
+            <li class="nav-item">
+                <a href="{{ nolsatu_course_home_page }}/backoffice" class="nav-link">
                     <i class="nav-icon fas fa-user-cog"></i>
                     <p>Backoffice Course</p>
                 </a>
