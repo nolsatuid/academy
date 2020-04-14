@@ -48,7 +48,10 @@ def complete_profile(request, campus_id):
         return redirect('website:campuses:index')
 
     signup_form = SignupForm(request.session['registration_data'])
-    form = ProfileForm(data=request.POST or None, files=request.FILES or None)
+    form = ProfileForm(
+        data=request.POST or None, files=request.FILES or None,
+        cv_required=False
+    )
     if signup_form.is_valid() and form.is_valid():
         user = signup_form.save()
         form.save(user)
