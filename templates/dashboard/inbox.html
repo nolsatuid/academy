@@ -74,7 +74,7 @@
                     <label for="check{{ inbox.id }}"></label>
                     </div>
                 </td>
-                <td class="mailbox-name"><a href="{% url 'website:accounts:inbox_detail' inbox.id %}">nolsatu.id</a></td>
+                <td class="mailbox-name"><a href="{% url 'website:accounts:inbox_detail' inbox.id %}">{{ site_name }}</a></td>
                 <td class="mailbox-subject"><span class="{{inbox.is_read|yesno:'font-weight-normal, font-weight-bold'}}">{{ inbox.subject|truncatechars:20 }}</span><br> {{ inbox.content|safe|truncatechars:50 }}
                 </td>
                 <td class="mailbox-attachment"></td>
