@@ -8,7 +8,7 @@ from academy.api.internal.serializers import (
 )
 from academy.api.response import ErrorResponse
 from academy.api.response import ErrorResponse
-from academy.apps.accounts.models import User
+from academy.apps.accounts.models import User, Certificate
 
 
 class DemoView(InternalAPIView):
@@ -50,3 +50,14 @@ class SendNotification(InternalAPIView):
             return Response({'message': 'Pesan berhasil disimpan'})
 
         return ErrorResponse(serializer=serializer)
+
+
+class RegenerateCertificateView(InternalAPIView):
+    def get(self, request, user_id):
+        certificates = Certificate.objects.filter(user=user_id)
+        if certificates:
+            for cert in certificates:
+                cert.generate()            
+            return Response({'message': 'Berhasil generate ulang sertifikat'})
+
+        return ErrorResponse(error_message='Gagal generate ulang sertifikat')
