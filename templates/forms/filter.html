@@ -31,5 +31,15 @@
 {% block extra_js %}
 <script>
     flatpickr(".date", {});
+
+    flatpickr("#id_start_date_time", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i"
+    });
+
+    flatpickr("#id_end_date_time", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i"
+    });
 </script>
 {% endblock%}
