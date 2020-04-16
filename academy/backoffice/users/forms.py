@@ -238,3 +238,74 @@ class ChangeToParticipantForm(forms.Form):
         student.training = self.cleaned_data['training']
         student.save()
         student.notification_status()
+
+
+class LastLoginForm(forms.Form):
+    start_date_time = forms.DateTimeField(
+        input_formats=["%Y-%m-%d %H:%M"], label="Tanggal Mulai", required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Tanggal Mulai'}),
+    )
+    end_date_time = forms.DateTimeField(
+        input_formats=["%Y-%m-%d %H:%M"], label="Tanggal Akhir", required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Tanggal Akhir'}),
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.users = None
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if self.errors:
+            return cleaned_data
+
+        start_date_time = cleaned_data['start_date_time']
+        end_date_time = cleaned_data['end_date_time']
+
+        if not start_date_time or not end_date_time:
+            return cleaned_data
+
+        if start_date_time > end_date_time:
+            self.add_error('start_date_time', "Tanggal mulai tidak bisa lebih dari tanggal akhir")
+
+        today = timezone.now()
+
+        if start_date_time > today:
+            self.add_error('start_date_time', "Tanggal mulai tidak boleh lebih hari ini")
+
+        if end_date_time > today:
+            self.add_error('end_date_time', "Tanggal Akhir tidak boleh lebih dari hari ini")
+
+        return cleaned_data
+
+    def get_data(self):
+        start_date_time = self.cleaned_data['start_date_time']
+        end_date_time = self.cleaned_data['end_date_time']
+
+        users = User.objects.exclude(is_superuser=True).exclude(is_staff=True)
+
+        if start_date_time and end_date_time:
+            start, end = normalize_datetime_range(start_date_time, end_date_time)
+            users = users.filter(date_joined__range=(start, end))
+
+        self.users = users
+        return self.users
+
+    def generate_to_csv(self):
+        csv_buffer = StringIO()
+        writer = csv.writer(csv_buffer)
+        writer.writerow([
+            'No.', 'Name', 'Username', 'Email', 'Masuk Terakhir'
+        ])
+
+        for index, user in enumerate(self.users, 1):
+            if user.last_login:
+                last_login = user.last_login.strftime("%d-%m-%Y %H:%M:%S")
+            else:
+                last_login = "-"
+
+            writer.writerow([
+                index, user.name, user.username, user.email, last_login
+            ])
+        return csv_buffer
