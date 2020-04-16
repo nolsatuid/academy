@@ -20,4 +20,5 @@ urlpatterns = [
           name='edit_student_batch'),
      path('<int:student_id>/status/', views.edit_status,
           name='edit_status'),
+     path('last-login/', views.last_login, name='last_login'),
 ]

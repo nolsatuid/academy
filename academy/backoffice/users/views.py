@@ -7,8 +7,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Student, Training
 from academy.core.utils import pagination
-from .forms import (BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
-                    BaseStatusTrainingFormSet, TrainingForm, StudentForm, ChangeStatusForm, ChangeToParticipantForm)
+from .forms import (
+    BaseFilterForm, ParticipantsFilterForm, ChangeStatusTraining,
+    BaseStatusTrainingFormSet, TrainingForm, StudentForm, ChangeStatusForm, 
+    ChangeToParticipantForm, LastLoginForm
+)
 
 
 @staff_member_required
@@ -254,3 +257,35 @@ def edit_status(request, student_id):
     }
 
     return render(request, 'backoffice/form.html', context)
+
+
+@staff_member_required
+def last_login(request):
+    user_list = User.objects.exclude(is_superuser=True).exclude(is_staff=True)
+    user_count = user_list.count()
+
+    download = request.GET.get('download', '')
+    form = LastLoginForm(request.GET or None)
+    if form.is_valid():
+        user_list = form.get_data()
+        if download:
+            csv_buffer = form.generate_to_csv()
+            response = HttpResponse(csv_buffer.getvalue(), content_type="text/csv")
+            response['Content-Disposition'] = 'attachment; filename=daftar-pengguna.csv'
+            return response
+
+    page = request.GET.get('page', 1)
+    users, page_range = pagination(user_list, page)
+
+    context = {
+        'title': 'Pengguna Masuk Terakhir',
+        'menu_active': 'user',
+        'users': users,
+        'form': form,
+        'user_count': user_count,
+        'filter_count': user_list.count(),
+        'query_params': 'start_date=%s&end_date=%s' % (
+            request.GET.get('start_date', ''), request.GET.get('end_date', '')),
+        'page_range': page_range
+    }
+    return render(request, 'backoffice/users/last-login.html', context)
