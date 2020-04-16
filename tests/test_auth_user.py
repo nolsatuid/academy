@@ -15,7 +15,7 @@ class AuthUserViewTest(TestCase):
         url = user.generate_auth_url()
         response = self.client.get(url)
         
-        # kalau belom punya survey harus redirect ke survey
+        # kalau belum punya survey harus redirect ke survey
         self.assertRedirects(response, '/accounts/survey/', status_code=302, target_status_code=200, fetch_redirect_response=True)
 
         #test untuk user yang sudah memiliki memiliki survey
