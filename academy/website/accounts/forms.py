@@ -58,11 +58,12 @@ class ProfileForm(forms.ModelForm):
         label=mark_safe('Curriculum Vitae<br/>'
                         '<a href="https://www.dropbox.com/s/nqjoadgifz7zpb0/template_cv_nolsatu.docx?dl=0" target="_blank">'
                         'Download Template CV</a>'),
-        help_text="File Type: .doc, .docx. Max 2 MB. Mohon gunakan template yang disediakan",
+        help_text="File Type: .doc, .docx, .pdf. Max 2 MB. Mohon gunakan template yang disediakan",
         max_mb_file_size=2,
         allowed_content_type=[
             'application/msword',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/pdf'
         ]
     )
 
