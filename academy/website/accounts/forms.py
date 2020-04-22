@@ -56,7 +56,7 @@ class ProfileForm(forms.ModelForm):
                                    label='Nomor Ponsel')
     curriculum_vitae = fields.FileFieldExtended(
         label='Curriculum Vitae',
-        help_text="File Type: .doc, .docx, .pdf. Max 2 MB. Mohon gunakan template yang disediakan",
+        help_text="File Type: .doc, .docx, .pdf. Max 2 MB.",
         max_mb_file_size=2,
         allowed_content_type=[
             'application/msword',
