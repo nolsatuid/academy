@@ -13,6 +13,7 @@ from django.urls import reverse
 from academy.backoffice.users.forms import BaseStatusTrainingFormSet
 from academy.apps.students.models import Student, Training, TrainingStatus, TrainingMaterial
 from academy.apps.accounts.models import User, Inbox
+from academy.core.email_utils import construct_email_args
 from academy.core.fields import TrainingMaterialField
 from academy.apps.graduates.models import Graduate, Rating
 
@@ -72,12 +73,11 @@ class ParticipantsRepeatForm(forms.Form):
 
             Inbox.objects.create(user=data['user'], subject=title, content=html_message)
 
-            kwargs = {
-                'recipients': data['user'].email,
-                'sender': settings.DEFAULT_FROM_EMAIL,
-                'subject': title,
-                'html_message': html_message
-            }
+            kwargs = construct_email_args(
+                recipients=data['user'].email,
+                subject=title,
+                content=html_message
+            )
             student = data['user'].get_student()
             student.status = Student.STATUS.repeat
             student.save(update_fields=['status'])
