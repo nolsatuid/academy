@@ -13,8 +13,8 @@ class ConfigEmailForm(forms.ModelForm):
 
 
 class TestEmailForm(forms.Form):
-    email_to = forms.EmailField()
-    message = forms.CharField(widget=forms.Textarea)
+    email_to = forms.EmailField(label="Penerima")
+    message = forms.CharField(widget=forms.Textarea, label="Pesan")
 
     def send_email(self):
         kwargs = construct_email_args(
