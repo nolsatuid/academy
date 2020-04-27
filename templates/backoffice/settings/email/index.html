@@ -1,0 +1,81 @@
+{% extends 'backoffice/base-adminlte.html' %}
+{% load form_tags %}
+
+{% block content %}
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="fa-pull-left">{{ title }}</h4>
+                <div class="fa-pull-right">
+                    <a href="{% url 'backoffice:settings:email_edit' %}" class="btn btn-primary btn-pill">Edit</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="content">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td class="font-weight-bold">Default From Email</td>
+                            <td>{{ config.from_email }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Email Host</td>
+                            <td>{{ config.email_host }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Email Host User</td>
+                            <td>{{ config.email_user }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Email Host Password</td>
+                            <td>{{ config.email_password }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Email Use TLS</td>
+                            <td>{{ config.use_tls }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Email Port</td>
+                            <td>{{ config.email_port }}</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Default Recipient Email</td>
+                            <td>{{ config.recipient_email }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer"></div>
+
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="fa-pull-left">Test Pengiriman Email</h4>
+            </div>
+            <div class="card-body">
+                <div class="content">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <span class="text-danger">{{ form.non_field_errors }}</span>
+                        {% for field in form %}
+                            <div class="form-group col-md-12">
+                                <label>{{ field.label }}</label><br>
+                                {{ field|addclass:"form-control" }}
+                                <small class="text-info">{{ field.help_text|safe }}</small>
+                                <span class="text-danger">{{ field.errors }}</span>
+                            </div>
+                        {% endfor %}
+
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary btn-pill"/>
+                            Kirim</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

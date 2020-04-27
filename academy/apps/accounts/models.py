@@ -19,6 +19,7 @@ from django.template.defaultfilters import slugify
 from django.http import HttpResponse
 from django.core.files.uploadedfile import SimpleUploadedFile
 
+from academy.core.email_utils import construct_email_args
 from academy.core.utils import image_upload_path, file_upload_path
 from academy.core.validators import validate_mobile_phone
 from academy.apps.students.models import TrainingStatus
@@ -104,13 +105,12 @@ class User(AbstractUser):
             'email_title': 'Aktivasi Akun'
         }
         data.update(sett)
-        kwargs = {
-            'recipients': [self.email],
-            'sender': settings.DEFAULT_FROM_EMAIL,
-            'subject': 'Aktivasi Akun',
-            'priority': PRIORITY.now,
-            'html_message': render_to_string('emails/register.html', context=data)
-        }
+        kwargs = construct_email_args(
+            recipients=[self.email],
+            subject='Aktivasi Akun',
+            content=render_to_string('emails/register.html', context=data),
+            priority=PRIORITY.now
+        )
         django_rq.enqueue(mail.send, **kwargs)
 
     def notification_status_training(self, training_materials):
@@ -131,12 +131,11 @@ class User(AbstractUser):
         inbox = Inbox.objects.create(user=self, subject=subject, content=html_message)
         inbox.send_notification(subject_as_content=True, send_email=False)
 
-        kwargs = {
-            'recipients': [self.email],
-            'sender': settings.DEFAULT_FROM_EMAIL,
-            'subject': subject,
-            'html_message': html_message
-        }
+        kwargs = construct_email_args(
+            recipients=[self.email],
+            subject=subject,
+            content=html_message
+        )
         django_rq.enqueue(mail.send, **kwargs)
 
     def get_count_training_status(self):
@@ -334,12 +333,11 @@ class Inbox(models.Model):
 
         # send email
         if send_email:
-            kwargs = {
-                'recipients': [self.user.email],
-                'sender': settings.DEFAULT_FROM_EMAIL,
-                'subject': self.subject,
-                'html_message': self.content
-            }
+            kwargs = construct_email_args(
+                recipients=[self.user.email],
+                subject=self.subject,
+                content=self.content
+            )
             django_rq.enqueue(mail.send, **kwargs)
 
 

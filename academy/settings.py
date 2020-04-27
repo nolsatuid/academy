@@ -147,17 +147,13 @@ AUTHENTICATION_BACKENDS = (
 
 # other app
 EMAIL_BACKEND = 'post_office.EmailBackend'
-DEFAULT_FROM_EMAIL = 'no-reply@nolsatu.id'
-EMAIL_HOST = 'mail.nolsatu.id'
-EMAIL_HOST_USER = 'no-reply@nolsatu.id'
-EMAIL_HOST_PASSWORD = '--ENTER_YOUR_PASSWORD--'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-DEFAULT_RECIPIANT_EMAIL = 'no-replay@nolsatu.id'
 
 POST_OFFICE = {
     'BATCH_SIZE': 50,
-    'THREADS_PER_PROCESS': 10
+    'THREADS_PER_PROCESS': 10,
+    'BACKENDS': {
+        'default': 'academy.core.email.backends.AcademySMTPEmailBackend'
+    }
 }
 
 # Internationalization

@@ -118,7 +118,7 @@ class Page(ModelMeta, models.Model):
         return self.category.all().values_list('name', flat=True)
 
     def __str__(self):
-        return self.title 
+        return self.title
 
     def save(self, *args, **kwargs):
         if self.slug:  # edit
@@ -211,7 +211,7 @@ class Setting(models.Model):
     def get_data(cls):
         setting = cls.objects.first()
         key = f'setting-{setting.id}'
-        expired = 3600*24*7
+        expired = 3600 * 24 * 7
 
         query_cached = cache.get(key, None)
         if query_cached:
@@ -242,3 +242,13 @@ class SettingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Setting
         fields = ('__all__')
+
+
+class ConfigEmail(models.Model):
+    from_email = models.EmailField(max_length=255, verbose_name="Default From Email")
+    email_host = models.CharField(max_length=255, verbose_name="Email Host")
+    email_user = models.CharField(max_length=255, verbose_name="Email Host User")
+    email_password = models.CharField(max_length=255, verbose_name="Email Host Password")
+    email_port = models.IntegerField(verbose_name="Email Port")
+    use_tls = models.BooleanField(verbose_name="Email Use TLS")
+    recipient_email = models.EmailField(max_length=255, verbose_name="Default Recipient Email")

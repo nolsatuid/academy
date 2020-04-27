@@ -11,6 +11,8 @@ from django.contrib.auth import get_user_model
 from model_utils import Choices
 from post_office import mail
 
+from academy.core.email_utils import construct_email_args
+
 
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username='deleted')[0]
@@ -107,12 +109,11 @@ class Student(models.Model):
         inbox = Inbox.objects.create(user=self.user, subject=title, content=html_message)
         inbox.send_notification(subject_as_content=True, send_email=False)
 
-        kwargs = {
-            'recipients': [self.user.email],
-            'sender': settings.DEFAULT_FROM_EMAIL,
-            'subject': title,
-            'html_message': html_message
-        }
+        kwargs = construct_email_args(
+            recipients=[self.user.email],
+            subject=title,
+            content=html_message
+        )
         django_rq.enqueue(mail.send, **kwargs)
 
     def save(self, *args, **kwargs):

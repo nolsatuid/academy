@@ -13,6 +13,7 @@ from academy.apps.accounts.models import User, Profile
 from academy.apps.students.models import Student
 from academy.apps.surveys.model import Survey
 from academy.core import fields
+from academy.core.email_utils import construct_email_args
 from academy.core.validators import validate_email, validate_mobile_phone, validate_username
 
 from post_office import mail
@@ -143,13 +144,12 @@ class ForgotPasswordForm(forms.Form):
         }
         data.update(sett)
 
-        kwargs = {
-            'recipients': [user.email],
-            'sender': settings.DEFAULT_FROM_EMAIL,
-            'subject': 'Lupa Kata Sandi',
-            'context': data,
-            'html_message': render_to_string('emails/forgot_password.html', context=data)
-        }
+        kwargs = construct_email_args(
+            recipients=[user.email],
+            subject='Lupa Kata Sandi',
+            content=render_to_string('emails/forgot_password.html', context=data)
+        )
+        kwargs['context'] = data
         django_rq.enqueue(mail.send, **kwargs)
 
 
