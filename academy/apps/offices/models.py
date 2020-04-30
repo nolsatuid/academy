@@ -146,7 +146,10 @@ class Setting(models.Model):
         blank=True, null=True
     )
     hide_logo = models.BooleanField(default=False)
-    site_name = models.CharField(max_length=50)
+    site_name = models.CharField(
+        max_length=50, help_text=_("Menyumbunyikan logo pada Nav bar"))
+    hide_site_name = models.BooleanField(
+        default=False, help_text=_("Menyumbunyikan site name pada Nav bar"))
     footer_title = models.CharField(max_length=100, blank=True, null=True)
     footer_url = models.CharField(max_length=200, blank=True, null=True)
     COLOR_THEME = Choices(

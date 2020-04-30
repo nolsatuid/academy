@@ -10,7 +10,13 @@
            style="opacity: .8">
         {% endif %}
         
-      <span class="brand-text font-weight-bold color-white" style="font-size:88%;">{{ site_name }}</span>
+        <span class="brand-text font-weight-bold color-white" style="font-size:88%;">
+        {% if not hide_site_name %}
+            {{ site_name }}
+        {% else %}
+            &nbsp;
+        {% endif %}
+        </span>
     </a>
 
     <!-- Sidebar -->
