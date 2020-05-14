@@ -12,6 +12,7 @@ def nolsatu_context(request):
         'footer_title': setting.footer_title,
         'footer_url': setting.footer_url,
         'hide_logo': setting.hide_logo,
+        'hide_site_name': setting.hide_site_name,
         'brand_logo': setting.get_logo(),
         'brand_logo_dark': setting.get_logo_dark(),
         'brand_logo_light': setting.get_logo_light(),
