@@ -364,20 +364,7 @@ class Certificate(models.Model):
     def generate(self):
         filename = 'certificate-%s.pdf' % slugify(self.user.name)
         filepath = '/tmp/%s' % filename
-        html_template = get_template('backoffice/graduates/certificate-dev.html')
-
-        last_name = (
-            self.user.last_name if self.user.last_name
-            else self.user.first_name
-        )
-
-        context = {
-            'certificate': self,
-            'user': self.user,
-            'host': settings.HOST,
-            'data_qr': f"{self.number}:{last_name}"
-        }
-        rendered_html = html_template.render(context)
+        rendered_html = self.preview()
 
         options = {
             'page-size': 'A4',
@@ -396,6 +383,21 @@ class Certificate(models.Model):
         upload_file = SimpleUploadedFile(filename, certificate_file.read())
         self.certificate_file = upload_file
         self.save()
+
+    def preview(self):
+        html_template = get_template('backoffice/graduates/certificate-dev.html')
+        last_name = (
+            self.user.last_name if self.user.last_name
+            else self.user.first_name
+        )
+        context = {
+            'certificate': self,
+            'user': self.user,
+            'host': settings.HOST,
+            'data_qr': f"{self.number}:{last_name}"
+        }
+        rendered_html = html_template.render(context)
+        return rendered_html
 
     def is_name_valid(self, last_name):
         cond1 = (self.user.last_name and self.user.last_name.lower() == last_name.lower())
