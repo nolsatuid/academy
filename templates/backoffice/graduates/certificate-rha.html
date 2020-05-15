@@ -1,6 +1,9 @@
 {% load qr_code %}
+{% load i18n %}
 <html>
   <head>
+    <meta name="pdfkit-page-size" content="Letter"/>
+    <meta name="pdfkit-orientation" content="Landscape"/>
     <style>
       @font-face {
         font-family: "Roboto";
@@ -18,33 +21,36 @@
       }
 
       body {
-        width: 1169px;
         font-family: Open Sans, Calibri, sans-serif, Roboto;
       }
 
       .bg-certificate {
           /* The image used */
-          background-image: url("{{ host }}/static/website/images/sertifikat_nolsatu_dev.png");
+          background-image: url("{{ host }}/static/website/images/rha_certificate_template.png");
 
           /* Full height */
           height: 100%;
-
+          width: 100%;
           /* Center and scale the image nicely */
           background-position: center;
           background-repeat: no-repeat;
           background-size: contain;
+
+          margin: 0px;
       }
 
       .user-name {
-        font-size: 30px;
-        text-align: left;
-        font-family: 'Roboto';
+        font-size: 24px;
+        text-align: center;
+        font-family: 'Roboto-Medium';
         color: #6b6b6b;
 
-        position: absolute;
-        top: 36px;
-        left: 0px;
-        width: 600px;
+        margin: auto;
+        padding: 10px;
+        width: 700px;
+
+        top: 230px;
+        position: relative;
       }
 
       .graduation-date {
@@ -53,9 +59,12 @@
         font-family: 'Roboto';
         color: #6b6b6b;
 
-        position: absolute;
-        top: 210px;
-        left: 0px;
+        margin: auto;
+        padding: 10px;
+
+        position: relative;
+        top: 640px;
+        left: -135px;
         width: 600px;
       }
 
@@ -66,46 +75,58 @@
       }
 
       .certificate-number {
-        position: absolute;
-        top: 360px;
-        left: 294px;
+        margin: auto;
+        padding: 10px;
+
         width: 300px;
         font-size: 18px;
-        text-align: left;
+        text-align: center;
         font-family: 'Dosis';
         color: #6b6b6b;
       }
 
       .certificate-desc {
-        position: absolute;
-        top: 96px;
-        left: 0px;
+        margin: auto;
+        padding: 10px;
+        width: 700px;
+
+        top: 235px;
+        position: relative;
+      }
+
+      .certificate-at {
+        margin: auto;
+        padding: 10px;
         width: 600px;
+
+        top: 270px;
+        position: relative;
       }
 
       p {
-        font-size: 22px;
-        text-align: left;
-        font-family: 'Roboto-Medium';
-        color: #e4be6c;
+        font-size: 20px;
+        text-align: center;
+        font-family: 'Roboto';
+        color: #6b6b6b;
       }
 
-      .user-data {
-        position: absolute;
-        top: 260px;
-        left: 251px;
-      }
     </style>
   </head>
   <body>
     <div class="bg-certificate">
-      <div class="user-data">
         <div class="user-name">{{ user.name }}</div>
-        <div class="graduation-date">{{ certificate.created|date:"F Y" }}</div>
+        <div class="graduation-date">
+            {% language 'en' %}
+                {{ certificate.created|date:"F Y" }}
+            {% endlanguage %}
+        </div>
         <div class="certificate-desc">
             <p>"{{ certificate.title }}"</p>
         </div>
-      </div>
+
+        <div class="certificate-at">
+            <p>Kominfo Online Academy 2020</p>
+        </div>
     </div>
 
   </body>

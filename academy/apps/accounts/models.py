@@ -367,7 +367,7 @@ class Certificate(models.Model):
         rendered_html = self.preview()
 
         options = {
-            'page-size': 'A4',
+            'page-size': 'Letter',
             'orientation': 'Landscape',
             'margin-top': '0in',
             'margin-right': '0in',
@@ -385,7 +385,7 @@ class Certificate(models.Model):
         self.save()
 
     def preview(self):
-        html_template = get_template('backoffice/graduates/certificate-dev.html')
+        html_template = get_template('backoffice/graduates/certificate-rha.html')
         last_name = (
             self.user.last_name if self.user.last_name
             else self.user.first_name
