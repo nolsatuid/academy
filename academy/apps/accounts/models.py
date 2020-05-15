@@ -373,7 +373,8 @@ class Certificate(models.Model):
             'margin-right': '0in',
             'margin-bottom': '0in',
             'margin-left': '0in',
-            'no-outline': None
+            'no-outline': None,
+            'dpi': 300
         }
         pdf = pdfkit.from_string(rendered_html, filepath, options=options)
         response = HttpResponse(pdf, content_type='application/pdf')
