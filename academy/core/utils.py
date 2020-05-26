@@ -1,5 +1,7 @@
 import datetime
 import feedparser
+from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from django.utils import timezone
 from django.utils.text import slugify
@@ -89,3 +91,32 @@ def generate_unique_slug(klass, field):
         numb += 1
     return unique_slug
 
+
+def sync_keycloak_user(id_token_object):
+    UserModel = get_user_model()
+
+    if getattr(settings, "KEYCLOAK_USE_PREFERRED_USERNAME", False):
+        username = id_token_object['preferred_username']
+    else:
+        username = id_token_object['sub']
+
+    if getattr(settings, "KEYCLOAK_USE_EMAIL_AS_USER_KEY", False):
+        user, _ = UserModel.objects.update_or_create(
+            email=id_token_object.get('email', ''),
+            defaults={
+                'username': username,
+                'first_name': id_token_object.get('given_name', ''),
+                'last_name': id_token_object.get('family_name', '')
+            }
+        )
+    else:
+        user, _ = UserModel.objects.update_or_create(
+            username=id_token_object.get('email', ''),
+            defaults={
+                'email': id_token_object.get('email', ''),
+                'first_name': id_token_object.get('given_name', ''),
+                'last_name': id_token_object.get('family_name', '')
+            }
+        )
+
+    return user
