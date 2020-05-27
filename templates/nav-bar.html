@@ -51,7 +51,7 @@
                     <a class="nav-link" href="{% url 'website:accounts:index' %}">{{ user.username }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'keycloak_logout' %}">Keluar</a>
+                    <a class="nav-link" href="{% url 'website:accounts:logout' %}">Keluar</a>
                 </li>
             </ul>
         {% else %}

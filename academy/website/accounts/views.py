@@ -28,7 +28,13 @@ def index(request):
     if hasattr(user, 'profile'):
         return redirect("website:accounts:profile")
 
-    form = ProfileForm(data=request.POST or None, files=request.FILES or None)
+    form = ProfileForm(
+        data=request.POST or None, files=request.FILES or None,
+        initial={
+            "first_name": user.first_name,
+            "last_name": user.last_name
+        }
+    )
     if form.is_valid():
         form.save(user)
         form_student = StudentForm(data={'user': user.id, 'training': training.id})
