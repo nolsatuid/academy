@@ -73,7 +73,8 @@ INSTALLED_APPS = [
     'django_rq',
     'fcm_django',
     'taggit',
-    "meta"
+    "meta",
+    "django_keycloak.apps.KeycloakAppConfig",
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_keycloak.middleware.BaseKeycloakMiddleware',
 ]
 
 SESSION_ENGINE = 'redis_sessions.session'
@@ -143,6 +145,7 @@ AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = (
     'academy.core.custom_auth.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'django_keycloak.auth.backends.KeycloakAuthorizationCodeBackend',
 )
 
 # other app
@@ -262,6 +265,12 @@ API_GATEWAY = [
 ]
 
 SERVER_KEY = "serverToServerAuthKeyKeepItVerySecret"
+
+# Keycloack
+KEYCLOAK_OIDC_PROFILE_MODEL = 'django_keycloak.OpenIdConnectProfile'
+KEYCLOAK_USE_PREFERRED_USERNAME = True
+KEYCLOAK_USE_EMAIL_AS_USER_KEY = True
+KEYCLOAK_SYNC_USER_MODEL = 'academy.core.utils.sync_keycloak_user'
 
 try:
     from .local_settings import *

@@ -41,6 +41,13 @@
                     <input type="submit" class="btn btn-primary btn-pill" value="Kirim" />
                 {% endif %}
             </div>
+            {% if page == "login" or page == "sign-up" %}
+                <div class="form-group col-md-12">
+                    <a href="{% url "keycloak_login" %}" class="btn btn-cta-primary btn-pill">
+                        Masuk dengan Btech Account
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </div>
 
