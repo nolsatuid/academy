@@ -183,3 +183,17 @@ body {
 .show-navbar-default {
     display: default;
 }
+
+a.btn-cta-primary,
+.btn-cta-primary {
+  background: #90c000;
+  border: 2px solid #90c000;
+  color: #fff;
+  text-transform: uppercase;
+}
+a.btn-cta-primary:hover,
+.btn-cta-primary:hover {
+  background: #51a746;
+  border: 2px solid #51a746;
+  color: #fff;
+}

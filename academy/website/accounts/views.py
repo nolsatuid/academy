@@ -30,7 +30,11 @@ def index(request):
 
     form = ProfileForm(
         data=request.POST or None, files=request.FILES or None,
-        cv_required=False
+        cv_required=False,
+        initial={
+            "first_name": user.first_name,
+            "last_name": user.last_name
+        }
     )
     if form.is_valid():
         form.save(user)
