@@ -25,7 +25,10 @@
               {% if not hide_logo %}
                 <img src="{{ brand_logo }}" class="mr-2" alt="{{site_name}}" style="width:70px;">
               {% endif %}
-              {{site_name}}
+
+              {% if not hide_site_name %}
+                {{site_name}}
+              {% endif %}
             </a>
             {% comment %} <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -72,7 +75,7 @@
           <div class="row">
             <div class="col-md-7">
                 <h1 class="welcome-heading display-4 text-white mb-4">{{ site_name }}</h1>
-                <p class="text-white">Adinusa (Akademi Digital Nusantara) adalah sebuah platform belajar untuk meningkatkan kempampuan dibidang Digital Informasi.</p>
+                <p class="text-white">Akademi Digital Nusantara adalah sebuah platform belajar untuk meningkatkan kempampuan dibidang Digital Informasi dengan materi terbaik dari berbagai vendor.</p>
                 <a href="{% url 'website:accounts:sign_up' %}" class="btn btn-lg btn-outline-white btn-pill align-self-center">Daftar</a>
                 <a href="{% url 'website:accounts:login' %}" class="btn btn-lg btn-outline-white btn-pill align-self-center">Masuk</a>
             </div>
@@ -98,7 +101,7 @@
       <footer>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container">
-            <a class="navbar-brand" href="#">&copy; {% now "Y" %} — {{site_name}}</a>
+            <a class="navbar-brand" href="{{ footer_url }}">&copy; {% now "Y" %} — {{footer_title}}</a>
             {% comment %} <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button> {% endcomment %}

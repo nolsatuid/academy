@@ -29,7 +29,7 @@ Dan ingat, setiap menit yang kalian luangkan untuk membaca ini. Ada ratusan bahk
 mendaftar. So, segera daftar karena setiap angkatan pun terbatas. NolSatu gratis, karena kami tau. Semua berawal dari Nol, \
 lalu menjadi Satu. Di NolSatu.''',
         keywords=[
-            'NolSatu', 'Open Source', 'Pelatihan', 'Gratis', 
+            'NolSatu', 'Open Source', 'Pelatihan', 'Gratis',
             'Cloud Computing', 'DevOps', 'Btech', 'Pemrograman'
         ],
         image=settings.HOST + '/static/website/images/logo/logo-polos-warna-30.png',
@@ -173,8 +173,8 @@ def blog_index(request):
     return render(request, 'website/blogs.html', context)
 
 
-def home_redhat(request):
+def home_custom(request):
     context = {
         'title': 'Home'
     }
-    return render(request, 'website/redhat/home2.html', context)
+    return render(request, 'website/custom/home2.html', context)
