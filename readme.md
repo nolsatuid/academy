@@ -27,6 +27,12 @@ Migrate database
 $ python manage.py migrate
 ```
 
+Run this command to seeding initial data settings
+
+```
+$ python manage.py seeding_initial_settings
+```
+
 Collect Static
 
 ```
