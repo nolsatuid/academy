@@ -13,7 +13,9 @@
     </div>
 
     <div class="inner-wrapper mt-auto mb-auto">
-        <img src="{{ brand_logo_light }}" alt="{{site_name}}" class="shard">
+        {% if not hide_logo %}
+            <img src="{{ brand_logo_light }}" alt="{{site_name}}" class="shard">
+        {% endif %}
         <h1>&nbsp;</h1>
         <h3>&nbsp;</h3>
         <br><br>
