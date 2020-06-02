@@ -213,25 +213,28 @@ class Setting(models.Model):
     @classmethod
     def get_data(cls):
         setting = cls.objects.first()
-        key = f'setting-{setting.id}'
+        key = f'setting-{settings.SESSION_COOKIE_DOMAIN}'
         expired = 3600 * 24 * 7
+
+        # cache data to consume course app
+        setting.set_cache_for_course(expired)
 
         query_cached = cache.get(key, None)
         if query_cached:
             return query_cached
         cache.set(key, setting, expired)
-
-        # cache data to consume course app
-        cache.set(
-            "setting-apperance",
-            SettingSerializer(setting).data,
-            expired
-        )
         return setting
+
+    def set_cache_for_course(self, expired):
+        key = f"course-appearance-{settings.SESSION_COOKIE_DOMAIN}"
+        cached = cache.get(key, None)
+        if not cached:
+            cache.set(key, SettingSerializer(self).data, expired)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         cache.delete(f'setting-{self.id}')
+        cache.delete(f"course-appearance-{settings.SESSION_COOKIE_DOMAIN}")
 
 
 class SettingSerializer(serializers.ModelSerializer):
