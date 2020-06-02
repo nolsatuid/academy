@@ -233,7 +233,7 @@ class Setting(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        cache.delete(f'setting-{self.id}')
+        cache.delete(f'setting-{settings.SESSION_COOKIE_DOMAIN}')
         cache.delete(f"course-appearance-{settings.SESSION_COOKIE_DOMAIN}")
 
 
