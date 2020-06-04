@@ -24,11 +24,14 @@
 
                             <form action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
-                                
+
                                 <span class="text-danger">{{ form.non_field_errors }}</span>
                                 {% for field in form %}
                                     <div class="form-group col-md-12">
-                                        {% if field.field.widget.input_type == 'checkbox' or field.field.widget.input_type == 'file' %}                                                    
+                                        {% if field.field.widget.input_type == 'checkbox' %}
+                                            {{ field }}
+                                            <label>{{ field.label }}</label><br>
+                                        {% elif  field.field.widget.input_type == 'file' %}
                                             <label>{{ field.label }}</label><br>
                                             {{ field }}<br>
                                         {% else %}
