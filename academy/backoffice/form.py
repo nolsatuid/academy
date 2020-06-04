@@ -134,12 +134,12 @@ class ImportUserForm(forms.Form):
         if self.cleaned_data['generate_username']:
             username = row[2].split('@')[0]
         else:
-            username = row[4]
+            username = row[4].strip()
         return username
 
     def get_password(self, row):
         if self.cleaned_data['default_password']:
             password = "academy!@#"
         else:
-            password = row[5]
+            password = row[5].strip()
         return password
