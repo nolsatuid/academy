@@ -6,7 +6,7 @@ from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
 
 from academy.apps.accounts.models import User, Profile
-from academy.apps.offices.models import Setting
+from academy.apps.offices.models import Setting, AuthSetting
 from academy.apps.students.models import Student, Training
 from academy.core import validators
 
@@ -20,6 +20,12 @@ class SettingForm(forms.ModelForm):
     class Meta:
         model = Setting
         exclude = ('name',)
+
+
+class AuthSettingForm(forms.ModelForm):
+    class Meta:
+        model = AuthSetting
+        fields = ('sign_with_btech',)
 
 
 class ImportUserForm(forms.Form):

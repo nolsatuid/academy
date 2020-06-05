@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from academy.apps.offices.models import Setting
+from academy.apps.offices.models import Setting, AuthSetting
 
 
 class Command(BaseCommand):
@@ -12,5 +12,12 @@ class Command(BaseCommand):
                 'site_name': 'NolSatu',
                 'footer_title': 'PT. Boer Technology (Btech)',
                 'footer_url': 'https://btech.id/',
+            }
+        )
+
+        AuthSetting.objects.update_or_create(
+            name="Authorization",
+            defaults={
+                'sign_with_btech': True
             }
         )

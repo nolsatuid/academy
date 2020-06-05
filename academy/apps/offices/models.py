@@ -258,3 +258,11 @@ class ConfigEmail(models.Model):
     email_port = models.IntegerField(verbose_name="Email Port")
     use_tls = models.BooleanField(verbose_name="Email Use TLS")
     recipient_email = models.EmailField(max_length=255, verbose_name="Default Recipient Email")
+
+
+class AuthSetting(models.Model):
+    name = models.CharField(max_length=50, default="Authorization")
+    sign_with_btech = models.BooleanField(default=True, verbose_name="Signin with Btech Account")
+
+    def __str__(self):
+        return self.sign_with_btech

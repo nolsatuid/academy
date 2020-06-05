@@ -35,18 +35,21 @@
                     <p class="help-block pull-right mt-2">
                         Punya Akun? <a href="{% url 'website:accounts:login' %}">Masuk</a>
                     </p>
+                    <div class="clearfix"></div>
                 {% elif page == "campus-registration" %}
                     <input type="submit" class="btn btn-primary btn-pill pull-right" value="Selanjutnya" />
                 {% else %}
                     <input type="submit" class="btn btn-primary btn-pill" value="Kirim" />
                 {% endif %}
             </div>
-            {% if page == "login" or page == "sign-up" %}
-                <div class="form-group col-md-12">
-                    <a href="{% url "keycloak_login" %}" class="btn btn-cta-primary btn-pill">
-                        Masuk dengan Btech Account
-                    </a>
-                </div>
+            {% if sign_with_btech %}
+                {% if page == "login" or page == "sign-up" %}
+                    <div class="form-group col-md-12">
+                        <a href="{% url "keycloak_login" %}" class="btn btn-cta-primary btn-pill float-right">
+                            Masuk dengan Btech Account
+                        </a>
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
     </div>
