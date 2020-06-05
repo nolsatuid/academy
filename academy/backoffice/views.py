@@ -60,8 +60,8 @@ def setting_appearance(request):
 
 @staff_member_required
 def setting_authorization(request):
-    setting = get_object_or_404(AuthSetting, id=1)
-    form = AuthSettingForm(request.POST or None, request.FILES or None, instance=setting)
+    setting = get_object_or_404(AuthSetting, name="Authorization")
+    form = AuthSettingForm(request.POST or None, instance=setting)
 
     if form.is_valid():
         form.save()
