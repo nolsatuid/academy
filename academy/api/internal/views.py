@@ -57,7 +57,18 @@ class RegenerateCertificateView(InternalAPIView):
         certificates = Certificate.objects.filter(user=user_id)
         if certificates:
             for cert in certificates:
-                cert.generate()            
+                cert.generate()
             return Response({'message': 'Berhasil generate ulang sertifikat'})
 
         return ErrorResponse(error_message='Gagal generate ulang sertifikat')
+
+
+class GetUserView(InternalAPIView):
+    def get(self, request):
+        email = request.GET.get('email')
+        username = request.GET.get('username')
+        if email:
+            user = get_object_or_404(User, email=email)
+        else:
+            user = get_object_or_404(User, username=username)
+        return Response(UserSerializer(user).data)
