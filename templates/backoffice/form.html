@@ -12,7 +12,9 @@
             <h4 class="fa-pull-left">
                 {{ title }}
             </h4>
-        </div>
+        </div>    
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="card-body">
             <div class="row-fluid">
                 <div class="row">
@@ -21,46 +23,40 @@
                     </div>
                     <div class=" col-md-12 col-lg-12 ">
                         <div class="tab-content">
-
-                            <form action="" method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-
-                                <span class="text-danger">{{ form.non_field_errors }}</span>
-                                {% for field in form %}
-                                    <div class="form-group col-md-12">
-                                        {% if field.field.widget.input_type == 'checkbox' %}
-                                            {{ field }}
-                                            <label>{{ field.label }}</label><br>
-                                        {% elif  field.field.widget.input_type == 'file' %}
-                                            <label>{{ field.label }}</label><br>
-                                            {{ field }}<br>
-                                        {% else %}
-                                            <label>{{ field.label }}</label><br>
-                                            {{ field|addclass:"form-control" }}
-                                        {% endif %}
-                                        <small class="text-info">{{ field.help_text|safe }}</small>
-                                        <span class="text-danger">{{ field.errors }}</span>
-                                    </div>
-                                {% endfor %}
-
+                            <span class="text-danger">{{ form.non_field_errors }}</span>
+                            {% for field in form %}
                                 <div class="form-group col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-pill"/>
-                                    {% if custom_button_title %}
-                                        {{ custom_button_title }}
+                                    {% if field.field.widget.input_type == 'checkbox' %}
+                                        {{ field }}
+                                        <label>{{ field.label }}</label><br>
+                                    {% elif  field.field.widget.input_type == 'file' %}
+                                        <label>{{ field.label }}</label><br>
+                                        {{ field }}<br>
                                     {% else %}
-                                        Simpan
+                                        <label>{{ field.label }}</label><br>
+                                        {{ field|addclass:"form-control" }}
                                     {% endif %}
-                                    </button>
+                                    <small class="text-info">{{ field.help_text|safe }}</small>
+                                    <span class="text-danger">{{ field.errors }}</span>
                                 </div>
-
-                            </form>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card-footer"></div>
-
+        <div class="card-footer">
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-primary btn-pill"/>
+                {% if custom_button_title %}
+                    {{ custom_button_title }}
+                {% else %}
+                    Simpan
+                {% endif %}
+                </button>
+            </div>
+        </div>
+    </form>
     </div>
 {% endblock %}
 
