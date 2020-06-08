@@ -20,4 +20,5 @@ urlpatterns = [
     path('settings-appearance/', views.setting_appearance, name='setting_appearance'),
     path('settings/', include('academy.backoffice.settings.urls', namespace='settings')),
     path('import-user/', views.import_users, name='import_users'),
+    path('settings-authorization/', views.setting_authorization, name='setting_authorization'),
 ]
