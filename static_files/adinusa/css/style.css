@@ -5,6 +5,11 @@
   background-image: linear-gradient(to left, #4D94FF 0%, #29C5FF 51%, #4D94FF 100%);
 }
 
+@font-face {
+  font-family: "Poppins";
+  src: url('../fonts/Poppins/Poppins-SemiBold.ttf');
+}
+
 /* line 6, E:/172 Etrain Education/172_Etrain_Education_html/sass/_extends.scss */
 .member_counter {
   background-image: -moz-linear-gradient(0deg, #4D94FF 0%, #29C5FF 100%);
