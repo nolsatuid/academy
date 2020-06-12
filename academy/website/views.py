@@ -181,4 +181,4 @@ def home_custom(request):
         'title': 'Home',
         'courses': courses[:3]
     }
-    return render(request, 'website/adinusa/home.html', context)
+    return render(request, 'website/home-adinusa.html', context)

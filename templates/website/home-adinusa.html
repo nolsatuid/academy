@@ -1,7 +1,8 @@
-{% extends 'website/adinusa/base.html' %}
+{% extends 'base-adinusa.html' %}
 {% load static %}
 
 {% block content %}
+    {% include 'website/navbar-adinusa.html' %}
     <!-- banner part start-->
     <section class="banner_part">
         <div class="container">
@@ -344,4 +345,5 @@
     </section>
     ::blog_part end::-->
 
+    {% include 'website/footer-adinusa.html' %}
 {% endblock %}
