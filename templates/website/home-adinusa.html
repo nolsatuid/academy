@@ -15,11 +15,11 @@
                             <p>Akademi Digital Nusantara (ADINUSA) merupakan platform untuk meningkatkan kemampuan di bidang teknologi informasi dengan materi pelatihan terbaik dari berbagai perusahaan digital global serta metode pelatihan teruji yang ditujukan untuk pelajar, mahasiswa, lulusan muda dan guru di Indonesia.</p>
                             
                             {% if not user.is_authenticated %}
-                            <a href="{{ course_link }}" class="btn_1">Lihat Kursus </a>
+                            <a href="{{ nolsatu_course_home_page }}" class="btn_1">Lihat Kursus </a>
                             <a href="{% url 'website:accounts:sign_up' %}" class="btn_2">Daftar </a>
                             {% else %}
-                            <a href="{{ course_link }}" class="btn_1">Semua Kursus </a>
-                            <a href="{{ course_link }}/courses/" class="btn_2">Kursus Saya </a>
+                            <a href="{{ nolsatu_course_home_page }}" class="btn_1">Semua Kursus </a>
+                            <a href="{{ nolsatu_course_home_page }}/courses/" class="btn_2">Kursus Saya </a>
                             {% endif %}
                         </div>
                     </div>
