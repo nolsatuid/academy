@@ -10,16 +10,16 @@
                 <div class="col-lg-6 col-xl-6">
                     <div class="banner_text">
                         <div class="banner_text_iner">
-                            <h5>Tuliskan kutipan disini</h5>
+                            <h5>Mempersempit kesenjangan antara pendidikan dan industri</h5>
                             <h1>Akademi Digital Nusantara</h1>
-                            <p>Akademi Digital Nusantara adalah sebuah platform belajar untuk meningkatkan kempampuan dibidang Digital Informasi dengan materi terbaik dari berbagai vendor.</p>
+                            <p>Akademi Digital Nusantara (ADINUSA) merupakan platform untuk meningkatkan kemampuan di bidang teknologi informasi dengan materi pelatihan terbaik dari berbagai perusahaan digital global serta metode pelatihan teruji yang ditujukan untuk pelajar, mahasiswa, lulusan muda dan guru di Indonesia.</p>
                             
                             {% if not user.is_authenticated %}
-                            <a href="#" class="btn_1">Lihat Kursus </a>
+                            <a href="{{ course_link }}" class="btn_1">Lihat Kursus </a>
                             <a href="{% url 'website:accounts:sign_up' %}" class="btn_2">Daftar </a>
                             {% else %}
-                            <a href="#" class="btn_1">Semua Kursus </a>
-                            <a href="#" class="btn_2">Kursus Saya </a>
+                            <a href="{{ course_link }}" class="btn_1">Semua Kursus </a>
+                            <a href="{{ course_link }}/courses/" class="btn_2">Kursus Saya </a>
                             {% endif %}
                         </div>
                     </div>
@@ -28,7 +28,7 @@
         </div>
     </section>
     <!-- banner part start-->
-
+{% comment %}
     <!-- feature_part start-->
     <section class="feature_part">
         <div class="container">
@@ -344,6 +344,6 @@
         </div>
     </section>
     ::blog_part end::-->
-
+{% endcomment %}
     {% include 'website/footer-adinusa.html' %}
 {% endblock %}

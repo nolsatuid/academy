@@ -179,6 +179,7 @@ def home_custom(request):
     
     context = {
         'title': 'Home',
-        'courses': courses[:3]
+        'courses': courses[:3],
+        'course_link': f'{settings.NOLSATU_COURSE_HOST}'
     }
     return render(request, 'website/home-adinusa.html', context)

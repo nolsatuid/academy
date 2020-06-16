@@ -15,6 +15,7 @@
                     <div class="collapse navbar-collapse main-menu-item justify-content-end"
                         id="navbarSupportedContent">
                         <ul class="navbar-nav align-items-center">
+                            {% comment %}
                             <li class="nav-item active">
                                 <a class="nav-link" href="{% url 'website:index' %}">Home</a>
                             </li>
@@ -27,6 +28,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Kontak</a>
                             </li>
+                            {% endcomment %}
                             {% if not user.is_authenticated %}
                             <li class="d-none d-lg-block">
                                 <a class="btn_1" href="{% url 'website:accounts:login' %}">Masuk</a>
