@@ -547,7 +547,7 @@ ul {
   /* line 24, E:/172 Etrain Education/172_Etrain_Education_html/sass/_button.scss */
   .btn_1 {
     padding: 10px 30px;
-    margin-top: 25px;
+    /* margin-top: 25px; */
   }
 }
 
@@ -2521,6 +2521,7 @@ ul {
   /* line 34, E:/172 Etrain Education/172_Etrain_Education_html/sass/_banner.scss */
   .banner_part .banner_text .banner_text_iner {
     vertical-align: bottom;
+    padding-top: 290px;
   }
 }
 
@@ -7353,4 +7354,12 @@ color: #ccc;
 
 .help_text ul{
   padding: 5px 0px;
+}
+
+.navbar-btn1 {
+  display: flex !important;
+  flex-basis: auto;
+  justify-content: flex-end !important;
+  flex-grow: 1;
+  align-items: center;
 }
