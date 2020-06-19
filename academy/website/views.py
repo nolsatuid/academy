@@ -14,6 +14,7 @@ from academy.apps.accounts.models import User
 from academy.apps.offices.models import LogoPartner, LogoSponsor, Page
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
+from academy.core.utils import call_internal_api
 
 from .forms import CertificateVerifyForm
 from meta.views import Meta
@@ -174,7 +175,10 @@ def blog_index(request):
 
 
 def home_custom(request):
+    courses = call_internal_api('get', url=settings.HOST + f'/api/course/list').json()
+    
     context = {
-        'title': 'Home'
+        'title': 'Home',
+        'courses': courses[:3]
     }
-    return render(request, 'website/custom/home2.html', context)
+    return render(request, 'website/home-adinusa.html', context)

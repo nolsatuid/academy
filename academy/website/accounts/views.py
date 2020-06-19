@@ -91,7 +91,7 @@ def sign_up(request):
         return redirect('website:accounts:index')
 
     # special for rh academy
-    disable_register = True
+    disable_register = False
     if disable_register:
         messages.warning(request, 'Mohon, pendaftaran belom dibuka.')
         return redirect('website:accounts:index')
