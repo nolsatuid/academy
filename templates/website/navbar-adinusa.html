@@ -49,6 +49,20 @@
                 </nav>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show" {% endif %} role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span class="mt-3 mr-2" aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
     </div>
 </header>
 <!-- Header part end-->
