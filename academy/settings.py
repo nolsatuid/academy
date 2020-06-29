@@ -270,7 +270,7 @@ SERVER_KEY = "serverToServerAuthKeyKeepItVerySecret"
 KEYCLOAK_OIDC_PROFILE_MODEL = 'django_keycloak.OpenIdConnectProfile'
 KEYCLOAK_USE_PREFERRED_USERNAME = True
 KEYCLOAK_USE_EMAIL_AS_USER_KEY = True
-KEYCLOAK_SYNC_USER_MODEL = 'academy.core.utils.sync_keycloak_user'
+KEYCLOAK_SYNC_USER_MODEL_HANDLER = 'academy.core.utils.sync_keycloak_user'
 
 try:
     from .local_settings import *
