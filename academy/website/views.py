@@ -1,4 +1,5 @@
 import json
+from json.decoder import JSONDecodeError
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
@@ -175,10 +176,15 @@ def blog_index(request):
 
 
 def home_custom(request):
-    courses = call_internal_api('get', url=settings.HOST + f'/api/course/list').json()
-    
+    # dinonaktifin dulu sampe beneran dipake
+    # try:
+    #     courses = call_internal_api('get', url=settings.HOST + f'/api/course/list').json()
+    #     courses = courses[:3]
+    # except JSONDecodeError:
+    #     courses = []
+
     context = {
         'title': 'Home',
-        'courses': courses[:3]
+        'courses': []
     }
     return render(request, 'website/home-adinusa.html', context)
