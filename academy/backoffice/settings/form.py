@@ -17,9 +17,9 @@ class TestEmailForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea, label="Pesan")
 
     def send_email(self):
-        kwargs = construct_email_args(
-            recipients=[self.cleaned_data['email_to']],
+        mail.send(
+            [self.cleaned_data['email_to']],
             subject="Test Email",
-            content=self.cleaned_data['message']
+            message=self.cleaned_data['message'],
+            priority='now',
         )
-        django_rq.enqueue(mail.send, **kwargs)
