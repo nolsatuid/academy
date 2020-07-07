@@ -1,4 +1,4 @@
-from django.test import TestCase
+from tests import AcademyTestCase
 
 from academy.apps.accounts.models import User
 from academy.apps.students.models import Training, Student
@@ -6,7 +6,7 @@ from academy.website.accounts.forms import StudentForm, SignupForm
 from academy.apps.campuses.models import Campus
 
 
-class AccountsTestForm(TestCase):
+class AccountsTestForm(AcademyTestCase):
 
     def test_signup_form(self):
         data = {
