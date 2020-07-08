@@ -1,10 +1,10 @@
-from django.test import TestCase
+from tests import AcademyTestCase
 
 from academy.apps.accounts.models import User
 from academy.apps.graduates.models import Graduate
 
 
-class GraduateTest(TestCase):
+class GraduateTest(AcademyTestCase):
     fixtures = ['accounts.json', 'students.json']
 
     def test_generate_certificate_number(self):

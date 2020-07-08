@@ -351,16 +351,20 @@ def inbox(request):
     user = request.user
     inbox_list = Inbox.objects.filter(user=user).order_by('-sent_date')
 
-    #pagination
+    # pagination
     length = 50
-    page = request.GET.get('page', 1)
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        page = 1
+
     inboxs, page_range = pagination(inbox_list, page, length)
     detail_page = {
         'page': page,
-        'next': int(page)+1,
-        'prev': int(page)-1,
-        'start': length*int(page)-length+1,
-        'end': length*int(page),
+        'next': page + 1,
+        'prev': page - 1,
+        'start': length * page - length+1,
+        'end': length * page,
         'total': inbox_list.count()
     }
 
