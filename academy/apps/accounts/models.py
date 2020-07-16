@@ -46,20 +46,23 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True, null=True)
-    phone = models.CharField(max_length=30, blank=True, null=True, default=None,
-                             validators=[validate_mobile_phone])
     ROLE = Choices(
         (1, 'student', 'Student'),
         (2, 'trainer', 'Trainer'),
-        (2, 'company', 'Company'),
+        (3, 'company', 'Company'),
+        (4, 'vendor', 'Vendor'),
     )
-    role = models.PositiveIntegerField(choices=ROLE, blank=True, null=True)
+
     VIA = Choices(
         (1, 'web', 'Web'),
         (2, 'mobile', 'Mobile'),
         (3, 'import_file', 'Import File'),
     )
+
+    email = models.EmailField(unique=True, null=True)
+    phone = models.CharField(max_length=30, blank=True, null=True, default=None,
+                             validators=[validate_mobile_phone])
+    role = models.PositiveIntegerField(choices=ROLE, blank=True, null=True)
     registered_via = models.PositiveIntegerField(choices=VIA, default=VIA.web, blank=True, null=True)
     has_valid_email = models.BooleanField(default=True)
     USERNAME_FIELD = 'email'
