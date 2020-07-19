@@ -9,13 +9,3 @@ update-to-development:
     - /-DEV$/
   tags:
     - runner-development
-
-
-update-to-production:
-  stage: update
-  script:
-    - sudo chmod +x /var/www/html/nolsatu_test/prod-academyupdate.sh && sudo bash /var/www/html/academy/prod-academyupdate.sh
-  only:
-    - /-PROD$/
-  tags:
-    - runner-production
