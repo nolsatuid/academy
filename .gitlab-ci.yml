@@ -2,29 +2,25 @@ stages:
 - update
 
 update-to-development:
-  rules:
-    - if: '$CI_COMMIT_TAG != null' 
-    - if: '$CI_COMMIT_BRANCH != "master"'
-    - if: '$CI_DEFAULT_BRANCH == "master"'
   stage: update
   script:
     - sudo chmod +x /var/www/html/academy/dev-academyupdate.sh && sudo bash /var/www/html/academy/dev-academyupdate.sh
-#  only:
-#    - /-DEV$/
-#    - master
+  only:
+    - /-DEV$/
+    - master
+  except:
+    - pushes
   tags:
     - runner-development
 
 update-to-development:
-  rules:
-    - if: '$CI_COMMIT_TAG != null'
-    - if: '$CI_COMMIT_BRANCH != "dev.adinusa.id"'
-    - if: '$CI_DEFAULT_BRANCH == "dev.adinusa.id"'
   stage: update
   script:
     - sudo chmod +x /var/www/html/devadinusaid/dev-adinusaupdate.sh && sudo bash /var/www/html/devadinusaid/dev-adinusaupdate.sh
-#  only:
-#    - /-DEV-ADINUSA$/
-#    - dev.adinusa.id
+  only:
+    - /-DEV-ADINUSA$/
+    - dev.adinusa.id
+  except:
+    - pushes
   tags:
     - runner-development
