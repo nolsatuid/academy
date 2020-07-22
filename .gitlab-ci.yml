@@ -8,8 +8,7 @@ update-to-development:
   when: manual
   only:
     - /-DEV$/
-    refs:
-      - master
+    - master
   tags:
     - runner-development
 stages:
@@ -19,10 +18,9 @@ update-to-development:
   stage: update
   script:
     - sudo chmod +x /var/www/html/devadinusaid/dev-adinusaupdate.sh && sudo bash /var/www/html/devadinusaid/dev-adinusaupdate.sh
+  when: manual
   only:
     - /-DEV-ADINUSA$/
-    refs:
-      - dev.adinusa.id
-
+    - dev.adinusa.id
   tags:
     - runner-development
