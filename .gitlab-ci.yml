@@ -7,5 +7,18 @@ update-to-development:
     - sudo chmod +x /var/www/html/academy/dev-academyupdate.sh && sudo bash /var/www/html/academy/dev-academyupdate.sh
   only:
     - /-DEV$/
+    - master
+  tags:
+    - runner-development
+stages:
+- update
+
+update-to-development:
+  stage: update
+  script:
+    - sudo chmod +x /var/www/html/devadinusaid/dev-adinusaupdate.sh && sudo bash /var/www/html/devadinusaid/dev-adinusaupdate.sh
+  only:
+    - /-DEV-ADINUSA$/
+    - dev.adinusa.id
   tags:
     - runner-development
