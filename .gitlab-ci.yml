@@ -9,7 +9,7 @@ update-to-development:
     - /-DEV$/
     - master
   except:
-    - pushes
+    - branches
   tags:
     - runner-development
 
@@ -21,6 +21,6 @@ update-to-development:
     - /-DEV-ADINUSA$/
     - dev.adinusa.id
   except:
-    - pushes
+    - branches
   tags:
     - runner-development
