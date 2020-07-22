@@ -2,25 +2,27 @@ stages:
 - update
 
 update-to-development:
+  rules:
+    - if: '$CI_COMMIT_TAG != ""'
   stage: update
   script:
     - sudo chmod +x /var/www/html/academy/dev-academyupdate.sh && sudo bash /var/www/html/academy/dev-academyupdate.sh
   only:
-    refs:
-      - /-DEV$/
-      - master
+    - /-DEV$/
+    - master
   tags:
     - runner-development
 stages:
 - update
 
 update-to-development:
+  rules:
+    - if: '$CI_COMMIT_TAG != ""'
   stage: update
   script:
     - sudo chmod +x /var/www/html/devadinusaid/dev-adinusaupdate.sh && sudo bash /var/www/html/devadinusaid/dev-adinusaupdate.sh
   only:
-    refs:
-      - /-DEV-ADINUSA$/
-      - dev.adinusa.id
+    - /-DEV-ADINUSA$/
+    - dev.adinusa.id
   tags:
     - runner-development
