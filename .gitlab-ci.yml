@@ -5,10 +5,10 @@ update-to-development:
   stage: update
   script:
     - sudo chmod +x /var/www/html/academy/dev-academyupdate.sh && sudo bash /var/www/html/academy/dev-academyupdate.sh
-  when: manual
   only:
-    - /-DEV$/
-    - master
+    refs:
+      - /-DEV$/
+      - master
   tags:
     - runner-development
 stages:
@@ -18,9 +18,9 @@ update-to-development:
   stage: update
   script:
     - sudo chmod +x /var/www/html/devadinusaid/dev-adinusaupdate.sh && sudo bash /var/www/html/devadinusaid/dev-adinusaupdate.sh
-  when: manual
   only:
-    - /-DEV-ADINUSA$/
-    - dev.adinusa.id
+    refs:
+      - /-DEV-ADINUSA$/
+      - dev.adinusa.id
   tags:
     - runner-development
