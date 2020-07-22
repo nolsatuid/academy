@@ -3,8 +3,9 @@ stages:
 
 update-to-development:
   rules:
-    - if: '$CI_COMMIT_TAG != null'
-    - branch: master
+    - if: '$CI_COMMIT_TAG != null' 
+    - if: '$CI_COMMIT_BRANCH != "master"'
+    - if: '$CI_DEFAULT_BRANCH == "master"'
   stage: update
   script:
     - sudo chmod +x /var/www/html/academy/dev-academyupdate.sh && sudo bash /var/www/html/academy/dev-academyupdate.sh
@@ -17,7 +18,8 @@ update-to-development:
 update-to-development:
   rules:
     - if: '$CI_COMMIT_TAG != null'
-    - branch: dev.adinusa.id
+    - if: '$CI_COMMIT_BRANCH != "dev.adinusa.id"'
+    - if: '$CI_DEFAULT_BRANCH == "dev.adinusa.id"'
   stage: update
   script:
     - sudo chmod +x /var/www/html/devadinusaid/dev-adinusaupdate.sh && sudo bash /var/www/html/devadinusaid/dev-adinusaupdate.sh
