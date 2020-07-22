@@ -9,7 +9,7 @@ update-to-development:
   only:
     - /-DEV$/
     refs:
-    - master
+      - master
   tags:
     - runner-development
 stages:
@@ -22,6 +22,7 @@ update-to-development:
   only:
     - /-DEV-ADINUSA$/
     refs:
-    - dev.adinusa.id
+      - dev.adinusa.id
+
   tags:
     - runner-development
