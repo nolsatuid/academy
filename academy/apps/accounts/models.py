@@ -389,7 +389,7 @@ class Certificate(models.Model):
         self.save()
 
     def preview(self):
-        html_template = get_template('backoffice/graduates/certificate-rha.html')
+        html_template = get_template('backoffice/graduates/certificate-adinusa.html')
         last_name = (
             self.user.last_name if self.user.last_name
             else self.user.first_name
