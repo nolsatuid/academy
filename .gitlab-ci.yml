@@ -1,0 +1,50 @@
+stages:
+- update
+
+update-to-development:
+  stage: update
+  script:
+    - sudo chmod +x /var/www/html/academy/dev-academyupdate.sh && sudo bash /var/www/html/academy/dev-academyupdate.sh
+  only:
+    - /-DEV$/
+    - master
+  except:
+    - branches
+  tags:
+    - runner-development
+
+update-to-development:
+  stage: update
+  script:
+    - sudo chmod +x /var/www/html/devadinusaid/dev-adinusaupdate.sh && sudo bash /var/www/html/devadinusaid/dev-adinusaupdate.sh
+  only:
+    - /-DEV-ADINUSA$/
+    - dev.adinusa.id
+  except:
+    - branches
+  tags:
+    - runner-development
+
+update-to-development:
+  stage: update
+  script:
+    - sudo chmod +x /var/www/html/devacadtest/devacadtest.sh && sudo bash /var/www/html/devacadtest/devacadtest.sh
+  only:
+    - /-DEV-ACAD$/
+    - nolsatu_test
+  except:
+    - branches
+  tags:
+    - runner-development
+
+update-to-production:
+  stage: update
+  script:
+    - sudo chmod +x /var/www/html/nolsatu_test/webnolsatutest.sh && sudo bash /var/www/html/nolsatu_test/webnolsatutest.sh
+  only:
+    - /-DEV-WEBTEST$/
+    - nolsatu_test
+  except:
+    - branches
+  tags:
+    - runner-production

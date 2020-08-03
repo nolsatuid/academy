@@ -16,7 +16,7 @@ class UserAdmin(DjangoUserAdmin):
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 
-    list_display = ('username', 'email', 'is_active', 'is_staff', 'registered_via', 'has_valid_email')
+    list_display = ('username', 'email', 'is_active', 'is_staff', 'role', 'registered_via', 'has_valid_email')
 
 
 class UserProfile(admin.ModelAdmin):
@@ -28,7 +28,7 @@ class InstructorAdmin(admin.ModelAdmin):
 
 
 class InboxAdmin(admin.ModelAdmin):
-    search_fields = ('user__username','subject',)
+    search_fields = ('user__username', 'subject',)
     list_display = ('user', 'subject', 'is_read', 'sent_date')
 
 
