@@ -26,7 +26,7 @@
 
       .bg-certificate {
           /* The image used */
-          background-image: url("{{ host }}/static/website/images/sertifikat_adinusa.jpg");
+          background-image: url("{{ host }}/static/website/images/sertifikat_adinusa.png");
 
           /* Full height */
           height: 810px;
@@ -79,8 +79,8 @@
       }
 
       .qr-code {
-        margin: 0px 484px;
-        top: 355px;
+        margin: 0px 290px;
+        top: 371px;
         position: relative;
       }
 
@@ -106,7 +106,7 @@
             <p>{{ certificate.number }}</p>
         </div>
         <div class="qr-code">
-          {% qr_from_text data_qr size=11 %}
+          {% qr_from_text data_qr size="S" %}
         </div>
     </div>
 
