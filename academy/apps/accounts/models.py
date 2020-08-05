@@ -370,9 +370,9 @@ class Certificate(models.Model):
         rendered_html = self.preview()
 
         options = {
-            'page-size': 'Letter',
+            'page-size': 'A4',
             'orientation': 'Landscape',
-            'margin-top': '0in',
+            'margin-top': '0.15in',
             'margin-right': '0in',
             'margin-bottom': '0in',
             'margin-left': '0in',
