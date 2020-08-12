@@ -6,6 +6,7 @@ from django.utils.http import base36_to_int
 from django.contrib.auth.tokens import default_token_generator
 from django.http import Http404
 from django.contrib.auth.forms import SetPasswordForm, PasswordChangeForm
+from django.conf import settings
 
 from academy.apps.accounts.models import User, Inbox, Certificate, Profile
 from academy.apps.offices.models import BannerInfo
@@ -87,6 +88,10 @@ def logout_view(request):
 
 def sign_up(request):
     if request.user.is_authenticated:
+        return redirect('website:accounts:index')
+
+    if settings.DISABLE_REGISTER:
+        messages.warning(request, 'Mohon maaf, pendaftaran sedang ditutup')
         return redirect('website:accounts:index')
 
     form = SignupForm(request.POST or None)
