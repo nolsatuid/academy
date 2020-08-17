@@ -65,7 +65,7 @@ class UserExport:
         media_dir = os.path.dirname(filepath.replace(settings.MEDIA_ROOT, ""))
         old_name = os.path.basename(filepath)
         old_extension = ".".join(old_name.split(".")[1:])
-        new_filename = prefix + datetime.now().strftime("%d%m%Y-%H%M%S") + "." + old_extension
+        new_filename = prefix + datetime.now().strftime("%d%m%Y-%H%M%S%f") + "." + old_extension
         new_filepath = os.path.join(media_dir, new_filename)[1:]
 
         zip_file.write(filepath, new_filepath)
@@ -116,7 +116,6 @@ class UserImport:
     def _extract_certificates_to_media(self, zip_file, certificates):
         for cert in certificates:
             zip_file.extract(cert['cert_file'], settings.MEDIA_ROOT)
-
 
     def import_data(self):
         imported_count = 0
