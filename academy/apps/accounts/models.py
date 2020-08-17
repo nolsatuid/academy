@@ -205,7 +205,7 @@ class User(AbstractUser):
                 "title": cert.title,
                 "number": cert.number,
                 "created_at": cert.created,
-                "is_graduate": False
+                "cert_file": cert.certificate_file.path
             })
 
         for grad in graduate_objects:
@@ -213,7 +213,7 @@ class User(AbstractUser):
                 "title": grad.certificate_number,
                 "number": grad.certificate_number,
                 "created_at": grad.created,
-                "is_graduate": True
+                "cert_file": grad.certificate_file.path
             })
 
         return certificate_list
