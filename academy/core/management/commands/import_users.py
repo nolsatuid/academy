@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from academy.core.import_export.user import UserImportExport
+from academy.core.import_export.user import UserImport
 
 
 class Command(BaseCommand):
@@ -11,6 +11,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         file_path = options['file']
-        import_export = UserImportExport(file_path=file_path)
+        import_export = UserImport(file_path=file_path)
         import_export.import_data()
         print(f'Import Finished')
