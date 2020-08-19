@@ -272,6 +272,9 @@ KEYCLOAK_USE_PREFERRED_USERNAME = True
 KEYCLOAK_USE_EMAIL_AS_USER_KEY = True
 KEYCLOAK_SYNC_USER_MODEL_HANDLER = 'academy.core.utils.sync_keycloak_user'
 
+# toggle to enable disable create account
+DISABLE_REGISTER = False
+
 try:
     from .local_settings import *
 except ImportError:

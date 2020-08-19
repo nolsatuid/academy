@@ -19,6 +19,7 @@ from django.template.defaultfilters import slugify
 from django.http import HttpResponse
 from django.core.files.uploadedfile import SimpleUploadedFile
 
+from academy.apps.graduates.models import Graduate
 from academy.core.email_utils import construct_email_args
 from academy.core.utils import image_upload_path, file_upload_path
 from academy.core.validators import validate_mobile_phone
@@ -193,11 +194,35 @@ class User(AbstractUser):
                       args=[int_to_base36(self.id), default_token_generator.make_token(self)])
         return f'{settings.HOST}{url}'
 
+    def get_all_certificates(self):
+        certificate_list = []
+
+        certificate_objects = Certificate.objects.filter(user=self).all()
+        graduate_objects = Graduate.objects.filter(user=self).all()
+
+        for cert in certificate_objects:
+            certificate_list.append({
+                "title": cert.title,
+                "number": cert.number,
+                "created_at": cert.created,
+                "cert_file": cert.certificate_file.path
+            })
+
+        for grad in graduate_objects:
+            certificate_list.append({
+                "title": grad.certificate_number,
+                "number": grad.certificate_number,
+                "created_at": grad.created,
+                "cert_file": grad.certificate_file.path
+            })
+
+        return certificate_list
+
 
 class Profile(models.Model):
     user = models.OneToOneField('accounts.User', related_name='profile',
                                 on_delete=models.CASCADE)
-    address = models.TextField()
+    address = models.TextField(blank=True, null=True)
     GENDER = Choices(
         (1, 'male', 'Male'),
         (2, 'female', 'Female'),
