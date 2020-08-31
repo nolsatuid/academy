@@ -20,11 +20,18 @@
             <div class="col-lg-12">
                 <!-- Title -->
                 <h1 class="mt-4">{{ blog.title }}</h1>
-                <!-- Author -->
-                <p class="lead">
-                by
-                <a href="#">{{ blog.author.username }}</a>
-                </p>
+                <div class="text-right">
+                        <span>Penulis: </span>
+                        <a href="#">
+                            <i class="fas fa-user"></i> {{ blog.author.username }}
+                        </a>
+                        <span class="pl-4">Bagikan: </span>
+                        <a href="#" style="font-size:1.3em;"><i class="fab fa-twitter-square"></i></i></a>
+                        <a href="#" style="font-size:1.3em;"><i class="fab fa-facebook-square"></i></a>
+                        <a href="#" style="font-size:1.3em;"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" style="font-size:1.3em;"><i class="fab fa-telegram"></i></a>
+                        <a href="#" style="font-size:1.3em;"><i class="fab fa-whatsapp-square"></i></a>
+                </div>
                 <hr>
 
                 <!-- Post Content -->
