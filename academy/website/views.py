@@ -29,7 +29,7 @@ Dan ingat, setiap menit yang kalian luangkan untuk membaca ini. Ada ratusan bahk
 mendaftar. So, segera daftar karena setiap angkatan pun terbatas. NolSatu gratis, karena kami tau. Semua berawal dari Nol, \
 lalu menjadi Satu. Di NolSatu.''',
         keywords=[
-            'NolSatu', 'Open Source', 'Pelatihan', 'Gratis', 
+            'NolSatu', 'Open Source', 'Pelatihan', 'Gratis',
             'Cloud Computing', 'DevOps', 'Btech', 'Pemrograman'
         ],
         image=settings.HOST + '/static/website/images/logo/logo-polos-warna-30.png',
@@ -153,6 +153,7 @@ def profile(request):
 
 def blog_details(request, slug):
     blog = get_object_or_404(Page, slug=slug)
+    print(blog.as_meta().__dict__)
 
     context = {
         'title': blog.title,

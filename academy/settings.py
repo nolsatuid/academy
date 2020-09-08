@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'taggit',
     "meta",
     "django_keycloak.apps.KeycloakAppConfig",
+    'django_social_share'
 ]
 
 MIDDLEWARE = [
