@@ -2,8 +2,8 @@
 {% load static %}
 {% load social_share %}
 
-{% block extra_css %}
 
+{% block extra_css %}
 <style>
     .icon-social {
         font-size:1.3em;
@@ -11,6 +11,25 @@
     }
 </style>
 {% endblock %}
+
+{% block meta_content %}
+<meta property="og:title" content="{{ blog.title }}"/>
+<meta property="og:description" content="{{ blog.content }}"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="{{ site_name }}"/>
+<meta property="og:url" content=""/>
+
+<meta name="twitter:title" content="{{blog.title}}"/>
+<meta name="twitter:description" content="{{blog.description}}"/>
+<meta name="twitter:url" content=""/>
+
+{% if blog.image %}
+    <meta property="og:image" content="{{ blog.image.url }}">
+    <meta property="twitter:image" content="{{ blog.image.url }}">
+{% endif %}
+{% endblock %}
+
+
 {% block content %}
 <div class="flex-column">
     <div class="container zindex">
@@ -44,7 +63,9 @@
                             {% post_to_whatsapp blog.slug '<i class="fab fa-whatsapp-square icon-social"></i>' %}
                 </div>
                 <hr>
-
+                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                <div class="addthis_inline_share_toolbox"></div>
+            
                 <!-- Post Content -->
                 {{ blog.content|safe }}
                 <hr>
@@ -55,4 +76,7 @@
     </div>
     <!-- /.container -->
 </div>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f58478352521809"></script>
+
 {% endblock %}
