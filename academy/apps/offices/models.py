@@ -90,7 +90,7 @@ class BannerInfo(models.Model):
 class Page(ModelMeta, models.Model):
     title = models.CharField(_("Judul"), max_length=220)
     slug = models.SlugField(max_length=200, blank=True, help_text=_("Generate otomatis jika dikosongkan"))
-    short_content = RichTextField(_("Konten Singkat"), config_name='basic_ckeditor')
+    short_content = models.TextField(_("Konten Singkat"))
     content = RichTextUploadingField(_("Konten"))
     image = models.FileField(_("Gambar"), upload_to="images/", blank=True)
     category = TaggableManager(_("Kategori"), help_text=_("Kategori dipisahkan dengan koma"))
