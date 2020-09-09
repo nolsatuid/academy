@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'taggit',
     "meta",
     "django_keycloak.apps.KeycloakAppConfig",
+    'django_social_share'
 ]
 
 MIDDLEWARE = [
@@ -274,6 +275,10 @@ KEYCLOAK_SYNC_USER_MODEL_HANDLER = 'academy.core.utils.sync_keycloak_user'
 
 # toggle to enable disable create account
 DISABLE_REGISTER = False
+
+# django-meta setting
+META_SITE_PROTOCOL = 'http'
+META_SITE_DOMAIN = 'localhost:8000'
 
 try:
     from .local_settings import *

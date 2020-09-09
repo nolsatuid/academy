@@ -32,7 +32,9 @@ fcm-django==0.3.2
 
 django-taggit==1.1.0
 
-django-meta==1.6.1
+django-meta==1.7.0
+
+django-social-share~=2.0
 
 # keycloak
 git+https://github.com/irfanpule/django-keycloak.git@dev_improvement
