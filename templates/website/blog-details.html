@@ -12,24 +12,6 @@
 </style>
 {% endblock %}
 
-{% block meta_content %}
-<meta property="og:title" content="{{ blog.title }}"/>
-<meta property="og:description" content="{{ blog.content }}"/>
-<meta property="og:type" content="article"/>
-<meta property="og:site_name" content="{{ site_name }}"/>
-<meta property="og:url" content=""/>
-
-<meta name="twitter:title" content="{{blog.title}}"/>
-<meta name="twitter:description" content="{{blog.description}}"/>
-<meta name="twitter:url" content=""/>
-
-{% if blog.image %}
-    <meta property="og:image" content="{{ blog.image.url }}">
-    <meta property="twitter:image" content="{{ blog.image.url }}">
-{% endif %}
-{% endblock %}
-
-
 {% block content %}
 <div class="flex-column">
     <div class="container zindex">

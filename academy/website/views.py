@@ -17,24 +17,23 @@ from academy.apps.graduates.models import Graduate
 
 from .forms import CertificateVerifyForm
 from meta.views import Meta
+from academy.apps.offices.models import Setting
 
 
 def index(request):
+    sett = Setting.get_data()
+    img_site = Meta(url=sett.get_logo())
     meta = Meta(
-        description='''NolSatu adalah Talent Hub dari Btech, Para peserta akan mendapatkan materi seputar DevOps, \
-Cloud Computing, Python dan pemrograman lainnya. Instruktur pemberi materi juga praktisi dilapangan, ketika memberikan materi \
-jadi dapat sharing tentang kondisi dunia TIK  terkini. Tools yang digunakan pun berbasis Open Source, sehingga menambah \
-add unique value jika kita mampu menguasai dan mengoptimalkannya. Peserta akan mendapatkan setiap proses itu. \
-Dan ingat, setiap menit yang kalian luangkan untuk membaca ini. Ada ratusan bahkan ribuan orang juga yang ingin \
-mendaftar. So, segera daftar karena setiap angkatan pun terbatas. NolSatu gratis, karena kami tau. Semua berawal dari Nol, \
-lalu menjadi Satu. Di NolSatu.''',
+        title=sett.site_name,
+        description=sett.site_desc,
         keywords=[
             'NolSatu', 'Open Source', 'Pelatihan', 'Gratis',
             'Cloud Computing', 'DevOps', 'Btech', 'Pemrograman'
         ],
-        image=settings.HOST + '/static/website/images/logo/logo-polos-warna-30.png',
+        image=img_site.url,
         use_og=True,
-        use_facebook=True
+        use_facebook=True,
+        use_twitter=True
     )
 
     seleksi = Student.objects.pre_test().count()
