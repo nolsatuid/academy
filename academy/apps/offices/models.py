@@ -90,7 +90,7 @@ class BannerInfo(models.Model):
 class Page(ModelMeta, models.Model):
     title = models.CharField(_("Judul"), max_length=220)
     slug = models.SlugField(max_length=200, blank=True, help_text=_("Generate otomatis jika dikosongkan"))
-    short_content = RichTextField(_("Konten Singkat"), config_name='basic_ckeditor')
+    short_content = models.TextField(_("Konten Singkat"))
     content = RichTextUploadingField(_("Konten"))
     image = models.FileField(_("Gambar"), upload_to="images/", blank=True)
     category = TaggableManager(_("Kategori"), help_text=_("Kategori dipisahkan dengan koma"))
@@ -107,12 +107,14 @@ class Page(ModelMeta, models.Model):
         'description': 'short_content',
         'keywords': 'get_category_list',
         'image': 'get_meta_image',
-        'use_og': True
+        'use_og': True,
+        'use_facebook': True,
+        'use_twitter': True
     }
 
     def get_meta_image(self):
         if self.image:
-            return settings.HOST + '/static/website/' + self.image.url
+            return settings.HOST + self.image.url
 
     def get_category_list(self):
         return self.category.all().values_list('name', flat=True)
@@ -148,6 +150,7 @@ class Setting(models.Model):
     hide_logo = models.BooleanField(default=False)
     site_name = models.CharField(
         max_length=50, help_text=_("Menyumbunyikan logo pada Nav bar"))
+    site_desc = models.TextField("Site Description", blank=True, null=True)
     hide_site_name = models.BooleanField(
         default=False, help_text=_("Menyumbunyikan site name pada Nav bar"))
     footer_title = models.CharField(max_length=100, blank=True, null=True)
