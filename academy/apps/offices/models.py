@@ -101,6 +101,8 @@ class Page(ModelMeta, models.Model):
         (2, 'publish', _("Terbit")),
     )
     status = models.PositiveIntegerField(choices=STATUS, default=STATUS.publish)
+    created_at = models.DateTimeField(_('Dibuat pada'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('Diubah pada'), auto_now=True)
 
     _metadata = {
         'title': 'title',
@@ -129,6 +131,9 @@ class Page(ModelMeta, models.Model):
         else:  # create
             self.slug = generate_unique_slug(Page, self.title)
         super().save(*args, **kwargs)
+
+    class meta:
+        ordering = ['-created_at', '-id']
 
 
 class Setting(models.Model):
