@@ -93,6 +93,10 @@ class Page(ModelMeta, models.Model):
     short_content = models.TextField(_("Konten Singkat"))
     content = RichTextUploadingField(_("Konten"))
     image = models.FileField(_("Gambar"), upload_to="images/", blank=True)
+    hidden_image = models.BooleanField(
+        _("Sembunyikan gambar"), default=False,
+        help_text=_("Sembunyikan gambar pada halaman detial")
+    )
     category = TaggableManager(_("Kategori"), help_text=_("Kategori dipisahkan dengan koma"))
     is_visible = models.BooleanField(_("Terlihat"), default=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="authors")
@@ -101,6 +105,8 @@ class Page(ModelMeta, models.Model):
         (2, 'publish', _("Terbit")),
     )
     status = models.PositiveIntegerField(choices=STATUS, default=STATUS.publish)
+    created_at = models.DateTimeField(_('Dibuat pada'), auto_now_add=True)
+    updated_at = models.DateTimeField(_('Diubah pada'), auto_now=True)
 
     _metadata = {
         'title': 'title',
@@ -129,6 +135,9 @@ class Page(ModelMeta, models.Model):
         else:  # create
             self.slug = generate_unique_slug(Page, self.title)
         super().save(*args, **kwargs)
+
+    class meta:
+        ordering = ['-created_at', '-id']
 
 
 class Setting(models.Model):
