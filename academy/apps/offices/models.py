@@ -93,6 +93,10 @@ class Page(ModelMeta, models.Model):
     short_content = models.TextField(_("Konten Singkat"))
     content = RichTextUploadingField(_("Konten"))
     image = models.FileField(_("Gambar"), upload_to="images/", blank=True)
+    hidden_image = models.BooleanField(
+        _("Sembunyikan gambar"), default=False,
+        help_text=_("Sembunyikan gambar pada halaman detial")
+    )
     category = TaggableManager(_("Kategori"), help_text=_("Kategori dipisahkan dengan koma"))
     is_visible = models.BooleanField(_("Terlihat"), default=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="authors")
