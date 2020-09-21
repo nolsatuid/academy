@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 from academy.api.serializers import user_profile
 from academy.apps.accounts.models import Instructor
 from academy.apps.accounts.models import User
-from academy.apps.offices.models import LogoPartner, LogoSponsor, Page
+from academy.apps.offices.models import LogoPartner, LogoSponsor, Page, FAQ
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 
@@ -56,10 +56,12 @@ def index(request):
 
 def faq(request):
     navbar = request.GET.get('navbar')
+    faqs = FAQ.objects.all()
 
     context = {
         'title': 'Tilil (Q&A)',
-        'navbar': navbar
+        'navbar': navbar,
+        'faqs': faqs
     }
 
     return render(request, 'website/faq.html', context)

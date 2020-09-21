@@ -278,3 +278,15 @@ class AuthSetting(models.Model):
 
     def __str__(self):
         return self.sign_with_btech
+
+
+class FAQ(models.Model):
+    question = models.CharField(max_length=255)
+    answer = models.CharField(max_length=255)
+    display_order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ['display_order']
+
+    def __str__(self):
+        return self.question
