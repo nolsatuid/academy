@@ -18,6 +18,7 @@ from academy.apps.graduates.models import Graduate
 from .forms import CertificateVerifyForm
 from meta.views import Meta
 from academy.apps.offices.models import Setting
+from django.db.models import Q
 
 
 def index(request):
@@ -174,3 +175,20 @@ def blog_index(request):
     }
 
     return render(request, 'website/blogs.html', context)
+
+
+def blog_category(request, categoryslug, slug=None):
+    if not slug:
+        tpl = 'website/blog-category.html'
+        blogs = Page.objects.filter(Q(catpage__slug=categoryslug))
+    else:
+        tpl = 'website/blog-category-detail.html'
+        blogs = Page.objects.get(
+            Q(catpage__slug=categoryslug) & Q(slug=slug))
+
+    context = {
+        'title': 'Blog',
+        'blogs': blogs
+    }
+
+    return render(request, tpl, context)

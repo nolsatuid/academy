@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from academy.apps.offices.models import (
-    LogoPartner, LogoSponsor, BannerInfo, Page, Setting, FAQ
+    LogoPartner, LogoSponsor, BannerInfo, Page, Setting, FAQ, CategoryPage
 )
 
 
@@ -18,7 +18,7 @@ class AdminBannerInfo(admin.ModelAdmin):
 
 
 class AdminPage(admin.ModelAdmin):
-    list_display = ('title', 'is_visible', 'status')
+    list_display = ('title', 'is_visible', 'status', 'category')
 
 
 class AdminSetting(admin.ModelAdmin):
@@ -34,9 +34,14 @@ class AdminFAQ(admin.ModelAdmin):
     )
 
 
+class AdminCategory(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+
+
 admin.site.register(LogoPartner, AdminLogoPartners)
 admin.site.register(LogoSponsor, AdminLogoSponsor)
 admin.site.register(BannerInfo, AdminBannerInfo)
 admin.site.register(Page, AdminPage)
 admin.site.register(Setting, AdminSetting)
 admin.site.register(FAQ, AdminFAQ)
+admin.site.register(CategoryPage, AdminCategory)
