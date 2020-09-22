@@ -178,15 +178,20 @@ def blog_index(request):
 
 
 def home_custom(request):
-    # dinonaktifin dulu sampe beneran dipake
-    # try:
-    #     courses = call_internal_api('get', url=settings.HOST + f'/api/course/list').json()
-    #     courses = courses[:3]
-    # except JSONDecodeError:
-    #     courses = []
+    try:
+        courses = call_internal_api('get', url=settings.NOLSATU_COURSE_HOST + f'/api/list').json()
+        courses = courses[:3]
+    except JSONDecodeError:
+        courses = []
 
+    try:
+        vendors = call_internal_api('get', url=settings.NOLSATU_COURSE_HOST + f'/api/vendorlist').json()
+    except JSONDecodeError:
+        vendors = []
+    
     context = {
         'title': 'Home',
-        'courses': []
+        'courses': courses,
+        'vendors': vendors
     }
     return render(request, 'website/home-adinusa.html', context)

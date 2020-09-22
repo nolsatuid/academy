@@ -1,37 +1,37 @@
-{% extends 'base-master.html' %}
+{% extends 'base-adinusa.html' %}
 {% load static %}
 
 {% block content %}
-<!-- <div class="loader"><div class="page-loader"></div></div> -->
-
-<!-- Welcome Section -->
-<div class="flex-column">
-    <div class="container zindex">
-        {% include 'nav-bar.html' %}
-    </div>
-
-    <div class="container shards-app-promo-page--1  mt-auto">
-        <h4 class="section-title text-center my-5">TILIL (Tanya Itu Lagi Itu Lagi)</h3>
-        <div id="accordion">
-            {% for faq in faqs %}
-            <div class="card">
-                <div class="card-header" id="heading{{ forloop.counter }}">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        {{ faq.question }}
-                    </a>
-                </h6>
+{% include 'website/navbar-adinusa.html' %}
+<section id="vendor" class="padding_top">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-5">
+                <div class="section_tittle text-center">
+                    <h2>FAQ</h2>
                 </div>
-            
-                <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    <i>{{ faq.answer }}</i>
-                </div>
-                </div>
-            </div>  
-            {% endfor %}     
+            </div>
         </div>
-    </div>
-</div>
+        <div class="row">
+            <div id="accordion" style="width: 100%;">
+                {% for faq in faqs %}
+                <div class="card" style="margin: 5px;">
+                    <div class="card-header" id="heading{{ forloop.counter }}" style="padding-left:30px; padding-top: 0px;">
+                        <a href="#" class="text-primary" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                            <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
+                            <h5>{{ faq.question }}</h5>
+                        </a>
+                    </div>
+                
+                    <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordion">
+                    <div class="card-body pl-5">
+                        <span style="font-size: medium;">{{ faq.answer }}</span>
+                    </div>
+                    </div>
+                </div>  
+                {% endfor %}     
+            </div>
+        </div>
+    </div>        
+</section>
 {% endblock %}
