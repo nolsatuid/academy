@@ -39,3 +39,4 @@ django-social-share~=2.0
 # keycloak
 git+https://github.com/irfanpule/django-keycloak.git@dev_improvement
 # https://github.com/irfanpule/django-keycloak/archive/v0.1.2-dev.zip
+
