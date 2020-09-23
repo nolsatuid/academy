@@ -177,11 +177,12 @@ def blog_index(request):
     return render(request, 'website/blogs.html', context)
 
 
-def page_category(request, categoryslug, slug=None):
+def page_category(request, categoryslug):
+    cat_page = get_object_or_404(CategoryPage, slug=categoryslug)
     blogs = Page.objects.filter(group__slug=categoryslug)
     
     context = {
-        'title': CategoryPage.objects.get(slug=categoryslug).name,
+        'title': cat_page.name,
         'blogs': blogs
     }
 
@@ -189,7 +190,7 @@ def page_category(request, categoryslug, slug=None):
 
 
 def page_category_detail(request, categoryslug, slug):
-    blog = Page.objects.get(Q(group__slug=categoryslug) & Q(slug=slug))
+    blog = get_object_or_404(Page, group__slug=categoryslug, slug=slug)
 
     context = {
         'title': blog.title,
