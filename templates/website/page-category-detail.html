@@ -1,4 +1,4 @@
-{% extends 'base-master.html' %}
+{% extends 'base-adinusa.html' %}
 {% load static %}
 {% load social_share %}
 
@@ -13,16 +13,13 @@
 {% endblock %}
 
 {% block content %}
-<div class="flex-column">
-    <div class="container zindex">
-        {% include 'nav-bar.html' %}
-    </div>
+<div class="padding_top">
     <!-- Page Content -->
-    <div class="container shards-app-promo-page--1  mt-5">
+    <div class="container">
         <div class="row">
             <!-- Post Content Column -->
             <div class="col-lg-12">
-                {% if blogs.image and not blog.hidden_image %}
+                {% if blog.image and not blog.hidden_image %}
                 <div style="width: 100%;height: 200px;overflow: hidden;">
                     <img class="card-img-top" src="{{ blog.image.url }}" alt="{{ blog.image.name}}">
                 </div>
@@ -35,14 +32,8 @@
                 <div class="text-right row pl-3">
                         <span class="pr-2">Penulis: </span>
                         <a href="#">
-                                <i class="fas fa-user"></i> {{ blog.author.username }}
-                            </a>
-
-                        <span class="pl-4 pr-2">Bagikan:</span>
-                            {% post_to_twitter '{{ blog.title|safe }}' blog.slug '<i class="fab fa-twitter-square icon-social"></i>' %}
-                            {% post_to_facebook blog.slug "<i class='fab fa-facebook-square icon-social'></i>" %}
-                            {% post_to_telegram '{{ blog.short_content|striptags|safe }}' blog.slug '<i class="fab fa-telegram icon-social"></i>' %}
-                            {% post_to_whatsapp blog.slug '<i class="fab fa-whatsapp-square icon-social"></i>' %}
+                            <i class="fas fa-user"></i> {{ blog.author.username }}
+                        </a>
                 </div>
                 <hr>
                 <!-- Post Content -->

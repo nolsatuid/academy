@@ -157,7 +157,6 @@ def profile(request):
 
 def blog_details(request, slug):
     blog = get_object_or_404(Page, slug=slug)
-    print(blog.as_meta().__dict__)
 
     context = {
         'title': blog.title,
