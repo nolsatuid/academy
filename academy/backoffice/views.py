@@ -24,7 +24,8 @@ def index(request):
 
     angkatan = Training.objects.order_by('batch')
     truncate_date = connection.ops.date_trunc_sql('month', 'date_joined')
-    users = User.objects.exclude(is_superuser=True).exclude(is_staff=True).extra({'month':truncate_date})
+    users = User.objects.exclude(is_superuser=True).exclude(
+        is_staff=True).extra({'month': truncate_date})
     users_month = users.values('month').annotate(Count('id')).order_by('month')
 
     context = {
@@ -33,8 +34,8 @@ def index(request):
         'data': data_dashboard,
         'angkatan': angkatan,
         'jumlah_pendaftar': users_month,
-        'jumlah_lulus': angkatan.annotate(num_graduate=Coalesce(Count('students', filter=Q(students__status=Student.STATUS.graduate)),0) or 0),
-        'jumlah_ulang': angkatan.annotate(num_repeat=Coalesce(Count('students', filter=Q(students__status=Student.STATUS.repeat)),0) or 0)
+        'jumlah_lulus': angkatan.annotate(num_graduate=Coalesce(Count('students', filter=Q(students__status=Student.STATUS.graduate)), 0) or 0),
+        'jumlah_ulang': angkatan.annotate(num_repeat=Coalesce(Count('students', filter=Q(students__status=Student.STATUS.repeat)), 0) or 0)
     }
 
     return render(request, 'backoffice/index.html', context=context)
@@ -43,7 +44,8 @@ def index(request):
 @staff_member_required
 def setting_appearance(request):
     setting = get_object_or_404(Setting, id=1)
-    form = SettingForm(request.POST or None, request.FILES or None, instance=setting)
+    form = SettingForm(request.POST or None,
+                       request.FILES or None, instance=setting)
 
     if form.is_valid():
         form.save()

@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from academy.api.serializers import user_profile
 from academy.apps.accounts.models import Instructor
 from academy.apps.accounts.models import User
-from academy.apps.offices.models import LogoPartner, LogoSponsor, Page, FAQ
+from academy.apps.offices.models import LogoPartner, LogoSponsor, Page, FAQ, CategoryPage
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 from academy.core.utils import call_internal_api
@@ -20,6 +20,7 @@ from academy.core.utils import call_internal_api
 from .forms import CertificateVerifyForm
 from meta.views import Meta
 from academy.apps.offices.models import Setting
+from django.db.models import Q
 
 
 def index(request):
@@ -179,19 +180,44 @@ def blog_index(request):
 
 def home_custom(request):
     try:
-        courses = call_internal_api('get', url=settings.NOLSATU_COURSE_HOST + f'/api/list').json()
+        courses = call_internal_api(
+            'get', url=settings.NOLSATU_COURSE_HOST + f'/api/list').json()
         courses = courses[:3]
     except JSONDecodeError:
         courses = []
 
     try:
-        vendors = call_internal_api('get', url=settings.NOLSATU_COURSE_HOST + f'/api/vendorlist').json()
+        vendors = call_internal_api(
+            'get', url=settings.NOLSATU_COURSE_HOST + f'/api/vendorlist').json()
     except JSONDecodeError:
         vendors = []
-    
+
     context = {
         'title': 'Home',
         'courses': courses,
         'vendors': vendors
     }
     return render(request, 'website/home-adinusa.html', context)
+
+
+def page_category(request, categoryslug):
+    cat_page = get_object_or_404(CategoryPage, slug=categoryslug)
+    blogs = Page.objects.filter(group__slug=categoryslug)
+
+    context = {
+        'title': cat_page.name,
+        'blogs': blogs
+    }
+
+    return render(request, 'website/page-category.html', context)
+
+
+def page_category_detail(request, categoryslug, slug):
+    blog = get_object_or_404(Page, group__slug=categoryslug, slug=slug)
+
+    context = {
+        'title': blog.title,
+        'blog': blog
+    }
+
+    return render(request, 'website/page-category-detail.html', context)

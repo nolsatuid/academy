@@ -1,0 +1,40 @@
+
+{% extends 'base-master.html' %}
+{% load static %}
+
+{% block content %}
+<div class="flex-column">
+    <div class="container zindex">
+        {% include 'nav-bar.html' %}
+    </div>
+    <!-- Page Content -->
+    <div class="container shards-app-promo-page--1  mt-5">
+        <div class="row">
+            <!-- Post Content Column -->
+            <div class="col-md-12 p-3 text-center">
+                <h1> {{ title }}</h1>
+            </div>
+            {% for blog in blogs %}
+            <div class="col-lg-4">
+                <div class="card" style="width: 100%;min-height: 400px;max-height: 450px;overflow: hidden;">
+                    <a href="{% url 'website:page_category_detail' blog.group.slug blog.slug %}">
+                        <div style="width: 100%;height: 200px;overflow: hidden; background-color: #b3b3b3;">
+                            {% if blog.image %}
+                                <img class="card-img-top" src="{{ blog.image.url }}" alt="{{ blog.image.name}}">
+                            {% endif %}
+                        </div>
+                        <div class="card-body text-dark">
+                            {{ blog.group }}
+                            <h4>{{ blog.title }}</h4>
+                            {{ blog.short_content|safe|truncatechars:100 }}
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</div>
+{% endblock %}

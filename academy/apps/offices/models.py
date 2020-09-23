@@ -20,7 +20,8 @@ from meta.models import ModelMeta
 
 class LogoPartner(models.Model):
     name = models.CharField(max_length=150)
-    image = models.ImageField(upload_to=image_upload_path('partners', use_dir_date=False))
+    image = models.ImageField(
+        upload_to=image_upload_path('partners', use_dir_date=False))
     display_order = models.PositiveSmallIntegerField()
     is_visible = models.BooleanField(default=True)
     website = models.URLField(max_length=255)
@@ -31,7 +32,8 @@ class LogoPartner(models.Model):
 
 class LogoSponsor(models.Model):
     name = models.CharField(max_length=150)
-    image = models.ImageField(upload_to=image_upload_path('sponsors', use_dir_date=False))
+    image = models.ImageField(
+        upload_to=image_upload_path('sponsors', use_dir_date=False))
     display_order = models.PositiveSmallIntegerField()
     is_visible = models.BooleanField(default=True)
     website = models.URLField(max_length=255)
@@ -42,7 +44,8 @@ class LogoSponsor(models.Model):
 
 class BannerInfo(models.Model):
     title = models.CharField(max_length=150)
-    content = RichTextField(help_text="Tuliskan informasi yang akan ditampilkan.")
+    content = RichTextField(
+        help_text="Tuliskan informasi yang akan ditampilkan.")
     COLOR_STYLE = Choices(
         ('success', 'Success'),
         ('danger', 'Danger'),
@@ -87,9 +90,27 @@ class BannerInfo(models.Model):
             return False
 
 
+class CategoryPage(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True, help_text=_(
+        'Generate otomatis jika dikosongkan'))
+
+    def __str__(self):
+        return str(self.name)
+
+    def save(self, *args, **kwargs):
+        if self.slug:  # edit
+            if slugify(self.name) != self.slug:
+                self.slug = generate_unique_slug(Page, self.name)
+        else:  # create
+            self.slug = generate_unique_slug(Page, self.name)
+        super().save(*args, **kwargs)
+
+
 class Page(ModelMeta, models.Model):
     title = models.CharField(_("Judul"), max_length=220)
-    slug = models.SlugField(max_length=200, blank=True, help_text=_("Generate otomatis jika dikosongkan"))
+    slug = models.SlugField(max_length=200, blank=True, help_text=_(
+        "Generate otomatis jika dikosongkan"))
     short_content = models.TextField(_("Konten Singkat"))
     content = RichTextUploadingField(_("Konten"))
     image = models.FileField(_("Gambar"), upload_to="images/", blank=True)
@@ -97,14 +118,21 @@ class Page(ModelMeta, models.Model):
         _("Sembunyikan gambar"), default=False,
         help_text=_("Sembunyikan gambar pada halaman detial")
     )
-    category = TaggableManager(_("Kategori"), help_text=_("Kategori dipisahkan dengan koma"))
+    category = TaggableManager(_("Kategori"), help_text=_(
+        "Kategori dipisahkan dengan koma"))
     is_visible = models.BooleanField(_("Terlihat"), default=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="authors")
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="authors")
+    group = models.ForeignKey(
+        CategoryPage, on_delete=models.CASCADE, related_name="group",
+        blank=True, null=True
+    )
     STATUS = Choices(
         (1, 'draft', _("Konsep")),
         (2, 'publish', _("Terbit")),
     )
-    status = models.PositiveIntegerField(choices=STATUS, default=STATUS.publish)
+    status = models.PositiveIntegerField(
+        choices=STATUS, default=STATUS.publish)
     created_at = models.DateTimeField(_('Dibuat pada'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Diubah pada'), auto_now=True)
 
@@ -171,12 +199,14 @@ class Setting(models.Model):
         (4, 'success', 'success'),
         (5, 'dark', 'dark'),
     )
-    color_theme = models.PositiveIntegerField(choices=COLOR_THEME, default=COLOR_THEME.danger)
+    color_theme = models.PositiveIntegerField(
+        choices=COLOR_THEME, default=COLOR_THEME.danger)
     SIDEBAR_COLOR = Choices(
         (1, 'light', 'light'),
         (2, 'dark', 'dark'),
     )
-    sidebar_color = models.PositiveIntegerField(choices=SIDEBAR_COLOR, default=SIDEBAR_COLOR.light)
+    sidebar_color = models.PositiveIntegerField(
+        choices=SIDEBAR_COLOR, default=SIDEBAR_COLOR.light)
 
     def __str__(self):
         return self.name
@@ -263,18 +293,23 @@ class SettingSerializer(serializers.ModelSerializer):
 
 
 class ConfigEmail(models.Model):
-    from_email = models.EmailField(max_length=255, verbose_name="Default From Email")
+    from_email = models.EmailField(
+        max_length=255, verbose_name="Default From Email")
     email_host = models.CharField(max_length=255, verbose_name="Email Host")
-    email_user = models.CharField(max_length=255, verbose_name="Email Host User")
-    email_password = models.CharField(max_length=255, verbose_name="Email Host Password")
+    email_user = models.CharField(
+        max_length=255, verbose_name="Email Host User")
+    email_password = models.CharField(
+        max_length=255, verbose_name="Email Host Password")
     email_port = models.IntegerField(verbose_name="Email Port")
     use_tls = models.BooleanField(verbose_name="Email Use TLS")
-    recipient_email = models.EmailField(max_length=255, verbose_name="Default Recipient Email")
+    recipient_email = models.EmailField(
+        max_length=255, verbose_name="Default Recipient Email")
 
 
 class AuthSetting(models.Model):
     name = models.CharField(max_length=50, default="Authorization")
-    sign_with_btech = models.BooleanField(default=True, verbose_name="Signin with Btech Account")
+    sign_with_btech = models.BooleanField(
+        default=True, verbose_name="Signin with Btech Account")
 
     def __str__(self):
         return self.sign_with_btech
