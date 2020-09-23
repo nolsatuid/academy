@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from academy.apps.offices.models import (
-    LogoPartner, LogoSponsor, BannerInfo, Page, Setting
+    LogoPartner, LogoSponsor, BannerInfo, Page, Setting, FAQ
 )
 
 
@@ -28,8 +28,15 @@ class AdminSetting(admin.ModelAdmin):
     )
 
 
+class AdminFAQ(admin.ModelAdmin):
+    list_display = (
+        'question', 'answer', 'display_order'
+    )
+
+
 admin.site.register(LogoPartner, AdminLogoPartners)
 admin.site.register(LogoSponsor, AdminLogoSponsor)
 admin.site.register(BannerInfo, AdminBannerInfo)
 admin.site.register(Page, AdminPage)
 admin.site.register(Setting, AdminSetting)
+admin.site.register(FAQ, AdminFAQ)
