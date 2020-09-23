@@ -123,8 +123,8 @@ class Page(ModelMeta, models.Model):
     is_visible = models.BooleanField(_("Terlihat"), default=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="authors")
-    catpage = models.ForeignKey(
-        CategoryPage, on_delete=models.CASCADE, related_name="categories")
+    group = models.ForeignKey(
+        CategoryPage, on_delete=models.CASCADE, related_name="group")
     STATUS = Choices(
         (1, 'draft', _("Konsep")),
         (2, 'publish', _("Terbit")),
@@ -323,5 +323,3 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
-
-

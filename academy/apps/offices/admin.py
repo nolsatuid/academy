@@ -18,7 +18,7 @@ class AdminBannerInfo(admin.ModelAdmin):
 
 
 class AdminPage(admin.ModelAdmin):
-    list_display = ('title', 'is_visible', 'status', 'category')
+    list_display = ('title', 'is_visible', 'status', 'group')
 
 
 class AdminSetting(admin.ModelAdmin):

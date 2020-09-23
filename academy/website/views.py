@@ -180,11 +180,11 @@ def blog_index(request):
 def blog_category(request, categoryslug, slug=None):
     if not slug:
         tpl = 'website/blog-category.html'
-        blogs = Page.objects.filter(Q(catpage__slug=categoryslug))
+        blogs = Page.objects.filter(Q(group__slug=categoryslug))
     else:
         tpl = 'website/blog-category-detail.html'
         blogs = Page.objects.get(
-            Q(catpage__slug=categoryslug) & Q(slug=slug))
+            Q(group__slug=categoryslug) & Q(slug=slug))
 
     context = {
         'title': 'Blog',

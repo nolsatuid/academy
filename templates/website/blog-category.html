@@ -17,14 +17,14 @@
             {% for blog in blogs %}
             <div class="col-lg-4">
                 <div class="card" style="width: 100%;min-height: 400px;max-height: 450px;overflow: hidden;">
-                    <a href="{% url 'website:blog_category' blog.catpage.slug blog.slug %}">
+                    <a href="{% url 'website:blog_category' blog.group.slug blog.slug %}">
                         <div style="width: 100%;height: 200px;overflow: hidden; background-color: #b3b3b3;">
                             {% if blog.image %}
                                 <img class="card-img-top" src="{{ blog.image.url }}" alt="{{ blog.iamge.name}}">
                             {% endif %}
                         </div>
                         <div class="card-body text-dark">
-                            {{ blog.catpage }}
+                            {{ blog.group }}
                             <h4>{{ blog.title }}</h4>
                             {{ blog.short_content|safe|truncatechars:100 }}
                         </div>
