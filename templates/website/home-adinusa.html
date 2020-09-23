@@ -1,5 +1,5 @@
 {% extends 'base-adinusa.html' %}
-{% load static %}
+{% load static humanize thumbnail math_extras %}
 
 {% block content %}
     {% include 'website/navbar-adinusa.html' %}
@@ -30,115 +30,36 @@
             </div>
         </div>
     </section>
+
     <!-- banner part start-->
-{% comment %}
-    <!-- feature_part start-->
-    <section class="feature_part">
+    <section id="vendor" class="padding_top">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-xl-3 align-self-center">
-                    <div class="single_feature_text ">
-                        <h2>Belajar di Adinusa</h2>
-                        <p>Tuliskan suatu deskripsi atau rangkuman tentang keunggulan Adinusa pada tempat ini. 
-                            Disarankan menuliskan sepanjang seperti ini. </p>
-                        <a href="#" class="btn_1">Read More</a>
+            <div class="row justify-content-center">
+                <div class="col-xl-5">
+                    <div class="section_tittle text-center">
+                        <h2>Vendor</h2>
                     </div>
                 </div>
-                <div class="col-sm-6 col-xl-3">
-                    <div class="single_feature">
-                        <div class="single_feature_part">
-                            <span class="single_feature_icon"><i class="ti-layers"></i></span>
-                            <h4>Materi Terkini</h4>
-                            <p>Tuliskan suatu deskripsi atau rangkuman pada tempat ini. 
-                                Disarankan menuliskan sepanjang tulisan ini.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                    <div class="single_feature">
-                        <div class="single_feature_part">
-                            <span class="single_feature_icon"><i class="ti-new-window"></i></span>
-                            <h4>Instruktur</h4>
-                            <p>Tuliskan suatu deskripsi atau rangkuman pada tempat ini. 
-                                Disarankan menuliskan sepanjang tulisan ini.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                    <div class="single_feature">
-                        <div class="single_feature_part single_feature_part_2">
-                            <span class="single_service_icon style_icon"><i class="ti-light-bulb"></i></span>
-                            <h4>Keunggulan</h4>
-                            <p>Tuliskan suatu deskripsi atau rangkuman pada tempat ini. 
-                                Disarankan menuliskan sepanjang tulisan ini.</p>
+            </div>
+            <div id="mitra" class="section py-4" style="display: none">
+                <div class="py-4 mb-4">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="slider mitra-slider">
+                                    {% for vendor in vendors %}
+                                        <div class="p-4">
+                                            <a href="{{ vendor.website }}" target="_blank"><img class="img-fluid" src="{{ nolsatu_course_home_page }}{{ vendor.logo }}" alt="{{ vendor.name }}"></a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>                
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>        
     </section>
-    <!-- upcoming_event part start-->
-
-    <!-- learning part start-->
-    <section class="learning_part">
-        <div class="container">
-            <div class="row align-items-sm-center align-items-lg-stretch">
-                <div class="col-md-7 col-lg-7">
-                    <div class="learning_img">
-                        <img src="{% static 'adinusa/img/learning_img.png' %}" alt="">
-                    </div>
-                </div>
-                <div class="col-md-5 col-lg-5">
-                    <div class="learning_member_text">
-                        <h5>Tentang kami</h5>
-                        <h2>Belajar dengan profesional</h2>
-                        <p>Tuliskan suatu deskripsi atau rangkuman pada tempat ini. 
-                            Disarankan menuliskan agak panjang sepanjang tulisan ini. 
-                            Supaya tinggi konten sesuai dengan tinggi gambar.</p>
-                        <ul>
-                            <li><span class="ti-pencil-alt"></span>Tuliskan suatu point yang mendeskripsikan tentang kami</li>
-                            <li><span class="ti-ruler-pencil"></span>Tuliskan suatu point yang mendeskripsikan tentang kami.</li>
-                        </ul>
-                        <a href="#" class="btn_1">Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- learning part end-->
-
-    <!-- member_counter counter start -->
-    <section class="member_counter">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single_member_counter">
-                        <span class="counter">57</span>
-                        <h4>Instruktur</h4>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single_member_counter">
-                        <span class="counter">10</span>
-                        <h4>Penyedia</h4>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single_member_counter">
-                        <span class="counter">101</span>
-                        <h4>Kursus Online</h4>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single_member_counter">
-                        <span class="counter">98</span>
-                        <h4>Kursus Offline</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- member_counter counter end -->
 
     <!--::review_part start::-->
     <section class="special_cource padding_top">
@@ -147,42 +68,48 @@
                 <div class="col-xl-5">
                     <div class="section_tittle text-center">
                         <p>kursus</p>
-                        <h2>Kursus Populer</h2>
+                        <h2>Kursus Terbaru</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 {% for course in courses %}
-                    <div class="col-sm-6 col-lg-4">
+                    <div class="col-sm-6 col-lg-4 mb-5 pb-5">
                         <div class="single_special_cource">
-                            <img src="{{ course.featured_image }}" class="special_img" alt="" style="width: 400px;">
-                            <div class="special_cource_text">
-                                <a href="#" class="btn_4">{{ course.level }}</a>
-                                <h4>FREE</h4>
-                                <a href="#"><h3>{{ course.title }}</h3></a>
-                                <p>{{ course.short_description|safe }}</p>
-                                <div class="author_info">
-                                    <div class="">
-                                        <div class="author_info_text">
-                                            <p>Disediakan oleh:</p>                                        
-                                            <img class="mt-2" src="https://btech.id/static/website/images/btech-logo-new-35px.png" alt="">
-                                        </div>
-                                    </div>
-                                    <!--
-                                    <div class="author_rating">
-                                        <div class="rating">
-                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
-                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
-                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
-                                            <a href="#"><img src="img/icon/color_star.svg" alt=""></a>
-                                            <a href="#"><img src="img/icon/star.svg" alt=""></a>
-                                        </div>
-                                        <p>3.8 Ratings</p>
-                                    </div>
-                                    -->
-                                </div>
+                            {% if course.status == 1 %}
+                                <span class="badge badge-pill badge-danger float-right" style="position: absolute; top: 10px; left: 25px;">{{ course.get_status_display }}</span>
+                            {% endif %}
+                            
+                            <div class="special_img special_img_card">        
+                                <a href="{{ nolsatu_course_home_page }}/courses/{{ course.slug }}">
+                                    {% thumbnail course.featured_image "360x360" crop="center" as course_thumb %}
+                                        <img src="{{ course_thumb.url }}" alt="{{ course_thumb.name}}" width="{{ course_thumb.width }}" height="{{ course_thumb.height }}">
+                                    {% endthumbnail %} 
+                                </a>
                             </div>
-
+                            <div class="special_cource_text">      
+                                <a href="{{ nolsatu_course_home_page }}/courses/{{ course.slug }}"><h3>{{ course.title }}</h3></a>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="badge badge-warning">{{ course.level }}</div>
+                                    </div>
+                                </div>           
+                                
+                                <div class="author_info">                
+                                    <span class="d-flex align-items-center">                    
+                                        <h4>                        
+                                            <span class="normal-price">
+                                                {% if course.product.discount_type == 1 %}<span class="badge badge-discount">{{ course.product.discount_value }}%</span>{% endif %}
+                                                {% if course.product.discount %}<s>Rp {{ course.product.price|intcomma }}</s>{% endif %}
+                                            </span><br>
+                                            {% if course.product.price %}Rp {{ course.product.price|subtract:course.product.discount|intcomma }}{% else %}GRATIS{% endif %}
+                                        </h4>
+                                    </span>      
+                                    {% if course.vendor.logo %}
+                                        <a href="{{ course.vendor.website }}" style="height: 100%;"><img class="d-flex align-items-center" src="{{ nolsatu_course_home_page }}{{ course.vendor.logo }}" alt="{{ course.vendor.name }}" style="width: 130px;"></a>
+                                    {% endif %}
+                                </div>
+                            </div>                    
                         </div>
                     </div>
                 {% endfor %}
@@ -190,163 +117,40 @@
         </div>
     </section>
     <!--::blog_part end::-->
-
-    <!-- learning part start-->
-    <section class="advance_feature learning_part">
-        <div class="container">
-            <div class="row align-items-sm-center align-items-xl-stretch">
-                <div class="col-md-6 col-lg-6">
-                    <div class="learning_member_text">
-                        <h5>Program kami</h5>
-                        <h2>Sistem pembelajaran di Adinusa</h2>
-                        <p>Tuliskan beberapa deskripsi disini. Deskripsi yang agak panjang.
-                            Penjelasan mengenai sistem pemebelajaran di Adinusa.
-                        </p>
-                        <div class="row">
-                            <div class="col-sm-6 col-md-12 col-lg-6">
-                                <div class="learning_member_text_iner">
-                                    <span class="ti-pencil-alt"></span>
-                                    <h4>Belajar dimanapun</h4>
-                                    <p>Kelas online kami memungkinkan Anda belajar dimanapun.</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-12 col-lg-6">
-                                <div class="learning_member_text_iner">
-                                    <span class="ti-stamp"></span>
-                                    <h4>Virtual Kelas</h4>
-                                    <p>Virtual kelas memungkinkan kamu untuk tetap bisa berdiskusi dengan instruktur secara langsung.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="learning_img">
-                        <img src="{% static 'adinusa/img/advance_feature_img.png' %}" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- learning part end-->
-
-    <!--::review_part start::
-    <section class="testimonial_part">
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-xl-5">
-                    <div class="section_tittle text-center">
-                        <p>tesimonial</p>
-                        <h2>Happy Students</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="textimonial_iner owl-carousel">
-                        <div class="testimonial_slider">
-                            <div class="row">
-                                <div class="col-lg-8 col-xl-4 col-sm-8 align-self-center">
-                                    <div class="testimonial_slider_text">
-                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
-                                            hath herb divided divide creepeth living shall i call beginning
-                                            third sea itself set</p>
-                                        <h4>Michel Hashale</h4>
-                                        <h5> Sr. Web designer</h5>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-xl-2 col-sm-4">
-                                    <div class="testimonial_slider_img">
-                                        <img src="{% static 'adinusa/img/testimonial_img_1.png' %}" alt="#">
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 d-none d-xl-block">
-                                    <div class="testimonial_slider_text">
-                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
-                                            hath herb divided divide creepeth living shall i call beginning
-                                            third sea itself set</p>
-                                        <h4>Michel Hashale</h4>
-                                        <h5> Sr. Web designer</h5>
-                                    </div>
-                                </div>
-                                <div class="col-xl-2 d-none d-xl-block">
-                                    <div class="testimonial_slider_img">
-                                        <img src="{% static 'adinusa/img/testimonial_img_1.png' %}" alt="#">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial_slider">
-                            <div class="row">
-                                <div class="col-lg-8 col-xl-4 col-sm-8 align-self-center">
-                                    <div class="testimonial_slider_text">
-                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
-                                            hath herb divided divide creepeth living shall i call beginning
-                                            third sea itself set</p>
-                                        <h4>Michel Hashale</h4>
-                                        <h5> Sr. Web designer</h5>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-xl-2 col-sm-4">
-                                    <div class="testimonial_slider_img">
-                                        <img src="{% static 'adinusa/img/testimonial_img_2.png' %}" alt="#">
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 d-none d-xl-block">
-                                    <div class="testimonial_slider_text">
-                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
-                                            hath herb divided divide creepeth living shall i call beginning
-                                            third sea itself set</p>
-                                        <h4>Michel Hashale</h4>
-                                        <h5> Sr. Web designer</h5>
-                                    </div>
-                                </div>
-                                <div class="col-xl-2 d-none d-xl-block">
-                                    <div class="testimonial_slider_img">
-                                        <img src="{% static 'adinusa/img/testimonial_img_2.png' %}" alt="#">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial_slider">
-                            <div class="row">
-                                <div class="col-lg-8 col-xl-4 col-sm-8 align-self-center">
-                                    <div class="testimonial_slider_text">
-                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
-                                            hath herb divided divide creepeth living shall i call beginning
-                                            third sea itself set</p>
-                                        <h4>Michel Hashale</h4>
-                                        <h5> Sr. Web designer</h5>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-xl-2 col-sm-4">
-                                    <div class="testimonial_slider_img">
-                                        <img src="{% static 'adinusa/img/testimonial_img_3.png' %}" alt="#">
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 d-none d-xl-block">
-                                    <div class="testimonial_slider_text">
-                                        <p>Behold place was a multiply creeping creature his domin to thiren open void
-                                            hath herb divided divide creepeth living shall i call beginning
-                                            third sea itself set</p>
-                                        <h4>Michel Hashale</h4>
-                                        <h5> Sr. Web designer</h5>
-                                    </div>
-                                </div>
-                                <div class="col-xl-2 d-none d-xl-block">
-                                    <div class="testimonial_slider_img">
-                                        <img src="{% static 'adinusa/img/testimonial_img_1.png' %}" alt="#">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    ::blog_part end::-->
-{% endcomment %}
     {% include 'website/footer-adinusa.html' %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $('#mitra').css('display', 'block');
+    $('.mitra-slider').slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        dots: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        adaptiveHeight: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
+    });
+</script>
 {% endblock %}

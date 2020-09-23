@@ -4016,7 +4016,7 @@ ul {
 
 /* line 42, E:/172 Etrain Education/172_Etrain_Education_html/sass/_special_cource.scss */
 .special_cource .single_special_cource .special_cource_text {
-  padding: 35px 35px 40px;
+  padding: 50px 35px 40px;
   border: 1px solid #edeff2;
   border-top: 0px;
 }
@@ -7594,4 +7594,118 @@ color: #ccc;
     margin-bottom: 70px;
     padding: 10px 25px;
   }
+}
+
+
+/* STYLE ADINUSA */
+
+.footer-simple {
+  background-color: #f7f7f7;
+  padding: 20px 20px 20px 20px;
+  position: relative;
+  bottom: 0;
+}
+
+.banner-simple {
+  height: 880px;
+  position: relative;
+  overflow: hidden;
+  background-image: url(../img/banner_bg.png);
+  background-repeat: no-repeat;
+  background-size: 68%;
+  background-position: top right;
+}
+
+.container-login {
+  margin-top: 150px;
+  margin-bottom: 150px;
+}
+
+.genric-btn {
+  font-size: 14px;
+}
+
+.btn-btech {
+  background-color: #8FBF00FF;
+  color: #FFFFFF;
+}
+
+.btn-btech:hover {
+  background-color: #FFFFFF;
+  color: #8FBF00FF;
+  border: 1px solid #8FBF00FF;
+}
+
+.errorlist {
+  padding-left: 0px;
+}
+
+.errorlist li {
+  list-style: none;
+  font-size: 12px;
+  color: #C4183C;
+}
+
+.help_text {
+list-style: none;
+font-size: 12px;
+color: #ccc;
+}
+
+.help_text li{
+  list-style: none;
+}
+
+.help_text ul{
+  padding: 5px 0px;
+}
+
+.content-materi h1, 
+.content-materi h2,
+.content-materi h3,
+.content-materi h4,
+.content-materi h5,
+.content-materi h6{
+  font-family: "Roboto", sans-serif !important;
+  color: black;
+}
+
+.special_level{
+  background-color: #3295ff;
+  padding: 10px 21px;
+  background: #3295ff;
+  text-transform: capitalize;
+  display: inline-block;
+  border: 2px solid transparent;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  color: #fff;
+}
+
+.special_img_card {
+  border: 1px solid #edeff2;
+  border-bottom: 0px;
+  height: 300px;
+  font-weight: 10;
+}
+
+.normal-price {
+  font-size: 9pt; 
+  color: #888888; 
+  margin-bottom: -20px;
+  float: left;
+}
+
+.badge{
+  font-weight: 400;
+  font-size: 90%;
+  padding: 5px 10px;
+}
+
+.badge-discount{
+  background-color: rgb(255, 234, 239);
+  color: rgb(255, 92, 132);
+  font-weight: 400;
+  font-size: 90%;
+  padding: 5px 5px;
 }
