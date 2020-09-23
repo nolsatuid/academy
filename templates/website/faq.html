@@ -1,193 +1,37 @@
-{% extends 'base-master.html' %}
+{% extends 'base-adinusa.html' %}
 {% load static %}
 
 {% block content %}
-<!-- <div class="loader"><div class="page-loader"></div></div> -->
-
-<!-- Welcome Section -->
-<div class="flex-column">
-    <div class="container zindex">
-        {% include 'nav-bar.html' %}
-    </div>
-
-    <div class="container shards-app-promo-page--1  mt-auto">
-        <h4 class="section-title text-center my-5">TILIL (Tanya Itu Lagi Itu Lagi)</h3>
-        <div id="accordion">
-            <div class="card">
-                <div class="card-header" id="headingOne">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Bidang profesi TI apa yang saat ini tersedia untuk dilatih dan disalurkan?
-                    </a>
-                </h6>
-                </div>
-            
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    <i>IT Operations, DevOps Engineer, Cloud Administrator, Cloud Engineer, SDN Engineer.</i>
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingTwo">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Apa syarat terpilih menjadi peserta di NolSatu?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    Memiliki kemampuan TI dasar yang cukup baik.
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingThree">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Bagaimana proses seleksi peserta dilakukan?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    Dari melihat profil dan karya peserta di blog, repositori kode dan media sosial.
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingFour">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Perusahaan apa saja yang bisa memanfaatkan NolSatu untuk merekrut Profesional terbaik?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                <div class="card-body pl-5">
-                        <i>Enterprises</i> yang menggunakan <i>Private Cloud</i> atau menerapkan <i>DevOps, Public Cloud Providers</i>, Startup yang menggunakan <i>Private Cloud</i>, Telco yang membangun <i>Software-Defined Something</i>.
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingFive">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Materi apa saja yang akan dipelajari?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    OpenStack, Kubernetes, ManageIQ, OpenShift Origin, Ceph, Docker, Ansible, Jenkins, SDN, GitLab CI/CD, Chef, Prometheus.
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingSix">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Dimana lingkungan praktikum dilakukan?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    Cloud lingkungan praktikum disediakan oleh tim NolSatu, peserta melakukan remote ke cloud dengan laptop/pc masing-masing.
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingSeven">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Perangkat apa saja yang dibutuhkan untuk mengikuti kelas praktikum di NolSatu?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    Laptop/PC, Internet, Peramban (Google Chrome/Chromium), SSH Client.
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingEight">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Saya sudah mendaftar NolSatu, langkah apa berikutnya?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    Pastikan profil anda diisi selengkap mungkin dan tunggu proses seleksi.
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingNine">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Seberapa sering NolSatu melakukan seleksi dan berapa orang yang dipilih setiap seleksi?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    Seleksi dilakukan setiap bulan untuk memilih 50 profil terbaik.
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingTen">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Bagaimana jadwal pelatihan berlangsung?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    <ol type="1">
-                        <li>Kelas live online dilaksanakan 2x dalam seminggu dengan durasi 2 Jam per-sesi</li>
-                        <li>Praktikum dilaksanakan sepanjang periode pelatihan yang dapat diakses kapanpun</li>
-                        <li>Total masa pelatihan berlangsung selama kurang lebih 2 Bulan</li>
-                    </ol>
-                </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingEleven">
-                <h6 class="mb-0">
-                    <a href="#" class="text-primary collapsed" data-toggle="collapse" data-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
-                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
-                        Saya sudah lulus NolSatu, langkah apa berikutnya?
-                    </a>
-                </h6>
-                </div>
-                <div id="collapseEleven" class="collapse" aria-labelledby="headingEleven" data-parent="#accordion">
-                <div class="card-body pl-5">
-                    <ol type="1">
-                        <li>Kamu bisa memanfaatkan sertifikat kelulusan dan sistem verifikasi NolSatu untuk melamar pekerjaan di perusahaan secara mandiri</li>
-                        <li>Tim NolSatu akan menghubungi kamu saat ada perusahaan yang membutuhkan tenaga profesional sesuai profil kamu</li>
-                        <li>Belajar terus menerus</li>
-                    </ol>                    
-                </div>
+{% include 'website/navbar-adinusa.html' %}
+<section id="vendor" class="padding_top">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-5">
+                <div class="section_tittle text-center">
+                    <h2>FAQ</h2>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        <div class="row">
+            <div id="accordion" style="width: 100%;">
+                {% for faq in faqs %}
+                <div class="card" style="margin: 5px;">
+                    <div class="card-header" id="heading{{ forloop.counter }}" style="padding-left:30px; padding-top: 0px;">
+                        <a href="#" class="text-primary" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                            <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;
+                            <h5>{{ faq.question }}</h5>
+                        </a>
+                    </div>
+                
+                    <div id="collapse{{ forloop.counter }}" class="collapse" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordion">
+                    <div class="card-body pl-5">
+                        <span style="font-size: medium;">{{ faq.answer }}</span>
+                    </div>
+                    </div>
+                </div>  
+                {% endfor %}     
+            </div>
+        </div>
+    </div>        
+</section>
 {% endblock %}

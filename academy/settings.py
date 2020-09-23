@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'django.forms',
 
     'academy.core',
@@ -75,7 +76,8 @@ INSTALLED_APPS = [
     'taggit',
     "meta",
     "django_keycloak.apps.KeycloakAppConfig",
-    'django_social_share'
+    'django_social_share',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [

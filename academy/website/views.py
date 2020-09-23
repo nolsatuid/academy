@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from academy.api.serializers import user_profile
 from academy.apps.accounts.models import Instructor
 from academy.apps.accounts.models import User
-from academy.apps.offices.models import LogoPartner, LogoSponsor, Page
+from academy.apps.offices.models import LogoPartner, LogoSponsor, Page, FAQ
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 from academy.core.utils import call_internal_api
@@ -58,10 +58,12 @@ def index(request):
 
 def faq(request):
     navbar = request.GET.get('navbar')
+    faqs = FAQ.objects.all()
 
     context = {
         'title': 'Tilil (Q&A)',
-        'navbar': navbar
+        'navbar': navbar,
+        'faqs': faqs
     }
 
     return render(request, 'website/faq.html', context)
@@ -176,15 +178,20 @@ def blog_index(request):
 
 
 def home_custom(request):
-    # dinonaktifin dulu sampe beneran dipake
-    # try:
-    #     courses = call_internal_api('get', url=settings.HOST + f'/api/course/list').json()
-    #     courses = courses[:3]
-    # except JSONDecodeError:
-    #     courses = []
+    try:
+        courses = call_internal_api('get', url=settings.NOLSATU_COURSE_HOST + f'/api/list').json()
+        courses = courses[:3]
+    except JSONDecodeError:
+        courses = []
 
+    try:
+        vendors = call_internal_api('get', url=settings.NOLSATU_COURSE_HOST + f'/api/vendorlist').json()
+    except JSONDecodeError:
+        vendors = []
+    
     context = {
         'title': 'Home',
-        'courses': []
+        'courses': courses,
+        'vendors': vendors
     }
     return render(request, 'website/home-adinusa.html', context)
