@@ -124,7 +124,9 @@ class Page(ModelMeta, models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="authors")
     group = models.ForeignKey(
-        CategoryPage, on_delete=models.CASCADE, related_name="group")
+        CategoryPage, on_delete=models.CASCADE, related_name="group",
+        blank=True, null=True
+    )
     STATUS = Choices(
         (1, 'draft', _("Konsep")),
         (2, 'publish', _("Terbit")),
