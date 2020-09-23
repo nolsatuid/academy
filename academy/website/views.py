@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 from academy.api.serializers import user_profile
 from academy.apps.accounts.models import Instructor
 from academy.apps.accounts.models import User
-from academy.apps.offices.models import LogoPartner, LogoSponsor, Page, FAQ
+from academy.apps.offices.models import LogoPartner, LogoSponsor, Page, FAQ, CategoryPage
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
 
@@ -177,18 +177,24 @@ def blog_index(request):
     return render(request, 'website/blogs.html', context)
 
 
-def blog_category(request, categoryslug, slug=None):
-    if not slug:
-        tpl = 'website/blog-category.html'
-        blogs = Page.objects.filter(Q(group__slug=categoryslug))
-    else:
-        tpl = 'website/blog-category-detail.html'
-        blogs = Page.objects.get(
-            Q(group__slug=categoryslug) & Q(slug=slug))
-
+def page_category(request, categoryslug, slug=None):
+    blogs = Page.objects.filter(group__slug=categoryslug)
+    
     context = {
-        'title': 'Blog',
+        'title': CategoryPage.objects.get(slug=categoryslug).name,
         'blogs': blogs
     }
 
-    return render(request, tpl, context)
+    return render(request, 'website/page-category.html', context)
+
+
+def page_category_detail(request, categoryslug, slug):
+    blog = Page.objects.get(Q(group__slug=categoryslug) & Q(slug=slug))
+
+    context = {
+        'title': blog.title,
+        'blog': blog
+    }
+    
+    return render(request, 'website/page-category-detail.html', context)
+

@@ -22,9 +22,9 @@
         <div class="row">
             <!-- Post Content Column -->
             <div class="col-lg-12">
-                {% if blogs.image and not blogs.hidden_image %}
+                {% if blogs.image and not blog.hidden_image %}
                 <div style="width: 100%;height: 200px;overflow: hidden;">
-                    <img class="card-img-top" src="{{ blogs.image.url }}" alt="{{ blogs.image.name}}">
+                    <img class="card-img-top" src="{{ blog.image.url }}" alt="{{ blog.image.name}}">
                 </div>
                 {% endif %}
             </div>
@@ -35,18 +35,18 @@
                 <div class="text-right row pl-3">
                         <span class="pr-2">Penulis: </span>
                         <a href="#">
-                                <i class="fas fa-user"></i> {{ blogs.author.username }}
+                                <i class="fas fa-user"></i> {{ blog.author.username }}
                             </a>
 
                         <span class="pl-4 pr-2">Bagikan:</span>
-                            {% post_to_twitter '{{ blogs.title|safe }}' blogs.slug '<i class="fab fa-twitter-square icon-social"></i>' %}
-                            {% post_to_facebook blogs.slug "<i class='fab fa-facebook-square icon-social'></i>" %}
-                            {% post_to_telegram '{{ blogs.short_content|striptags|safe }}' blogs.slug '<i class="fab fa-telegram icon-social"></i>' %}
-                            {% post_to_whatsapp blogs.slug '<i class="fab fa-whatsapp-square icon-social"></i>' %}
+                            {% post_to_twitter '{{ blog.title|safe }}' blog.slug '<i class="fab fa-twitter-square icon-social"></i>' %}
+                            {% post_to_facebook blog.slug "<i class='fab fa-facebook-square icon-social'></i>" %}
+                            {% post_to_telegram '{{ blog.short_content|striptags|safe }}' blog.slug '<i class="fab fa-telegram icon-social"></i>' %}
+                            {% post_to_whatsapp blog.slug '<i class="fab fa-whatsapp-square icon-social"></i>' %}
                 </div>
                 <hr>
                 <!-- Post Content -->
-                {{ blogs.content|safe }}
+                {{ blog.content|safe }}
                 <!-- Go to www.addthis.com/dashboard to customize your tools --> 
                 <div class="addthis_inline_share_toolbox"></div>
                 <hr>
