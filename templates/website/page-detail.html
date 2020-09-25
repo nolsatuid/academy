@@ -1,0 +1,39 @@
+{% extends 'base-adinusa.html' %}
+{% load static %}
+{% load social_share %}
+
+
+{% block content %}
+<div class="padding_top">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Post Content Column -->
+            <div class="col-lg-12">
+                {% if blog.image and not blog.hidden_image %}
+                <div style="width: 100%;height: 200px;overflow: hidden;">
+                    <img class="card-img-top" src="{{ blog.image.url }}" alt="{{ blog.image.name}}">
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-12">
+                <!-- Title -->
+                <h1 class="mt-4">{{ blog.title }}</h1>
+                <hr>
+                <!-- Post Content -->
+                {{ blog.content|safe }}
+                <!-- Go to www.addthis.com/dashboard to customize your tools --> 
+                <div class="addthis_inline_share_toolbox"></div>
+                <hr>
+
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</div>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f58478352521809"></script>
+
+{% endblock %}

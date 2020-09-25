@@ -199,19 +199,25 @@ def home_custom(request):
     return render(request, 'website/home-adinusa.html', context)
 
 
-def page_category(request, categoryslug):
-    cat_page = get_object_or_404(CategoryPage, slug=categoryslug)
-    blogs = Page.objects.filter(group__slug=categoryslug)
+def page_category(request, type_content, slug):
+    if type_content == 'post':
+        cat_page = get_object_or_404(CategoryPage, slug=slug)
+        blogs = cat_page.group.all()
+        context = {
+            'title': cat_page.name,
+            'blogs': blogs
+        }
+        return render(request, 'website/page-category.html', context)
+    else:
+        blog = get_object_or_404(Page, slug=slug)
+        context = {
+            'title': blog.title,
+            'blog': blog
+        }
+        return render(request, 'website/page-detail.html', context)
 
-    context = {
-        'title': cat_page.name,
-        'blogs': blogs
-    }
 
-    return render(request, 'website/page-category.html', context)
-
-
-def page_category_detail(request, categoryslug, slug):
+def page_category_detail(request, type_content, categoryslug, slug):
     blog = get_object_or_404(Page, group__slug=categoryslug, slug=slug)
 
     context = {
