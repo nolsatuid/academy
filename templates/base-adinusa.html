@@ -33,7 +33,9 @@
 
 <body>    
     {% include 'website/navbar-adinusa.html' %}
-    {% block content %} {% endblock %}
+    <div style="min-height: 100vh">
+        {% block content %} {% endblock %}   
+    </div> 
     {% include 'website/footer-adinusa.html' %}
     <!-- jquery plugins here-->
     <!-- jquery -->
