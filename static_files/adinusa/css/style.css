@@ -7709,3 +7709,7 @@ color: #ccc;
   font-size: 90%;
   padding: 5px 5px;
 }
+
+.basic-link {
+  color: rgba(0,0,0,.9);
+}
