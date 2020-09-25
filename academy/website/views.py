@@ -220,3 +220,11 @@ def page_category_detail(request, categoryslug, slug):
     }
 
     return render(request, 'website/page-category-detail.html', context)
+
+
+def contact(request):
+    context = {
+        'title': 'Kontak'
+    }
+
+    return render(request, 'website/contact.html', context)
