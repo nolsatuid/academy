@@ -9,9 +9,9 @@
                     <div class="row">
                         <a href="{% url 'website:contact' %}" class="ml-3 basic-link">Kontak</a>
                         <span class="ml-2">></span>
-                        <a href="#" class="ml-2 basic-link">Syarat & Ketentuan</a>
+                        <a href="{% url 'website:page_category' 'page' 'syarat-dan-ketentuan' %}" class="ml-2 basic-link">Syarat & Ketentuan</a>
                         <span class="ml-2">></span>
-                        <a href="#" class="ml-2 basic-link">Refund Policy</a>
+                        <a href="{% url 'website:page_category' 'page' 'refund-policy' %}" class="ml-2 basic-link">Refund Policy</a>
                     </div>
                 </div>
             </div>
