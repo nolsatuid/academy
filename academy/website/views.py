@@ -1,6 +1,8 @@
 import json
 from json.decoder import JSONDecodeError
 
+from requests.exceptions import ConnectionError
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
@@ -182,13 +184,13 @@ def home_custom(request):
         courses = call_internal_api(
             'get', url=settings.NOLSATU_COURSE_HOST + f'/api/list').json()
         courses = courses[:3]
-    except JSONDecodeError:
+    except (JSONDecodeError, ConnectionError):
         courses = []
 
     try:
         vendors = call_internal_api(
             'get', url=settings.NOLSATU_COURSE_HOST + f'/api/vendorlist').json()
-    except JSONDecodeError:
+    except (JSONDecodeError, ConnectionError):
         vendors = []
 
     context = {
