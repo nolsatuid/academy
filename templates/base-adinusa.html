@@ -1,0 +1,66 @@
+{% load static compress meta %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ site_name }} - {{ title }}</title>
+    <link rel="shortcut icon" href="{{brand_favicon}}">
+    {% compress css %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'adinusa/css/bootstrap.min.css' %}">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="{% static 'adinusa/css/animate.css' %}">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="{% static 'adinusa/css/owl.carousel.min.css' %}">
+    <!-- themify CSS -->
+    <link rel="stylesheet" href="{% static 'adinusa/css/themify-icons.css' %}">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="{% static 'adinusa/css/flaticon.css' %}">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="{% static 'adinusa/css/magnific-popup.css' %}">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="{% static 'website/css/slick.min.css' %}">
+    <link rel="stylesheet" href="{% static 'website/css/slick-theme.css' %}">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="{% static 'adinusa/css/style.css' %}">
+    {% endcompress %}
+
+    {% block extra_css %}{% endblock  %}
+</head>
+
+<body>    
+    {% include 'website/navbar-adinusa.html' %}
+    <div style="min-height: 100vh">
+        {% block content %} {% endblock %}   
+    </div> 
+    {% include 'website/footer-adinusa.html' %}
+    <!-- jquery plugins here-->
+    <!-- jquery -->
+    <script src="{% static 'adinusa/js/jquery-1.12.1.min.js' %}"></script>
+    <!-- popper js -->
+    <script src="{% static 'adinusa/js/popper.min.js' %}"></script>
+    <!-- bootstrap js -->
+    <script src="{% static 'adinusa/js/bootstrap.min.js' %}"></script>
+    <!-- easing js -->
+    <script src="{% static 'adinusa/js/jquery.magnific-popup.js' %}"></script>
+    <!-- swiper js -->
+    <script src="{% static 'adinusa/js/swiper.min.js' %}"></script>
+    <!-- swiper js -->
+    <script src="{% static 'adinusa/js/masonry.pkgd.js' %}"></script>
+    <!-- particles js -->
+    <script src="{% static 'adinusa/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'adinusa/js/jquery.nice-select.min.js' %}"></script>
+    <!-- swiper js -->
+    <script src="{% static 'website/js/slick.min.js' %}"></script>
+    <script src="{% static 'adinusa/js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'adinusa/js/waypoints.min.js' %}"></script>
+    <!-- custom js -->
+    <script src="{% static 'website/js/custom.js' %}"></script>    
+
+    {% block extra_js %} {% endblock %}
+</body>
+
+</html>

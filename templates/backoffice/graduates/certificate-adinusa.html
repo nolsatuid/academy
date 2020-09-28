@@ -1,0 +1,110 @@
+{% load qr_code %}
+{% load i18n %}
+<html>
+  <head>
+    <meta name="pdfkit-page-size" content="Letter"/>
+    <meta name="pdfkit-orientation" content="Landscape"/>
+    <style>
+      @font-face {
+        font-family: "Roboto";
+        src: url("{{ host }}/static/fonts/Roboto-Light.ttf") format("truetype");
+      }
+
+      @font-face {
+        font-family: "Roboto-Medium";
+        src: url("{{ host }}/static/fonts/Roboto-Medium.ttf") format("truetype");
+      }
+
+      @font-face {
+        font-family: "Dosis";
+        src: url("{{ host }}/static/fonts/Dosis-Regular.ttf") format("truetype");
+      }
+
+      body {
+        font-family: Open Sans, Calibri, sans-serif, Roboto;
+      }
+
+      .bg-certificate {
+          /* The image used */
+          background-image: url("{{ host }}/static/website/images/sertifikat_ADINUSA.png");
+
+          /* Full height */
+          height: 100%;
+          width: 100%;
+          /* Center and scale the image nicely */
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+      }
+
+      .user-name {
+        font-size: 72px;
+        font-family: 'Roboto';
+        color: #4e94ff;
+        margin-left: 145px;
+        width: 1000px;
+        top: 350px;
+        position: fixed;
+      }
+
+      .certificate-desc p{
+        margin-left: 145px;
+        width: 800px;
+        top: 490px;
+        position: fixed;
+        font-family: 'Roboto';
+        font-size: 20pt;
+      }
+
+      .certificate-date{
+        margin-left: 145px;
+        top: 610px;
+        position: fixed;
+        font-family: 'Roboto';
+        font-size: 18pt;
+        width: 500px;
+      }
+
+      .certificate-number{
+        margin-left: 670px;
+        top: 700px;
+        position: fixed;
+        font-size: 18pt;
+      }
+
+      .qr-code {
+        margin-left: 500px;
+        top: 660px;
+        position: fixed;
+      }
+
+      p {
+        font-size: 18px;
+        font-family: 'Roboto';
+        color: #000000;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="bg-certificate">
+        <div class="user-name">{{ user.name }}</div>
+        <div class="certificate-desc">
+            <p>{{ certificate.title }} {% if certificate.title|length > 40 %}<br>{% endif %}</p>
+        </div>
+        <div class="certificate-number">
+            Certificate Number: <br>
+            <strong>{{ certificate.number }}</strong><br>
+            <strong>
+              {% language 'en' %}
+                  {{ certificate.created|date:"d F Y" }}
+              {% endlanguage %}
+            </strong>
+        </div>        
+        <div class="qr-code">
+          {% qr_from_text data_qr size="S" %}
+        </div>
+    </div>
+
+  </body>
+</html>

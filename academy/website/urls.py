@@ -5,7 +5,7 @@ from . import views
 app_name = 'website'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.home_custom, name='index'),
     path('profile/', views.profile, name='profile'),
     path('home/', views.home, name='home'),
     path('error404/', views.error_404, name='error404'),
@@ -20,9 +20,9 @@ urlpatterns = [
     path('statistic/', views.statistic, name='statistic'),
     path('blogs/<slug:slug>', views.blog_details, name='blog_details'),
     path('blogs/', views.blog_index, name='blog_index'),
-    path('page/<slug:categoryslug>/',
+    path('<slug:type_content>/<slug:slug>/',
          views.page_category, name='page_category'),
-    path('page/<slug:categoryslug>/<slug:slug>/',
+    path('<slug:type_content>/<slug:categoryslug>/<slug:slug>/',
          views.page_category_detail, name='page_category_detail'),
-
+    path('contact/', views.contact, name='contact'),
 ]

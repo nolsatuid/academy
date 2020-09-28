@@ -127,6 +127,12 @@ class Page(ModelMeta, models.Model):
         CategoryPage, on_delete=models.CASCADE, related_name="group",
         blank=True, null=True
     )
+    TYPE_CONTENT = Choices(
+        (1, 'page', _("Page")),
+        (2, 'post', _("Post")),
+    )
+    type_content = models.PositiveIntegerField(
+        choices=TYPE_CONTENT, default=TYPE_CONTENT.post)
     STATUS = Choices(
         (1, 'draft', _("Konsep")),
         (2, 'publish', _("Terbit")),
@@ -152,6 +158,10 @@ class Page(ModelMeta, models.Model):
 
     def get_category_list(self):
         return self.category.all().values_list('name', flat=True)
+
+    @property
+    def raw_type(self):
+        return self.get_type_content_display().lower()
 
     def __str__(self):
         return self.title

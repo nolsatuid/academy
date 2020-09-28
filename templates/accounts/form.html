@@ -1,17 +1,18 @@
-{% extends 'base-master.html' %}
+{% extends 'base-adinusa.html' %}
 {% load static form_tags %}
 
 {% block content %}
-<div class="welcome d-flex flex-column">
-    <div class="container zindex">
-        {% include 'nav-bar.html' %}
-    </div>
-    <div class="inner-wrapper mt-auto mb-auto">
-        <div class="offset-md-4 col-md-4">
-            <h3>{{ title }}</h3>
-            {% include 'forms/login-signup.html' %}
+<div class="banner-simple">
+    <div class="container-fluid container-login">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="inner-wrapper mt-auto mb-auto">
+                    <div class="offset-md-4 col-md-4">
+                        {% include 'forms/login-signup.html' %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="page-content"></div>
 {% endblock %}

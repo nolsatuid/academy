@@ -1,0 +1,133 @@
+{% load qr_code %}
+{% load i18n %}
+<html>
+  <head>
+    <meta name="pdfkit-page-size" content="Letter"/>
+    <meta name="pdfkit-orientation" content="Landscape"/>
+    <style>
+      @font-face {
+        font-family: "Roboto";
+        src: url("{{ host }}/static/fonts/Roboto-Light.ttf") format("truetype");
+      }
+
+      @font-face {
+        font-family: "Roboto-Medium";
+        src: url("{{ host }}/static/fonts/Roboto-Medium.ttf") format("truetype");
+      }
+
+      @font-face {
+        font-family: "Dosis";
+        src: url("{{ host }}/static/fonts/Dosis-Regular.ttf") format("truetype");
+      }
+
+      body {
+        font-family: Open Sans, Calibri, sans-serif, Roboto;
+      }
+
+      .bg-certificate {
+          /* The image used */
+          background-image: url("{{ host }}/static/website/images/rha_certificate_template.png");
+
+          /* Full height */
+          height: 810px;
+          width: 1056px;
+          /* Center and scale the image nicely */
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+
+          margin: 0px;
+      }
+
+      .user-name {
+        font-size: 24px;
+        text-align: center;
+        font-family: 'Roboto';
+        color: #6b6b6b;
+
+        margin: auto;
+        padding: 10px;
+        width: 700px;
+
+        top: 215px;
+        position: relative;
+      }
+
+      .graduation-date {
+        font-size: 24px;
+        text-align: left;
+        font-family: 'Roboto';
+        color: #6b6b6b;
+
+        margin: auto;
+        padding: 10px;
+
+        position: relative;
+        top: 580px;
+        left: -82px;
+        width: 600px;
+      }
+
+      .qr-code {
+        position: absolute;
+        top: 387px;
+        left: 750px;
+      }
+
+      .certificate-number {
+        margin: auto;
+        padding: 10px;
+
+        width: 300px;
+        font-size: 18px;
+        text-align: center;
+        font-family: 'Dosis';
+        color: #6b6b6b;
+      }
+
+      .certificate-desc {
+        margin: auto;
+        padding: 10px;
+        width: 700px;
+
+        top: 210px;
+        position: relative;
+      }
+
+      .certificate-at {
+        margin: auto;
+        padding: 10px;
+        width: 600px;
+
+        top: 240px;
+        position: relative;
+      }
+
+      p {
+        font-size: 18px;
+        text-align: center;
+        font-family: 'Roboto';
+        color: #6b6b6b;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="bg-certificate">
+        <div class="user-name">{{ user.name }}</div>
+        <div class="graduation-date">
+            {% language 'en' %}
+                {{ certificate.created|date:"F Y" }}
+            {% endlanguage %}
+        </div>
+        <div class="certificate-desc">
+            <p>{{ certificate.title }}</p>
+        </div>
+
+        <div class="certificate-at">
+            <p>Online Academy Digital Talent Scholarship 2020 <br> Kementerian Komunikasi dan Informatika Republik Indonesia</p>
+        </div>
+    </div>
+
+  </body>
+</html>

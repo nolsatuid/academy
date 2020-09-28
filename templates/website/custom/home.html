@@ -1,0 +1,72 @@
+{% extends 'base-master.html' %}
+{% load static %}
+
+{% block content %}
+<!-- <div class="loader"><div class="page-loader"></div></div> -->
+
+<!-- Floating Shards -->
+
+<!-- Welcome Section -->
+<div class="welcome d-flex flex-column">
+    <div class="container zindex">
+        {% include 'website/custom/nav-bar.html' %}
+    </div>
+
+    <div class="inner-wrapper mt-auto mb-auto">
+        {% if not hide_logo %}
+            <img src="{{ brand_logo_light }}" alt="{{site_name}}" class="shard">
+        {% endif %}
+        <h1>&nbsp;</h1>
+        <h3>&nbsp;</h3>
+        <br><br>
+        <div class="action-links">
+          <a href="{% url 'website:accounts:sign_up' %}" class="btn btn-primary btn-pill align-self-center mr-2"><i class="fa fa-download mr-1"></i>Daftar</a>
+          <!-- <a href="#" data-scroll-to="#introduction" id="scroll-to-content" class="btn btn-outline-light btn-pill align-self-center">Login</a> -->
+          <a href="{% url 'website:accounts:login' %}" class="btn btn-outline-light btn-pill align-self-center">Masuk</a>
+        </div>
+    </div>
+</div>
+
+<!-- Page Content -->
+<div class="shards-app-promo-page--1 page-content">
+    <!-- Content -->
+    <!-- About -->
+    {% include 'website/partials/about.html' %}
+    <!-- / About -->
+
+    <!-- Talent -->
+    {% include 'website/partials/talent.html' %}
+    <!-- / Talent -->
+
+    <!-- Company -->
+    {% include 'website/partials/company.html' %}
+    <!-- / Company -->
+
+    {% include 'website/partials/flow.html' %}
+
+    <!-- Subscribe Section -->
+    <div id="hubungi-kami" class="subscribe section bg-dark py-4">
+        <h3 class="section-title text-center text-white m-5">Hubungi Kami</h3>
+        <div class="row">
+            <div class="col-lg-4 ml-auto text-center">
+                <i class="text-primary fa fa-phone fa-3x mb-3 sr-contact" data-sr-id="8" style="; visibility: visible;  -webkit-transform: scale(1); opacity: 1;transform: scale(1); opacity: 1;-webkit-transition: -webkit-transform 0.6s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.6s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; transition: transform 0.6s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.6s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; "></i>
+                <p class="text-white">+62-251-7596-414</p>
+            </div>
+            <div class="col-lg-2 text-center">
+                <i class="text-primary fab fa-whatsapp fa-3x mb-3 sr-contact" data-sr-id="8" style="; visibility: visible;  -webkit-transform: scale(1); opacity: 1;transform: scale(1); opacity: 1;-webkit-transition: -webkit-transform 0.6s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.6s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; transition: transform 0.6s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.6s cubic-bezier(0.6, 0.2, 0.1, 1) 0s; "></i>
+                <p class="text-white">+62-811111-8187</p>
+            </div>
+            <div class="col-lg-4 mr-auto text-center">
+                <a class="mx-3" href="#" target="_blank">
+                    <i class="text-primary fas fa-envelope fa-3x mb-3 sr-contact" data-sr-id="9"></i>
+                </a>
+                <p>
+                <a class="text-white" href="mailto:kontak@nolsatu.id">kontak@nolsatu.id</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- / Subscribe Section -->
+
+</div>
+{% endblock %}

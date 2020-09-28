@@ -1,0 +1,157 @@
+{% extends 'base-adinusa.html' %}
+{% load static humanize thumbnail math_extras %}
+
+{% block content %}
+    <!-- banner part start-->
+    <section class="banner_part">
+    </section>
+
+    <section class="banner-text-custom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="banner_text">
+                        <div class="banner_text_iner">
+                            <h5>Mempersempit kesenjangan antara pendidikan dan industri</h5>
+                            <h1>Akademi Digital Nusantara</h1>
+                            <p>Akademi Digital Nusantara (ADINUSA) merupakan platform untuk meningkatkan kemampuan di bidang teknologi informasi dengan materi pelatihan terbaik dari berbagai perusahaan digital global serta metode pelatihan teruji yang ditujukan untuk pelajar, mahasiswa, lulusan muda dan guru di Indonesia.</p>
+                            
+                            {% if not user.is_authenticated %}
+                            <a href="{{ nolsatu_course_home_page }}" class="btn_1">Lihat Kursus </a>
+                            <a href="{% url 'website:accounts:sign_up' %}" class="btn_2">Daftar </a>
+                            {% else %}
+                            <a href="{{ nolsatu_course_home_page }}" class="btn_1">Semua Kursus </a>
+                            <a href="{{ nolsatu_course_home_page }}/courses/" class="btn_2">Kursus Saya </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- banner part start-->
+    <section id="vendor" class="padding_top">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-5">
+                    <div class="section_tittle text-center">
+                        <h2>Vendor</h2>
+                    </div>
+                </div>
+            </div>
+            <div id="mitra" class="section py-4" style="display: none">
+                <div class="py-4 mb-4">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="slider mitra-slider">
+                                    {% for vendor in vendors %}
+                                        <div class="p-4">
+                                            <a href="{{ vendor.website }}" target="_blank"><img class="img-fluid" src="{{ nolsatu_course_home_page }}{{ vendor.logo }}" alt="{{ vendor.name }}"></a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </section>
+
+    <!--::review_part start::-->
+    <section class="special_cource padding_top">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-5">
+                    <div class="section_tittle text-center">
+                        <p>kursus</p>
+                        <h2>Kursus Terbaru</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for course in courses %}
+                    <div class="col-sm-6 col-lg-4 mb-5 pb-5">
+                        <div class="single_special_cource">
+                            {% if course.status == 1 %}
+                                <span class="badge badge-pill badge-danger float-right" style="position: absolute; top: 10px; left: 25px;">{{ course.get_status_display }}</span>
+                            {% endif %}
+                            
+                            <div class="special_img special_img_card">        
+                                <a href="{{ nolsatu_course_home_page }}/courses/{{ course.slug }}">
+                                    {% thumbnail course.featured_image "360x360" crop="center" as course_thumb %}
+                                        <img src="{{ course_thumb.url }}" alt="{{ course_thumb.name}}" width="{{ course_thumb.width }}" height="{{ course_thumb.height }}">
+                                    {% endthumbnail %} 
+                                </a>
+                            </div>
+                            <div class="special_cource_text">      
+                                <a href="{{ nolsatu_course_home_page }}/courses/{{ course.slug }}"><h3>{{ course.title }}</h3></a>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="badge badge-warning">{{ course.level }}</div>
+                                    </div>
+                                </div>           
+                                
+                                <div class="author_info">                
+                                    <span class="d-flex align-items-center">                    
+                                        <h4> 
+                                            {% if course.product.price %}                       
+                                                <span class="normal-price">
+                                                    {% if course.product.discount_type == 1 %}<span class="badge badge-discount">{{ course.product.discount_value }}%</span>{% endif %}
+                                                    {% if course.product.discount %}<s>Rp {{ course.product.price|intcomma }}</s>{% endif %}
+                                                </span><br>
+                                                Rp {{ course.product.price|subtract:course.product.discount|intcomma }}
+                                            {% else %}
+                                                GRATIS
+                                            {% endif %}
+                                        </h4>
+                                    </span>      
+                                    {% if course.vendor.logo %}
+                                        <a href="{{ course.vendor.website }}" style="height: 100%;"><img class="d-flex align-items-center" src="{{ nolsatu_course_home_page }}{{ course.vendor.logo }}" alt="{{ course.vendor.name }}" style="width: 130px;"></a>
+                                    {% endif %}
+                                </div>
+                            </div>                    
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $('#mitra').css('display', 'block');
+    $('.mitra-slider').slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        dots: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        adaptiveHeight: true,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+        ]
+    });
+</script>
+{% endblock %}

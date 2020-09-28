@@ -1,4 +1,5 @@
 import json
+from json.decoder import JSONDecodeError
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
@@ -14,6 +15,7 @@ from academy.apps.accounts.models import User
 from academy.apps.offices.models import LogoPartner, LogoSponsor, Page, FAQ, CategoryPage
 from academy.apps.students.models import Student
 from academy.apps.graduates.models import Graduate
+from academy.core.utils import call_internal_api
 
 from .forms import CertificateVerifyForm
 from meta.views import Meta
@@ -155,14 +157,12 @@ def profile(request):
 
 def blog_details(request, slug):
     blog = get_object_or_404(Page, slug=slug)
-    print(blog.as_meta().__dict__)
 
     context = {
         'title': blog.title,
         'blog': blog,
         'meta': blog.as_meta()
     }
-
     return render(request, 'website/blog-details.html', context)
 
 
@@ -177,25 +177,60 @@ def blog_index(request):
     return render(request, 'website/blogs.html', context)
 
 
-def page_category(request, categoryslug):
-    cat_page = get_object_or_404(CategoryPage, slug=categoryslug)
-    blogs = Page.objects.filter(group__slug=categoryslug)
-    
+def home_custom(request):
+    try:
+        courses = call_internal_api(
+            'get', url=settings.NOLSATU_COURSE_HOST + f'/api/list').json()
+        courses = courses[:3]
+    except JSONDecodeError:
+        courses = []
+
+    try:
+        vendors = call_internal_api(
+            'get', url=settings.NOLSATU_COURSE_HOST + f'/api/vendorlist').json()
+    except JSONDecodeError:
+        vendors = []
+
     context = {
-        'title': cat_page.name,
-        'blogs': blogs
+        'title': 'Home',
+        'courses': courses,
+        'vendors': vendors
     }
+    return render(request, 'website/home-adinusa.html', context)
 
-    return render(request, 'website/page-category.html', context)
+
+def page_category(request, type_content, slug):
+    if type_content == 'post':
+        cat_page = get_object_or_404(CategoryPage, slug=slug)
+        blogs = cat_page.group.all()
+        context = {
+            'title': cat_page.name,
+            'blogs': blogs
+        }
+        return render(request, 'website/page-category.html', context)
+    else:
+        blog = get_object_or_404(Page, slug=slug)
+        context = {
+            'title': blog.title,
+            'blog': blog
+        }
+        return render(request, 'website/page-detail.html', context)
 
 
-def page_category_detail(request, categoryslug, slug):
+def page_category_detail(request, type_content, categoryslug, slug):
     blog = get_object_or_404(Page, group__slug=categoryslug, slug=slug)
 
     context = {
         'title': blog.title,
         'blog': blog
     }
-    
+
     return render(request, 'website/page-category-detail.html', context)
 
+
+def contact(request):
+    context = {
+        'title': 'Kontak'
+    }
+
+    return render(request, 'website/contact.html', context)

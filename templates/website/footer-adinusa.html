@@ -1,0 +1,45 @@
+{% load static %}
+<!-- footer part start-->
+<footer class="footer-area">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-sm-12 col-md-7 col-xl-7">
+                <div class="single-footer-widget footer_2">
+                    <h4>Links</h4>
+                    <div class="row">
+                        <a href="{% url 'website:contact' %}" class="ml-3 basic-link">Kontak</a>
+                        <span class="ml-2">></span>
+                        <a href="{% url 'website:page_category' 'page' 'syarat-dan-ketentuan' %}" class="ml-2 basic-link">Syarat & Ketentuan</a>
+                        <span class="ml-2">></span>
+                        <a href="{% url 'website:page_category' 'page' 'refund-policy' %}" class="ml-2 basic-link">Refund Policy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-5 col-xl-5">
+                <div class="single-footer-widget footer_2">
+                    <h4>Hubungi Kami</h4>
+                    <div class="row">
+                        <a href="https://api.whatsapp.com/send?phone=628111123242&text=Hello,%20Saya%20tertarik%20dengan%20Adinusa" target="_blank" class="ml-3 mr-1 basic-link"><i class="ti-tablet"></i> +62-811-1123-242 (WhatsApp)</a>
+                        <a href="mailto:contact@adinusa.id?Subject=Hello,%20Saya%20tertarik%20dengan%20Adinusa" target="_blank" class="basic-link"><i class="ml-3 ti-email"></i> contact@adinusa.id</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="copyright_part_text text-center">
+                    <div class="row">
+                        <div class="col-lg-12">
+                          <p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> <strong><a href="https://btech.id">PT. Boer Technology (Btech)</a></strong>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer part end-->

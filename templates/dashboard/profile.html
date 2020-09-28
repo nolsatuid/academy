@@ -71,12 +71,12 @@
                                                         {{ user.phone }}
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                {% comment %} <tr>
                                                     <td class="font-weight-bold">Status</td>
                                                     <td>
                                                         {{ student.status|status_display:"True" }}
                                                     </td>
-                                                </tr>
+                                                </tr> {% endcomment %}
                                                 {% if student.campus %}
                                                 <tr>
                                                     <td class="font-weight-bold">Kampus</td>
@@ -147,7 +147,7 @@
                                     </tbody></table>
                                 </div>
 
-                                {% if survey %}
+                                {% comment %} {% if survey %}
                                 <div class="table-responsive box box-info">
                                     <table class="table table-bordered">
 
@@ -197,7 +197,7 @@
                                         </tr>
                                     </table>
                                 </div>
-                                {% endif %}
+                                {% endif %} {% endcomment %}
                             </div>
                         </div>
                     </div>

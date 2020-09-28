@@ -2,8 +2,8 @@
 {% if not mobile_layout %}
 <nav class="navbar navbar-expand-lg navbar-light pt-4 px-0">
     <span class="badge badge-danger">BETA</span>&nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="{% static 'website/images/logo/logo-polos-warna-30.png' %}" alt="nolsatu" class="mr-2" height="30px">
-    <a class="navbar-brand" href="{% url 'website:index' %}">nolsatu</a>
+    <img src="{{ brand_logo }}" alt="{{ site_name }}" class="mr-2" height="30px">
+    <a class="navbar-brand" href="{% url 'website:index' %}">{{site_name}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-1"
             aria-controls="navbarNavDropdown-1"
             aria-expanded="false" aria-label="Toggle navigation">

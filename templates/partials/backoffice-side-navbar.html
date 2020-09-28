@@ -76,7 +76,14 @@
                 </ul>
             </li>
 
-            <li class="nav-item {% if menu_active == 'materials' %}has-treeview menu-open{% endif %}">
+            <li class="nav-item">
+                <a href="{{ nolsatu_course_home_page }}" class="nav-link {% if menu_active == 'materi' %}active{% endif %}">
+                    <i class="nav-icon fas fa-th-list"></i>
+                    <p>Daftar Materi</p>
+                </a>
+            </li>
+
+            {% comment %} <li class="nav-item {% if menu_active == 'materials' %}has-treeview menu-open{% endif %}">
                 <a href="#" class="nav-link {% if menu_active == 'materials' %}active{% endif %}">
                     <i class="nav-icon fas fa-th-list"></i>
                     <p>Materi Pelatihan<i class="right fas fa-angle-left"></i></p>
@@ -95,9 +102,9 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> {% endcomment %}
 
-            <li class="nav-item {% if menu_active == 'graduates' %}has-treeview menu-open{% endif %}">
+            {% comment %} <li class="nav-item {% if menu_active == 'graduates' %}has-treeview menu-open{% endif %}">
                 <a href="#" class="nav-link {% if menu_active == 'graduates' %}active{% endif %}">
                     <i class="nav-icon fas fa-user-graduate"></i>
                     <p>Lulusan<i class="right fas fa-angle-left"></i></p>
@@ -122,9 +129,9 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> {% endcomment %}
 
-            <li class="nav-item {% if menu_active == 'campus' %}has-treeview menu-open{% endif %}">
+            {% comment %} <li class="nav-item {% if menu_active == 'campus' %}has-treeview menu-open{% endif %}">
                 <a href="#" class="nav-link {% if menu_active == 'campus' %}active{% endif %}">
                     <i class="nav-icon fas fa-university"></i>
                     <p>Kampus<i class="right fas fa-angle-left"></i></p>
@@ -149,14 +156,14 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> {% endcomment %}
 
-            <li class="nav-item">
+            {% comment %} <li class="nav-item">
                 <a href="{% url 'backoffice:surveys:index' %}" class="nav-link {% if menu_active == 'surveys' %}active{% endif %}">
                     <i class="nav-icon fas fa-poll-h"></i>
                     <p>Survey</p>
                 </a>
-            </li>
+            </li> {% endcomment %}
 
             <li class="nav-item">
                 <a href="{% url 'backoffice:broadcasts:index' %}" class="nav-link {% if menu_active == 'broadcast' %}active{% endif %}">

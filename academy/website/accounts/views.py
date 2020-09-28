@@ -20,8 +20,8 @@ from .forms import (
 
 @login_required
 def index(request):
-    if not hasattr(request.user, 'survey'):
-        return redirect("website:accounts:survey")
+    # if not hasattr(request.user, 'survey'):
+    #     return redirect("website:accounts:survey")
 
     user = request.user
     training = Training.get_or_create_initial()
@@ -31,6 +31,7 @@ def index(request):
 
     form = ProfileForm(
         data=request.POST or None, files=request.FILES or None,
+        cv_required=False,
         initial={
             "first_name": user.first_name,
             "last_name": user.last_name
@@ -191,8 +192,10 @@ def edit_profile(request):
         'instagram': user.profile.instagram
     }
 
-    form = ProfileForm(data=request.POST or None, files=request.FILES or None,
-                       initial=initial, instance=user.profile)
+    form = ProfileForm(
+        data=request.POST or None, files=request.FILES or None,
+        initial=initial, instance=user.profile, cv_required=False
+    )
     if form.is_valid():
         form.save(user)
         messages.success(request, 'Profil berhasil diubah')

@@ -16,7 +16,7 @@ from django.views import View
 from academy.core.utils import pagination
 from academy.apps.graduates.models import Graduate
 from academy.apps.students.models import Student, TrainingMaterial, TrainingStatus
-from academy.apps.accounts.models import User
+from academy.apps.accounts.models import User, Certificate
 from academy.backoffice.users.forms import ChangeStatusTraining
 from .forms import (
     ParticipantsRepeatForm, AddTrainingStatus, GraduateTrainingStatusFormSet, BaseFilterForm,
@@ -237,15 +237,15 @@ def status_training(request, id):
 
 @staff_member_required
 def show_certificate(request, id):
-    graduate = get_object_or_404(Graduate, id=id)
+    graduate = get_object_or_404(Certificate, id=id)
     force = False
 
     if request.GET.get('regenerate') and request.GET['regenerate'] == 'yes':
         force = True
 
-    graduate.generate_certificate_file(force)
+    graduate.generate()
     context = {
-        'title': f'Certificate {graduate.certificate_number}',
+        'title': f'Certificate',
         'menu_active': 'graduates',
         'graduate': graduate
     }

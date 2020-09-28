@@ -4,8 +4,13 @@
     {% csrf_token %}
 
     <div class="card full-width">
-        <div class="card-body">
-            {{ form.non_field_errors }}
+        <div class="card-body">            
+            <h3 class="mt-3 mb-5 text-center">{{ title }}</h3>
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}                
+            </div>
+            {% endif %}
             {% for field in form %}
                 <div class="form-group col-md-12">
                     <label class="pull-left">{{ field.label }}</label>
@@ -20,9 +25,9 @@
 
             <div class="form-group col-md-12">
                 {% if page == 'campus-registration' %}
-                    <button type="submit" class="btn btn-primary btn-pill pull-right"/>Daftar</button>
+                    <button type="submit" class="genric-btn info circle btn-block mt-4">Daftar</button>
                 {% else %}
-                    <button type="submit" class="btn btn-primary btn-pill"/>Simpan</button>
+                    <button type="submit" class="genric-btn info circle btn-block mt-4">Simpan</button>
                 {% endif %}
             </div>
         </div>

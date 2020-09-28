@@ -397,11 +397,12 @@ class Certificate(models.Model):
         options = {
             'page-size': 'A4',
             'orientation': 'Landscape',
-            'margin-top': '0in',
+            'margin-top': '0.15in',
             'margin-right': '0in',
             'margin-bottom': '0in',
             'margin-left': '0in',
-            'no-outline': None
+            'no-outline': None,
+            'dpi': 300
         }
         pdf = pdfkit.from_string(rendered_html, filepath, options=options)
         response = HttpResponse(pdf, content_type='application/pdf')
@@ -413,7 +414,7 @@ class Certificate(models.Model):
         self.save()
 
     def preview(self):
-        html_template = get_template('backoffice/graduates/certificate-dev.html')
+        html_template = get_template('backoffice/graduates/certificate-adinusa.html')
         last_name = (
             self.user.last_name if self.user.last_name
             else self.user.first_name
