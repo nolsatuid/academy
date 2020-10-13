@@ -181,15 +181,13 @@ def blog_index(request):
 
 def home_custom(request):
     try:
-        courses = requests.get(
-            'get', url=settings.HOST + '/api/course/list').json()
+        courses = requests.get(settings.HOST + '/api/course/list').json()
         courses = courses[:3]
     except (JSONDecodeError, ConnectionError):
         courses = []
 
     try:
-        vendors = requests.get(
-            'get', url=settings.HOST + '/api/course/vendor/list').json()
+        vendors = requests.get(settings.HOST + '/api/course/vendor/list').json()
     except (JSONDecodeError, ConnectionError):
         vendors = []
 
