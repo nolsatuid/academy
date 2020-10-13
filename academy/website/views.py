@@ -180,19 +180,20 @@ def blog_index(request):
 
 
 def home_custom(request):
-    try:
-        courses = call_internal_api(
-            'get', url=settings.NOLSATU_COURSE_HOST + f'/api/list').json()
-        courses = courses[:3]
-    except (JSONDecodeError, ConnectionError):
-        courses = []
+    # try:
+    #     courses = call_internal_api(
+    #         'get', url=settings.NOLSATU_COURSE_HOST + f'/api/list').json()
+    #     courses = courses[:3]
+    # except (JSONDecodeError, ConnectionError):
+    #     courses = []
 
-    try:
-        vendors = call_internal_api(
-            'get', url=settings.NOLSATU_COURSE_HOST + f'/api/vendorlist').json()
-    except (JSONDecodeError, ConnectionError):
-        vendors = []
-
+    # try:
+    #     vendors = call_internal_api(
+    #         'get', url=settings.NOLSATU_COURSE_HOST + f'/api/vendorlist').json()
+    # except (JSONDecodeError, ConnectionError):
+    #     vendors = []
+    vendors = []
+    courses = []
     context = {
         'title': 'Home',
         'courses': courses,
