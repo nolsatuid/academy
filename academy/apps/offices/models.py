@@ -335,16 +335,3 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
-
-
-class Banner(models.Model):
-    title = models.CharField(max_length=255)
-    link = models.CharField(max_length=512)
-    image = models.ImageField(
-        upload_to=image_upload_path('banners', use_dir_date=False)
-    )
-    show_web = models.BooleanField()
-    show_app = models.BooleanField()
-
-    def __str__(self):
-        return self.title
