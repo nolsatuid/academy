@@ -20,9 +20,9 @@ urlpatterns = [
     path('statistic/', views.statistic, name='statistic'),
     path('blogs/<slug:slug>', views.blog_details, name='blog_details'),
     path('blogs/', views.blog_index, name='blog_index'),
-    path('<slug:type_content>/<slug:slug>/',
+    path('content/<slug:type_content>/<slug:slug>/',
          views.page_category, name='page_category'),
-    path('<slug:type_content>/<slug:categoryslug>/<slug:slug>/',
+    path('content/<slug:type_content>/<slug:categoryslug>/<slug:slug>/',
          views.page_category_detail, name='page_category_detail'),
     path('contact/', views.contact, name='contact'),
 ]
