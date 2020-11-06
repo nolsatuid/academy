@@ -8,5 +8,6 @@ urlpatterns = [
     path('infos/', include('academy.api.infos.urls')),
     path('inbox/', include('academy.api.inbox.urls')),
     path('devices/', include('academy.api.devices.urls')),
+    path('banners/', include('academy.api.banner.urls')),
     path('internal/', include('academy.api.internal.urls'))
 ]
