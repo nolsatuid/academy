@@ -31,33 +31,8 @@ class CertificateVerifyForm(forms.Form):
 
         return None
 
-    def get_graduate(self, certificate_number, last_name):
-        graduate = Graduate.objects.filter(
-            certificate_number__iexact=certificate_number
-        ).select_related('user').last()
-
-        if graduate and graduate.is_name_valid(last_name):
-            return {
-                "user": {
-                    "full_name": graduate.user.get_full_name(),
-                    "first_name": graduate.user.first_name,
-                    "last_name": graduate.user.last_name
-                },
-                "certificate_number": graduate.certificate_number,
-                "created": graduate.created,
-                "valid_until": graduate.valid_until,
-                "rating_stars": graduate.get_rating_stars(None),
-                "rating_accumulation": graduate.rating_accumulation(),
-                "rating_respondents": graduate.ratings.count()
-            }
-
-        return None
-
     def verification(self, *args, **kwargs):
         certificate_number = self.cleaned_data['certificate_number']
         last_name = self.cleaned_data['last_name']
 
-        if "DEV" in certificate_number:
-            return self.get_certificate(certificate_number, last_name)
-        else:
-            return self.get_graduate(certificate_number, last_name)
+        return self.get_certificate(certificate_number, last_name)
