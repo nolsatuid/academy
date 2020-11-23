@@ -52,41 +52,6 @@ def index(request):
     return render(request, 'accounts/index.html', context)
 
 
-def login_view(request):
-    navbar = request.GET.get('navbar')
-    if request.user.is_authenticated:
-        return redirect('website:accounts:index')
-
-    form = CustomAuthenticationForm(request, data=request.POST or None)
-    if form.is_valid():
-        user = form.get_user()
-        login(request, user)
-
-        next = request.GET.get('next') or None
-        if next:
-            return redirect(next)
-        else:
-            return redirect("website:accounts:index")
-
-    context = {
-        'form': form,
-        'title': 'Masuk',
-        'page': 'login',
-        'navbar': navbar,
-        'mobile_layout': navbar
-    }
-    return render(request, 'accounts/form.html', context)
-
-
-def logout_view(request):
-    logout(request)
-
-    if 'next' in request.GET:
-        return redirect(request.GET.get('next'))
-
-    return redirect("website:index")
-
-
 def sign_up(request):
     if request.user.is_authenticated:
         return redirect('website:accounts:index')
