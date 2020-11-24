@@ -64,3 +64,11 @@ class BulkDelete(UserAuthAPIView):
                 return Response({'message': 'Berhasil hapus pesan yang dipilih'})
         else:
             return ErrorResponse(error_message='Pesan tidak ditemukan')
+
+
+class GetCountInbox(UserAuthAPIView):
+    def get(self, request):
+        inbox = Inbox.objects.filter(user=request.user, is_read=False)
+        return Response(
+            {'count': inbox.count()}
+        )

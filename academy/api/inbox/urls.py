@@ -7,4 +7,5 @@ urlpatterns = [
     path('<int:id>', views.InboxDetail.as_view(), name='inbox_detail'),
     path('read', views.BulkReadUnread.as_view(), name='inbox_read'),
     path('delete', views.BulkDelete.as_view(), name='inbox_delete'),
+    path('count', views.GetCountInbox.as_view(), name='get_count_inbox'),
 ]
