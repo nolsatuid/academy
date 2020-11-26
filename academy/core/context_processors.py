@@ -18,5 +18,6 @@ def nolsatu_context(request):
         'brand_logo_dark': setting.get_logo_dark(),
         'brand_logo_light': setting.get_logo_light(),
         'brand_favicon': setting.get_favicon(),
-        'sign_with_btech': auth_setting.sign_with_btech
+        'sign_with_btech': auth_setting.sign_with_btech,
+        'mobile_layout': request.GET.get('navbar')
     }
