@@ -5,6 +5,10 @@ from academy.apps.offices.models import Setting, AuthSetting
 def nolsatu_context(request):
     setting = Setting.get_data()
     auth_setting = AuthSetting.objects.first()
+    mobile_layout = False
+    if request.GET.get('navbar') == "hidden":
+        mobile_layout = True
+
     return {
         'nolsatu_course_home_page': settings.NOLSATU_COURSE_HOST,
         'site_name': setting.site_name,
@@ -19,5 +23,5 @@ def nolsatu_context(request):
         'brand_logo_light': setting.get_logo_light(),
         'brand_favicon': setting.get_favicon(),
         'sign_with_btech': auth_setting.sign_with_btech,
-        'mobile_layout': request.GET.get('navbar')
+        'mobile_layout': mobile_layout
     }
