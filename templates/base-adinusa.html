@@ -32,11 +32,17 @@
 </head>
 
 <body>    
-    {% include 'website/navbar-adinusa.html' %}
+    {% if not mobile_layout %}
+        {% include 'website/navbar-adinusa.html' %}
+    {% endif %}
+
     <div style="min-height: 100vh">
         {% block content %} {% endblock %}   
     </div> 
-    {% include 'website/footer-adinusa.html' %}
+
+    {% if not mobile_layout %}
+        {% include 'website/footer-adinusa.html' %}
+    {% endif %}
     <!-- jquery plugins here-->
     <!-- jquery -->
     <script src="{% static 'adinusa/js/jquery-1.12.1.min.js' %}"></script>
