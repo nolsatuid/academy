@@ -1,10 +1,10 @@
-from tokenize import TokenError
+from urllib import parse
 
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.exceptions import AuthenticationFailed, InvalidToken
-from rest_framework_simplejwt.tokens import UntypedToken, AccessToken
+from rest_framework_simplejwt.exceptions import AuthenticationFailed, InvalidToken, TokenError
+from rest_framework_simplejwt.tokens import AccessToken
 
 from academy.website.accounts.forms import CustomAuthenticationForm
 
@@ -22,6 +22,13 @@ def success_redirect(request):
         return redirect(next)
     else:
         return redirect("website:accounts:index")
+
+
+def redirect_login(request):
+    query = parse.urlencode(request.GET)
+    response = redirect("website:accounts:login")
+    response['Location'] += '?' + query
+    return response
 
 
 def login_form_view(request):
@@ -58,7 +65,7 @@ def jwt_header_login(request):
     :return:
     """
     if JWT_AUTH_HEADER_KEY not in request.headers:
-        return redirect("website:accounts:login")
+        return redirect_login(request)
 
     jwt_token = request.headers[JWT_AUTH_HEADER_KEY]
     try:
@@ -68,7 +75,7 @@ def jwt_header_login(request):
         return success_redirect(request)
     except (TokenError, AuthenticationFailed, InvalidToken):
         # Token invalid redirect to login page
-        return redirect("website:accounts:login")
+        return redirect_login(request)
 
 
 def login_view(request):
