@@ -5,9 +5,7 @@ from academy.apps.offices.models import Setting, AuthSetting
 def nolsatu_context(request):
     setting = Setting.get_data()
     auth_setting = AuthSetting.objects.first()
-    mobile_layout = False
-    if request.GET.get('navbar') == "hidden":
-        mobile_layout = True
+    mobile_layout = request.GET.get('navbar') == "hidden" or request.is_mobile
 
     return {
         'nolsatu_course_home_page': settings.NOLSATU_COURSE_HOST,

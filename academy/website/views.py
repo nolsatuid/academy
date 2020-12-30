@@ -45,7 +45,6 @@ def index(request):
     peserta = Student.objects.participants().count()
     context = {
         'title': 'Home',
-        'mobile_layout': False,
         'instructors': Instructor.objects.order_by('order'),
         'pengguna': User.objects.actived().count(),
         'seleksi': seleksi + peserta,
@@ -60,12 +59,10 @@ def index(request):
 
 
 def faq(request):
-    navbar = request.GET.get('navbar')
     faqs = FAQ.objects.all()
 
     context = {
         'title': 'Tilil (Q&A)',
-        'navbar': navbar,
         'faqs': faqs
     }
 
