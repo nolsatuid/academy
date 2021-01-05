@@ -770,3 +770,52 @@ request:
 ```
 
 `registration_id` is unique.
+
+## Certificates
+
+
+### List All Certificates
+url: `/api/certificates/`
+
+
+method: `GET`
+
+response:
+```json
+[
+    {
+        "id": 52,
+        "title": "123",
+        "number": "123",
+        "created": "2020-08-17T23:54:44.317268+07:00",
+        "valid_until": "2023-08-17T16:54:44.317268Z",
+        "certificate_file": "http://localhost:8000/media/images/certificates/2020/08/17/setyongr_exported_17082020-235141779941.pdf"
+    },
+    {
+        "id": 51,
+        "title": "Tess",
+        "number": "asdasdasd",
+        "created": "2020-08-17T23:54:44.315673+07:00",
+        "valid_until": "2023-08-17T16:54:44.315673Z",
+        "certificate_file": "http://localhost:8000/media/images/certificates/2020/08/17/setyongr_exported_17082020-235141778503.pdf"
+    }
+]
+```
+
+### Get Single Certificate
+url: `/api/certificates/<int:id>`
+
+
+method: `GET`
+
+response:
+```json
+{
+    "id": 52,
+    "title": "123",
+    "number": "123",
+    "created": "2020-08-17T23:54:44.317268+07:00",
+    "valid_until": "2023-08-17T16:54:44.317268Z",
+    "certificate_file": "http://localhost:8000/media/images/certificates/2020/08/17/setyongr_exported_17082020-235141779941.pdf"
+}
+```

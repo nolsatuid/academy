@@ -9,5 +9,6 @@ urlpatterns = [
     path('inbox/', include('academy.api.inbox.urls')),
     path('devices/', include('academy.api.devices.urls')),
     path('banners/', include('academy.api.banner.urls')),
+    path('certificates/', include('academy.api.certificate.urls')),
     path('internal/', include('academy.api.internal.urls'))
 ]
