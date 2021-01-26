@@ -92,6 +92,15 @@
                 </a>
             </li>
 
+            {% if user.get_role_display == 'Trainer' %}
+            <li class="nav-item">
+                <a href="{{ nolsatu_course_home_page }}/teachersroom" class="nav-link">
+                    <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                    <p>Ruang Pengajar</p>
+                </a>
+            </li>
+            {% endif %}
+
             <li class="nav-item">
                 <a href="{% url 'website:accounts:logout' %}" class="nav-link {% if menu_active == '' %}active{% endif %}">
                     <i class="nav-icon fas fa-sign-out-alt"></i>
