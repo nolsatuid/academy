@@ -390,7 +390,7 @@ class Certificate(models.Model):
         return self.created + timedelta(days=1095)
 
     def generate(self):
-        filename = 'certificate-%s.pdf' % slugify(self.user.name)
+        filename = 'cert-%s-%s.pdf' % (slugify(self.user.username), self.number)
         filepath = '/tmp/%s' % filename
         rendered_html = self.preview()
 
