@@ -83,7 +83,7 @@
                                 <a href="{{ nolsatu_course_home_page }}/courses/{{ course.slug }}">
                                     {% thumbnail course.featured_image "360x360" crop="center" as course_thumb %}
                                         <img src="{{ course_thumb.url }}" alt="{{ course_thumb.name}}" width="{{ course_thumb.width }}" height="{{ course_thumb.height }}">
-                                    {% endthumbnail %} 
+                                    {% endthumbnail %}
                                 </a>
                             </div>
                             <div class="special_cource_text">      
@@ -109,7 +109,7 @@
                                         </h4>
                                     </span>      
                                     {% if course.vendor.logo %}
-                                        <a href="{{ course.vendor.website }}" style="height: 100%;"><img class="d-flex align-items-center" src="{{ nolsatu_course_home_page }}{{ course.vendor.logo }}" alt="{{ course.vendor.name }}" style="width: 130px;"></a>
+                                        <a href="{{ course.vendor.website }}" style="height: 100%;"><img class="d-flex align-items-center" src="{{ course.vendor.logo }}" alt="{{ course.vendor.name }}" style="width: 130px;"></a>
                                     {% endif %}
                                 </div>
                             </div>                    

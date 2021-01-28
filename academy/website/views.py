@@ -187,7 +187,7 @@ def home_custom(request):
         vendors = requests.get(settings.HOST + '/api/course/vendor/list').json()
     except (JSONDecodeError, ConnectionError):
         vendors = []
-
+    print(courses)
     context = {
         'title': 'Home',
         'courses': courses,
