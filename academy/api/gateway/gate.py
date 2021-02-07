@@ -4,6 +4,7 @@ import jwt
 import requests
 from django.conf import settings
 from django.urls import path
+from urllib.parse import urlencode
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -22,10 +23,14 @@ def gate_func(remote_base):
     @api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
     @authentication_classes([JWTAuthentication])
     @permission_classes([AllowAny])
-    def func(req, remote_path):
+    def func(request, remote_path):
+        query = urlencode(request.GET)
         url = remote_base + remote_path
-        method = req.method.lower()
-        data = req.data
+        if query:
+            url += f"?{query}"
+
+        method = request.method.lower()
+        data = request.data
         method_map = {
             'get': requests.get,
             'post': requests.post,
@@ -33,13 +38,13 @@ def gate_func(remote_base):
             'patch': requests.patch,
             'delete': requests.delete
         }
-        user_id = req.user.id if req.user and req.user.is_authenticated else None
+        user_id = request.user.id if request.user and request.user.is_authenticated else None
 
         headers = {
             'authorization': f'Server {get_server_token(user_id)}'
         }
 
-        res = method_map[method](url, headers=headers, data=data, files=req.FILES)
+        res = method_map[method](url, headers=headers, data=data, files=request.FILES)
 
         if res.headers.get('Content-Type', '').lower() == 'application/json':
             data = res.json()
