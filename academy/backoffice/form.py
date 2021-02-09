@@ -4,6 +4,7 @@ from io import StringIO
 from django import forms
 from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 from academy.apps.accounts.models import User, Profile
 from academy.apps.offices.models import Setting, AuthSetting
@@ -113,16 +114,18 @@ class ImportUserForm(forms.Form):
         if self.cleaned_data['update_or_create']:
             for row in data:
                 email = row[2].strip("")
+                username = row[4].strip("")
                 if self.validate_email(email) and \
-                        User.objects.filter(email=email).exists():
+                        User.objects.filter(Q(email=email) | Q(username=username)).exists():
                     self.update_user(row)
                     continue
                 self.reject_data.append(row)
         else:
             for row in data:
                 email = row[2].strip("")
+                username = row[4].strip("")
                 if self.validate_email(email) and \
-                        not User.objects.filter(email=email).exists():
+                        not User.objects.filter(Q(email=email) | Q(username=username)).exists():
                     self.create_user(row)
                     continue
                 self.reject_data.append(row)
