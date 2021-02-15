@@ -3,6 +3,7 @@ import django_rq
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.tokens import default_token_generator
+from django.forms import ClearableFileInput
 from django.utils.http import int_to_base36
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -59,11 +60,15 @@ class ProfileForm(forms.ModelForm):
         label='Curriculum Vitae',
         help_text="File Type: .doc, .docx, .pdf. Max 2 MB.",
         max_mb_file_size=2,
-        allowed_content_type=[
+        allowed_extension=('.doc', '.docx', '.pdf'),
+        allowed_content_type=(
             'application/msword',
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'application/pdf'
-        ]
+        ),
+        widget=ClearableFileInput(attrs={
+            'accept': '.doc,.docx,.pdf'
+        })
     )
 
     class Meta:

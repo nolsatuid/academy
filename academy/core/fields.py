@@ -1,3 +1,5 @@
+import pathlib
+
 from django import forms
 from django.core.exceptions import ValidationError
 from academy.apps.students.models import TrainingMaterial
@@ -38,15 +40,21 @@ class AjaxModelChoiceField(forms.ChoiceField):
 
 
 class FileFieldExtended(forms.FileField):
-    def __init__(self, allowed_content_type=None, max_mb_file_size=None, *args, **kwargs):
+    def __init__(self, allowed_extension=None, allowed_content_type=None, max_mb_file_size=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.allowed_content_type = allowed_content_type
         self.max_mb_file_size = max_mb_file_size
+        self.allowed_extension = allowed_extension
 
     def to_python(self, data):
         f = super().to_python(data)
         if f is None:
             return None
+
+        file_extension = pathlib.Path(f.name).suffix
+
+        if file_extension not in self.allowed_extension:
+            raise forms.ValidationError('Ekstensi file tidak diperbolehkan')
 
         if self.max_mb_file_size and f.size > self.max_mb_file_size * 1048576:
             raise forms.ValidationError('Ukuran file maksimal 2 MB')
