@@ -1,4 +1,4 @@
-Django==2.2.10
+Django==2.2.24
 psycopg2==2.7.3.2
 
 id-phonenumbers==0.3.0
